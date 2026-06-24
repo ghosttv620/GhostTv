@@ -8,6 +8,7 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clappr@latest/dist/clappr.min.js">
     </script>
     <style>
+        /* সব স্টাইল যেমন আছে – কোনো পরিবর্তন করা হয়নি */
         * {
             margin: 0;
             padding: 0;
@@ -20,7 +21,6 @@
             padding-bottom: 40px;
         }
 
-        /* ফিক্সড প্লেয়ার সেকশন – ঠিক 16:9 রেশিও */
         #player-section {
             position: sticky;
             top: 0;
@@ -28,10 +28,8 @@
             background: #000;
             width: 100%;
             display: none;
-            /* শুরুতে লুকানো */
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
             aspect-ratio: 16 / 9;
-            /* 🔥 16:9 ফিক্সড রেশিও */
             max-height: 100vh;
             overflow: hidden;
             background: #111;
@@ -43,14 +41,12 @@
             background: #000;
         }
 
-        /* কন্টেইনার – মোবাইল ফার্স্ট */
         .container {
             max-width: 1000px;
             margin: 0 auto;
             padding: 16px 12px 30px;
         }
 
-        /* ইনপুট বক্স */
         .input-box {
             background: white;
             padding: 18px 16px;
@@ -107,16 +103,13 @@
             transform: scale(1.02);
         }
 
-        /* চ্যানেল গ্রিড – মোবাইলে প্রতি লাইনে ৪টি (কার্ড) */
         .channel-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            /* 🔥 ৪ কলাম ফিক্সড */
             gap: 14px;
             margin-top: 8px;
         }
 
-        /* কার্ড – ছোট মোবাইলে আরও কম্প্যাক্ট */
         .card {
             background: white;
             padding: 12px 6px 14px;
@@ -201,7 +194,6 @@
             background: #d5dce6;
         }
 
-        /* যখন কোন চ্যানেল নেই বা লোড হচ্ছে */
         .loading-placeholder {
             grid-column: 1 / -1;
             text-align: center;
@@ -212,7 +204,6 @@
             border-radius: 24px;
         }
 
-        /* মোবাইলে ৪ কলাম ঠিক রাখতে ছোট স্ক্রিনে আরও টিউন */
         @media (max-width: 480px) {
             .channel-grid {
                 gap: 10px;
@@ -243,7 +234,6 @@
             }
         }
 
-        /* ৩২০px এর নিচে – একদম ছোট ফোন */
         @media (max-width: 380px) {
             .channel-grid {
                 gap: 8px;
@@ -257,7 +247,6 @@
             }
         }
 
-        /* স্ক্রল সুন্দর */
         ::-webkit-scrollbar {
             width: 5px;
         }
@@ -269,7 +258,6 @@
 </head>
 <body>
 
-    <!-- প্লেয়ার সেকশন – 16:9 রেশিও সহ -->
     <div id="player-section">
         <div id="player-wrapper"></div>
     </div>
@@ -281,77 +269,105 @@
             <button onclick="loadM3U()">চ্যানেল লোড</button>
         </div>
 
-        <!-- চ্যানেল গ্রিড – ৪ কলাম -->
         <div id="channelGrid" class="channel-grid">
             <div class="loading-placeholder">⬆️ উপরের বক্সে M3U লিঙ্ক দিয়ে "চ্যানেল লোড" করুন</div>
         </div>
     </div>
 
     <script>
-        let player = null;
-        let isPlayerVisible = false;
+        (function() {
+            "use strict";
 
-        // M3U লোড ও প্যার্স
-        async function loadM3U() {
-            const urlInput = document.getElementById('m3uUrl');
-            const grid = document.getElementById('channelGrid');
-            const rawUrl = urlInput.value.trim();
+            let player = null;
+            let isPlayerVisible = false;
 
-            if (!rawUrl) {
-                grid.innerHTML = `<div class="loading-placeholder">⚠️ দয়া করে একটি M3U লিঙ্ক দিন</div>`;
-                return;
-            }
+            // ======= 🚀 লোড ফাংশন – ১০০টি করে চ্যানেল দেখাবে (পেইজিনেটেড) =======
+            // আমরা সব চ্যানেল ধরে রাখব, এবং শুধু ১০০টি করে দেখাব
+            let allChannels = [];
+            let currentPage = 0;
+            const PAGE_SIZE = 100;
 
-            grid.innerHTML = `<div class="loading-placeholder">⏳ চ্যানেল লোড হচ্ছে...</div>`;
+            async function loadM3U() {
+                const urlInput = document.getElementById('m3uUrl');
+                const grid = document.getElementById('channelGrid');
+                const rawUrl = urlInput.value.trim();
 
-            try {
-                const response = await fetch(rawUrl);
-                if (!response.ok) throw new Error(`HTTP ${response.status}`);
-                const data = await response.text();
-
-                const lines = data.split(/\r?\n/);
-                let channels = [];
-                let currentName = '';
-                let currentLogo = '';
-                let currentUrl = '';
-
-                for (let i = 0; i < lines.length; i++) {
-                    const line = lines[i].trim();
-                    if (line.startsWith('#EXTINF')) {
-                        // নাম বের করি
-                        const nameMatch = line.match(/,([^,]*)$/);
-                        currentName = nameMatch ? nameMatch[1].trim() : 'চ্যানেল';
-                        // লোগো
-                        const logoMatch = line.match(/tvg-logo="([^"]*)"/);
-                        currentLogo = logoMatch ? logoMatch[1] : '';
-                        // পরের লাইনটি URL
-                        if (i + 1 < lines.length) {
-                            const nextLine = lines[i + 1].trim();
-                            if (!nextLine.startsWith('#')) {
-                                currentUrl = nextLine;
-                                channels.push({
-                                    name: currentName || 'চ্যানেল',
-                                    logo: currentLogo || '',
-                                    url: currentUrl
-                                });
-                            }
-                        }
-                    }
-                }
-
-                // যদি কোনো চ্যানেল না পাওয়া যায়
-                if (channels.length === 0) {
-                    grid.innerHTML = `<div class="loading-placeholder">😕 কোনো চ্যানেল পাওয়া যায়নি। লিঙ্কটি চেক করুন।</div>`;
+                if (!rawUrl) {
+                    grid.innerHTML = `<div class="loading-placeholder">⚠️ দয়া করে একটি M3U লিঙ্ক দিন</div>`;
                     return;
                 }
 
-                // গ্রিড রেন্ডার
+                grid.innerHTML = `<div class="loading-placeholder">⏳ চ্যানেল লোড হচ্ছে...</div>`;
+
+                try {
+                    const response = await fetch(rawUrl);
+                    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                    const data = await response.text();
+
+                    const lines = data.split(/\r?\n/);
+                    let channels = [];
+                    let currentName = '';
+                    let currentLogo = '';
+                    let currentUrl = '';
+
+                    for (let i = 0; i < lines.length; i++) {
+                        const line = lines[i].trim();
+                        if (line.startsWith('#EXTINF')) {
+                            const nameMatch = line.match(/,([^,]*)$/);
+                            currentName = nameMatch ? nameMatch[1].trim() : 'চ্যানেল';
+                            const logoMatch = line.match(/tvg-logo="([^"]*)"/);
+                            currentLogo = logoMatch ? logoMatch[1] : '';
+                            if (i + 1 < lines.length) {
+                                const nextLine = lines[i + 1].trim();
+                                if (!nextLine.startsWith('#')) {
+                                    currentUrl = nextLine;
+                                    channels.push({
+                                        name: currentName || 'চ্যানেল',
+                                        logo: currentLogo || '',
+                                        url: currentUrl
+                                    });
+                                }
+                            }
+                        }
+                    }
+
+                    if (channels.length === 0) {
+                        grid.innerHTML = `<div class="loading-placeholder">😕 কোনো চ্যানেল পাওয়া যায়নি। লিঙ্কটি চেক করুন।</div>`;
+                        return;
+                    }
+
+                    // সব চ্যানেল সংরক্ষণ
+                    allChannels = channels;
+                    currentPage = 0;
+
+                    // প্রথম ১০০টি দেখাও
+                    renderPage(currentPage);
+
+                } catch (error) {
+                    console.error(error);
+                    grid.innerHTML =
+                        `<div class="loading-placeholder">❌ লিঙ্ক লোড করতে সমস্যা: ${error.message || 'CORS বা নেটওয়ার্ক ত্রুটি'}</div>`;
+                }
+            }
+
+            // ======= পৃষ্ঠা রেন্ডার (১০০টি করে) =======
+            function renderPage(page) {
+                const grid = document.getElementById('channelGrid');
+                const start = page * PAGE_SIZE;
+                const end = Math.min(start + PAGE_SIZE, allChannels.length);
+                const pageChannels = allChannels.slice(start, end);
+
                 grid.innerHTML = '';
-                channels.forEach((ch) => {
+
+                if (pageChannels.length === 0) {
+                    grid.innerHTML = `<div class="loading-placeholder">📭 আর কোনো চ্যানেল নেই</div>`;
+                    return;
+                }
+
+                pageChannels.forEach((ch) => {
                     const card = document.createElement('div');
                     card.className = 'card';
 
-                    // লোগো ঠিকানা – ডিফল্ট প্লেসহোল্ডার
                     const logoImg = ch.logo || '';
 
                     card.innerHTML = `
@@ -365,7 +381,6 @@
                         </div>
                     `;
 
-                    // প্লে বাটন ইভেন্ট
                     const playBtn = card.querySelector('.btn-play');
                     playBtn.addEventListener('click', function(e) {
                         e.stopPropagation();
@@ -373,7 +388,6 @@
                         if (url) playVideo(url);
                     });
 
-                    // কপি বাটন
                     const copyBtn = card.querySelector('.btn-copy');
                     copyBtn.addEventListener('click', function(e) {
                         e.stopPropagation();
@@ -384,79 +398,98 @@
                     grid.appendChild(card);
                 });
 
-            } catch (error) {
-                console.error(error);
-                grid.innerHTML =
-                    `<div class="loading-placeholder">❌ লিঙ্ক লোড করতে সমস্যা: ${error.message || 'CORS বা নেটওয়ার্ক ত্রুটি'}</div>`;
-            }
-        }
+                // ===== "আরও লোড" বাটন (যদি বাকি থাকে) =====
+                if (end < allChannels.length) {
+                    const loadMoreDiv = document.createElement('div');
+                    loadMoreDiv.style.gridColumn = '1 / -1';
+                    loadMoreDiv.style.textAlign = 'center';
+                    loadMoreDiv.style.marginTop = '20px';
+                    loadMoreDiv.style.marginBottom = '10px';
 
-        // ▶ প্লে ফাংশন – 16:9 প্লেয়ার দেখায় (স্ক্রল করে উপরে আনা বন্ধ)
-        function playVideo(url) {
-            if (!url) return;
+                    const loadMoreBtn = document.createElement('button');
+                    loadMoreBtn.innerText = `📥 আরও ১০০টি চ্যানেল লোড করুন (${allChannels.length - end} বাকি)`;
+                    loadMoreBtn.style.padding = '12px 30px';
+                    loadMoreBtn.style.background = '#2563eb';
+                    loadMoreBtn.style.color = 'white';
+                    loadMoreBtn.style.border = 'none';
+                    loadMoreBtn.style.borderRadius = '40px';
+                    loadMoreBtn.style.fontSize = '1rem';
+                    loadMoreBtn.style.fontWeight = '600';
+                    loadMoreBtn.style.cursor = 'pointer';
+                    loadMoreBtn.style.boxShadow = '0 2px 8px rgba(0,0,0,0.1)';
+                    loadMoreBtn.addEventListener('click', function() {
+                        currentPage++;
+                        renderPage(currentPage);
+                    });
 
-            const section = document.getElementById('player-section');
-            const wrapper = document.getElementById('player-wrapper');
-
-            // সেকশন দেখাও
-            section.style.display = 'block';
-
-            // পুরোনো প্লেয়ার ধ্বংস
-            if (player) {
-                try { player.destroy(); } catch (e) {}
-                player = null;
-            }
-
-            // নতুন প্লেয়ার
-            player = new Clappr.Player({
-                source: url,
-                parentId: '#player-wrapper',
-                autoPlay: true,
-                height: '100%',
-                width: '100%',
-                mute: false,
-                preload: 'auto',
-                playback: {
-                    preload: 'auto'
+                    loadMoreDiv.appendChild(loadMoreBtn);
+                    grid.appendChild(loadMoreDiv);
                 }
-            });
+            }
 
-            // 🛑 স্ক্রল অটো উপরে আনা সম্পূর্ণ বন্ধ (কোনো স্ক্রল ইফেক্ট নেই)
-            // 🔥 ইউজারের স্ক্রল পজিশন অপরিবর্তিত থাকবে
-        }
+            // ▶ প্লে ফাংশন – 16:9 প্লেয়ার দেখায় (স্ক্রল প্রভাব নেই)
+            function playVideo(url) {
+                if (!url) return;
 
-        // কপি ফাংশন
-        function copyText(text) {
-            if (navigator.clipboard && navigator.clipboard.writeText) {
-                navigator.clipboard.writeText(text).then(() => {
-                    alert('✅ লিঙ্ক কপি হয়েছে!');
-                }).catch(() => {
-                    fallbackCopy(text);
+                const section = document.getElementById('player-section');
+                const wrapper = document.getElementById('player-wrapper');
+
+                section.style.display = 'block';
+
+                if (player) {
+                    try { player.destroy(); } catch (e) {}
+                    player = null;
+                }
+
+                player = new Clappr.Player({
+                    source: url,
+                    parentId: '#player-wrapper',
+                    autoPlay: true,
+                    height: '100%',
+                    width: '100%',
+                    mute: false,
+                    preload: 'auto',
+                    playback: {
+                        preload: 'auto'
+                    }
                 });
-            } else {
-                fallbackCopy(text);
+                // স্ক্রল কোনোভাবেই পরিবর্তন করা হচ্ছে না – ইউজারের স্ক্রল পজিশন অপরিবর্তিত থাকবে
             }
-        }
 
-        // ব্যাকআপ কপি
-        function fallbackCopy(text) {
-            const textarea = document.createElement('textarea');
-            textarea.value = text;
-            document.body.appendChild(textarea);
-            textarea.select();
-            try {
-                document.execCommand('copy');
-                alert('✅ লিঙ্ক কপি হয়েছে!');
-            } catch (e) {
-                alert('❌ কপি করতে ব্যর্থ, লিঙ্কটি ম্যানুয়ালি কপি করুন।');
+            // কপি ফাংশন
+            function copyText(text) {
+                if (navigator.clipboard && navigator.clipboard.writeText) {
+                    navigator.clipboard.writeText(text).then(() => {
+                        alert('✅ লিঙ্ক কপি হয়েছে!');
+                    }).catch(() => {
+                        fallbackCopy(text);
+                    });
+                } else {
+                    fallbackCopy(text);
+                }
             }
-            document.body.removeChild(textarea);
-        }
 
-        // পেজ লোডে ডিফল্ট M3U লোড (ইউজার নিজে লোড করবে)
-        window.addEventListener('DOMContentLoaded', function() {
-            // কিছু করা হবে না – ইউজার নিজে বাটন ক্লিক করবে
-        });
+            function fallbackCopy(text) {
+                const textarea = document.createElement('textarea');
+                textarea.value = text;
+                document.body.appendChild(textarea);
+                textarea.select();
+                try {
+                    document.execCommand('copy');
+                    alert('✅ লিঙ্ক কপি হয়েছে!');
+                } catch (e) {
+                    alert('❌ কপি করতে ব্যর্থ, লিঙ্কটি ম্যানুয়ালি কপি করুন।');
+                }
+                document.body.removeChild(textarea);
+            }
+
+            // গ্লোবাল ফাংশন রাখা (HTML থেকে কল হবে)
+            window.loadM3U = loadM3U;
+            window.playVideo = playVideo;
+            window.copyText = copyText;
+
+            // পেজ লোডে কিছু করবে না (ইউজার নিজে লোড করবে)
+        })();
     </script>
 
 </body>
