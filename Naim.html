@@ -1289,7 +1289,7 @@
       posterElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
 
-    // পরিবর্তিত অংশ: শেয়ার করা লিংকের জন্য শেয়ার ফাংশনালিটি
+    // পরিবর্তিত অংশ: মোবাইল শেয়ার শীট এবং কপি লিংক ফাংশনালিটি
     function shareCurrentVideo() {
       if (!currentPlayingMovie) return;
       try {
@@ -1299,23 +1299,32 @@
           p: currentPlayingMovie.premium ? 1 : 0,
           g: currentPlayingMovie.logo || ''
         };
-        // ব্রাউজার সামঞ্জস্যপূর্ণ এনকোডিং ও টোকেন জেনারেট
         const token = btoa(unescape(encodeURIComponent(JSON.stringify(shareObj))));
         const shareUrl = `${window.location.origin}${window.location.pathname}?play=${token}`;
 
-        // ক্লিপবোর্ডে কপি করা হচ্ছে
-        navigator.clipboard.writeText(shareUrl).then(() => {
-          showToast("🔗 শেয়ার লিংক কপি করা হয়েছে!");
-        }).catch(err => {
-          // বিকল্প পদ্ধতি (fallback)
-          const tempInput = document.createElement("input");
-          tempInput.value = shareUrl;
-          document.body.appendChild(tempInput);
-          tempInput.select();
-          document.execCommand("copy");
-          document.body.removeChild(tempInput);
-          showToast("🔗 শেয়ার লিংক কপি করা হয়েছে!");
-        });
+        // যদি ব্রাউজার মোবাইলের নিজস্ব শেয়ার অপশন সাপোর্ট করে
+        if (navigator.share) {
+          navigator.share({
+            title: currentPlayingMovie.name,
+            text: `Ghost TV-তে "${currentPlayingMovie.name}" ভিডিওটি দেখুন!`,
+            url: shareUrl
+          }).catch(err => {
+            // ইউজার শেয়ার ক্যান্সেল করলে কোনো ত্রুটি দেখাবে না
+          });
+        } else {
+          // সাপোর্ট না করলে (যেমন ডেস্কটপ ব্রাউজার) অটোমেটিক কপি হবে
+          navigator.clipboard.writeText(shareUrl).then(() => {
+            showToast("🔗 শেয়ার লিংক কপি করা হয়েছে!");
+          }).catch(err => {
+            const tempInput = document.createElement("input");
+            tempInput.value = shareUrl;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand("copy");
+            document.body.removeChild(tempInput);
+            showToast("🔗 শেয়ার লিংক কপি করা হয়েছে!");
+          });
+        }
       } catch (e) {
         showToast("⚠️ লিংক তৈরি করতে সমস্যা হয়েছে!");
       }
