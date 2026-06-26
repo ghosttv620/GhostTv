@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ghost Corp · প্রিমিয়াম ডাউনলোড</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #05070e;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            padding: 12px 16px 20px;
+            overflow-x: hidden;
+        }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: #0a0d18; }
+        ::-webkit-scrollbar-thumb { background: linear-gradient(135deg, #4a6cf7, #6d8cff); border-radius: 10px; }
+
+        .main-wrapper { max-width: 1200px; width: 100%; display: flex; flex-direction: column; align-items: center; gap: 20px; }
+
+        .card {
+            background: rgba(255, 255, 255, 0.025);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 28px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.02);
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            transition: 0.3s;
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            top: -2px; left: -2px; right: -2px;
+            height: 3px;
+            background: linear-gradient(90deg, #4a6cf7, #7a9cff, #4a6cf7);
+            background-size: 200% 100%;
+            border-radius: 28px 28px 0 0;
+            opacity: 0.6;
+            animation: shimmerLine 3s linear infinite;
+        }
+        @keyframes shimmerLine {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        .card .card-inner { position: relative; z-index: 2; padding: 16px 20px 14px; }
+
+        .header-card { border-radius: 24px; padding: 0; background: rgba(255, 255, 255, 0.015); }
+        .header-card .card-inner { padding: 12px 16px 10px; text-align: center; }
+        .header-card .brand h1 {
+            font-size: 2.2rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, #ffffff, #7a9cff, #4a6cf7, #ffffff);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 5s ease-in-out infinite;
+            filter: drop-shadow(0 0 30px rgba(74, 108, 247, 0.10));
+            line-height: 1.2;
+        }
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .header-card .sub {
+            font-size: 0.9rem;
+            color: #7a8aaa;
+            margin-top: 2px;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .header-card .sub i { color: #4a6cf7; -webkit-text-fill-color: #4a6cf7; }
+        .header-card .sub .highlight {
+            color: #7a9cff;
+            font-weight: 600;
+            border-bottom: 1.5px solid rgba(74, 108, 247, 0.2);
+            padding-bottom: 1px;
+            -webkit-text-fill-color: #7a9cff;
+        }
+        .header-card .tagline {
+            margin-top: 4px;
+            font-size: 0.6rem;
+            color: #2e3a5a;
+            font-family: 'Courier New', monospace;
+            letter-spacing: 1.5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .header-card .tagline .dot {
+            display: inline-block;
+            width: 5px;
+            height: 5px;
+            background: #4a6cf7;
+            border-radius: 50%;
+            animation: pulseDot 1.5s ease-in-out infinite;
+        }
+        @keyframes pulseDot {
+            0%, 100% { opacity: 0.3; transform: scale(0.8); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        .download-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 20px;
+            padding: 20px 22px 18px;
+        }
+
+        .dl-card {
+            position: relative;
+            border-radius: 24px;
+            padding: 18px 16px 16px;
+            overflow: hidden;
+            transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: default;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            min-height: 180px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(18px) saturate(1.4);
+            -webkit-backdrop-filter: blur(18px) saturate(1.4);
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            box-shadow: 0 8px 32px rgba(135, 206, 250, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+        }
+        .dl-card:hover {
+            transform: translateY(-6px) scale(1.02);
+            border-color: rgba(135, 206, 250, 0.3);
+            box-shadow: 0 16px 48px rgba(135, 206, 250, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .dl-card .card-wave {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            z-index: 0;
+            border-radius: 24px;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        .dl-card .card-wave canvas {
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 100%; height: 100%;
+            display: block;
+        }
+        .dl-card .card-wave .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            pointer-events: none;
+            opacity: 0.25;
+        }
+        .dl-card:nth-child(1) .card-wave .orb {
+            width: 280px; height: 280px;
+            background: radial-gradient(circle, rgba(135, 206, 250, 0.45), transparent 70%);
+            bottom: -60px; right: -60px;
+            animation: orbFloat1 10s ease-in-out infinite;
+        }
+        .dl-card:nth-child(2) .card-wave .orb {
+            width: 280px; height: 280px;
+            background: radial-gradient(circle, rgba(162, 92, 247, 0.40), transparent 70%);
+            top: -60px; left: -60px;
+            animation: orbFloat2 12s ease-in-out infinite;
+        }
+        .dl-card:nth-child(3) .card-wave .orb {
+            width: 280px; height: 280px;
+            background: radial-gradient(circle, rgba(0, 200, 150, 0.35), transparent 70%);
+            bottom: -50px; left: 30px;
+            animation: orbFloat3 14s ease-in-out infinite;
+        }
+        .dl-card:nth-child(4) .card-wave .orb {
+            width: 280px; height: 280px;
+            background: radial-gradient(circle, rgba(247, 92, 150, 0.35), transparent 70%);
+            top: -50px; right: 20px;
+            animation: orbFloat1 11s ease-in-out infinite;
+        }
+        @keyframes orbFloat1 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-20px,-20px) scale(1.15); } }
+        @keyframes orbFloat2 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(20px,20px) scale(1.15); } }
+        @keyframes orbFloat3 { 0%,100% { transform: translate(0,0) scale(1); } 50% { transform: translate(-15px,15px) scale(1.15); } }
+
+        .rain-layer {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+            border-radius: 24px;
+        }
+        .rain-drop {
+            position: absolute;
+            top: -10px;
+            width: 1.5px;
+            background: rgba(200, 220, 255, 0.5);
+            animation: rainFall linear infinite;
+            border-radius: 0 0 3px 3px;
+            box-shadow: 0 0 3px rgba(255, 255, 255, 0.05);
+        }
+        @keyframes rainFall {
+            0% { transform: translateY(0); opacity: 0.1; }
+            10% { opacity: 0.6; }
+            90% { opacity: 0.6; }
+            100% { transform: translateY(calc(100% + 20px)); opacity: 0; }
+        }
+
+        .card-gif-box {
+            position: absolute;
+            top: 8px; right: 8px;
+            width: 60px; height: 60px;
+            border-radius: 14px;
+            overflow: hidden;
+            z-index: 10;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(6px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 16px rgba(135, 206, 250, 0.6), 0 0 32px rgba(135, 206, 250, 0.25);
+            opacity: 0;
+            transform: scale(0.7);
+            transition: opacity 0.25s ease, transform 0.25s ease;
+            pointer-events: none;
+        }
+        .card-gif-box.active { opacity: 1; transform: scale(1); pointer-events: auto; }
+        .card-gif-box img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+        .dl-card .card-content {
+            position: relative;
+            z-index: 5;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+        .dl-card .card-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 2px;
+        }
+        .dl-card .card-header i {
+            font-size: 1.6rem;
+            filter: drop-shadow(0 0 20px rgba(135, 206, 250, 0.3));
+        }
+        .dl-card .card-header .file-name-sm {
+            font-size: 1rem;
+            font-weight: 700;
+            color: #f0f4ff;
+            text-shadow: 0 2px 20px rgba(0, 0, 0, 0.4);
+            line-height: 1.2;
+            flex: 1;
+        }
+        .dl-card .file-desc-sm {
+            font-size: 0.75rem;
+            color: #d0d8ee;
+            line-height: 1.3;
+            margin-bottom: 4px;
+            text-shadow: 0 1px 8px rgba(0,0,0,0.4);
+        }
+        .dl-card .meta-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px 12px;
+            font-size: 0.7rem;
+            color: #b8c0da;
+            margin: 2px 0 6px;
+            text-shadow: 0 1px 6px rgba(0,0,0,0.3);
+        }
+        .dl-card .meta-row span { display: flex; align-items: center; gap: 4px; }
+        .dl-card .meta-row i { color: #4a6cf7; font-size: 0.65rem; width: 14px; text-align: center; }
+        .dl-card .meta-row .badge-pc {
+            background: rgba(74, 108, 247, 0.15);
+            color: #b0c8ff;
+            padding: 0 8px;
+            border-radius: 12px;
+            font-size: 0.6rem;
+            font-weight: 600;
+            border: 1px solid rgba(74, 108, 247, 0.1);
+            line-height: 1.6;
+        }
+        .dl-card .meta-row .badge-safe {
+            background: rgba(0, 200, 83, 0.12);
+            color: #80e8a0;
+            padding: 0 8px;
+            border-radius: 12px;
+            font-size: 0.6rem;
+            font-weight: 600;
+            border: 1px solid rgba(0, 200, 83, 0.08);
+            line-height: 1.6;
+        }
+
+        /* ===== রিয়েল ডাউনলোড প্রগ্রেস ===== */
+        .progress-wrapper-sm {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 4px 0 2px;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            border: 1px solid rgba(255, 255, 255, 0.02);
+        }
+        .progress-wrapper-sm.active { opacity: 1; }
+        .progress-bar-sm {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #4a6cf7, #7a9cff, #4a6cf7);
+            background-size: 200% 100%;
+            border-radius: 10px;
+            transition: width 0.3s ease;
+            animation: shimmer 1.8s linear infinite;
+        }
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+        .progress-text-sm {
+            font-size: 0.55rem;
+            color: #b0b8cc;
+            text-align: right;
+            margin-top: 1px;
+            opacity: 0;
+            transition: 0.3s;
+            font-weight: 500;
+            letter-spacing: 0.2px;
+            height: 14px;
+        }
+        .progress-text-sm.active { opacity: 1; }
+        .progress-text-sm .speed { color: #7a9cff; font-weight: 600; }
+
+        .dl-btn-sm {
+            background: linear-gradient(135deg, #4a6cf7, #6d8cff);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 40px;
+            color: #fff;
+            font-weight: 700;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 0 4px 20px rgba(74, 108, 247, 0.15);
+            margin-top: 4px;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            z-index: 6;
+        }
+        .dl-btn-sm::before {
+            content: '';
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.08), transparent 60%);
+            opacity: 0;
+            transition: 0.4s;
+        }
+        .dl-btn-sm:hover::before { opacity: 1; }
+        .dl-btn-sm:hover { transform: scale(1.03); box-shadow: 0 8px 30px rgba(74, 108, 247, 0.25); }
+        .dl-btn-sm:active { transform: scale(0.95); }
+        .dl-btn-sm:disabled { opacity: 0.4; cursor: not-allowed; transform: none !important; }
+        .dl-btn-sm i { font-size: 0.8rem; }
+        .dl-count-sm {
+            font-size: 0.65rem;
+            color: #b0b8cc;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-top: 2px;
+        }
+        .dl-count-sm i { color: #f1c40f; font-size: 0.7rem; }
+        .dl-count-sm .check { color: #00c853; }
+
+        .footer-card { border-radius: 24px; background: rgba(255, 255, 255, 0.015); margin-top: 4px; }
+        .footer-card .card-inner { padding: 14px 20px 12px; text-align: center; }
+        .footer-card .footer-content { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+        .footer-card .credit { font-size: 0.75rem; color: #5a6a8a; letter-spacing: 0.3px; }
+        .footer-card .credit i { color: #4a6cf7; margin: 0 3px; }
+        .footer-card .credit .heart { color: #ff6b6b; }
+        .footer-card .social-links { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; justify-content: center; }
+        .footer-card .social-links a {
+            color: #3a4a6a;
+            font-size: 1rem;
+            transition: 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px; height: 32px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            text-decoration: none;
+        }
+        .footer-card .social-links a:hover { color: #7a9cff; background: rgba(74, 108, 247, 0.06); border-color: rgba(74, 108, 247, 0.10); transform: translateY(-2px); }
+        .footer-card .footer-extra { font-size: 0.55rem; color: #2a3250; margin-top: 2px; letter-spacing: 0.5px; }
+
+        .toast-container {
+            position: fixed;
+            bottom: 24px; right: 24px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            max-width: 320px;
+            width: 100%;
+        }
+        .toast {
+            background: rgba(12, 18, 38, 0.97);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(74, 108, 247, 0.10);
+            padding: 10px 16px;
+            border-radius: 16px;
+            color: #eef2f9;
+            font-weight: 500;
+            font-size: 0.8rem;
+            box-shadow: 0 16px 50px rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: toastIn 0.4s ease;
+            border-left: 4px solid #4a6cf7;
+            transition: 0.3s;
+        }
+        @keyframes toastIn {
+            0% { opacity: 0; transform: translateX(30px) scale(0.95); }
+            100% { opacity: 1; transform: translateX(0) scale(1); }
+        }
+        .toast i { font-size: 1rem; flex-shrink: 0; }
+        .toast .toast-icon-success { color: #00c853; }
+        .toast .toast-icon-error { color: #ff6b6b; }
+        .toast .toast-icon-info { color: #4a6cf7; }
+        .toast .toast-icon-warning { color: #f1c40f; }
+        .toast .toast-msg { flex: 1; }
+        .toast .toast-time { font-size: 0.5rem; color: #3a4260; margin-left: 4px; }
+
+        @media (max-width: 768px) {
+            .download-grid { grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 14px; padding: 16px; }
+            .dl-card .card-header i { font-size: 1.3rem; }
+            .dl-card .card-header .file-name-sm { font-size: 0.9rem; }
+            .card-gif-box { width: 50px; height: 50px; top: 6px; right: 6px; }
+        }
+        @media (max-width: 480px) {
+            body { padding: 8px 10px 16px; }
+            .header-card .brand h1 { font-size: 1.6rem; }
+            .download-grid { grid-template-columns: 1fr; gap: 14px; padding: 14px; }
+            .card .card-inner { padding: 12px 14px 10px; }
+            .dl-card { padding: 14px 12px 12px; min-height: 160px; }
+            .toast-container { right: 12px; bottom: 12px; left: 12px; max-width: 100%; }
+            .toast { padding: 8px 14px; font-size: 0.75rem; border-radius: 12px; }
+            .footer-card .social-links a { width: 28px; height: 28px; font-size: 0.85rem; }
+            .card-gif-box { width: 44px; height: 44px; top: 4px; right: 4px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="main-wrapper">
+    <div class="card header-card">
+        <div class="card-inner">
+            <div class="brand">
+                <h1>Ghost Corporation</h1>
+                <div class="sub">
+                    <i class="fas fa-code"></i>
+                    Developer <span class="highlight">Nirob</span>
+                    <i class="fas fa-crown" style="color:#f1c40f; -webkit-text-fill-color:#f1c40f;"></i>
+                </div>
+                <div class="tagline">
+                    <span class="dot"></span> SYSTEM · READY <span class="dot"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card" style="padding:0; border-radius:28px; background:transparent; box-shadow:none; border:none;">
+        <div class="download-grid" id="downloadGrid"></div>
+    </div>
+
+    <div class="card footer-card">
+        <div class="card-inner">
+            <div class="footer-content">
+                <div class="credit">
+                    <i class="fas fa-code"></i> Developed with <span class="heart"><i class="fas fa-heart"></i></span> by <strong style="color:#7a9cff;">Nirob</strong>
+                    <span style="color:#2a3250; margin:0 4px;">|</span>
+                    <i class="fas fa-crown" style="color:#f1c40f;"></i> Ghost Corp
+                </div>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-github"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+                <div class="footer-extra">
+                    <i class="fas fa-image" style="color:#4a6cf7;"></i> ক্লিক করলে GIF · অন্য কার্ডে ক্লিক করলে বদলায়
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="toast-container" id="toastContainer"></div>
+
+<script>
+(function() {
+    "use strict";
+
+    const DOWNLOAD_LINK = 'https://github.com/nirob1520/Roaster-Prime/releases/download/GhostEXE/Ghost.Tv.apk';
+
+    const files = [
+        { id: 1, name: 'সেটআপ ইনস্টলার v3.2', desc: 'উইন্ডোজের জন্য অফলাইন ইনস্টলার', size: '18.6', icon: 'fa-file-exe', iconColor: '#4a6cf7', type: '.exe', link: DOWNLOAD_LINK, downloads: 4280, pc: true, safe: true },
+        { id: 2, name: 'অ্যান্ড্রয়েড অ্যাপ v2.1', desc: 'মোবাইলের জন্য প্রিমিয়াম অ্যাপ', size: '12.4', icon: 'fa-android', iconColor: '#00c853', type: '.apk', link: DOWNLOAD_LINK, downloads: 3120, pc: false, safe: true },
+        { id: 3, name: 'ড্রাইভার প্যাক প্রো', desc: 'সব ড্রাইভারের একত্রিত সংগ্রহ', size: '42.8', icon: 'fa-file-archive', iconColor: '#f1c40f', type: '.zip', link: DOWNLOAD_LINK, downloads: 1890, pc: true, safe: true },
+        { id: 4, name: 'মিডিয়া প্লেয়ার HD', desc: '৪কে ভিডিও প্লেয়ার, লাইটওয়েট', size: '8.2', icon: 'fa-film', iconColor: '#ff6b6b', type: '.exe', link: DOWNLOAD_LINK, downloads: 2560, pc: true, safe: true }
+    ];
+
+    const grid = document.getElementById('downloadGrid');
+    const GIF_URL = 'https://media2.giphy.com/media/v1.Y2lkPTZjMDliOTUyaTJhZWd2YXE4aXBmZ2RpODJ4enZrajh2em9yM2RmN2h0ZXdsZmE4cyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/kjjIHZ7LKATvDYHpkC/giphy.gif';
+    let activeGifId = null;
+
+    function renderCards() {
+        grid.innerHTML = files.map((f, index) => {
+            const badgePc = f.pc ? '<span class="badge-pc">পিসির জন্য</span>' : '';
+            const badgeSafe = f.safe ? '<span class="badge-safe">ভাইরাস মুক্ত</span>' : '';
+            return `
+                <div class="dl-card" data-id="${f.id}" style="animation-delay: ${index * 0.1}s;">
+                    <div class="card-wave"><div class="orb"></div><canvas class="wave-canvas" data-id="${f.id}"></canvas></div>
+                    <div class="rain-layer" id="rainLayer-${f.id}"></div>
+                    <div class="card-gif-box" id="gifBox-${f.id}"><img src="${GIF_URL}" alt="GIF" /></div>
+                    <div class="card-content">
+                        <div class="card-header">
+                            <i class="fab ${f.icon}" style="color:${f.iconColor};"></i>
+                            <span class="file-name-sm">${f.name}</span>
+                        </div>
+                        <div class="file-desc-sm">${f.desc}</div>
+                        <div class="meta-row">
+                            <span><i class="fas fa-weight-hanging"></i> ${f.size} MB</span>
+                            ${badgePc} ${badgeSafe}
+                            <span><i class="fas fa-download" style="color:#4a6cf7;"></i> <span class="dl-count-num">${f.downloads.toLocaleString()}</span></span>
+                        </div>
+                        <div class="progress-wrapper-sm" id="pWrap-${f.id}">
+                            <div class="progress-bar-sm" id="pBar-${f.id}"></div>
+                        </div>
+                        <div class="progress-text-sm" id="pText-${f.id}">
+                            <span class="speed" id="speed-${f.id}">0</span> KB/s · <span id="pct-${f.id}">0</span>%
+                        </div>
+                        <button class="dl-btn-sm" data-id="${f.id}" data-link="${f.link}" data-name="${f.name}">
+                            <i class="fas fa-download"></i> ডাউনলোড
+                        </button>
+                        <div class="dl-count-sm">
+                            <i class="fas fa-check-circle check"></i> ফ্রি
+                            <span style="margin-left:auto; color:#b0b8cc;"><i class="fas fa-star" style="color:#f1c40f;"></i> প্রিমিয়াম</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+
+        document.querySelectorAll('.dl-card').forEach(card => {
+            const rain = card.querySelector('.rain-layer');
+            if (rain) createRain(rain);
+            const canvas = card.querySelector('.wave-canvas');
+            if (canvas) initCardWave(canvas);
+        });
+
+        document.querySelectorAll('.dl-btn-sm').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                if (this.disabled) return;
+                const id = parseInt(this.dataset.id);
+                const link = this.dataset.link;
+                const name = this.dataset.name;
+                startRealDownload(id, link, name, this);
+            });
+        });
+
+        document.querySelectorAll('.dl-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                if (e.target.closest('.dl-btn-sm')) return;
+                const id = this.dataset.id;
+                const box = document.getElementById(`gifBox-${id}`);
+                if (activeGifId === id && box.classList.contains('active')) {
+                    box.classList.remove('active');
+                    activeGifId = null;
+                    showToast('🖼️ GIF বন্ধ', 'info');
+                    return;
+                }
+                document.querySelectorAll('.card-gif-box').forEach(b => b.classList.remove('active'));
+                if (box) { box.classList.add('active'); activeGifId = id; }
+                const canvas = this.querySelector('.wave-canvas');
+                if (canvas && canvas._waveData) {
+                    canvas._waveData.amplitude = 50;
+                    setTimeout(() => { canvas._waveData.amplitude = 25; }, 1200);
+                }
+                showToast('🖼️ GIF দেখাচ্ছে!', 'info');
+            });
+        });
+
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.dl-card')) {
+                document.querySelectorAll('.card-gif-box').forEach(b => b.classList.remove('active'));
+                activeGifId = null;
+            }
+        });
+    }
+
+    function createRain(container) {
+        const count = 55;
+        const frag = document.createDocumentFragment();
+        for (let i = 0; i < count; i++) {
+            const drop = document.createElement('div');
+            drop.className = 'rain-drop';
+            drop.style.left = Math.random() * 100 + '%';
+            drop.style.height = (6 + Math.random() * 14) + 'px';
+            drop.style.animationDuration = (0.4 + Math.random() * 0.8) + 's';
+            drop.style.animationDelay = Math.random() * 2 + 's';
+            drop.style.opacity = 0.3 + Math.random() * 0.4;
+            drop.style.background = `rgba(200, 220, 255, ${(0.3 + Math.random() * 0.4) * 0.8})`;
+            frag.appendChild(drop);
+        }
+        container.appendChild(frag);
+    }
+
+    function initCardWave(canvas) {
+        const ctx = canvas.getContext('2d');
+        let w, h;
+        function resize() {
+            const rect = canvas.parentElement.getBoundingClientRect();
+            w = canvas.width = rect.width;
+            h = canvas.height = rect.height;
+        }
+        resize();
+        window.addEventListener('resize', resize);
+
+        let time = 0, amplitude = 25;
+        canvas._waveData = { amplitude: amplitude };
+        const waves = [
+            { amp: 18, freq: 0.020, speed: 0.5, phase: 0, color: 'rgba(135, 206, 250, 0.22)' },
+            { amp: 14, freq: 0.030, speed: 0.7, phase: 1.6, color: 'rgba(135, 206, 250, 0.16)' },
+            { amp: 10, freq: 0.040, speed: 0.4, phase: 3.0, color: 'rgba(200, 225, 255, 0.10)' },
+            { amp: 6, freq: 0.050, speed: 0.9, phase: 2.0, color: 'rgba(220, 235, 255, 0.07)' }
+        ];
+
+        const fishes = [];
+        for (let i = 0; i < 3; i++) {
+            fishes.push({
+                x: 20 + Math.random() * (w - 40),
+                y: h - 10 - Math.random() * 15,
+                jumpTimer: 0, jumpDuration: 50 + Math.random() * 80,
+                isJumping: false, jumpHeight: 30 + Math.random() * 50,
+                direction: Math.random() > 0.5 ? 1 : -1,
+                size: 6 + Math.random() * 8,
+                color: `hsl(${180 + Math.random() * 60}, 80%, 55%)`,
+                nextJumpDelay: 60 + Math.random() * 120,
+                splash: { active: false, x: 0, y: 0, progress: 0, duration: 20, particles: [] }
+            });
+        }
+
+        function createSplash(fish) {
+            const s = fish.splash;
+            s.active = true; s.x = fish.x; s.y = h - 8;
+            s.progress = 0; s.duration = 20 + Math.random() * 15;
+            s.particles = [];
+            const count = 10 + Math.floor(Math.random() * 12);
+            for (let i = 0; i < count; i++) {
+                const angle = -Math.PI/2 + (Math.random() - 0.5) * 1.2;
+                const speed = 1 + Math.random() * 3;
+                s.particles.push({ x: 0, y: 0, vx: Math.cos(angle)*speed, vy: Math.sin(angle)*speed - 1, size: 2 + Math.random()*4, life: 1, decay: 0.02 + Math.random()*0.025 });
+            }
+        }
+
+        function updateSplashes() {
+            fishes.forEach(fish => {
+                const s = fish.splash;
+                if (!s.active) return;
+                s.progress++;
+                if (s.progress >= s.duration) { s.active = false; return; }
+                s.particles.forEach(p => { p.x += p.vx; p.y += p.vy; p.vy += 0.08; p.life -= p.decay; p.size *= 0.98; });
+            });
+        }
+
+        function drawSplashes() {
+            fishes.forEach(fish => {
+                const s = fish.splash;
+                if (!s.active) return;
+                s.particles.forEach(p => {
+                    if (p.life <= 0) return;
+                    ctx.globalAlpha = p.life * 0.8;
+                    ctx.beginPath();
+                    ctx.arc(s.x + p.x, s.y + p.y, Math.max(0.5, p.size), 0, Math.PI * 2);
+                    ctx.fillStyle = 'rgba(180, 220, 255, 0.8)';
+                    ctx.shadowColor = 'rgba(135, 206, 250, 0.5)';
+                    ctx.shadowBlur = 8;
+                    ctx.fill();
+                    ctx.shadowBlur = 0;
+                    ctx.globalAlpha = 1;
+                });
+            });
+        }
+
+        function drawFish(fish) {
+            if (!fish.isJumping) return;
+            ctx.save();
+            ctx.translate(fish.x, fish.y);
+            if (fish.direction < 0) ctx.scale(-1, 1);
+            ctx.beginPath();
+            ctx.ellipse(0, 0, fish.size, fish.size * 0.6, 0, 0, Math.PI * 2);
+            ctx.fillStyle = fish.color;
+            ctx.shadowColor = 'rgba(135, 206, 250, 0.3)';
+            ctx.shadowBlur = 8;
+            ctx.fill();
+            ctx.shadowBlur = 0;
+            ctx.beginPath();
+            ctx.moveTo(-fish.size * 0.8, 0);
+            ctx.lineTo(-fish.size * 1.3, -fish.size * 0.4);
+            ctx.lineTo(-fish.size * 1.3, fish.size * 0.4);
+            ctx.closePath();
+            ctx.fillStyle = fish.color;
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(fish.size * 0.35, -fish.size * 0.1, fish.size * 0.15, 0, Math.PI * 2);
+            ctx.fillStyle = 'white';
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(fish.size * 0.45, -fish.size * 0.1, fish.size * 0.07, 0, Math.PI * 2);
+            ctx.fillStyle = 'black';
+            ctx.fill();
+            ctx.restore();
+        }
+
+        function updateFishes() {
+            fishes.forEach(fish => {
+                if (!fish.isJumping) {
+                    fish.nextJumpDelay--;
+                    if (fish.nextJumpDelay <= 0) {
+                        fish.isJumping = true;
+                        fish.jumpTimer = 0;
+                        fish.x = 20 + Math.random() * (w - 40);
+                        fish.direction = Math.random() > 0.5 ? 1 : -1;
+                        fish.jumpDuration = 35 + Math.random() * 70;
+                        fish.jumpHeight = 25 + Math.random() * 55;
+                        fish.nextJumpDelay = 80 + Math.random() * 180;
+                    }
+                } else {
+                    fish.jumpTimer++;
+                    const progress = fish.jumpTimer / fish.jumpDuration;
+                    if (progress >= 1) {
+                        fish.isJumping = false;
+                        fish.y = h - 10 - Math.random() * 15;
+                        if (!fish.splash.active) createSplash(fish);
+                    } else {
+                        const height = Math.sin(progress * Math.PI) * fish.jumpHeight;
+                        fish.y = (h - 10) - height - Math.random() * 10;
+                        fish.x += fish.direction * (0.8 + Math.random() * 0.5);
+                        if (fish.x < 10) fish.direction = 1;
+                        if (fish.x > w - 10) fish.direction = -1;
+                    }
+                }
+            });
+            updateSplashes();
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, w, h);
+            const grad = ctx.createLinearGradient(0, h * 0.4, 0, h);
+            grad.addColorStop(0, 'rgba(0,0,0,0)');
+            grad.addColorStop(1, 'rgba(0,0,0,0.2)');
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, w, h);
+
+            const currentAmp = canvas._waveData ? canvas._waveData.amplitude : amplitude;
+            waves.forEach((wave) => {
+                ctx.beginPath();
+                ctx.moveTo(0, h);
+                const amp = wave.amp * (currentAmp / 25);
+                for (let x = 0; x <= w; x += 1) {
+                    const y = h - 8 - amp * Math.sin(x * wave.freq + time * wave.speed + wave.phase)
+                              - amp * 0.2 * Math.sin(x * 0.015 + time * 0.15 + wave.phase * 1.8);
+                    ctx.lineTo(x, y);
+                }
+                ctx.lineTo(w, h);
+                ctx.closePath();
+                ctx.fillStyle = wave.color;
+                ctx.fill();
+            });
+
+            updateFishes();
+            fishes.forEach(fish => drawFish(fish));
+            drawSplashes();
+            time += 0.02;
+            requestAnimationFrame(draw);
+        }
+        draw();
+
+        const resizeObserver = new ResizeObserver(() => resize());
+        resizeObserver.observe(canvas.parentElement);
+    }
+
+    // ================================================================
+    //   🔽 রিয়েল ডাউনলোড — XHR + ফ্যালব্যাক
+    // ================================================================
+    function startRealDownload(id, link, name, btn) {
+        const pWrap = document.getElementById(`pWrap-${id}`);
+        const pBar = document.getElementById(`pBar-${id}`);
+        const pText = document.getElementById(`pText-${id}`);
+        const speedSpan = document.getElementById(`speed-${id}`);
+        const pctSpan = document.getElementById(`pct-${id}`);
+
+        btn.disabled = true;
+        const originalHtml = btn.innerHTML;
+        btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+
+        // UI দেখানো
+        if (pWrap) pWrap.classList.add('active');
+        if (pText) {
+            pText.classList.add('active');
+            pText.innerHTML = '<span class="speed">0</span> KB/s · <span id="pct-' + id + '">0</span>%';
+        }
+
+        // XHR ডাউনলোড
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', link, true);
+        xhr.responseType = 'blob';
+
+        let loaded = 0, total = 0, startTime = Date.now(), speed = 0;
+
+        xhr.onprogress = function(event) {
+            if (event.lengthComputable) {
+                total = event.total;
+                loaded = event.loaded;
+                const percent = (loaded / total) * 100;
+                if (pBar) pBar.style.width = percent + '%';
+                const elapsed = (Date.now() - startTime) / 1000;
+                if (elapsed > 0.3) speed = (loaded / 1024) / elapsed;
+                if (speedSpan) speedSpan.textContent = Math.round(speed);
+                if (pctSpan) pctSpan.textContent = Math.round(percent);
+            }
+        };
+
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                const blob = xhr.response;
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                let ext = '.apk';
+                if (name.includes('সেটআপ')) ext = '.exe';
+                else if (name.includes('অ্যান্ড্রয়েড')) ext = '.apk';
+                else if (name.includes('ড্রাইভার')) ext = '.zip';
+                else if (name.includes('প্লেয়ার')) ext = '.exe';
+                a.download = name + ext;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+
+                if (pText) pText.innerHTML = '✅ সম্পন্ন!';
+                if (pBar) pBar.style.width = '100%';
+                if (pctSpan) pctSpan.textContent = '100';
+
+                const card = btn.closest('.dl-card');
+                const countSpan = card.querySelector('.dl-count-num');
+                if (countSpan) {
+                    let current = parseInt(countSpan.textContent.replace(/,/g, ''));
+                    if (!isNaN(current)) { current += 1; countSpan.textContent = current.toLocaleString(); }
+                }
+
+                showToast(`📥 "${name}" ডাউনলোড সম্পন্ন!`, 'success');
+
+                setTimeout(() => {
+                    btn.innerHTML = originalHtml;
+                    btn.disabled = false;
+                    setTimeout(() => {
+                        if (pWrap) pWrap.classList.remove('active');
+                        if (pText) pText.classList.remove('active');
+                        if (pBar) pBar.style.width = '0%';
+                        const canvas = card.querySelector('.wave-canvas');
+                        if (canvas && canvas._waveData) canvas._waveData.amplitude = 25;
+                    }, 1600);
+                }, 500);
+
+            } else {
+                // স্ট্যাটাস না এলেও ফ্যালব্যাক: ব্রাউজারে ওপেন
+                fallbackDownload(link, name, btn, originalHtml);
+            }
+        };
+
+        xhr.onerror = function() {
+            // নেটওয়ার্ক ত্রুটি বা CORS — ফ্যালব্যাক
+            fallbackDownload(link, name, btn, originalHtml);
+        };
+
+        // ৫ সেকেন্ডে রেসপন্স না এলে ফ্যালব্যাক
+        const timeout = setTimeout(() => {
+            xhr.abort();
+            fallbackDownload(link, name, btn, originalHtml);
+        }, 5000);
+
+        xhr.send();
+
+        function fallbackDownload(link, name, btn, originalHtml) {
+            clearTimeout(timeout);
+            showToast(`📥 "${name}" সরাসরি ডাউনলোড শুরু হচ্ছে...`, 'info');
+            window.open(link, '_blank');
+            btn.innerHTML = originalHtml;
+            btn.disabled = false;
+            if (pWrap) pWrap.classList.remove('active');
+            if (pText) pText.classList.remove('active');
+            if (pBar) pBar.style.width = '0%';
+            const card = btn.closest('.dl-card');
+            const canvas = card.querySelector('.wave-canvas');
+            if (canvas && canvas._waveData) canvas._waveData.amplitude = 25;
+        }
+    }
+
+    function showToast(message, type = 'info') {
+        const container = document.getElementById('toastContainer');
+        if (!container) return;
+        const old = container.querySelectorAll('.toast');
+        old.forEach(t => t.remove());
+        const icons = {
+            success: '<i class="fas fa-check-circle toast-icon-success"></i>',
+            error: '<i class="fas fa-exclamation-circle toast-icon-error"></i>',
+            warning: '<i class="fas fa-exclamation-triangle toast-icon-warning"></i>',
+            info: '<i class="fas fa-info-circle toast-icon-info"></i>'
+        };
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.innerHTML = `${icons[type] || icons.info}<span class="toast-msg">${message}</span><span class="toast-time">${new Date().toLocaleTimeString()}</span>`;
+        container.appendChild(toast);
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateX(20px)';
+            toast.style.transition = '0.3s ease';
+            setTimeout(() => toast.remove(), 400);
+        }, 3500);
+    }
+
+    renderCards();
+    setTimeout(() => showToast('🐟 রিয়েল ডাউনলোড স্ট্যাটাস + ফ্যালব্যাক!', 'info'), 600);
+})();
+</script>
+
+</body>
+</html>
