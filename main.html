@@ -127,7 +127,7 @@
             text-align: center;
             font-size: 18px;
         }
-        /* ===== নতুন: Ghost Problem Fix সাইডবার আইটেম ===== */
+
         .sidebar .ghost-problem-btn {
             display: flex;
             align-items: center;
@@ -153,6 +153,7 @@
             font-size: 18px;
             color: #e50914;
         }
+
         .remote-selected-name {
             color: #22c55e !important;
             transition: color 0.15s ease;
@@ -172,6 +173,7 @@
         .suggested-item.remote-selected-suggested .suggested-name {
             color: #22c55e !important;
         }
+
         .container {
             padding: 8px 4px;
             max-width: 100%;
@@ -188,7 +190,7 @@
             opacity: 1;
             transform: scale(1) translateY(0);
         }
-        /* ===== পোস্টার : মোবাইলে ৩টি ঠিকমতো দেখাতে ===== */
+
         .poster {
             transition: all 0.25s ease;
             will-change: transform;
@@ -254,13 +256,14 @@
             overflow: hidden;
             transition: color 0.15s ease;
         }
-        /* ===== বাকি সব স্টাইল অপরিবর্তিত ===== */
+
         .glass-header {
             background: rgba(0, 0, 0, 0.88);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
+
         #videoModal {
             display: none;
             position: fixed;
@@ -294,6 +297,7 @@
             text-overflow: ellipsis;
             color: #f1f5f9;
         }
+
         .video-container-box {
             width: 100%;
             aspect-ratio: 16 / 9;
@@ -312,6 +316,7 @@
             background-color: #e50914 !important;
             border-color: #e50914 !important;
         }
+
         .suggested-section {
             width: 100%;
             background: #0b0f17;
@@ -330,13 +335,12 @@
             align-items: center;
             gap: 8px;
         }
-        /* ===== সাজেস্টেড গ্রিড - সব স্ক্রিনে ৩ কলাম ===== */
+
         .suggested-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 12px;
         }
-        /* খুব ছোট স্ক্রিনেও ৩ কলাম রাখবে, কিন্তু আইটেম ছোট হবে */
         @media (max-width: 360px) {
             .suggested-grid {
                 gap: 8px;
@@ -347,20 +351,38 @@
                 min-height: 30px;
             }
         }
-        /* মোবাইলে ৩ কলাম */
         @media (max-width: 640px) {
             .suggested-grid {
                 grid-template-columns: repeat(3, 1fr);
                 gap: 10px;
             }
         }
-        /* ট্যাবলেট/ডেস্কটপে ৩ কলাম */
+        /* বড় স্ক্রিনেও ৩ কলাম থাকবে, আকার ছোট */
         @media (min-width: 641px) {
             .suggested-grid {
                 grid-template-columns: repeat(3, 1fr);
-                gap: 16px;
+                gap: 12px;
+            }
+            .suggested-item .suggested-name {
+                font-size: 12px;
+                padding: 6px 4px 8px;
+                min-height: 34px;
+            }
+            .suggested-item img {
+                aspect-ratio: 2 / 2.4;
             }
         }
+        @media (min-width: 1024px) {
+            .suggested-grid {
+                gap: 14px;
+            }
+            .suggested-item .suggested-name {
+                font-size: 13px;
+                padding: 8px 6px 10px;
+                min-height: 38px;
+            }
+        }
+
         .suggested-item {
             cursor: pointer;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -401,13 +423,7 @@
             margin-left: 3px;
             font-size: 10px;
         }
-        @media (min-width: 768px) {
-            .suggested-item .suggested-name {
-                font-size: 14px;
-                padding: 10px 8px 12px;
-                min-height: 50px;
-            }
-        }
+
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -448,6 +464,7 @@
         .nav-item.active i {
             transform: scale(1.15);
         }
+
         .backdrop {
             position: fixed;
             top: 0;
@@ -462,6 +479,7 @@
         .backdrop.active {
             display: block;
         }
+
         .slider-container {
             position: relative;
             width: 100%;
@@ -489,6 +507,7 @@
             opacity: 1;
             display: block;
         }
+
         #toast-notice {
             position: fixed;
             bottom: 85px;
@@ -509,6 +528,7 @@
             text-align: center;
             pointer-events: none;
         }
+
         #customConfirmModal {
             display: none;
             position: fixed;
@@ -541,6 +561,7 @@
         #customConfirmModal.show .confirm-box {
             transform: scale(1);
         }
+
         #premiumAlertModal {
             display: none;
             position: fixed;
@@ -574,6 +595,7 @@
         #premiumAlertModal.show .premium-glass-box {
             transform: scale(1);
         }
+
         .sidebar-player-footer {
             background: rgba(10, 14, 23, 0.95);
             border-top: 1px solid rgba(255, 255, 255, 0.06);
@@ -611,6 +633,7 @@
             border-color: #e50914;
             box-shadow: 0 0 0 2px rgba(229, 9, 20, 0.2);
         }
+
         .modal-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -627,6 +650,7 @@
                 grid-template-columns: repeat(5, 1fr);
             }
         }
+
         .fav-heart-badge {
             position: absolute;
             bottom: 44px;
@@ -652,6 +676,7 @@
             letter-spacing: 0.5px;
             box-shadow: 0 2px 8px rgba(245, 158, 11, 0.4);
         }
+
         #loginModal .modal-card {
             background: #161d2b;
             border: 1px solid #2a3348;
@@ -687,6 +712,7 @@
         .suggested-scroll::-webkit-scrollbar-track {
             background: transparent;
         }
+
         #loginModal {
             display: none !important;
             position: fixed !important;
@@ -697,7 +723,7 @@
         #loginModal[style*="display: flex"] {
             display: flex !important;
         }
-        /* নেটওয়ার্ক এরর পপআপ */
+
         #networkErrorModal {
             display: none;
             position: fixed;
@@ -772,7 +798,7 @@
         .error-retry-btn:active {
             transform: scale(0.96);
         }
-        /* SEE ALL পেজের জন্য ব্যাকগ্রাউন্ড সম্পূর্ণ কালো */
+
         .modal-background-fix {
             background: #000 !important;
         }
@@ -785,7 +811,7 @@
         #modal .modal-grid {
             background: #000 !important;
         }
-        /* সাজেস্টেড সেকশন */
+
         .suggested-section {
             min-height: 350px;
         }
@@ -794,7 +820,7 @@
                 min-height: 450px;
             }
         }
-        /* মোবাইলে পোস্টার ৩টা ঠিকমতো দেখানোর জন্য */
+
         .scroll-row {
             display: flex;
             gap: 8px;
@@ -803,7 +829,6 @@
             flex-wrap: nowrap;
             scroll-behavior: smooth;
         }
-        /* ছোট স্ক্রিনে পোস্টার ঠিকমতো সাইজ */
         @media (max-width: 480px) {
             .poster {
                 width: calc(33.333% - 6px) !important;
@@ -823,7 +848,6 @@
                 padding: 2px 1px 8px 1px !important;
             }
         }
-        /* একদম ছোট স্ক্রিনে */
         @media (max-width: 360px) {
             .poster {
                 width: calc(33.333% - 4px) !important;
@@ -838,7 +862,6 @@
                 gap: 4px !important;
             }
         }
-        /* মডাল গ্রিডেও ৩ কলাম ঠিকমতো */
         @media (max-width: 480px) {
             .modal-grid {
                 grid-template-columns: repeat(3, 1fr) !important;
@@ -852,7 +875,7 @@
                 flex: 0 0 100% !important;
             }
         }
-        /* সার্চ রেজাল্ট গ্রিড */
+
         #content-search {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -869,7 +892,7 @@
                 flex: 0 0 100% !important;
             }
         }
-        /* ফেবারিট গ্রিড */
+
         #content-favorite {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -886,7 +909,7 @@
                 flex: 0 0 100% !important;
             }
         }
-        /* রিসেট বাটনের জন্য স্টাইল - ছোট ও লগইন বাটনের সাথে এক লাইনে */
+
         .reset-device-btn {
             background: rgba(229, 9, 20, 0.12);
             border: 1px solid rgba(229, 9, 20, 0.25);
@@ -914,6 +937,7 @@
         .reset-device-btn i {
             font-size: 10px;
         }
+
         .login-card-header {
             display: flex;
             align-items: center;
@@ -939,7 +963,6 @@
             flex-shrink: 0;
         }
 
-        /* ===== Ghost Problem Fix মডাল ===== */
         #ghostProblemModal {
             display: none;
             position: fixed;
@@ -1080,7 +1103,6 @@
             margin-top: 2px;
             padding-right: 4px;
         }
-        /* সাবমিট সাফল্য বার্তা */
         .ghost-problem-box .success-msg {
             display: none;
             text-align: center;
@@ -1098,7 +1120,6 @@
         .ghost-problem-box .success-msg i {
             font-size: 20px;
         }
-        /* স্ক্রিন রিডারের জন্য */
         .sr-only {
             position: absolute;
             width: 1px;
@@ -1108,6 +1129,85 @@
             overflow: hidden;
             clip: rect(0, 0, 0, 0);
             border: 0;
+        }
+
+        /* ===== বড় স্ক্রিনে ভিডিও প্লেয়ার ও সাজেস্টেড ঠিক করতে ===== */
+        @media (min-width: 768px) {
+            #videoModal .flex-col.md\:flex-row {
+                height: calc(100vh - 70px);
+                max-height: calc(100vh - 70px);
+                overflow: hidden;
+            }
+            #videoModal .video-container-box {
+                aspect-ratio: auto !important;
+                height: 100% !important;
+                width: 67% !important;
+                flex: 0 0 67% !important;
+            }
+            #videoModal .suggested-section {
+                width: 33% !important;
+                flex: 0 0 33% !important;
+                height: 100% !important;
+                max-height: 100% !important;
+                overflow-y: auto;
+                padding: 16px 12px 20px;
+                min-height: unset !important;
+            }
+            /* বড় স্ক্রিনে সাজেস্টেড ৩ কলাম, ছোট সাইজ */
+            #videoModal .suggested-grid {
+                grid-template-columns: repeat(3, 1fr) !important;
+                gap: 10px !important;
+            }
+            #videoModal .suggested-item .suggested-name {
+                font-size: 11px !important;
+                padding: 6px 4px 8px !important;
+                min-height: 32px !important;
+            }
+            #videoModal .suggested-item img {
+                aspect-ratio: 2 / 2.4 !important;
+            }
+            #videoModal .glass-header h3 {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            #videoModal .video-container-box {
+                width: 70% !important;
+                flex: 0 0 70% !important;
+            }
+            #videoModal .suggested-section {
+                width: 30% !important;
+                flex: 0 0 30% !important;
+                padding: 20px 14px 24px;
+            }
+            #videoModal .suggested-grid {
+                gap: 12px !important;
+            }
+            #videoModal .suggested-item .suggested-name {
+                font-size: 12px !important;
+                padding: 8px 6px 10px !important;
+                min-height: 36px !important;
+            }
+        }
+
+        @media (min-width: 1400px) {
+            #videoModal .video-container-box {
+                width: 72% !important;
+                flex: 0 0 72% !important;
+            }
+            #videoModal .suggested-section {
+                width: 28% !important;
+                flex: 0 0 28% !important;
+            }
+            #videoModal .suggested-grid {
+                gap: 14px !important;
+            }
+            #videoModal .suggested-item .suggested-name {
+                font-size: 13px !important;
+                padding: 10px 8px 12px !important;
+                min-height: 40px !important;
+            }
         }
     </style>
 </head>
@@ -1146,14 +1246,10 @@
                 </div>
                 <input type="checkbox" id="adultVisibilityToggle" onchange="toggleAdultNavVisibility(this.checked)" class="w-5 h-5 accent-red-600 cursor-pointer">
             </div>
-
-            <!-- ===== নতুন: Ghost Problem Fix বাটন (এডাল্ট কন্টেন্টের নিচে) ===== -->
             <div class="ghost-problem-btn" onclick="openGhostProblemModal(); toggleSidebar();">
                 <i class="fas fa-ghost"></i>
                 <span>Ghost Problem Fix</span>
             </div>
-            <!-- ===== শেষ ===== -->
-
         </div>
         <div class="sidebar-player-footer">
             <div class="player-select-box">
@@ -1194,6 +1290,7 @@
                 <div id="content-search"></div>
             </div>
         </section>
+
         <section id="home" class="page-section active">
             <div class="px-2 max-w-full mx-auto">
                 <div class="slider-container" id="dynamic-slider">
@@ -1209,6 +1306,7 @@
                 <p class="text-gray-400 text-center py-10">Gʜ👻ꜱᴛ_Sᴇʀᴠʀ _ʟᴏᴀᴅɪɴɢ..</p>
             </div>
         </section>
+
         <section id="movie" class="page-section"><div class="pt-6 px-2 max-w-full mx-auto" id="content-movie"></div></section>
         <section id="livetv" class="page-section"><div class="pt-6 px-2 max-w-full mx-auto" id="content-livetv"></div></section>
         <section id="adult" class="page-section"><div class="pt-6 px-2 max-w-full mx-auto" id="content-adult"></div></section>
@@ -1219,7 +1317,7 @@
         </section>
     </div>
 
-    <!-- ===== Ghost Problem Fix মডাল (গ্লাস ইফেক্ট) ===== -->
+    <!-- ===== Ghost Problem Fix মডাল ===== -->
     <div id="ghostProblemModal">
         <div class="ghost-problem-box">
             <div class="modal-header">
@@ -1246,7 +1344,7 @@
         </div>
     </div>
 
-    <!-- ===== অন্যান্য মডাল (অপরিবর্তিত) ===== -->
+    <!-- ===== অন্যান্য মডাল ===== -->
     <div id="customConfirmModal">
         <div class="confirm-box text-center">
             <div class="text-red-500 text-3xl mb-3">
@@ -1344,6 +1442,7 @@
         </div>
     </div>
 
+    <!-- ===== ভিডিও মডাল ===== -->
     <div id="videoModal">
         <div class="glass-header">
             <button onclick="closeVideoModal()" class="text-gray-400 hover:text-white text-lg font-medium flex items-center gap-1"><i class="fas fa-arrow-left"></i> </button>
@@ -1352,11 +1451,11 @@
                 <i class="fas fa-share-alt"></i>
             </button>
         </div>
-        <div class="w-full flex-1 flex flex-col md:flex-row">
-            <div class="video-container-box w-full md:w-3/4 aspect-video" id="player-mount-point">
+        <div class="w-full flex-1 flex flex-col md:flex-row" id="videoModalLayout">
+            <div class="video-container-box w-full md:w-2/3 aspect-video md:aspect-auto md:h-full" id="player-mount-point">
                 <video id="myVideoPlayer" class="video-js vjs-default-skin vjs-big-play-centered vjs-theme-ghost" controls preload="auto" data-setup='{}'></video>
             </div>
-            <div class="suggested-section suggested-scroll w-full md:w-1/4" id="suggestedSection">
+            <div class="suggested-section suggested-scroll w-full md:w-1/3 md:h-full" id="suggestedSection">
                 <div class="suggested-title">
                     <i class="fas fa-lightbulb text-yellow-400"></i> সাজেস্টেড ভিডিও
                 </div>
@@ -1380,7 +1479,6 @@
         const MASTER_KEY = "$2a$10$HxsYIZoT7QPdPK.EtQZnG.e7AqIWHwpgQ/wsSSavXR3kTM6r.bsWG";
         const USER_BIN = "6a351a15da38895dfedcd033";
         const DISCORD_WEBHOOK = "https://discord.com/api/webhooks/1520076484738416700/u82UBIcHlqgXP4uBcJCEJexHgRna2UTspg_b3VXyhXDTcn8Wxaff4byvDO3zzCEq_iRS";
-
         const KEYS = {
             movie: { url: "https://raw.githubusercontent.com/ghosttv620/Ghost-Movie/main/Ghost%20Movie.json", title: "Movies" },
             livetv: { url: "https://raw.githubusercontent.com/ghosttv620/Ghost-Tv/main/Ghost%20Tv.json", title: "Live TV" },
@@ -1468,7 +1566,7 @@
         function clearRemoteFocus() {
             document.querySelectorAll(
                 '.remote-selected-name, .remote-selected-nav, .remote-selected-sidebar, .remote-selected-suggested-name, .remote-selected-poster, .remote-selected-suggested'
-                ).forEach(el => {
+            ).forEach(el => {
                 el.classList.remove('remote-selected-name', 'remote-selected-nav', 'remote-selected-sidebar',
                     'remote-selected-suggested-name', 'remote-selected-poster', 'remote-selected-suggested');
             });
@@ -1488,8 +1586,8 @@
         function shareCurrentVideo() {
             if (!currentPlayingMovie) return;
             try {
-                const shareObj = { n: currentPlayingMovie.name, l: currentPlayingMovie.link, p: currentPlayingMovie
-                        .premium ? 1 : 0, g: currentPlayingMovie.logo || '' };
+                const shareObj = { n: currentPlayingMovie.name, l: currentPlayingMovie.link, p: currentPlayingMovie.premium ?
+                        1 : 0, g: currentPlayingMovie.logo || '' };
                 const token = btoa(unescape(encodeURIComponent(JSON.stringify(shareObj))));
                 const shareUrl = `${window.location.origin}${window.location.pathname}?play=${token}`;
                 if (navigator.share) {
@@ -1537,10 +1635,15 @@
 
         function attachRemoteSelectionToPoster(posterElement, movieData) {
             if (!posterElement) return;
-            posterElement.addEventListener('click', function(e) { e.stopPropagation();
-                focusRemoteOnPoster(this, movieData); });
-            posterElement.addEventListener('contextmenu', function(e) { e.preventDefault();
-                focusRemoteOnPoster(this, movieData); return false; });
+            posterElement.addEventListener('click', function(e) {
+                e.stopPropagation();
+                focusRemoteOnPoster(this, movieData);
+            });
+            posterElement.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                focusRemoteOnPoster(this, movieData);
+                return false;
+            });
         }
 
         // ---- ফেভারিট ----
@@ -1614,7 +1717,8 @@
             if (!movie) return;
             if (movie.premium) {
                 if (!currentUserData) {
-                    showPremiumAlert("⚠️ এই কন্টেন্টটি প্রিমিয়াম! দেখতে হলে প্রথমে ডানদিকের কোণায় ক্লিক করে লগইন করুন।");
+                    showPremiumAlert(
+                    "⚠️ এই কন্টেন্টটি প্রিমিয়াম! দেখতে হলে প্রথমে ডানদিকের কোণায় ক্লিক করে লগইন করুন।");
                     return;
                 }
                 const isValid = await verifyUser(currentUserData.username, currentUserData.password, true);
@@ -1632,13 +1736,15 @@
             grid.innerHTML = '';
             if (!movies || movies.length === 0) {
                 grid.innerHTML =
-                    `<div class="col-span-full text-gray-400 text-center py-6 text-sm">কোন সাজেস্টেড ভিডিও নেই</div>`;
+                `<div class="col-span-full text-gray-400 text-center py-6 text-sm">কোন সাজেস্টেড ভিডিও নেই</div>`;
                 return;
             }
             const unique = [];
             const seen = new Set();
-            movies.forEach(m => { if (m && m.link && !seen.has(m.link)) { seen.add(m.link);
-                    unique.push(m); } });
+            movies.forEach(m => {
+                if (m && m.link && !seen.has(m.link)) { seen.add(m.link);
+                    unique.push(m); }
+            });
             const toShow = unique.slice(0, 12);
             toShow.forEach(movie => {
                 const item = document.createElement('div');
@@ -1649,10 +1755,15 @@
                     <img src="${movie.logo || 'https://picsum.photos/400/220'}" alt="${movie.name || ''}" loading="lazy">
                     <div class="suggested-name">${movie.name || ''} ${favIcon}</div>
                 `;
-                item.addEventListener('click', function(e) { focusRemoteOnSuggested(this, movie);
-                    handleMovieClick(movie); });
-                item.addEventListener('contextmenu', function(e) { e.preventDefault();
-                    focusRemoteOnSuggested(this, movie); return false; });
+                item.addEventListener('click', function(e) {
+                    focusRemoteOnSuggested(this, movie);
+                    handleMovieClick(movie);
+                });
+                item.addEventListener('contextmenu', function(e) {
+                    e.preventDefault();
+                    focusRemoteOnSuggested(this, movie);
+                    return false;
+                });
                 grid.appendChild(item);
             });
         }
@@ -1709,7 +1820,9 @@
                 homeContainer.appendChild(section);
                 const rowDiv = document.getElementById(`home-row-${type}`);
                 if (rowDiv) {
-                    rowMovies.slice(0, 15).forEach(movie => { if (movie) rowDiv.appendChild(createPoster(movie)); });
+                    rowMovies.slice(0, 15).forEach(movie => {
+                        if (movie) rowDiv.appendChild(createPoster(movie));
+                    });
                 }
             });
         }
@@ -1735,6 +1848,7 @@
                 const moviesToRender = category.movies || [];
                 if (row && moviesToRender.length > 0) {
                     let chunkIndex = 0;
+
                     function renderChunk() {
                         const batchSize = 100;
                         for (let i = 0; i < batchSize; i++) {
@@ -1855,12 +1969,14 @@
                 if (expiryDate < today) { if (!isAuto) showLoginError("আপনার অ্যাকাউন্টের মেয়াদ শেষ হয়ে গেছে!");
                     localStorage.clear(); return false; }
                 if (user.device_id && user.device_id !== "" && user.device_id !== myDeviceId) {
-                    if (!isAuto) showLoginError("এই অ্যাকাউন্টটি ইতিমধ্যে অন্য ডিভাইসে লগইন করা আছে!"); return false;
+                    if (!isAuto) showLoginError("এই অ্যাকাউন্টটি ইতিমধ্যে অন্য ডিভাইসে লগইন করা আছে!");
+                    return false;
                 }
                 if (!user.device_id || user.device_id === "") {
                     user.device_id = myDeviceId;
                     if (Array.isArray(responseData)) { await updateJsonBin(responseData); } else { responseData.users =
-                            users; await updateJsonBin(responseData); }
+                        users;
+                        await updateJsonBin(responseData); }
                 }
                 currentUserData = user;
                 localStorage.setItem('ghost_user', username);
@@ -1868,7 +1984,7 @@
                 updateAuthHeaderUI();
                 closeLoginModal();
                 return true;
-            } catch (err) { if (!isAuto) showLoginError("সার্ভার ত্রুটি! দয়া করে আবার চেষ্টা করুন。");
+            } catch (err) { if (!isAuto) showLoginError("সার্ভার ত্রুটি! দয়া করে আবার চেষ্টা করুন।");
                 showNetworkError(); return false; }
         }
 
@@ -1887,7 +2003,7 @@
                 let isArray = false;
                 if (Array.isArray(responseData)) { users = responseData;
                     isArray = true; } else if (responseData.users && Array.isArray(responseData.users)) { users =
-                        responseData.users; } else { showToast("⚠️ ডেটা ফরম্যাট সঠিক নয়!"); return; }
+                    responseData.users; } else { showToast("⚠️ ডেটা ফরম্যাট সঠিক নয়!"); return; }
                 const userIndex = users.findIndex(u => u.username === user && u.password === pass);
                 if (userIndex === -1) { showToast("⚠️ ইউজারনাম বা পাসওয়ার্ড ভুল!"); return; }
                 users[userIndex].device_id = "";
@@ -2065,19 +2181,22 @@
                 oldCancelBtn.parentNode.replaceChild(cancelBtn, oldCancelBtn);
                 modal.style.display = 'flex';
                 setTimeout(() => modal.classList.add('show'), 10);
-                okBtn.addEventListener('click', () => { modal.classList.remove('show');
+                okBtn.addEventListener('click', () => {
+                    modal.classList.remove('show');
                     setTimeout(() => modal.style.display = 'none', 300);
-                    resolve(true); });
-                cancelBtn.addEventListener('click', () => { modal.classList.remove('show');
+                    resolve(true);
+                });
+                cancelBtn.addEventListener('click', () => {
+                    modal.classList.remove('show');
                     setTimeout(() => modal.style.display = 'none', 300);
-                    resolve(false); });
+                    resolve(false);
+                });
             });
         }
 
         function showPremiumAlert(message) {
             const modal = document.getElementById('premiumAlertModal');
-            document.getElementById('premiumAlertMessage').innerText = message ||
-                "⚠️ এই কন্টেন্টটি প্রিমিয়াম! লগইন করুন।";
+            document.getElementById('premiumAlertMessage').innerText = message || "⚠️ এই কন্টেন্টটি প্রিমিয়াম! লগইন করুন।";
             modal.style.display = 'flex';
             setTimeout(() => modal.classList.add('show'), 10);
         }
@@ -2105,27 +2224,23 @@
             document.getElementById('loginError').classList.add('hidden');
         }
 
-        // ---- Ghost Problem Fix মডাল কন্ট্রোল ----
+        // ---- Ghost Problem Fix মডাল ----
         function openGhostProblemModal() {
             const modal = document.getElementById('ghostProblemModal');
             modal.style.display = 'flex';
-            // রিসেট ফর্ম
             document.getElementById('problemMovieName').value = '';
             document.getElementById('problemDescription').value = '';
             document.getElementById('charCount').textContent = '0';
             document.getElementById('ghostSuccessMsg').classList.remove('show');
             document.getElementById('ghostSendBtn').disabled = false;
             document.getElementById('ghostSendBtn').innerHTML = '<i class="fas fa-paper-plane"></i> সেন্ড করুন';
-            // চার কাউন্টার
             const desc = document.getElementById('problemDescription');
             desc.addEventListener('input', function() {
                 const count = this.value.length;
                 document.getElementById('charCount').textContent = count;
-                if (count > 1000) {
-                    this.value = this.value.substring(0, 1000);
+                if (count > 1000) { this.value = this.value.substring(0, 1000);
                     document.getElementById('charCount').textContent = 1000;
-                    showToast('⚠️ সর্বোচ্চ ১০০০ অক্ষর!');
-                }
+                    showToast('⚠️ সর্বোচ্চ ১০০০ অক্ষর!'); }
             });
             setTimeout(() => modal.classList.add('show'), 10);
         }
@@ -2136,37 +2251,22 @@
             setTimeout(() => { modal.style.display = 'none'; }, 350);
         }
 
-        // ---- Ghost Problem Fix: Discord webhook-এ সেন্ড ----
+        // ---- Ghost Problem Fix: Discord webhook ----
         async function sendGhostProblem() {
             const movieName = document.getElementById('problemMovieName').value.trim();
             const problemDesc = document.getElementById('problemDescription').value.trim();
             const sendBtn = document.getElementById('ghostSendBtn');
             const successMsg = document.getElementById('ghostSuccessMsg');
-
-            if (!movieName) {
-                showToast('⚠️ দয়া করে টিভি অথবা মুভির নাম লিখুন!');
-                document.getElementById('problemMovieName').focus();
-                return;
-            }
-            if (!problemDesc) {
-                showToast('⚠️ দয়া করে প্রবলেমটি লিখুন!');
-                document.getElementById('problemDescription').focus();
-                return;
-            }
-            if (problemDesc.length < 5) {
-                showToast('⚠️ প্রবলেমটি একটু বিস্তারিত লিখুন (কমপক্ষে ৫ অক্ষর)');
-                return;
-            }
-
+            if (!movieName) { showToast('⚠️ দয়া করে টিভি অথবা মুভির নাম লিখুন!');
+                document.getElementById('problemMovieName').focus(); return; }
+            if (!problemDesc) { showToast('⚠️ দয়া করে প্রবলেমটি লিখুন!');
+                document.getElementById('problemDescription').focus(); return; }
+            if (problemDesc.length < 5) { showToast('⚠️ প্রবলেমটি একটু বিস্তারিত লিখুন (কমপক্ষে ৫ অক্ষর)'); return; }
             sendBtn.disabled = true;
             sendBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> সেন্ড হচ্ছে...';
-
-            // ইউজার ইনফো
             const username = currentUserData ? currentUserData.username : 'অতিথি';
             const deviceId = myDeviceId;
             const currentTime = new Date().toLocaleString('bn-BD', { timeZone: 'Asia/Dhaka' });
-
-            // Discord এম্বেড তৈরি (সুন্দর ডিজাইন)
             const payload = {
                 embeds: [{
                     title: '👻 Ghost Problem Fix',
@@ -2178,27 +2278,21 @@
                         { name: '📱 ডিভাইস', value: deviceId, inline: true },
                         { name: '📅 সময়', value: currentTime, inline: false }
                     ],
-                    footer: {
-                        text: 'Ghost TV — Problem Report',
-                        icon_url: 'https://img.icons8.com/color/48/ghost.png'
-                    },
+                    footer: { text: 'Ghost TV — Problem Report', icon_url: 'https://img.icons8.com/color/48/ghost.png' },
                     timestamp: new Date().toISOString()
                 }]
             };
-
             try {
                 const response = await fetch(DISCORD_WEBHOOK, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
-
                 if (response.ok) {
                     successMsg.classList.add('show');
                     sendBtn.innerHTML = '✅ সফল!';
                     sendBtn.disabled = false;
                     showToast('✅ সফলভাবে সেন্ড করা হয়েছে!');
-                    // ২ সেকেন্ড পর ফর্ম রিসেট করে মডাল বন্ধ
                     setTimeout(() => {
                         document.getElementById('problemMovieName').value = '';
                         document.getElementById('problemDescription').value = '';
@@ -2245,11 +2339,10 @@
                 const activePlayer = vjsPlayer || plyrPlayer || dPlayerInstance || clapprPlayerInstance;
                 if (activePlayer) {
                     if (vjsPlayer) {
-                        if (vjsPlayer.isFullscreen()) { vjsPlayer.exitFullscreen(); } else { vjsPlayer
-                            .requestFullscreen(); }
+                        if (vjsPlayer.isFullscreen()) { vjsPlayer.exitFullscreen(); } else { vjsPlayer.requestFullscreen(); }
                     } else if (plyrPlayer) {
-                        if (plyrPlayer.fullscreen.active) { plyrPlayer.fullscreen.exit(); } else { plyrPlayer
-                            .fullscreen.enter(); }
+                        if (plyrPlayer.fullscreen.active) { plyrPlayer.fullscreen.exit(); } else { plyrPlayer.fullscreen
+                                .enter(); }
                     } else if (dPlayerInstance) {
                         if (document.fullscreenElement) { document.exitFullscreen(); } else {
                             const container = dPlayerInstance.container;
@@ -2286,12 +2379,16 @@
                     }
                     const categories = globalDataStore[currentPage] || [];
                     let allVideos = [];
-                    categories.forEach(cat => { if (cat && cat.movies) { allVideos = allVideos.concat(cat.movies); } });
+                    categories.forEach(cat => {
+                        if (cat && cat.movies) { allVideos = allVideos.concat(cat.movies); }
+                    });
                     const filtered = allVideos.filter(v => v.name !== currentVideoName);
                     if (filtered.length > 0) {
                         const randomMovie = filtered[Math.floor(Math.random() * filtered.length)];
-                        if (randomMovie) { handleMovieClick(randomMovie);
-                            showToast(`⏭️ চেঞ্জ করা হয়েছে: ${randomMovie.name}`); }
+                        if (randomMovie) {
+                            handleMovieClick(randomMovie);
+                            showToast(`⏭️ চেঞ্জ করা হয়েছে: ${randomMovie.name}`);
+                        }
                     } else { showToast('❌ অন্য কোনো ভিডিও পাওয়া যায়নি'); }
                     lastClickElement = null;
                     lastClickTime = 0;
@@ -2307,7 +2404,8 @@
         });
 
         document.addEventListener('fullscreenchange', () => { isVideoFullscreen = !!document.fullscreenElement; });
-        document.addEventListener('webkitfullscreenchange', () => { isVideoFullscreen = !!document.webkitFullscreenElement; });
+        document.addEventListener('webkitfullscreenchange', () => { isVideoFullscreen = !!document
+                .webkitFullscreenElement; });
 
         function openVideoModal(movie) {
             if (!movie || !movie.link) return;
@@ -2414,8 +2512,9 @@
             if (globalDataStore[currentPage]) {
                 globalDataStore[currentPage].forEach(cat => {
                     if (cat && cat.movies) {
-                        cat.movies.forEach(m => { if (m && m.link && m.link !== movie.link) suggested.push(
-                            m); });
+                        cat.movies.forEach(m => {
+                            if (m && m.link && m.link !== movie.link) suggested.push(m);
+                        });
                     }
                 });
             }
@@ -2424,8 +2523,9 @@
                     if (type !== currentPage && globalDataStore[type]) {
                         globalDataStore[type].forEach(cat => {
                             if (cat && cat.movies) {
-                                cat.movies.forEach(m => { if (m && m.link && m.link !== movie.link)
-                                        suggested.push(m); });
+                                cat.movies.forEach(m => {
+                                    if (m && m.link && m.link !== movie.link) suggested.push(m);
+                                });
                             }
                         });
                     }
@@ -2480,23 +2580,21 @@
             attachRemoteFocusToNav();
             attachRemoteFocusToSidebar();
 
-            // শেয়ার করা লিংক থেকে ভিডিও প্লে
             const urlParams = new URLSearchParams(window.location.search);
             const playToken = urlParams.get('play');
             let playedFromShare = false;
             if (playToken) {
                 try {
                     const decoded = JSON.parse(decodeURIComponent(escape(atob(playToken))));
-                    const sharedMovie = { name: decoded.n, link: decoded.l, premium: decoded.p === 1, logo: decoded
-                            .g };
+                    const sharedMovie = { name: decoded.n, link: decoded.l, premium: decoded.p === 1, logo: decoded.g };
                     let foundMovie = null;
                     let foundType = 'movie';
                     ['movie', 'livetv', 'adult'].forEach(type => {
                         if (globalDataStore[type]) {
                             globalDataStore[type].forEach(cat => {
                                 if (cat && cat.movies) {
-                                    const match = cat.movies.find(m => m.link === sharedMovie.link || m
-                                        .name === sharedMovie.name);
+                                    const match = cat.movies.find(m => m.link === sharedMovie.link || m.name ===
+                                        sharedMovie.name);
                                     if (match) { foundMovie = match;
                                         foundType = type; }
                                 }
@@ -2528,19 +2626,17 @@
         });
 
         window.addEventListener('popstate', function(event) { if (event.state && event.state.modalOpen) closeModal(); });
-
         document.addEventListener('keydown', e => {
             if (e.key === "Escape") {
-                if (document.getElementById('videoModal').style.display === 'flex') { closeVideoModal(); } else { closeModal(); }
+                if (document.getElementById('videoModal').style.display === 'flex') { closeVideoModal(); } else { closeModal
+                    (); }
             }
         });
-
         window.addEventListener('online', function() { hideNetworkError();
             showToast('📡 ইন্টারনেট সংযোগ পুনরুদ্ধার হয়েছে!'); });
         window.addEventListener('offline', function() { showNetworkError(); });
 
         window.onload = initPortal;
     </script>
-
 </body>
 </html>
