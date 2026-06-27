@@ -358,7 +358,7 @@
             }
         }
         /* বড় স্ক্রিনেও ৩ কলাম থাকবে, নাম স্পষ্ট দেখাবে */
-        @media (min-width: 641px) {
+        @media (min-width: 641px) and (max-width: 767px) {
             .suggested-grid {
                 grid-template-columns: repeat(3, 1fr);
                 gap: 12px;
@@ -1138,91 +1138,73 @@
             border: 0;
         }
 
-        /* ===== বড় স্ক্রিনে ভিডিও প্লেয়ার ও সাজেস্টেড ঠিক করতে ===== */
+        /* ===== বড় স্ক্রিনে ভিডিও প্লেয়ার ফুলস্ক্রিন, সাজেস্টেড লুকানো ===== */
         @media (min-width: 768px) {
-            #videoModal .flex-col.md\:flex-row {
-                height: calc(100vh - 70px);
-                max-height: calc(100vh - 70px);
-                overflow: hidden;
+            #videoModal .suggested-section {
+                display: none !important;
             }
             #videoModal .video-container-box {
+                width: 100% !important;
+                flex: 1 1 100% !important;
+                height: 100% !important;
                 aspect-ratio: auto !important;
+            }
+            #videoModal .flex-col.md\:flex-row {
+                flex-direction: column !important;
+                height: calc(100vh - 70px);
+                max-height: calc(100vh - 70px);
+                width: 100% !important;
+            }
+            #videoModal .video-container-box video,
+            #videoModal .video-container-box .video-js,
+            #videoModal .video-container-box #myVideoPlayer {
+                width: 100% !important;
                 height: 100% !important;
-                width: 67% !important;
-                flex: 0 0 67% !important;
             }
-            #videoModal .suggested-section {
-                width: 33% !important;
-                flex: 0 0 33% !important;
+            /* প্লেয়ারের কন্টেইনার পুরো জায়গা নেবে */
+            #videoModal .video-container-box .video-js {
+                position: absolute !important;
+                top: 0;
+                left: 0;
+                width: 100% !important;
                 height: 100% !important;
-                max-height: 100% !important;
-                overflow-y: auto;
-                padding: 16px 12px 20px;
-                min-height: unset !important;
             }
-            /* বড় স্ক্রিনে সাজেস্টেড ৩ কলাম, নাম স্পষ্ট */
-            #videoModal .suggested-grid {
-                grid-template-columns: repeat(3, 1fr) !important;
-                gap: 10px !important;
-            }
-            #videoModal .suggested-item .suggested-name {
-                font-size: 11px !important;
-                padding: 6px 4px 8px !important;
-                min-height: 32px !important;
-                background: rgba(0, 0, 0, 0.7) !important;
-                color: #ffffff !important;
-                border-radius: 0 0 12px 12px !important;
-            }
-            #videoModal .suggested-item img {
-                aspect-ratio: 2 / 2.4 !important;
+            #videoModal .video-container-box {
+                position: relative !important;
             }
             #videoModal .glass-header h3 {
                 font-size: 1.1rem;
             }
-        }
-
-        @media (min-width: 1024px) {
-            #videoModal .video-container-box {
-                width: 70% !important;
-                flex: 0 0 70% !important;
-            }
-            #videoModal .suggested-section {
-                width: 30% !important;
-                flex: 0 0 30% !important;
-                padding: 20px 14px 24px;
-            }
+            /* মোবাইলের মতো সাজেস্টেড গ্রিড আর থাকবে না */
             #videoModal .suggested-grid {
-                gap: 12px !important;
+                display: none !important;
             }
-            #videoModal .suggested-item .suggested-name {
-                font-size: 12px !important;
-                padding: 8px 6px 10px !important;
-                min-height: 36px !important;
-                background: rgba(0, 0, 0, 0.7) !important;
-                color: #ffffff !important;
-                border-radius: 0 0 12px 12px !important;
+            #videoModal .suggested-title {
+                display: none !important;
             }
         }
 
-        @media (min-width: 1400px) {
-            #videoModal .video-container-box {
-                width: 72% !important;
-                flex: 0 0 72% !important;
-            }
+        /* মোবাইলে (৭৬৮px এর নিচে) আগের মতোই থাকবে */
+        @media (max-width: 767px) {
             #videoModal .suggested-section {
-                width: 28% !important;
-                flex: 0 0 28% !important;
+                display: block !important;
+            }
+            #videoModal .video-container-box {
+                aspect-ratio: 16 / 9 !important;
+                width: 100% !important;
+                flex: 0 0 auto !important;
+                height: auto !important;
+            }
+            #videoModal .flex-col.md\:flex-row {
+                flex-direction: column !important;
+                height: auto !important;
+                max-height: none !important;
             }
             #videoModal .suggested-grid {
-                gap: 14px !important;
+                display: grid !important;
             }
-            #videoModal .suggested-item .suggested-name {
-                font-size: 13px !important;
-                padding: 10px 8px 12px !important;
-                min-height: 40px !important;
-                background: rgba(0, 0, 0, 0.7) !important;
-                color: #ffffff !important;
-                border-radius: 0 0 12px 12px !important;
+            #videoModal .suggested-title {
+                display: flex !important;
             }
         }
     </style>
@@ -2523,6 +2505,7 @@
                 clapprPlayerInstance.play();
             }
 
+            // বড় স্ক্রিনে সাজেস্টেড লুকানোর জন্য কিছু করছি না, CSS ই দেখবে
             let suggested = [];
             const currentPage = pageContext;
             if (globalDataStore[currentPage]) {
