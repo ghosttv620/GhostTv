@@ -333,9 +333,19 @@
             letter-spacing: 0.3px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+        }
+        .suggested-title .current-thumb {
+            width: 44px;
+            height: 44px;
+            border-radius: 8px;
+            object-fit: cover;
+            border: 2px solid rgba(229, 9, 20, 0.6);
+            flex-shrink: 0;
+            background: #1a1f2e;
         }
 
+        /* সাজেস্টেড গ্রিড – আগের মতো */
         .suggested-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -357,7 +367,6 @@
                 gap: 10px;
             }
         }
-        /* বড় স্ক্রিনেও ৩ কলাম থাকবে, নাম স্পষ্ট দেখাবে */
         @media (min-width: 641px) and (max-width: 767px) {
             .suggested-grid {
                 grid-template-columns: repeat(3, 1fr);
@@ -731,79 +740,32 @@
             display: flex !important;
         }
 
-        #networkErrorModal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(18px);
-            -webkit-backdrop-filter: blur(18px);
-            z-index: 6000;
-            justify-content: center;
+        .loading-spinner {
+            display: flex;
+            flex-direction: column;
             align-items: center;
-            opacity: 0;
-            transition: opacity 0.3s ease;
+            justify-content: center;
+            padding: 50px 20px;
+            gap: 16px;
         }
-        #networkErrorModal.show {
-            opacity: 1;
+        .loading-spinner .spinner {
+            width: 48px;
+            height: 48px;
+            border: 4px solid rgba(229, 9, 20, 0.15);
+            border-top-color: #e50914;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
         }
-        .error-glass-box {
-            background: rgba(255, 255, 255, 0.06);
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 32px;
-            width: 90%;
-            max-width: 360px;
-            padding: 36px 24px 32px;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7);
-            text-align: center;
-            transform: scale(0.88);
-            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-        #networkErrorModal.show .error-glass-box {
-            transform: scale(1);
-        }
-        .error-icon {
-            font-size: 56px;
-            margin-bottom: 12px;
-            color: #e50914;
-            text-shadow: 0 0 30px rgba(229, 9, 20, 0.3);
-        }
-        .error-title {
-            font-size: 24px;
-            font-weight: 800;
-            letter-spacing: 0.5px;
-            color: #f1f5f9;
-            margin-bottom: 4px;
-            background: linear-gradient(135deg, #e50914, #ff6b6b);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-        .error-sub {
+        .loading-spinner .loading-text {
+            color: #9aa3b5;
             font-size: 14px;
-            color: #94a3b8;
-            margin-bottom: 20px;
             font-weight: 500;
+            letter-spacing: 0.5px;
         }
-        .error-retry-btn {
-            background: #e50914;
-            color: white;
-            font-weight: 700;
-            padding: 12px 28px;
-            border-radius: 40px;
-            border: none;
-            font-size: 15px;
-            cursor: pointer;
-            transition: 0.2s;
-            box-shadow: 0 4px 20px rgba(229, 9, 20, 0.3);
-        }
-        .error-retry-btn:hover {
-            transform: scale(1.02);
-            background: #ff1a2a;
-        }
-        .error-retry-btn:active {
-            transform: scale(0.96);
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         .modal-background-fix {
@@ -1161,7 +1123,6 @@
                 width: 100% !important;
                 height: 100% !important;
             }
-            /* প্লেয়ারের কন্টেইনার পুরো জায়গা নেবে */
             #videoModal .video-container-box .video-js {
                 position: absolute !important;
                 top: 0;
@@ -1175,7 +1136,6 @@
             #videoModal .glass-header h3 {
                 font-size: 1.1rem;
             }
-            /* মোবাইলের মতো সাজেস্টেড গ্রিড আর থাকবে না */
             #videoModal .suggested-grid {
                 display: none !important;
             }
@@ -1184,7 +1144,6 @@
             }
         }
 
-        /* মোবাইলে (৭৬৮px এর নিচে) আগের মতোই থাকবে */
         @media (max-width: 767px) {
             #videoModal .suggested-section {
                 display: block !important;
@@ -1301,13 +1260,16 @@
                 </div>
             </div>
             <div class="pt-2 px-2 max-w-full mx-auto" id="content-home">
-                <p class="text-gray-400 text-center py-10">Gʜ👻ꜱᴛ_Sᴇʀᴠʀ _ʟᴏᴀᴅɪɴɢ..</p>
+                <div class="loading-spinner" id="homeLoader">
+                    <div class="spinner"></div>
+                    <div class="loading-text">Gʜ👻ꜱᴛ_Sᴇʀᴠʀ _ʟᴏᴀᴅɪɴɢ..</div>
+                </div>
             </div>
         </section>
 
-        <section id="movie" class="page-section"><div class="pt-6 px-2 max-w-full mx-auto" id="content-movie"></div></section>
-        <section id="livetv" class="page-section"><div class="pt-6 px-2 max-w-full mx-auto" id="content-livetv"></div></section>
-        <section id="adult" class="page-section"><div class="pt-6 px-2 max-w-full mx-auto" id="content-adult"></div></section>
+        <section id="movie" class="page-section"><div class="pt-6 px-2 max-w-full mx-auto" id="content-movie"><div class="loading-spinner"><div class="spinner"></div><div class="loading-text">মুভি লোড হচ্ছে...</div></div></div></section>
+        <section id="livetv" class="page-section"><div class="pt-6 px-2 max-w-full mx-auto" id="content-livetv"><div class="loading-spinner"><div class="spinner"></div><div class="loading-text">লাইভ টিভি লোড হচ্ছে...</div></div></div></section>
+        <section id="adult" class="page-section"><div class="pt-6 px-2 max-w-full mx-auto" id="content-adult"><div class="loading-spinner"><div class="spinner"></div><div class="loading-text">অ্যাডাল্ট লোড হচ্ছে...</div></div></div></section>
         <section id="favorite" class="page-section">
             <div class="pt-4 px-2 max-w-full mx-auto">
                 <div id="content-favorite"></div>
@@ -1369,15 +1331,6 @@
             <button onclick="closePremiumAlert()" class="w-full bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-xl transition shadow-lg shadow-red-600/40 active:scale-95 text-sm uppercase tracking-wider">
                 OK
             </button>
-        </div>
-    </div>
-
-    <div id="networkErrorModal">
-        <div class="error-glass-box">
-            <div class="error-icon"><i class="fas fa-ghost"></i></div>
-            <div class="error-title">Ghost Tv</div>
-            <div class="error-sub">Network Error</div>
-            <button class="error-retry-btn" onclick="retryNetwork()">পুনরায় চেষ্টা করুন</button>
         </div>
     </div>
 
@@ -1455,7 +1408,8 @@
             </div>
             <div class="suggested-section suggested-scroll w-full md:w-1/3 md:h-full" id="suggestedSection">
                 <div class="suggested-title">
-                    <i class="fas fa-lightbulb text-yellow-400"></i> সাজেস্টেড ভিডিও
+                    <img id="currentVideoThumb" class="current-thumb" src="" alt="বর্তমান ভিডিওর পোস্টার">
+                    <span>➤➤➤</i> 👻 Ghost TV • 🔥 Watch Next</span>
                 </div>
                 <div class="suggested-grid" id="suggestedGrid"></div>
             </div>
@@ -1497,7 +1451,6 @@
         let activePageGlobal = 'home';
         let currentSuggestedMovies = [];
         let remoteFocusTarget = null;
-        let isNetworkErrorShown = false;
         let currentPlayingMovie = null;
 
         // ---- ইউটিলিটি ----
@@ -1536,28 +1489,6 @@
                 const selectEl = document.getElementById(`player-select-${page}`);
                 if (selectEl) selectEl.value = savedPlayer;
             });
-        }
-
-        // ---- নেটওয়ার্ক এরর ----
-        function showNetworkError() {
-            if (isNetworkErrorShown) return;
-            isNetworkErrorShown = true;
-            const modal = document.getElementById('networkErrorModal');
-            modal.style.display = 'flex';
-            setTimeout(() => modal.classList.add('show'), 10);
-        }
-
-        function hideNetworkError() {
-            const modal = document.getElementById('networkErrorModal');
-            modal.classList.remove('show');
-            setTimeout(() => { modal.style.display = 'none';
-                isNetworkErrorShown = false; }, 300);
-        }
-
-        function retryNetwork() {
-            hideNetworkError();
-            showToast('🔄 পুনরায় সংযোগ করার চেষ্টা করা হচ্ছে...');
-            setTimeout(() => { window.location.reload(); }, 400);
         }
 
         // ---- রিমোট ফোকাস ----
@@ -1734,7 +1665,7 @@
             grid.innerHTML = '';
             if (!movies || movies.length === 0) {
                 grid.innerHTML =
-                `<div class="col-span-full text-gray-400 text-center py-6 text-sm">কোন সাজেস্টেড ভিডিও নেই</div>`;
+                    `<div class="col-span-full text-gray-400 text-center py-6 text-sm">কোন সাজেস্টেড ভিডিও নেই</div>`;
                 return;
             }
             const unique = [];
@@ -1790,6 +1721,8 @@
         function renderHomePage() {
             const homeContainer = document.getElementById('content-home');
             if (!homeContainer) return;
+            const loader = document.getElementById('homeLoader');
+            if (loader) loader.style.display = 'none';
             homeContainer.innerHTML = '';
             let typesToRender = ['movie', 'livetv'];
             const isAdultVisible = localStorage.getItem('ghost_adult_visible') === 'true';
@@ -1828,8 +1761,12 @@
         function renderFullPageLagFree(type) {
             const container = document.getElementById(`content-${type}`);
             const categories = globalDataStore[type];
-            if (!container || !categories) return;
+            if (!container) return;
             container.innerHTML = '';
+            if (!categories || categories.length === 0) {
+                container.innerHTML = `<div class="text-gray-500 text-center py-12 text-sm">কোন কন্টেন্ট নেই</div>`;
+                return;
+            }
             categories.forEach((category, catIndex) => {
                 if (!category) return;
                 const section = document.createElement('div');
@@ -1956,8 +1893,7 @@
                 const res = await fetch(`https://api.jsonbin.io/v3/b/${USER_BIN}/latest`, {
                     headers: { "X-Master-Key": MASTER_KEY, "X-Bin-Meta": "false" }
                 });
-                if (!res.ok) { if (!isAuto) showLoginError("সার্ভার সংযোগ ব্যর্থ!");
-                    showNetworkError(); return false; }
+                if (!res.ok) { if (!isAuto) showLoginError("সার্ভার সংযোগ ব্যর্থ!"); return false; }
                 const responseData = await res.json();
                 const users = Array.isArray(responseData) ? responseData : (responseData.users || []);
                 const user = users.find(u => u.username === username && u.password === password);
@@ -1973,7 +1909,7 @@
                 if (!user.device_id || user.device_id === "") {
                     user.device_id = myDeviceId;
                     if (Array.isArray(responseData)) { await updateJsonBin(responseData); } else { responseData.users =
-                        users;
+                            users;
                         await updateJsonBin(responseData); }
                 }
                 currentUserData = user;
@@ -1982,8 +1918,7 @@
                 updateAuthHeaderUI();
                 closeLoginModal();
                 return true;
-            } catch (err) { if (!isAuto) showLoginError("সার্ভার ত্রুটি! দয়া করে আবার চেষ্টা করুন।");
-                showNetworkError(); return false; }
+            } catch (err) { if (!isAuto) showLoginError("সার্ভার ত্রুটি! দয়া করে আবার চেষ্টা করুন।"); return false; }
         }
 
         async function resetDeviceId() {
@@ -1994,14 +1929,13 @@
                 const res = await fetch(`https://api.jsonbin.io/v3/b/${USER_BIN}/latest`, {
                     headers: { "X-Master-Key": MASTER_KEY, "X-Bin-Meta": "false" }
                 });
-                if (!res.ok) { showToast("⚠️ সার্ভার সংযোগ ব্যর্থ!");
-                    showNetworkError(); return; }
+                if (!res.ok) { showToast("⚠️ সার্ভার সংযোগ ব্যর্থ!"); return; }
                 const responseData = await res.json();
                 let users = [];
                 let isArray = false;
                 if (Array.isArray(responseData)) { users = responseData;
                     isArray = true; } else if (responseData.users && Array.isArray(responseData.users)) { users =
-                    responseData.users; } else { showToast("⚠️ ডেটা ফরম্যাট সঠিক নয়!"); return; }
+                        responseData.users; } else { showToast("⚠️ ডেটা ফরম্যাট সঠিক নয়!"); return; }
                 const userIndex = users.findIndex(u => u.username === user && u.password === pass);
                 if (userIndex === -1) { showToast("⚠️ ইউজারনাম বা পাসওয়ার্ড ভুল!"); return; }
                 users[userIndex].device_id = "";
@@ -2022,8 +1956,7 @@
                 showToast("✅ ডিভাইস আইডি রিসেট হয়েছে! পুনরায় লগইন করুন।");
                 closeLoginModal();
             } catch (err) { console.error("Reset error:", err);
-                showToast("⚠️ রিসেট করতে সমস্যা হয়েছে!");
-                showNetworkError(); }
+                showToast("⚠️ রিসেট করতে সমস্যা হয়েছে!"); }
         }
 
         async function checkAutoLogin() {
@@ -2137,12 +2070,12 @@
                 const res = await fetch(`https://api.jsonbin.io/v3/b/${USER_BIN}/latest`, {
                     headers: { "X-Master-Key": MASTER_KEY, "X-Bin-Meta": "false" }
                 });
-                if (!res.ok) { showNetworkError(); return; }
+                if (!res.ok) { return; }
                 const data = await res.json();
                 if (data && data.slider && Array.isArray(data.slider)) {
                     sliderData = data.slider.filter(s => s.type !== 'adult');
                 }
-            } catch (e) { showNetworkError(); return; }
+            } catch (e) { return; }
             sliderContainer.innerHTML = '';
             sliderData.forEach((slide, index) => {
                 const activeClass = index === 0 ? 'active' : '';
@@ -2310,7 +2243,6 @@
                 showToast('⚠️ নেটওয়ার্ক সমস্যা! আবার চেষ্টা করুন।');
                 sendBtn.innerHTML = '<i class="fas fa-paper-plane"></i> সেন্ড করুন';
                 sendBtn.disabled = false;
-                showNetworkError();
             }
         }
 
@@ -2411,6 +2343,11 @@
             destroyAllPlayers();
             const videoModal = document.getElementById('videoModal');
             document.getElementById('videoTitle').textContent = movie.name || '';
+            // থাম্বনেইল আপডেট
+            const thumb = document.getElementById('currentVideoThumb');
+            thumb.src = movie.logo || 'https://picsum.photos/100/100';
+            thumb.alt = movie.name || 'বর্তমান ভিডিওর পোস্টার';
+
             videoModal.style.display = 'flex';
             const mountPoint = document.getElementById('player-mount-point');
             mountPoint.innerHTML = '';
@@ -2505,7 +2442,6 @@
                 clapprPlayerInstance.play();
             }
 
-            // বড় স্ক্রিনে সাজেস্টেড লুকানোর জন্য কিছু করছি না, CSS ই দেখবে
             let suggested = [];
             const currentPage = pageContext;
             if (globalDataStore[currentPage]) {
@@ -2550,11 +2486,12 @@
         async function fetchData(type) {
             try {
                 const response = await fetch(KEYS[type].url);
-                if (!response.ok) { showNetworkError(); return; }
+                if (!response.ok) { return; }
                 const json = await response.json();
                 globalDataStore[type] = json.categories || [];
-            } catch (error) { showNetworkError();
-                globalDataStore[type] = []; }
+            } catch (error) {
+                globalDataStore[type] = [];
+            }
         }
 
         function attachRemoteFocusToSidebar() {
@@ -2631,9 +2568,6 @@
                     (); }
             }
         });
-        window.addEventListener('online', function() { hideNetworkError();
-            showToast('📡 ইন্টারনেট সংযোগ পুনরুদ্ধার হয়েছে!'); });
-        window.addEventListener('offline', function() { showNetworkError(); });
 
         window.onload = initPortal;
     </script>
