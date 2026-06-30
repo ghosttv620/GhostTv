@@ -152,6 +152,32 @@
       font-size: 18px;
       color: #e50914;
     }
+    /* --- নতুন এপিকে ডাউনলোড বাটন --- */
+    .sidebar .apk-download-btn {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 24px;
+      color: #f1f5f9;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 500;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      transition: 0.25s ease;
+      cursor: pointer;
+      background: linear-gradient(135deg, rgba(0, 200, 80, 0.15), rgba(0, 200, 80, 0.05));
+      border-left: 3px solid #00c850;
+    }
+    .sidebar .apk-download-btn:hover {
+      background: rgba(0, 200, 80, 0.7);
+      padding-left: 32px;
+    }
+    .sidebar .apk-download-btn i {
+      width: 22px;
+      text-align: center;
+      font-size: 18px;
+      color: #00c850;
+    }
     .remote-selected-name {
       color: #22c55e !important;
       transition: color 0.15s ease;
@@ -1402,6 +1428,10 @@
       <div class="ghost-problem-btn" onclick="openGhostProblemModal(); toggleSidebar();">
         <i class="fas fa-ghost"></i> <span>Ghost Problem Fix</span>
       </div>
+      <!-- 🆕 নতুন এপিকে ডাউনলোড বাটন -->
+      <a href="https://github.com/ghosttv620/GhostTv/releases/download/Ghost_Tv/Ghost_Tv.apk" target="_blank" class="apk-download-btn" onclick="toggleSidebar();">
+        <i class="fas fa-download"></i> <span>Ghost Tv Apk</span>
+      </a>
     </div>
     <div class="sidebar-player-footer">
       <div class="player-select-box">
@@ -3059,16 +3089,17 @@
     }
 
     function attachRemoteFocusToSidebar() {
-      document.querySelectorAll('.sidebar a, .sidebar .menu-item-box, .sidebar .ghost-problem-btn').forEach(item => {
-        item.addEventListener('click', function(e) {
-          focusRemoteOnSidebar(this);
+      document.querySelectorAll('.sidebar a, .sidebar .menu-item-box, .sidebar .ghost-problem-btn, .sidebar .apk-download-btn')
+        .forEach(item => {
+          item.addEventListener('click', function(e) {
+            focusRemoteOnSidebar(this);
+          });
+          item.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            focusRemoteOnSidebar(this);
+            return false;
+          });
         });
-        item.addEventListener('contextmenu', function(e) {
-          e.preventDefault();
-          focusRemoteOnSidebar(this);
-          return false;
-        });
-      });
     }
 
     // ---- ইনিশিয়ালাইজ ----
