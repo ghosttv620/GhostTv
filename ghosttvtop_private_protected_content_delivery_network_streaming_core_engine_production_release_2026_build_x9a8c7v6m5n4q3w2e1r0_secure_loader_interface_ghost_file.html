@@ -152,7 +152,7 @@
       font-size: 18px;
       color: #e50914;
     }
-    /* --- নতুন এপিকে ডাউনলোড বাটন --- */
+    /* --- এপিকে ডাউনলোড বাটন --- */
     .sidebar .apk-download-btn {
       display: flex;
       align-items: center;
@@ -177,6 +177,45 @@
       text-align: center;
       font-size: 18px;
       color: #00c850;
+    }
+    /* ---- ভয়েজ মোড টগল বাটন (সাইডবারে) ---- */
+    .sidebar .voice-toggle-btn {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 24px;
+      color: #f1f5f9;
+      text-decoration: none;
+      font-size: 16px;
+      font-weight: 500;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      transition: 0.25s ease;
+      cursor: pointer;
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(59, 130, 246, 0.05));
+      border-left: 3px solid #3b82f6;
+    }
+    .sidebar .voice-toggle-btn:hover {
+      background: rgba(59, 130, 246, 0.7);
+      padding-left: 32px;
+    }
+    .sidebar .voice-toggle-btn i {
+      width: 22px;
+      text-align: center;
+      font-size: 18px;
+      color: #3b82f6;
+    }
+    .sidebar .voice-toggle-btn .toggle-status {
+      margin-left: auto;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 2px 10px;
+      border-radius: 20px;
+      background: rgba(34, 197, 94, 0.2);
+      color: #22c55e;
+    }
+    .sidebar .voice-toggle-btn .toggle-status.off {
+      background: rgba(239, 68, 68, 0.2);
+      color: #ef4444;
     }
     .remote-selected-name {
       color: #22c55e !important;
@@ -1495,6 +1534,12 @@
         <i class="fas fa-ghost"></i>
         <span>Ghost Problem Fix</span>
       </div>
+      <!-- 🆕 ভয়েজ মোড টগল বাটন (এপিকে ডাউনলোডের উপরে) -->
+      <div class="voice-toggle-btn" onclick="toggleVoiceMode(); toggleSidebar();">
+        <i class="fas fa-volume-up"></i>
+        <span>ভয়েজ মোড</span>
+        <span class="toggle-status" id="voiceModeStatus">অন</span>
+      </div>
       <a href="https://github.com/ghosttv620/GhostTv/releases/download/Ghost_Tv/Ghost_Tv.apk" target="_blank" class="apk-download-btn" onclick="toggleSidebar();">
         <i class="fas fa-download"></i>
         <span>Ghost Tv Apk</span>
@@ -1767,6 +1812,10 @@
     let lastClickElement = null;
     let doubleClickTimeout = null;
     let isVideoFullscreen = false;
+
+    // ---- 🆕 ভয়েজ মোড স্টেট ----
+    let isVoiceEnabled = true;
+
     // ---- নোটিফিকেশন ফাংশন ----
     function showToast(message) {
       const toast = document.getElementById('toast-notice');
@@ -1790,6 +1839,7 @@
         }, 350);
       }, 2000);
     }
+
     function getDeviceId() {
       let id = localStorage.getItem('ghost_device_id');
       if (!id) {
@@ -1799,6 +1849,7 @@
       return id;
     }
     myDeviceId = getDeviceId();
+
     function loadFavorites() {
       const saved = localStorage.getItem('ghost_favorites');
       if (saved) {
@@ -1810,10 +1861,12 @@
       }
     }
     loadFavorites();
+
     function savePlayerSettings(page, playerType) {
       localStorage.setItem(`ghost_player_${page}`, playerType);
       showToast(`✅ ${page.toUpperCase()} পেজের জন্য প্লেয়ার সেট করা হয়েছে!`);
     }
+
     function loadPlayerSettings() {
       ['movie', 'livetv', 'adult'].forEach(page => {
         const savedPlayer = localStorage.getItem(`ghost_player_${page}`) || 'videojs';
@@ -1821,6 +1874,81 @@
         if (selectEl) selectEl.value = savedPlayer;
       });
     }
+
+    // ---- 🆕 ভয়েজ মোড টগল ফাংশন ----
+    function toggleVoiceMode() {
+      isVoiceEnabled = !isVoiceEnabled;
+      const statusEl = document.getElementById('voiceModeStatus');
+      if (isVoiceEnabled) {
+        statusEl.textContent = 'অন';
+        statusEl.classList.remove('off');
+        showToast('🔊 ভয়েজ মোড চালু করা হয়েছে');
+      } else {
+        statusEl.textContent = 'বন্ধ';
+        statusEl.classList.add('off');
+        showToast('🔇 ভয়েজ মোড বন্ধ করা হয়েছে');
+      }
+      localStorage.setItem('ghost_voice_enabled', isVoiceEnabled ? 'true' : 'false');
+    }
+
+    function loadVoiceModeSettings() {
+      const saved = localStorage.getItem('ghost_voice_enabled');
+      if (saved !== null) {
+        isVoiceEnabled = saved === 'true';
+      } else {
+        isVoiceEnabled = true; // ডিফল্ট অন
+      }
+      const statusEl = document.getElementById('voiceModeStatus');
+      if (isVoiceEnabled) {
+        statusEl.textContent = 'অন';
+        statusEl.classList.remove('off');
+      } else {
+        statusEl.textContent = 'বন্ধ';
+        statusEl.classList.add('off');
+      }
+    }
+
+    // ---- 🆕 ভয়েস স্পিক ফাংশন ----
+    function speakMessage(message) {
+      if (!isVoiceEnabled) return;
+      if (!window.speechSynthesis) {
+        console.warn('Speech synthesis not supported in this browser.');
+        return;
+      }
+      // Cancel any ongoing speech
+      window.speechSynthesis.cancel();
+
+      const utterance = new SpeechSynthesisUtterance(message);
+      utterance.lang = 'en-US';
+      utterance.rate = 0.95;
+      utterance.pitch = 1;
+      utterance.volume = 1;
+
+      const voices = window.speechSynthesis.getVoices();
+      const preferredVoice = voices.find(voice =>
+        voice.lang === 'en-US' && (voice.name.includes('Google') || voice.name.includes('Natural') || voice.name.includes(
+          'Samantha'))
+      );
+      if (preferredVoice) {
+        utterance.voice = preferredVoice;
+      }
+      window.speechSynthesis.speak(utterance);
+    }
+
+    // ---- 🆕 ওয়েলকাম ভয়েস (শুধু প্রথমবার) ----
+    function playWelcomeVoice() {
+      if (sessionStorage.getItem('ghost_welcome_played')) return;
+      speakMessage("Welcome to Ghost Corporation. Developer by Ghost Nirob.");
+      sessionStorage.setItem('ghost_welcome_played', 'true');
+    }
+
+    // ---- 🆕 নোটিফিকেশন ভয়েস ----
+    function speakNotification(message) {
+      // নোটিফিকেশন আসলে ভয়েস বলবে (যদি অন থাকে)
+      if (!isVoiceEnabled) return;
+      speakMessage(message);
+    }
+
     // ---- রিমোট ফোকাস ----
     function clearRemoteFocus() {
       document.querySelectorAll(
@@ -1831,6 +1959,7 @@
       });
       remoteFocusTarget = null;
     }
+
     function focusRemoteOnPoster(posterElement, movieData) {
       clearRemoteFocus();
       if (!posterElement) return;
@@ -1847,6 +1976,7 @@
         block: 'nearest'
       });
     }
+
     function focusRemoteOnNav(navButton) {
       clearRemoteFocus();
       if (!navButton) return;
@@ -1856,6 +1986,7 @@
         element: navButton
       };
     }
+
     function focusRemoteOnSidebar(sidebarItem) {
       clearRemoteFocus();
       if (!sidebarItem) return;
@@ -1865,6 +1996,7 @@
         element: sidebarItem
       };
     }
+
     function focusRemoteOnSuggested(suggestedItem, movieData) {
       clearRemoteFocus();
       if (!suggestedItem) return;
@@ -1881,6 +2013,7 @@
         block: 'nearest'
       });
     }
+
     function attachRemoteSelectionToPoster(posterElement, movieData) {
       if (!posterElement) return;
       posterElement.addEventListener('click', function(e) {
@@ -1893,6 +2026,7 @@
         return false;
       });
     }
+
     // ---- ফেভারিট ----
     function toggleFavorite(movie) {
       if (!movie || !movie.link) return;
@@ -1900,9 +2034,11 @@
       if (index > -1) {
         favoritesList.splice(index, 1);
         showToast("💔 ফেবারেট থেকে রিমুভ করা হয়েছে!");
+        speakNotification("Removed from favorites");
       } else {
         favoritesList.push(movie);
         showToast("❤️ ফেবারেটে যুক্ত করা হয়েছে!");
+        speakNotification("Added to favorites");
       }
       localStorage.setItem('ghost_favorites', JSON.stringify(favoritesList));
       renderHomePage();
@@ -1912,6 +2048,7 @@
       if (document.getElementById('favorite').classList.contains('active')) renderFavoritePage();
       renderSuggestedVideos(currentSuggestedMovies);
     }
+
     // ---- পোস্টার ক্রিয়েট ----
     function createPoster(movie) {
       if (!movie) return document.createElement('div');
@@ -1962,6 +2099,7 @@
       });
       return div;
     }
+
     function attachRemoteFocusToNav() {
       document.querySelectorAll('.nav-item').forEach(btn => {
         btn.addEventListener('click', function(e) {
@@ -1974,6 +2112,7 @@
         });
       });
     }
+
     // ---- ভিডিও ----
     async function handleMovieClick(movie) {
       if (!movie) return;
@@ -1994,6 +2133,7 @@
       }
       openVideoModal(movie);
     }
+
     function renderSuggestedVideos(movies) {
       const grid = document.getElementById('suggestedGrid');
       if (!grid) return;
@@ -2033,11 +2173,13 @@
         grid.appendChild(item);
       });
     }
+
     // ---- পেজ চেঞ্জ ----
     function toggleSidebar() {
       document.getElementById('sidebar').classList.toggle('active');
       document.querySelector('.backdrop').classList.toggle('active');
     }
+
     function changePage(pageId) {
       activePageGlobal = pageId;
       const sections = document.querySelectorAll('.page-section');
@@ -2060,6 +2202,7 @@
       if (pageId === 'favorite') renderFavoritePage();
       clearRemoteFocus();
     }
+
     function renderHomePage() {
       const homeContainer = document.getElementById('content-home');
       if (!homeContainer) return;
@@ -2099,6 +2242,7 @@
         }
       });
     }
+
     function renderFullPageLagFree(type) {
       const container = document.getElementById(`content-${type}`);
       const categories = globalDataStore[type];
@@ -2139,6 +2283,7 @@
         }
       });
     }
+
     function renderFavoritePage() {
       const container = document.getElementById('content-favorite');
       if (!container) return;
@@ -2152,6 +2297,7 @@
         if (movie) container.appendChild(createPoster(movie));
       });
     }
+
     function showAll(type, catIndex) {
       const cat = globalDataStore[type]?.[catIndex];
       if (cat) {
@@ -2175,6 +2321,7 @@
         }
       }
     }
+
     function openModal() {
       const modal = document.getElementById('modal');
       modal.classList.remove('hidden');
@@ -2183,9 +2330,11 @@
         modalOpen: true
       }, '');
     }
+
     function closeModal() {
       document.getElementById('modal').classList.add('hidden');
     }
+
     function handleSearch(query) {
       const txt = query.trim().toLowerCase();
       const searchContainer = document.getElementById('content-search');
@@ -2230,6 +2379,7 @@
         streamSearchData();
       }
     }
+
     // ---- ইউজার ভেরিফাই ----
     async function verifyUser(username, password, isAuto = false) {
       try {
@@ -2281,6 +2431,7 @@
         return false;
       }
     }
+
     async function resetDeviceId() {
       const user = document.getElementById('loginUser')?.value.trim();
       const pass = document.getElementById('loginPass')?.value.trim();
@@ -2350,6 +2501,7 @@
         showToast("⚠️ রিসেট করতে সমস্যা হয়েছে!");
       }
     }
+
     async function checkAutoLogin() {
       const savedUser = localStorage.getItem('ghost_user');
       const savedPass = localStorage.getItem('ghost_pass');
@@ -2357,6 +2509,7 @@
         await verifyUser(savedUser, savedPass, true);
       }
     }
+
     async function handleLogin() {
       const user = document.getElementById('loginUser').value.trim();
       const pass = document.getElementById('loginPass').value.trim();
@@ -2368,11 +2521,13 @@
       btn.innerText = "লগইন করুন";
       btn.disabled = false;
     }
+
     function showLoginError(msg) {
       const err = document.getElementById('loginError');
       err.innerText = msg;
       err.classList.remove('hidden');
     }
+
     async function updateJsonBin(updatedData) {
       try {
         await fetch(`https://api.jsonbin.io/v3/b/${USER_BIN}`, {
@@ -2385,6 +2540,7 @@
         });
       } catch (e) {}
     }
+
     function updateAuthHeaderUI() {
       const area = document.getElementById('auth-status-area');
       if (currentUserData) {
@@ -2405,6 +2561,7 @@
             `;
       }
     }
+
     function handleLogout() {
       showCustomConfirm("আপনি কি লগআউট করতে চান?").then(confirmed => {
         if (confirmed) {
@@ -2417,6 +2574,7 @@
         }
       });
     }
+
     // ---- অ্যাডাল্ট ----
     function toggleAdultNavVisibility(isChecked) {
       const adultBtn = document.getElementById('btn-adult');
@@ -2432,12 +2590,14 @@
       }
       renderHomePage();
     }
+
     function loadAdultVisibilitySettings() {
       const isVisible = localStorage.getItem('ghost_adult_visible') === 'true';
       const checkbox = document.getElementById('adultVisibilityToggle');
       if (checkbox) checkbox.checked = isVisible;
       document.getElementById('btn-adult').style.display = isVisible ? 'flex' : 'none';
     }
+
     // ---- স্লাইডার ----
     function initSliderControl() {
       if (sliderInterval) clearInterval(sliderInterval);
@@ -2449,6 +2609,7 @@
         slides[currentSlideIdx].classList.add('active');
       }, 3200);
     }
+
     async function fetchAndRenderSlider() {
       const sliderContainer = document.getElementById('dynamic-slider');
       let sliderData = [{
@@ -2501,6 +2662,7 @@
       currentSlideIdx = 0;
       initSliderControl();
     }
+
     // ---- কনফর্ম, প্রিমিয়াম, লগইন ----
     function showCustomConfirm(messageText) {
       return new Promise((resolve) => {
@@ -2526,12 +2688,14 @@
         });
       });
     }
+
     function showPremiumAlert(message) {
       const modal = document.getElementById('premiumAlertModal');
       document.getElementById('premiumAlertMessage').innerText = message || "⚠️ এই কন্টেন্টটি প্রিমিয়াম! লগইন করুন।";
       modal.style.display = 'flex';
       setTimeout(() => modal.classList.add('show'), 10);
     }
+
     function closePremiumAlert() {
       const modal = document.getElementById('premiumAlertModal');
       modal.classList.remove('show');
@@ -2540,6 +2704,7 @@
         openLoginModal();
       }, 300);
     }
+
     async function openLoginModal() {
       const modal = document.getElementById('loginModal');
       modal.style.display = 'flex';
@@ -2550,10 +2715,12 @@
       modal.style.justifyContent = 'center';
       modal.style.alignItems = 'center';
     }
+
     function closeLoginModal() {
       document.getElementById('loginModal').style.display = 'none';
       document.getElementById('loginError').classList.add('hidden');
     }
+
     // ---- Ghost Problem Fix মডাল ----
     function openGhostProblemModal() {
       const modal = document.getElementById('ghostProblemModal');
@@ -2576,6 +2743,7 @@
       });
       setTimeout(() => modal.classList.add('show'), 10);
     }
+
     function closeGhostProblemModal() {
       const modal = document.getElementById('ghostProblemModal');
       modal.classList.remove('show');
@@ -2583,6 +2751,7 @@
         modal.style.display = 'none';
       }, 350);
     }
+
     // ---- Ghost Problem Fix: Discord webhook ----
     async function sendGhostProblem() {
       const movieName = document.getElementById('problemMovieName').value.trim();
@@ -2662,6 +2831,7 @@
         sendBtn.disabled = false;
       }
     }
+
     // ---- ভিডিও প্লেয়ার কন্ট্রোল ফাংশন ----
     function togglePlayStop() {
       const btn = document.getElementById('playStopToggleBtn');
@@ -2708,6 +2878,7 @@
       }
       btn.innerHTML = isPlaying ? '<i class="fas fa-pause"></i>' : '<i class="fas fa-play"></i>';
     }
+
     function toggleVideoFullscreen() {
       const activePlayer = vjsPlayer || plyrPlayer || dPlayerInstance || clapprPlayerInstance;
       if (!activePlayer) {
@@ -2749,6 +2920,7 @@
       }
       showToast('⛶ ফুলস্ক্রিন টগল');
     }
+
     // ---- ভিডিও মডাল ----
     function destroyAllPlayers() {
       if (vjsPlayer) {
@@ -2776,12 +2948,14 @@
         clapprPlayerInstance = null;
       }
     }
+
     document.addEventListener('dblclick', function(e) {
       const videoModal = document.getElementById('videoModal');
       if (videoModal.style.display === 'flex') {
         toggleVideoFullscreen();
       }
     });
+
     document.addEventListener('keydown', function(e) {
       const videoModal = document.getElementById('videoModal');
       if (videoModal.style.display !== 'flex') return;
@@ -2827,6 +3001,7 @@
         }, 500);
       }
     });
+
     document.addEventListener('fullscreenchange', () => {
       isVideoFullscreen = !!document.fullscreenElement;
       updateFullscreenOverlayState();
@@ -2843,6 +3018,7 @@
       isVideoFullscreen = !!document.msFullscreenElement;
       updateFullscreenOverlayState();
     });
+
     function openVideoModal(movie) {
       if (!movie || !movie.link) return;
       currentPlayingMovie = movie;
@@ -3032,6 +3208,7 @@
       renderSuggestedVideos(suggested);
       setTimeout(updateFullscreenOverlayState, 300);
     }
+
     function closeVideoModal() {
       document.body.classList.remove('ghost-fs-overlay-active');
       destroyAllPlayers();
@@ -3043,6 +3220,7 @@
       lastClickTime = 0;
       clearTimeout(doubleClickTimeout);
     }
+
     // ============================================================
     // 🆕 ফুলস্ক্রিনে হেডার ওভারলে কন্ট্রোল – শুধু বড় স্ক্রিনে
     // ============================================================
@@ -3061,6 +3239,7 @@
         document.body.classList.remove('ghost-fs-overlay-active');
       }
     }
+
     // ============================================================
     // 🆕 অটো-ফুলস্ক্রিন অন প্লে – শুধু বড় স্ক্রিনে
     // ============================================================
@@ -3169,6 +3348,7 @@
         });
       }, 3000);
     }
+
     // ---- DevTools ডিটেক্ট ও সতর্কতা ----
     let alertShown = false;
 
@@ -3187,6 +3367,7 @@
       }
     }
     setInterval(detectDevTools, 1500);
+
     // ---- ডাটা ফেচ ----
     async function fetchData(type) {
       try {
@@ -3200,8 +3381,9 @@
         globalDataStore[type] = [];
       }
     }
+
     function attachRemoteFocusToSidebar() {
-      document.querySelectorAll('.sidebar a, .sidebar .menu-item-box, .sidebar .ghost-problem-btn, .sidebar .apk-download-btn')
+      document.querySelectorAll('.sidebar a, .sidebar .menu-item-box, .sidebar .ghost-problem-btn, .sidebar .apk-download-btn, .sidebar .voice-toggle-btn')
         .forEach(item => {
           item.addEventListener('click', function(e) {
             focusRemoteOnSidebar(this);
@@ -3214,51 +3396,14 @@
         });
     }
 
-    // ---- 🆕 ভয়েস ওয়েলকাম মেসেজ (শুধু একবার, 100% ভলিউম, প্রাকৃতিক ইংরেজি) ----
-    function playWelcomeVoice() {
-      // Check if already played in this session
-      if (sessionStorage.getItem('ghost_welcome_played')) return;
-
-      // Check if the browser supports speech synthesis
-      if (!window.speechSynthesis) {
-        console.warn('Speech synthesis not supported in this browser.');
-        return;
-      }
-
-      // Create the utterance
-      const utterance = new SpeechSynthesisUtterance("Welcome to Ghost Corporation. Developer by Ghost Nirob.");
-
-      // Set voice properties for a natural English voice
-      utterance.lang = 'en-US';
-      utterance.rate = 0.95; // slightly slower for clarity
-      utterance.pitch = 1;
-      utterance.volume = 1; // 100% volume
-
-      // Optionally, try to select a natural male/female voice
-      const voices = window.speechSynthesis.getVoices();
-      const preferredVoice = voices.find(voice =>
-        voice.lang === 'en-US' && (voice.name.includes('Google') || voice.name.includes('Natural') || voice.name.includes(
-          'Samantha'))
-      );
-      if (preferredVoice) {
-        utterance.voice = preferredVoice;
-      }
-
-      // Speak and mark as played
-      window.speechSynthesis.speak(utterance);
-      sessionStorage.setItem('ghost_welcome_played', 'true');
-
-      // Fallback: if the speech is not played due to browser restrictions, we still mark it as played.
-      utterance.onerror = function() {
-        sessionStorage.setItem('ghost_welcome_played', 'true');
-      };
-    }
-
     // ---- ইনিশিয়ালাইজ ----
     async function initPortal() {
-      // Load voices early (some browsers need a user gesture, but we try)
+      // Load voice mode settings
+      loadVoiceModeSettings();
+
+      // Load voices early
       if (window.speechSynthesis) {
-        window.speechSynthesis.getVoices(); // Prime the voices
+        window.speechSynthesis.getVoices();
       }
 
       loadPlayerSettings();
@@ -3326,7 +3471,7 @@
         changePage('home');
       }
 
-      // ---- Play the welcome voice after a short delay to ensure everything is loaded ----
+      // ---- Play welcome voice on first load ----
       setTimeout(playWelcomeVoice, 1500);
     }
 
@@ -3357,6 +3502,15 @@
         }
       }
     });
+
+    // ---- 🆕 showToast ওভাররাইড করে নোটিফিকেশন ভয়েস যোগ করা ----
+    const originalShowToast = showToast;
+    showToast = function(message) {
+      originalShowToast(message);
+      // নোটিফিকেশন ভয়েস (শুধুমাত্র যদি ভয়েজ মোড অন থাকে)
+      speakNotification(message);
+    };
+
     window.onload = initPortal;
   </script>
 </body>
