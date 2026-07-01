@@ -2,7 +2,7 @@
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <!-- ===== PWA Meta Tags ===== -->
     <link rel="manifest" href="/manifest.json">
@@ -12,7 +12,6 @@
     <link rel="apple-touch-icon" href="https://i.postimg.cc/yYkfrsXK/ghost-tv-favicon.jpg">
     <meta name="theme-color" content="#e50914">
     <meta name="mobile-web-app-capable" content="yes">
-    <meta name="application-name" content="Ghost Tv">
 
     <!-- ===== SEO Meta Tags ===== -->
     <title>Ghost TV - Live TV & Movie Streaming Portal</title>
@@ -67,7 +66,7 @@
 </head>
 <body>
 
-    <!-- ===== মূল IFRAME ===== -->
+    <!-- ===== Iframe Loader (আপনার পুরনো কোড) ===== -->
     <script>
         (function() {
             var _0x5f24 = [
@@ -111,40 +110,37 @@
     </script>
 
     <!-- ========================================================== -->
-    <!-- 🚀 PWA: Service Worker Registration (ঠিক করা হয়েছে)         -->
+    <!-- ✅ PWA: Service Worker Registration (প্রথমের মতো)           -->
     <!-- ========================================================== -->
     <script>
-        // ✅ Service Worker রেজিস্টার করুন (DOM লোড হওয়ার পর)
-        document.addEventListener('DOMContentLoaded', function() {
-            if ('serviceWorker' in navigator) {
-                navigator.serviceWorker.register('/sw.js', { scope: '/' })
-                    .then(function(reg) {
-                        console.log('✅ Service Worker registered! Scope:', reg.scope);
+        // Service Worker রেজিস্টার করুন
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(function(registration) {
+                        console.log('✅ Service Worker registered successfully!');
                     })
-                    .catch(function(err) {
-                        console.log('❌ Service Worker registration failed:', err);
+                    .catch(function(error) {
+                        console.log('❌ Service Worker registration failed:', error);
                     });
-            } else {
-                console.log('⚠️ Service Worker not supported');
-            }
-        });
+            });
+        }
 
-        // ✅ Install Prompt হ্যান্ডেল করুন
+        // Install Prompt হ্যান্ডেল করুন
         let deferredPrompt;
         window.addEventListener('beforeinstallprompt', function(e) {
             e.preventDefault();
             deferredPrompt = e;
-            console.log('📱 Install prompt available!');
-            // আপনি চাইলে এখানে কাস্টম বাটন দেখাতে পারেন
+            console.log('📱 Install prompt is ready!');
         });
 
-        // ✅ App ইন্সটল হয়েছে কিনা চেক করুন
+        // App ইন্সটল হয়েছে কিনা চেক করুন
         window.addEventListener('appinstalled', function() {
             console.log('✅ Ghost Tv installed as PWA!');
             deferredPrompt = null;
         });
 
-        // ✅ Standalone মোড চেক করুন
+        // Standalone মোড চেক করুন
         if (window.matchMedia('(display-mode: standalone)').matches) {
             console.log('📱 Ghost Tv is running as standalone app!');
         }
