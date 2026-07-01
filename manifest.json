@@ -4,7 +4,7 @@
   "description": "Watch Movies & Live TV for Free",
   "start_url": "/",
   "display": "standalone",
-  "orientation": "portrait",
+  "orientation": "any",
   "background_color": "#000000",
   "theme_color": "#e50914",
   "icons": [
@@ -19,13 +19,6 @@
       "sizes": "512x512",
       "type": "image/jpeg",
       "purpose": "any maskable"
-    }
-  ],
-  "screenshots": [
-    {
-      "src": "https://github.com/ghosttv620/GhostTv/releases/download/Ghost_Tv/Ghost.Tv.Logo.jpg",
-      "sizes": "1280x720",
-      "type": "image/jpeg"
     }
   ],
   "categories": ["entertainment", "video", "movies", "tv"],
