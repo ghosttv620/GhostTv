@@ -4,51 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <!-- ===== PWA Meta Tags ===== -->
-    <link rel="manifest" href="/manifest.json">
+    <!-- ===== PWA Meta ===== -->
+    <link rel="manifest" href="manifest.json">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Ghost Tv">
-    <link rel="apple-touch-icon" href="https://i.postimg.cc/yYkfrsXK/ghost-tv-favicon.jpg">
-    <meta name="theme-color" content="#e50914">
-    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="apple-touch-icon" href="https://github.com/ghosttv620/GhostTv/releases/download/Ghost_Tv/Ghost.Tv.Logo.jpg">
+    <meta name="theme-color" content="#000000">
 
-    <!-- ===== SEO Meta Tags ===== -->
-    <title>Ghost TV - Live TV & Movie Streaming Portal</title>
-    <meta name="description" content="Ghost TV-তে পাবেন বাফারিং ছাড়া যেকোনো লাইভ টিভি চ্যানেল এবং নতুন সব মুভি দেখার সুবিধা।">
-    <meta name="keywords" content="ghost tv, ghost tv live, live tv bangladesh, free movie streaming online, ghost tv top">
-    <meta name="author" content="Ghost TV">
-    <link rel="canonical" href="https://ghosttv.top/">
-    <link rel="icon" type="image/jpeg" href="https://i.postimg.cc/yYkfrsXK/ghost-tv-favicon.jpg">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://ghosttv.top/">
-    <meta property="og:title" content="Ghost TV - Live TV & Movie Streaming Portal">
-    <meta property="og:description" content="বাফারিং ছাড়াই উপভোগ করুন যেকোনো লাইভ টিভি চ্যানেল ও নতুন সব মুভি।">
-    <meta property="og:image" content="https://i.postimg.cc/yYkfrsXK/ghost-tv-favicon.jpg">
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://ghosttv.top/">
-    <meta property="twitter:title" content="Ghost TV - Live TV & Movie Streaming Portal">
-    <meta property="twitter:description" content="বাফারিং ছাড়া লাইভ টিভি চ্যানেল এবং নতুন মুভি দেখার নির্ভরযোগ্য প্ল্যাটফর্ম।">
-    <meta property="twitter:image" content="https://i.postimg.cc/yYkfrsXK/ghost-tv-favicon.jpg">
-
-    <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "WebSite",
-            "name": "Ghost TV",
-            "url": "https://ghosttv.top/"
-        }
-    </script>
+    <title>Ghost Tv</title>
 
     <style>
-        html,
-        body {
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+        }
+        html, body {
             width: 100%;
             height: 100%;
             overflow: hidden;
-            background-color: #000000;
+            background: #000;
         }
         iframe {
             position: fixed;
@@ -57,16 +33,117 @@
             width: 100%;
             height: 100%;
             border: none;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            z-index: 999999;
+            z-index: 1;
+        }
+
+        /* ===== PWA Install Banner (Popup Style) ===== */
+        #installBanner {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            width: 92%;
+            max-width: 400px;
+            background: rgba(20, 28, 45, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 16px 18px;
+            z-index: 9999999;
+            display: none;
+            align-items: center;
+            gap: 14px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
+            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
+            opacity: 0;
+        }
+        #installBanner.show {
+            display: flex;
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+        #installBanner .icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            flex-shrink: 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        #installBanner .text {
+            flex: 1;
+            color: #fff;
+        }
+        #installBanner .text .title {
+            font-weight: 700;
+            font-size: 15px;
+            color: #e50914;
+        }
+        #installBanner .text .sub {
+            font-size: 12px;
+            color: #9aa3b5;
+            margin-top: 2px;
+        }
+        #installBanner .btn-install {
+            background: #e50914;
+            color: #fff;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.2s;
+            flex-shrink: 0;
+        }
+        #installBanner .btn-install:hover {
+            transform: scale(1.05);
+            background: #b8070f;
+        }
+        #installBanner .btn-close {
+            background: rgba(255, 255, 255, 0.06);
+            color: #8a94a6;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 30px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.2s;
+            flex-shrink: 0;
+            line-height: 1;
+        }
+        #installBanner .btn-close:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+        }
+
+        @media (max-width: 480px) {
+            #installBanner {
+                bottom: 20px;
+                padding: 12px 14px;
+                gap: 10px;
+                width: 95%;
+            }
+            #installBanner .icon {
+                width: 40px;
+                height: 40px;
+            }
+            #installBanner .text .title {
+                font-size: 13px;
+            }
+            #installBanner .text .sub {
+                font-size: 10px;
+            }
+            #installBanner .btn-install {
+                padding: 6px 14px;
+                font-size: 11px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- ===== Iframe Loader (আপনার পুরনো কোড) ===== -->
+    <!-- ===== IFRAME ===== -->
     <script>
         (function() {
             var _0x5f24 = [
@@ -109,41 +186,100 @@
         })();
     </script>
 
+    <!-- ===== PWA Install Banner (Popup) ===== -->
+    <div id="installBanner">
+        <img class="icon" src="https://github.com/ghosttv620/GhostTv/releases/download/Ghost_Tv/Ghost.Tv.Logo.jpg" alt="Ghost Tv">
+        <div class="text">
+            <div class="title">👻 Ghost Tv</div>
+            <div class="sub">Watch Live TV & Movies</div>
+        </div>
+        <button class="btn-install" id="installBtn">📲 Install</button>
+        <button class="btn-close" id="closeBannerBtn">✕</button>
+    </div>
+
     <!-- ========================================================== -->
-    <!-- ✅ PWA: Service Worker Registration (প্রথমের মতো)           -->
+    <!-- ✅ PWA: Service Worker + Install Logic                      -->
     <!-- ========================================================== -->
     <script>
-        // Service Worker রেজিস্টার করুন
+        // ============================================
+        // 1. Service Worker Register
+        // ============================================
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('/sw.js')
-                    .then(function(registration) {
-                        console.log('✅ Service Worker registered successfully!');
+                    .then(function(reg) {
+                        console.log('✅ Service Worker registered!');
                     })
-                    .catch(function(error) {
-                        console.log('❌ Service Worker registration failed:', error);
+                    .catch(function(err) {
+                        console.log('❌ SW registration failed:', err);
                     });
             });
         }
 
-        // Install Prompt হ্যান্ডেল করুন
-        let deferredPrompt;
+        // ============================================
+        // 2. Install Banner Logic
+        // ============================================
+        let deferredPrompt = null;
+        const banner = document.getElementById('installBanner');
+        const installBtn = document.getElementById('installBtn');
+        const closeBtn = document.getElementById('closeBannerBtn');
+
+        // 👇 ব্রাউজার যখন Install প্রম্পট দিতে পারে
         window.addEventListener('beforeinstallprompt', function(e) {
             e.preventDefault();
             deferredPrompt = e;
-            console.log('📱 Install prompt is ready!');
+
+            // ব্যানার দেখান (যদি আগে বন্ধ না করা থাকে)
+            if (!sessionStorage.getItem('ghost_banner_closed')) {
+                banner.classList.add('show');
+            }
+            console.log('📱 Install prompt ready!');
         });
 
-        // App ইন্সটল হয়েছে কিনা চেক করুন
+        // 👇 Install বাটন ক্লিক করলে
+        installBtn.addEventListener('click', function() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then(function(result) {
+                    if (result.outcome === 'accepted') {
+                        console.log('✅ Ghost Tv installed!');
+                        banner.classList.remove('show');
+                    } else {
+                        console.log('❌ Installation declined');
+                    }
+                    deferredPrompt = null;
+                });
+            } else {
+                // Fallback: যদি deferredPrompt না থাকে
+                banner.classList.remove('show');
+            }
+        });
+
+        // 👇 Close বাটন ক্লিক করলে
+        closeBtn.addEventListener('click', function() {
+            banner.classList.remove('show');
+            sessionStorage.setItem('ghost_banner_closed', 'true');
+        });
+
+        // 👇 ইন্সটল হয়ে গেলে
         window.addEventListener('appinstalled', function() {
             console.log('✅ Ghost Tv installed as PWA!');
+            banner.classList.remove('show');
             deferredPrompt = null;
         });
 
-        // Standalone মোড চেক করুন
+        // 👇 ইতিমধ্যে Standalone মোডে আছে কিনা
         if (window.matchMedia('(display-mode: standalone)').matches) {
-            console.log('📱 Ghost Tv is running as standalone app!');
+            console.log('📱 Ghost Tv running as standalone app!');
+            banner.classList.remove('show');
         }
+
+        // 👇 ৫ সেকেন্ড পরেও যদি ব্যানার না দেখায়, তাহলে নিজে থেকে দেখান
+        setTimeout(function() {
+            if (deferredPrompt && !sessionStorage.getItem('ghost_banner_closed')) {
+                banner.classList.add('show');
+            }
+        }, 3000);
     </script>
 
 </body>
