@@ -9,23 +9,16 @@
   "theme_color": "#e50914",
   "icons": [
     {
-      "src": "https://i.postimg.cc/yYkfrsXK/ghost-tv-favicon.jpg",
+      "src": "https://github.com/ghosttv620/GhostTv/releases/download/Ghost_Tv/Ghost.Tv.Logo.jpg",
       "sizes": "192x192",
       "type": "image/jpeg",
       "purpose": "any maskable"
     },
     {
-      "src": "https://i.postimg.cc/yYkfrsXK/ghost-tv-favicon.jpg",
+      "src": "https://github.com/ghosttv620/GhostTv/releases/download/Ghost_Tv/Ghost.Tv.Logo.jpg",
       "sizes": "512x512",
       "type": "image/jpeg",
       "purpose": "any maskable"
-    }
-  ],
-  "screenshots": [
-    {
-      "src": "https://i.postimg.cc/yYkfrsXK/ghost-tv-favicon.jpg",
-      "sizes": "1280x720",
-      "type": "image/jpeg"
     }
   ],
   "categories": ["entertainment", "video", "movies", "tv"],
