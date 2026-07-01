@@ -4,27 +4,59 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-    <!-- ===== PWA Meta ===== -->
-    <link rel="manifest" href="manifest.json">
+    <!-- ===== PWA Meta Tags ===== -->
+    <link rel="manifest" href="/manifest.json">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="Ghost Tv">
-    <link rel="apple-touch-icon" href="https://github.com/ghosttv620/GhostTv/releases/download/Ghost_Tv/Ghost.Tv.Logo.jpg">
-    <meta name="theme-color" content="#000000">
+    <link rel="apple-touch-icon" href="https://i.postimg.cc/yYkfrsXK/ghost-tv-favicon.jpg">
+    <meta name="theme-color" content="#e50914">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Ghost Tv">
 
-    <title>Ghost Tv</title>
+    <!-- ===== SEO Meta Tags ===== -->
+    <title>Ghost TV - Live TV & Movie Streaming Portal</title>
+    <meta name="description" content="Ghost TV-তে পাবেন বাফারিং ছাড়া যেকোনো লাইভ টিভি চ্যানেল এবং নতুন সব মুভি দেখার সুবিধা। বাংলাদেশে ফ্রিতে সেরা বিনোদন উপভোগ করতে আজই ভিজিট করুন আমাদের অনলাইন পোর্টাল।">
+    <meta name="keywords" content="ghost tv, ghost tv live, live tv bangladesh, free movie streaming online, ghost tv top, watch movies bd, লাইভ টিভি, নতুন মুভি, ghosttv.top">
+    <meta name="author" content="Ghost TV">
+    <link rel="canonical" href="https://ghosttv.top/">
+    <link rel="icon" type="image/jpeg" href="https://i.postimg.cc/yYkfrsXK/ghost-tv-favicon.jpg">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ghosttv.top/">
+    <meta property="og:title" content="Ghost TV - Live TV & Movie Streaming Portal">
+    <meta property="og:description" content="বাফারিং ছাড়াই উপভোগ করুন যেকোনো লাইভ টিভি চ্যানেল ও নতুন সব মুভি। আপনার বিনোদনের বিশ্বস্ত অনলাইন প্ল্যাটফর্ম।">
+    <meta property="og:image" content="https://i.postimg.cc/yYkfrsXK/ghost-tv-favicon.jpg">
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://ghosttv.top/">
+    <meta property="twitter:title" content="Ghost TV - Live TV & Movie Streaming Portal">
+    <meta property="twitter:description" content="বাফারিং ছাড়া লাইভ টিভি চ্যানেল এবং নতুন মুভি দেখার নির্ভরযোগ্য প্ল্যাটফর্ম।">
+    <meta property="twitter:image" content="https://i.postimg.cc/yYkfrsXK/ghost-tv-favicon.jpg">
+
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "Ghost TV",
+            "url": "https://ghosttv.top/",
+            "logo": "https://i.postimg.cc/yYkfrsXK/ghost-tv-favicon.jpg",
+            "description": "Ghost TV is an online streaming platform offering a selection of live television channels and movies.",
+            "potentialAction": {
+                "@type": "SearchAction",
+                "target": "https://ghosttv.top/?search={search_term_string}",
+                "query-input": "required name=search_term_string"
+            }
+        }
+    </script>
 
     <style>
-        * {
+        html,
+        body {
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-        }
-        html, body {
             width: 100%;
             height: 100%;
             overflow: hidden;
-            background: #000;
+            background-color: #000000;
         }
         iframe {
             position: fixed;
@@ -33,58 +65,61 @@
             width: 100%;
             height: 100%;
             border: none;
-            z-index: 1;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            z-index: 999999;
         }
-
-        /* ===== PWA Install Banner (Popup Style) ===== */
-        #installBanner {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%) translateY(100px);
-            width: 92%;
-            max-width: 400px;
-            background: rgba(20, 28, 45, 0.92);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 16px 18px;
-            z-index: 9999999;
+        /* PWA Install Banner Style (Optional) */
+        #pwa-install-banner {
             display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.92);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-top: 2px solid #e50914;
+            padding: 14px 18px;
+            z-index: 9999999;
+            justify-content: space-between;
             align-items: center;
-            gap: 14px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
-            transition: transform 0.5s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
-            opacity: 0;
+            font-family: system-ui, -apple-system, sans-serif;
+            box-shadow: 0 -4px 24px rgba(229, 9, 20, 0.2);
         }
-        #installBanner.show {
+        #pwa-install-banner.show {
             display: flex;
-            transform: translateX(-50%) translateY(0);
-            opacity: 1;
         }
-        #installBanner .icon {
-            width: 48px;
-            height: 48px;
-            border-radius: 12px;
-            flex-shrink: 0;
+        #pwa-install-banner .banner-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        #pwa-install-banner .banner-left img {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
-        #installBanner .text {
-            flex: 1;
+        #pwa-install-banner .banner-left .banner-text {
             color: #fff;
         }
-        #installBanner .text .title {
+        #pwa-install-banner .banner-left .banner-text .banner-title {
             font-weight: 700;
-            font-size: 15px;
+            font-size: 14px;
             color: #e50914;
         }
-        #installBanner .text .sub {
-            font-size: 12px;
+        #pwa-install-banner .banner-left .banner-text .banner-sub {
+            font-size: 11px;
             color: #9aa3b5;
-            margin-top: 2px;
         }
-        #installBanner .btn-install {
+        #pwa-install-banner .banner-right {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        #pwa-install-banner .btn-install {
             background: #e50914;
             color: #fff;
             border: none;
@@ -94,56 +129,68 @@
             font-size: 13px;
             cursor: pointer;
             transition: 0.2s;
-            flex-shrink: 0;
         }
-        #installBanner .btn-install:hover {
+        #pwa-install-banner .btn-install:hover {
             transform: scale(1.05);
             background: #b8070f;
         }
-        #installBanner .btn-close {
-            background: rgba(255, 255, 255, 0.06);
+        #pwa-install-banner .btn-close {
+            background: rgba(255, 255, 255, 0.08);
             color: #8a94a6;
             border: none;
-            padding: 6px 12px;
+            padding: 6px 14px;
             border-radius: 30px;
-            font-size: 16px;
+            font-size: 13px;
             cursor: pointer;
             transition: 0.2s;
-            flex-shrink: 0;
-            line-height: 1;
         }
-        #installBanner .btn-close:hover {
+        #pwa-install-banner .btn-close:hover {
             background: rgba(255, 255, 255, 0.15);
             color: #fff;
         }
-
         @media (max-width: 480px) {
-            #installBanner {
-                bottom: 20px;
+            #pwa-install-banner {
                 padding: 12px 14px;
-                gap: 10px;
-                width: 95%;
             }
-            #installBanner .icon {
-                width: 40px;
-                height: 40px;
+            #pwa-install-banner .banner-left .banner-text .banner-title {
+                font-size: 12px;
             }
-            #installBanner .text .title {
-                font-size: 13px;
-            }
-            #installBanner .text .sub {
+            #pwa-install-banner .banner-left .banner-text .banner-sub {
                 font-size: 10px;
             }
-            #installBanner .btn-install {
+            #pwa-install-banner .btn-install {
                 padding: 6px 14px;
                 font-size: 11px;
+            }
+            #pwa-install-banner .btn-close {
+                padding: 4px 10px;
+                font-size: 11px;
+            }
+            #pwa-install-banner .banner-left img {
+                width: 36px;
+                height: 36px;
             }
         }
     </style>
 </head>
 <body>
 
-    <!-- ===== IFRAME ===== -->
+    <!-- ===== PWA ইনস্টল ব্যানার (যখন ব্রাউজার প্রম্পট দেবে) ===== -->
+    <div id="pwa-install-banner">
+        <div class="banner-left">
+            <img src="https://i.postimg.cc/yYkfrsXK/ghost-tv-favicon.jpg" alt="Ghost Tv">
+            <div class="banner-text">
+                <div class="banner-title">👻 Ghost Tv</div>
+                <div class="banner-sub">Watch Live TV & Movies</div>
+            </div>
+        </div>
+        <div class="banner-right">
+            <button class="btn-install" id="pwaInstallBtn">📲 Install</button>
+            <button class="btn-close" id="pwaCloseBtn">✕</button>
+        </div>
+    </div>
+
+    <!-- ===== মূল IFRAME ===== -->
     <script>
         (function() {
             var _0x5f24 = [
@@ -186,100 +233,83 @@
         })();
     </script>
 
-    <!-- ===== PWA Install Banner (Popup) ===== -->
-    <div id="installBanner">
-        <img class="icon" src="https://github.com/ghosttv620/GhostTv/releases/download/Ghost_Tv/Ghost.Tv.Logo.jpg" alt="Ghost Tv">
-        <div class="text">
-            <div class="title">👻 Ghost Tv</div>
-            <div class="sub">Watch Live TV & Movies</div>
-        </div>
-        <button class="btn-install" id="installBtn">📲 Install</button>
-        <button class="btn-close" id="closeBannerBtn">✕</button>
-    </div>
-
-    <!-- ========================================================== -->
-    <!-- ✅ PWA: Service Worker + Install Logic                      -->
-    <!-- ========================================================== -->
+    <!-- ===== PWA Service Worker + Install Logic ===== -->
     <script>
-        // ============================================
-        // 1. Service Worker Register
-        // ============================================
+        // ============================================================
+        // 🚀 PWA: Service Worker Registration
+        // ============================================================
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', function() {
                 navigator.serviceWorker.register('/sw.js')
-                    .then(function(reg) {
-                        console.log('✅ Service Worker registered!');
+                    .then(function(registration) {
+                        console.log('✅ Ghost Tv: Service Worker registered!');
                     })
-                    .catch(function(err) {
-                        console.log('❌ SW registration failed:', err);
+                    .catch(function(error) {
+                        console.log('❌ Ghost Tv: SW registration failed:', error);
                     });
             });
         }
 
-        // ============================================
-        // 2. Install Banner Logic
-        // ============================================
+        // ============================================================
+        // 📱 PWA: Install Banner Logic
+        // ============================================================
         let deferredPrompt = null;
-        const banner = document.getElementById('installBanner');
-        const installBtn = document.getElementById('installBtn');
-        const closeBtn = document.getElementById('closeBannerBtn');
+        const installBanner = document.getElementById('pwa-install-banner');
+        const installBtn = document.getElementById('pwaInstallBtn');
+        const closeBtn = document.getElementById('pwaCloseBtn');
 
-        // 👇 ব্রাউজার যখন Install প্রম্পট দিতে পারে
+        // Listen for beforeinstallprompt event
         window.addEventListener('beforeinstallprompt', function(e) {
             e.preventDefault();
             deferredPrompt = e;
-
-            // ব্যানার দেখান (যদি আগে বন্ধ না করা থাকে)
-            if (!sessionStorage.getItem('ghost_banner_closed')) {
-                banner.classList.add('show');
-            }
-            console.log('📱 Install prompt ready!');
+            // Show custom install banner
+            installBanner.classList.add('show');
+            console.log('📱 Ghost Tv: Install prompt available!');
         });
 
-        // 👇 Install বাটন ক্লিক করলে
+        // Install button click
         installBtn.addEventListener('click', function() {
             if (deferredPrompt) {
                 deferredPrompt.prompt();
-                deferredPrompt.userChoice.then(function(result) {
-                    if (result.outcome === 'accepted') {
-                        console.log('✅ Ghost Tv installed!');
-                        banner.classList.remove('show');
+                deferredPrompt.userChoice.then(function(choiceResult) {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('✅ Ghost Tv: App installed successfully!');
+                        installBanner.classList.remove('show');
                     } else {
-                        console.log('❌ Installation declined');
+                        console.log('❌ Ghost Tv: Installation declined');
                     }
                     deferredPrompt = null;
                 });
             } else {
-                // Fallback: যদি deferredPrompt না থাকে
-                banner.classList.remove('show');
+                // Fallback: Just hide the banner
+                installBanner.classList.remove('show');
             }
         });
 
-        // 👇 Close বাটন ক্লিক করলে
+        // Close banner
         closeBtn.addEventListener('click', function() {
-            banner.classList.remove('show');
-            sessionStorage.setItem('ghost_banner_closed', 'true');
+            installBanner.classList.remove('show');
+            // Remember that user closed it (session only)
+            sessionStorage.setItem('ghost_pwa_banner_closed', 'true');
         });
 
-        // 👇 ইন্সটল হয়ে গেলে
-        window.addEventListener('appinstalled', function() {
-            console.log('✅ Ghost Tv installed as PWA!');
-            banner.classList.remove('show');
-            deferredPrompt = null;
-        });
-
-        // 👇 ইতিমধ্যে Standalone মোডে আছে কিনা
-        if (window.matchMedia('(display-mode: standalone)').matches) {
-            console.log('📱 Ghost Tv running as standalone app!');
-            banner.classList.remove('show');
+        // Don't show banner if user closed it before in this session
+        if (sessionStorage.getItem('ghost_pwa_banner_closed') === 'true') {
+            installBanner.classList.remove('show');
         }
 
-        // 👇 ৫ সেকেন্ড পরেও যদি ব্যানার না দেখায়, তাহলে নিজে থেকে দেখান
-        setTimeout(function() {
-            if (deferredPrompt && !sessionStorage.getItem('ghost_banner_closed')) {
-                banner.classList.add('show');
-            }
-        }, 3000);
+        // Check if app is already installed (standalone mode)
+        if (window.matchMedia('(display-mode: standalone)').matches) {
+            console.log('📱 Ghost Tv: Running as standalone app!');
+            installBanner.classList.remove('show');
+        }
+
+        // ============================================================
+        // 🔄 Detect PWA Installation from App Store (optional)
+        // ============================================================
+        // If user comes from a custom scheme or deep link, handle here
+
+        console.log('👻 Ghost Tv PWA Loaded Successfully!');
     </script>
 
 </body>
