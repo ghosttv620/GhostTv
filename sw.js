@@ -2,14 +2,14 @@ const CACHE_NAME = 'ghost-tv-v1';
 const ASSETS = [
   '/',
   '/index.html',
-  'https://i.postimg.cc/yYkfrsXK/ghost-tv-favicon.jpg'
+  'https://github.com/ghosttv620/GhostTv/releases/download/Ghost_Tv/Ghost.Tv.Logo.jpg'
 ];
 
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
-        console.log('[SW] Caching assets...');
+        console.log('[SW] Caching...');
         return cache.addAll(ASSETS);
       })
       .then(() => self.skipWaiting())
@@ -31,9 +31,7 @@ self.addEventListener('fetch', event => {
   event.respondWith(
     caches.match(event.request)
       .then(cached => {
-        if (cached) {
-          return cached;
-        }
+        if (cached) return cached;
         return fetch(event.request)
           .then(response => {
             if (response && response.status === 200) {
@@ -45,9 +43,8 @@ self.addEventListener('fetch', event => {
             return response;
           })
           .catch(() => {
-            return new Response('🔴 অফলাইন মোড - Ghost Tv', {
-              status: 503,
-              statusText: 'Service Unavailable'
+            return new Response('🔴 অফলাইন - Ghost Tv', {
+              status: 503
             });
           });
       })
