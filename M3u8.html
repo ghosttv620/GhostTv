@@ -87,6 +87,72 @@
       color: #fff;
     }
 
+    /* ====== কার্ডের নতুন লেআউট: লোগো উপরে, নাম মাঝে, কপি বাটন নিচে ====== */
+    .card {
+      background: #fff;
+      padding: 10px 6px 12px;
+      border-radius: 16px;
+      border: 1px solid #e9edf2;
+      text-align: center;
+      transition: .2s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      height: 170px;
+      cursor: pointer;
+      gap: 4px;
+    }
+
+    .card img {
+      width: 56px;
+      height: 56px;
+      object-fit: contain;
+      background: #f9fafc;
+      border-radius: 12px;
+      padding: 4px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .card h4 {
+      font-size: .75rem;
+      font-weight: 600;
+      color: #0b1e33;
+      margin: 2px 0 4px;
+      line-height: 1.3;
+      max-height: 2.6em;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      word-break: break-word;
+      flex-shrink: 0;
+      transition: all 0.25s ease;
+      width: 100%;
+      padding: 0 4px;
+    }
+
+    .card .btn-copy {
+      border: none;
+      padding: 6px 12px;
+      border-radius: 30px;
+      font-size: .7rem;
+      font-weight: 700;
+      cursor: pointer;
+      background: #e9edf2;
+      color: #1e293b;
+      transition: .15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      width: 85%;
+      justify-content: center;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+      margin-top: auto;
+      flex-shrink: 0;
+    }
+
     /* ====== আগের স্টাইল ====== */
     * {
       margin: 0;
@@ -499,82 +565,6 @@
       margin-top: 8px
     }
 
-    .card {
-      background: #fff;
-      padding: 8px 4px 10px;
-      border-radius: 16px;
-      border: 1px solid #e9edf2;
-      text-align: center;
-      transition: .2s ease;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 160px;
-      cursor: pointer
-    }
-
-    .card:hover {
-      transform: translateY(-3px);
-      border-color: #b3c9f0;
-      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.04)
-    }
-
-    .card img {
-      width: 48px;
-      height: 48px;
-      object-fit: contain;
-      background: #f9fafc;
-      border-radius: 10px;
-      padding: 3px;
-      margin-bottom: 2px;
-      flex-shrink: 0
-    }
-
-    .card h4 {
-      font-size: .7rem;
-      font-weight: 600;
-      color: #0b1e33;
-      margin: 2px 0 6px;
-      line-height: 1.3;
-      max-height: 2.6em;
-      overflow: hidden;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      word-break: break-word;
-      flex-shrink: 0;
-      transition: all 0.25s ease;
-    }
-
-    .card .btn-copy {
-      border: none;
-      padding: 6px 12px;
-      border-radius: 30px;
-      font-size: .7rem;
-      font-weight: 700;
-      cursor: pointer;
-      background: #e9edf2;
-      color: #1e293b;
-      transition: .15s;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      width: 85%;
-      justify-content: center;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
-      margin-top: auto
-    }
-
-    .card .btn-copy:hover {
-      background: #d5dce6;
-      transform: scale(1.02)
-    }
-
-    .card .btn-copy:active {
-      transform: scale(.96)
-    }
-
     .loading-placeholder {
       grid-column: 1/-1;
       text-align: center;
@@ -585,20 +575,21 @@
       border-radius: 20px
     }
 
+    /* ====== রেসপন্সিভ ====== */
     @media(max-width:820px) {
       .channel-grid {
         gap: 10px
       }
       .card {
-        height: 150px;
-        padding: 6px 3px 8px
+        height: 155px;
+        padding: 8px 4px 10px
       }
       .card img {
-        width: 42px;
-        height: 42px
+        width: 48px;
+        height: 48px
       }
       .card h4 {
-        font-size: .62rem
+        font-size: .68rem
       }
       .card .btn-copy {
         padding: 5px 8px;
@@ -606,7 +597,7 @@
         width: 80%
       }
       .card.playing h4 {
-        font-size: 0.8rem !important;
+        font-size: 0.85rem !important;
       }
     }
 
@@ -616,18 +607,18 @@
       }
       .card {
         height: 140px;
-        padding: 4px 2px 6px;
+        padding: 6px 3px 8px;
         border-radius: 12px
       }
       .card img {
-        width: 36px;
-        height: 36px;
-        border-radius: 8px;
-        padding: 2px
+        width: 40px;
+        height: 40px;
+        border-radius: 10px;
+        padding: 3px
       }
       .card h4 {
-        font-size: .55rem;
-        margin: 1px 0 4px;
+        font-size: .6rem;
+        margin: 1px 0 3px;
         -webkit-line-clamp: 2
       }
       .card .btn-copy {
@@ -637,7 +628,7 @@
         border-radius: 20px
       }
       .card.playing h4 {
-        font-size: 0.7rem !important;
+        font-size: 0.75rem !important;
       }
       #search-section {
         padding: 4px 8px;
@@ -720,18 +711,18 @@
       }
       .card {
         height: 120px;
-        padding: 3px 2px 4px;
+        padding: 4px 2px 6px;
         border-radius: 10px
       }
       .card img {
-        width: 28px;
-        height: 28px;
-        border-radius: 6px;
+        width: 32px;
+        height: 32px;
+        border-radius: 8px;
         padding: 2px
       }
       .card h4 {
-        font-size: .45rem;
-        margin: 1px 0 2px;
+        font-size: .5rem;
+        margin: 0 0 2px;
         -webkit-line-clamp: 2
       }
       .card .btn-copy {
@@ -741,7 +732,7 @@
         border-radius: 14px
       }
       .card.playing h4 {
-        font-size: 0.6rem !important;
+        font-size: 0.65rem !important;
       }
       .popup-card {
         padding: 10px 6px 8px;
@@ -1017,7 +1008,6 @@
           currentPlayingCard.classList.remove('playing');
           currentPlayingCard = null;
         }
-        // সব কার্ড থেকে playing ক্লাস রিমুভ
         document.querySelectorAll('.card.playing').forEach(el => el.classList.remove('playing'));
       }
 
@@ -1025,10 +1015,8 @@
       function playVideo(url, cardElement) {
         if (!url) return;
 
-        // আগের হাইলাইট রিমুভ
         removeHighlightFromAll();
 
-        // নতুন কার্ড হাইলাইট
         if (cardElement) {
           cardElement.classList.add('playing');
           currentPlayingCard = cardElement;
@@ -1075,14 +1063,12 @@
             <button class="btn-copy" data-url="${ch.url}">📋 কপি লিঙ্ক</button>
           `;
 
-          // কার্ডে ক্লিক -> ভিডিও প্লে
           card.addEventListener('click', function(e) {
             if (e.target.closest('button')) return;
             const u = this.querySelector('.btn-copy')?.getAttribute('data-url');
             if (u) playVideo(u, this);
           });
 
-          // কপি বাটন
           card.querySelector('.btn-copy').addEventListener('click', function(e) {
             e.stopPropagation();
             const u = this.getAttribute('data-url');
@@ -1092,7 +1078,6 @@
           grid.appendChild(card);
         });
 
-        // "আরও ১০০টি" বাটন
         if (end < total) {
           const div = document.createElement('div');
           div.style.gridColumn = '1 / -1';
@@ -1113,13 +1098,8 @@
           grid.appendChild(div);
         }
 
-        // যদি আগে কোনো কার্ড প্লে ছিল, আবার হাইলাইট যোগ করি (যদি ওই কার্ড এই পেজে থাকে)
         if (currentPlayingCard) {
-          // currentPlayingCard এখনও DOM এ আছে কিনা চেক করুন
-          if (document.body.contains(currentPlayingCard)) {
-            // আছে, তাই কিছু করার দরকার নেই
-          } else {
-            // পেজ পরিবর্তনে পুরনো রেফারেন্স কাজ করবে না, তাই রিসেট
+          if (!document.body.contains(currentPlayingCard)) {
             currentPlayingCard = null;
           }
         }
@@ -1138,7 +1118,6 @@
         filteredChannels = null;
         searchInput.value = '';
         currentPage = 0;
-        // হাইলাইট রিসেট
         removeHighlightFromAll();
         updateCategories(channels);
         renderPage(currentPage);
@@ -1158,7 +1137,6 @@
           });
         }
         currentPage = 0;
-        // ফিল্টার করলে হাইলাইট রিমুভ
         removeHighlightFromAll();
         renderPage(currentPage);
         setStatus(filteredChannels !== null ? `সার্চ ফলাফল: ${filteredChannels.length}টি` : `${allChannels.length}টি চ্যানেল`, filteredChannels !== null ? '🔍' : '✅');
@@ -1215,7 +1193,7 @@
       window.filterByCategory = filterByCategory;
 
       setStatus('প্রস্তুত', '⏳');
-      console.log('✅ মাস্টার লাইভ টিভি – চ্যানেল প্লে করলে নাম জুম + হাইলাইট');
+      console.log('✅ মাস্টার লাইভ টিভি – লোগো উপরে, নাম মাঝে, কপি বাটন নিচে');
     })();
   </script>
 </body>
