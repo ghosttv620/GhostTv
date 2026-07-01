@@ -3,25 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    
-    <!-- SEO Meta Tags -->
+
+    <!-- ===== PWA Meta Tags ===== -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Ghost Tv">
+    <link rel="apple-touch-icon" href="https://i.postimg.cc/yYkfrsXK/ghost-tv-favicon.jpg">
+    <meta name="theme-color" content="#e50914">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Ghost Tv">
+
+    <!-- ===== SEO Meta Tags ===== -->
     <title>Ghost TV - Live TV & Movie Streaming Portal</title>
     <meta name="description" content="Ghost TV-তে পাবেন বাফারিং ছাড়া যেকোনো লাইভ টিভি চ্যানেল এবং নতুন সব মুভি দেখার সুবিধা। বাংলাদেশে ফ্রিতে সেরা বিনোদন উপভোগ করতে আজই ভিজিট করুন আমাদের অনলাইন পোর্টাল।">
     <meta name="keywords" content="ghost tv, ghost tv live, live tv bangladesh, free movie streaming online, ghost tv top, watch movies bd, লাইভ টিভি, নতুন মুভি, ghosttv.top">
     <meta name="author" content="Ghost TV">
     <link rel="canonical" href="https://ghosttv.top/">
-
     <link rel="icon" type="image/jpeg" href="https://i.postimg.cc/yYkfrsXK/ghost-tv-favicon.jpg">
-    <link rel="apple-touch-icon" href="https://i.postimg.cc/yYkfrsXK/ghost-tv-favicon.jpg">
-
-    
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://ghosttv.top/">
     <meta property="og:title" content="Ghost TV - Live TV & Movie Streaming Portal">
     <meta property="og:description" content="বাফারিং ছাড়াই উপভোগ করুন যেকোনো লাইভ টিভি চ্যানেল ও নতুন সব মুভি। আপনার বিনোদনের বিশ্বস্ত অনলাইন প্ল্যাটফর্ম।">
     <meta property="og:image" content="https://i.postimg.cc/yYkfrsXK/ghost-tv-favicon.jpg">
-
-    <!-- Twitter Card Meta Tags -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://ghosttv.top/">
     <meta property="twitter:title" content="Ghost TV - Live TV & Movie Streaming Portal">
@@ -29,22 +33,24 @@
     <meta property="twitter:image" content="https://i.postimg.cc/yYkfrsXK/ghost-tv-favicon.jpg">
 
     <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "Ghost TV",
-      "url": "https://ghosttv.top/",
-      "logo": "https://i.postimg.cc/yYkfrsXK/ghost-tv-favicon.jpg",
-      "description": "Ghost TV is an online streaming platform offering a selection of live television channels and movies.",
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://ghosttv.top/?search={search_term_string}",
-        "query-input": "required name=search_term_string"
-      }
-    }
+        {
+            "@context": "https://schema.org",
+            "@type": "WebSite",
+            "name": "Ghost TV",
+            "url": "https://ghosttv.top/",
+            "logo": "https://i.postimg.cc/yYkfrsXK/ghost-tv-favicon.jpg",
+            "description": "Ghost TV is an online streaming platform offering a selection of live television channels and movies.",
+            "potentialAction": {
+                "@type": "SearchAction",
+                "target": "https://ghosttv.top/?search={search_term_string}",
+                "query-input": "required name=search_term_string"
+            }
+        }
     </script>
+
     <style>
-        html, body {
+        html,
+        body {
             margin: 0;
             padding: 0;
             width: 100%;
@@ -64,38 +70,152 @@
             overflow: hidden;
             z-index: 999999;
         }
+        /* PWA Install Banner Style (Optional) */
+        #pwa-install-banner {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.92);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-top: 2px solid #e50914;
+            padding: 14px 18px;
+            z-index: 9999999;
+            justify-content: space-between;
+            align-items: center;
+            font-family: system-ui, -apple-system, sans-serif;
+            box-shadow: 0 -4px 24px rgba(229, 9, 20, 0.2);
+        }
+        #pwa-install-banner.show {
+            display: flex;
+        }
+        #pwa-install-banner .banner-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        #pwa-install-banner .banner-left img {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        #pwa-install-banner .banner-left .banner-text {
+            color: #fff;
+        }
+        #pwa-install-banner .banner-left .banner-text .banner-title {
+            font-weight: 700;
+            font-size: 14px;
+            color: #e50914;
+        }
+        #pwa-install-banner .banner-left .banner-text .banner-sub {
+            font-size: 11px;
+            color: #9aa3b5;
+        }
+        #pwa-install-banner .banner-right {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        #pwa-install-banner .btn-install {
+            background: #e50914;
+            color: #fff;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        #pwa-install-banner .btn-install:hover {
+            transform: scale(1.05);
+            background: #b8070f;
+        }
+        #pwa-install-banner .btn-close {
+            background: rgba(255, 255, 255, 0.08);
+            color: #8a94a6;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        #pwa-install-banner .btn-close:hover {
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+        }
+        @media (max-width: 480px) {
+            #pwa-install-banner {
+                padding: 12px 14px;
+            }
+            #pwa-install-banner .banner-left .banner-text .banner-title {
+                font-size: 12px;
+            }
+            #pwa-install-banner .banner-left .banner-text .banner-sub {
+                font-size: 10px;
+            }
+            #pwa-install-banner .btn-install {
+                padding: 6px 14px;
+                font-size: 11px;
+            }
+            #pwa-install-banner .btn-close {
+                padding: 4px 10px;
+                font-size: 11px;
+            }
+            #pwa-install-banner .banner-left img {
+                width: 36px;
+                height: 36px;
+            }
+        }
     </style>
 </head>
 <body>
 
-    <script type="text/javascript">
+    <!-- ===== PWA ইনস্টল ব্যানার (যখন ব্রাউজার প্রম্পট দেবে) ===== -->
+    <div id="pwa-install-banner">
+        <div class="banner-left">
+            <img src="https://i.postimg.cc/yYkfrsXK/ghost-tv-favicon.jpg" alt="Ghost Tv">
+            <div class="banner-text">
+                <div class="banner-title">👻 Ghost Tv</div>
+                <div class="banner-sub">Watch Live TV & Movies</div>
+            </div>
+        </div>
+        <div class="banner-right">
+            <button class="btn-install" id="pwaInstallBtn">📲 Install</button>
+            <button class="btn-close" id="pwaCloseBtn">✕</button>
+        </div>
+    </div>
+
+    <!-- ===== মূল IFRAME ===== -->
+    <script>
         (function() {
             var _0x5f24 = [
-                "\x69\x66\x72\x61\x6d\x65", 
-                "\x63\x72\x65\x61\x74\x65\x45\x6c\x65\x6d\x65\x6e\x74", 
-                "\x73\x72\x63", 
-                "\x67\x68\x6f\x73\x74\x74\x76\x74\x6f\x70\x5f\x70\x72\x69\x76\x61\x74\x65\x5f\x70\x72\x6f\x74\x65\x63\x74\x65\x64\x5f\x63\x6f\x6e\x74\x65\x6e\x74\x5f\x64\x65\x6c\x69\x76\x65\x72\x79\x5f\x6e\x65\x74\x77\x6f\x72\x6b\x5f\x73\x74\x72\x65\x61\x6d\x69\x6e\x67\x5f\x63\x6f\x72\x65\x5f\x65\x6e\x67\x69\x6e\x65\x5f\x70\x72\x6f\x64\x75\x63\x74\x69\x6f\x6e\x5f\x72\x65\x6c\x65\x61\x73\x65\x5f\x32\x30\x32\x36\x5f\x62\x75\x69\x6c\x64\x5f\x78\x39\x61\x38\x63\x37\x76\x36\x6d\x35\x6e\x34\x71\x33\x77\x32\x65\x31\x72\x30\x5f\x73\x65\x63\x75\x72\x65\x5f\x6c\x6f\x61\x64\x65\x72\x5f\x69\x6e\x74\x65\x72\x66\x61\x63\x65\x5f\x67\x68\x6f\x73\x74\x5f\x66\x69\x6c\x65\x2e\x68\x74\x6d\x6c", 
-                "\x61\x70\x70\x65\x6e\x64\x43\x68\x69\x6c\x64", 
-                "\x62\x6f\x64\x79", 
-                "\x63\x6f\x6e\x74\x65\x78\x74\x6d\x65\x6e\x75", 
-                "\x70\x72\x65\x76\x65\x6e\x74\x44\x65\x66\x61\x75\x6c\x74", 
-                "\x61\x64\x64\x45\x76\x65\x6e\x74\x4c\x69\x73\x74\x65\x6e\x65\x72", 
-                "\x6a\x65\x79\x64\x6f\x77\x6e", 
-                "\x6b\x65\x79\x44\x6f\x77\x6e", 
-                "\x6b\x65\x7a\x43\x6f\x64\x65", 
-                "\x63\x74\x72\x6c\x4b\x65\x79", 
-                "\x73\x68\x69\x66\x74\x4b\x65\x79", 
+                "\x69\x66\x72\x61\x6d\x65",
+                "\x63\x72\x65\x61\x74\x65\x45\x6c\x65\x6d\x65\x6e\x74",
+                "\x73\x72\x63",
+                "\x67\x68\x6f\x73\x74\x74\x76\x74\x6f\x70\x5f\x70\x72\x69\x76\x61\x74\x65\x5f\x70\x72\x6f\x74\x65\x63\x74\x65\x64\x5f\x63\x6f\x6e\x74\x65\x6e\x74\x5f\x64\x65\x6c\x69\x76\x65\x72\x79\x5f\x6e\x65\x74\x77\x6f\x72\x6b\x5f\x73\x74\x72\x65\x61\x6d\x69\x6e\x67\x5f\x63\x6f\x72\x65\x5f\x65\x6e\x67\x69\x6e\x65\x5f\x70\x72\x6f\x64\x75\x63\x74\x69\x6f\x6e\x5f\x72\x65\x6c\x65\x61\x73\x65\x5f\x32\x30\x32\x36\x5f\x62\x75\x69\x6c\x64\x5f\x78\x39\x61\x38\x63\x37\x76\x36\x6d\x35\x6e\x34\x71\x33\x77\x32\x65\x31\x72\x30\x5f\x73\x65\x63\x75\x72\x65\x5f\x6c\x6f\x61\x64\x65\x72\x5f\x69\x6e\x74\x65\x72\x66\x61\x63\x65\x5f\x67\x68\x6f\x73\x74\x5f\x66\x69\x6c\x65\x2e\x68\x74\x6d\x6c",
+                "\x61\x70\x70\x65\x6e\x64\x43\x68\x69\x6c\x64",
+                "\x62\x6f\x64\x79",
+                "\x63\x6f\x6e\x74\x65\x78\x74\x6d\x65\x6e\x75",
+                "\x70\x72\x65\x76\x65\x6e\x74\x44\x65\x66\x61\x75\x6c\x74",
+                "\x61\x64\x64\x45\x76\x65\x6e\x74\x4c\x69\x73\x74\x65\x6e\x65\x72",
+                "\x6a\x65\x79\x64\x6f\x77\x6e",
+                "\x6b\x65\x79\x44\x6f\x77\x6e",
+                "\x6b\x65\x7a\x43\x6f\x64\x65",
+                "\x63\x74\x72\x6c\x4b\x65\x79",
+                "\x73\x68\x69\x66\x74\x4b\x65\x79",
                 "\x6b\x65\x79\x64\x6f\x77\x6e"
             ];
-
             var _0x12a3 = document[_0x5f24[1]](_0x5f24[0]);
             _0x12a3[_0x5f24[2]] = _0x5f24[3];
             document[_0x5f24[5]][_0x5f24[4]](_0x12a3);
-
             document[_0x5f24[8]](_0x5f24[6], function(_0x4b72) {
                 _0x4b72[_0x5f24[7]]();
             });
-
             document[_0x5f24[8]](_0x5f24[14], function(_0x2e1a) {
                 if (_0x2e1a.keyCode == 123) {
                     _0x2e1a[_0x5f24[7]]();
@@ -112,5 +232,85 @@
             });
         })();
     </script>
+
+    <!-- ===== PWA Service Worker + Install Logic ===== -->
+    <script>
+        // ============================================================
+        // 🚀 PWA: Service Worker Registration
+        // ============================================================
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(function(registration) {
+                        console.log('✅ Ghost Tv: Service Worker registered!');
+                    })
+                    .catch(function(error) {
+                        console.log('❌ Ghost Tv: SW registration failed:', error);
+                    });
+            });
+        }
+
+        // ============================================================
+        // 📱 PWA: Install Banner Logic
+        // ============================================================
+        let deferredPrompt = null;
+        const installBanner = document.getElementById('pwa-install-banner');
+        const installBtn = document.getElementById('pwaInstallBtn');
+        const closeBtn = document.getElementById('pwaCloseBtn');
+
+        // Listen for beforeinstallprompt event
+        window.addEventListener('beforeinstallprompt', function(e) {
+            e.preventDefault();
+            deferredPrompt = e;
+            // Show custom install banner
+            installBanner.classList.add('show');
+            console.log('📱 Ghost Tv: Install prompt available!');
+        });
+
+        // Install button click
+        installBtn.addEventListener('click', function() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                deferredPrompt.userChoice.then(function(choiceResult) {
+                    if (choiceResult.outcome === 'accepted') {
+                        console.log('✅ Ghost Tv: App installed successfully!');
+                        installBanner.classList.remove('show');
+                    } else {
+                        console.log('❌ Ghost Tv: Installation declined');
+                    }
+                    deferredPrompt = null;
+                });
+            } else {
+                // Fallback: Just hide the banner
+                installBanner.classList.remove('show');
+            }
+        });
+
+        // Close banner
+        closeBtn.addEventListener('click', function() {
+            installBanner.classList.remove('show');
+            // Remember that user closed it (session only)
+            sessionStorage.setItem('ghost_pwa_banner_closed', 'true');
+        });
+
+        // Don't show banner if user closed it before in this session
+        if (sessionStorage.getItem('ghost_pwa_banner_closed') === 'true') {
+            installBanner.classList.remove('show');
+        }
+
+        // Check if app is already installed (standalone mode)
+        if (window.matchMedia('(display-mode: standalone)').matches) {
+            console.log('📱 Ghost Tv: Running as standalone app!');
+            installBanner.classList.remove('show');
+        }
+
+        // ============================================================
+        // 🔄 Detect PWA Installation from App Store (optional)
+        // ============================================================
+        // If user comes from a custom scheme or deep link, handle here
+
+        console.log('👻 Ghost Tv PWA Loaded Successfully!');
+    </script>
+
 </body>
 </html>
