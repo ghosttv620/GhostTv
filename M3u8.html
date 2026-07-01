@@ -7,714 +7,292 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clappr@latest/dist/clappr.min.js">
     </script>
     <style>
-        /* ===== রিসেট ===== */
+        /*======= প্রটেকশন স্টাইল =======*/
         * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
         body {
+            position: relative;
             background: #f0f2f5;
             padding-bottom: 80px;
             min-height: 100vh;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
         }
-
-        /* ===== প্লেয়ার - স্টিকি ===== */
-        #player-section {
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            background: #000;
-            width: 100%;
-            display: none;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
-            aspect-ratio: 16 / 9;
-            max-height: 100vh;
-            overflow: hidden;
-        }
-        #player-wrapper {
-            width: 100%;
-            height: 100%;
-            background: #000;
-        }
-
-        /* ===== সার্চ ও ক্যাটাগরি সেকশন - স্টিকি ===== */
-        #search-section {
-            position: sticky;
-            top: 0;
-            z-index: 999;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            padding: 6px 12px;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-            display: none;
-            align-items: center;
-            gap: 4px;
-            flex-wrap: wrap;
-            justify-content: center;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-        }
-        #search-section input {
-            flex: 2 1 80px;
-            padding: 4px 10px;
-            border: 1px solid rgba(0, 0, 0, 0.08);
-            border-radius: 30px;
-            font-size: 0.7rem;
-            background: rgba(255, 255, 255, 0.8);
-            outline: none;
-            min-width: 60px;
-            height: 26px;
-        }
-        #search-section input:focus {
-            border-color: #2563eb;
-            background: rgba(255, 255, 255, 0.95);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.08);
-        }
-        #search-section select {
-            padding: 3px 8px;
-            border: 1px solid rgba(0, 0, 0, 0.08);
-            border-radius: 30px;
-            font-size: 0.65rem;
-            background: rgba(255, 255, 255, 0.8);
-            outline: none;
-            height: 26px;
-            min-width: 80px;
-            cursor: pointer;
-            color: #1e293b;
-        }
-        #search-section select:focus {
-            border-color: #2563eb;
-        }
-        #search-section .search-btn {
-            padding: 4px 10px;
-            background: #2563eb;
-            color: white;
-            border: none;
-            border-radius: 30px;
-            font-weight: 600;
-            font-size: 0.65rem;
-            cursor: pointer;
-            transition: 0.2s;
-            white-space: nowrap;
-            height: 26px;
-            display: inline-flex;
-            align-items: center;
-        }
-        #search-section .search-btn:hover {
-            background: #1d4ed8;
-        }
-
-        /* ===== কন্টেইনার ===== */
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 8px 10px 30px;
-        }
-
-        /* ===== পপআপ ===== */
-        .popup-toggle-btn {
+        /* ওয়াটারমার্ক ব্যাকগ্রাউন্ড */
+        body::before {
+            content: "© Ghost Tv";
             position: fixed;
-            bottom: 24px;
-            right: 24px;
-            z-index: 999;
-            background: #2563eb;
-            color: white;
-            border: none;
-            border-radius: 60px;
-            padding: 10px 16px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            box-shadow: 0 8px 24px rgba(37, 99, 235, 0.4);
-            cursor: pointer;
-            transition: 0.25s ease;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(4px);
-        }
-        .popup-toggle-btn:hover {
-            transform: scale(1.05) translateY(-2px);
-            background: #1d4ed8;
-        }
-        .popup-toggle-btn .badge {
-            background: rgba(255, 255, 255, 0.25);
-            border-radius: 40px;
-            padding: 2px 8px;
-            font-size: 0.6rem;
-            font-weight: 500;
-        }
-        .popup-overlay {
-            position: fixed;
-            inset: 0;
-            z-index: 9999;
-            background: rgba(10, 20, 40, 0.45);
-            backdrop-filter: blur(14px) saturate(1.2);
-            -webkit-backdrop-filter: blur(14px) saturate(1.2);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            padding: 16px;
-            animation: fadeIn 0.3s ease;
-        }
-        .popup-overlay.active {
-            display: flex;
-        }
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: scale(0.96);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1);
-            }
-        }
-        .popup-card {
-            background: rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(24px) saturate(1.4);
-            -webkit-backdrop-filter: blur(24px) saturate(1.4);
-            border-radius: 28px;
-            padding: 16px 14px 14px;
-            max-width: 450px;
-            width: 100%;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.25) inset;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            position: relative;
-        }
-        .popup-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: 28px;
-            background: radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 80px;
+            font-weight: 900;
+            color: rgba(0, 0, 0, 0.03);
             pointer-events: none;
+            z-index: 0;
+            letter-spacing: 10px;
+            text-transform: uppercase;
+            white-space: nowrap;
         }
-        .popup-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 12px;
+        .container,
+        #player-section,
+        #search-section,
+        .popup-overlay {
             position: relative;
             z-index: 1;
         }
-        .popup-header h2 {
-            font-size: 1rem;
-            font-weight: 700;
-            color: #0b1e33;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .popup-header h2 span {
-            background: rgba(37, 99, 235, 0.15);
-            padding: 2px 8px;
-            border-radius: 40px;
-            font-size: 0.55rem;
-            font-weight: 500;
-            color: #1d4ed8;
-        }
-        .popup-close-btn {
-            background: rgba(0, 0, 0, 0.06);
-            border: none;
-            border-radius: 60px;
-            width: 30px;
-            height: 30px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: 0.2s;
-            color: #1e293b;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        .popup-close-btn:hover {
-            background: rgba(220, 38, 38, 0.15);
-            color: #b91c1c;
-            transform: rotate(90deg);
-        }
-        .popup-body {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            position: relative;
-            z-index: 1;
-        }
+        .card .btn-copy,
+        .popup-card,
         .function-box {
-            background: rgba(255, 255, 255, 0.35);
-            backdrop-filter: blur(4px);
-            -webkit-backdrop-filter: blur(4px);
-            border-radius: 14px;
-            padding: 8px 12px;
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+            user-select: none;
+            -webkit-user-select: none;
         }
-        .function-box .label {
-            font-size: 0.65rem;
-            font-weight: 600;
-            color: #1e293b;
-            opacity: 0.7;
-            letter-spacing: 0.2px;
-            margin-bottom: 4px;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-        .function-box .row {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            flex-wrap: wrap;
-        }
-        .function-box input[type="text"] {
-            flex: 1 1 100px;
-            min-width: 70px;
-            padding: 4px 10px;
-            border: 1px solid rgba(0, 0, 0, 0.08);
-            border-radius: 30px;
-            font-size: 0.75rem;
-            background: rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(4px);
-            outline: none;
-            transition: 0.2s;
-            height: 28px;
-        }
-        .function-box input[type="text"]:focus {
-            border-color: #2563eb;
-            background: rgba(255, 255, 255, 0.9);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-        }
-        .function-box select {
-            padding: 3px 8px;
-            border: 1px solid rgba(0, 0, 0, 0.08);
-            border-radius: 30px;
-            font-size: 0.7rem;
-            background: rgba(255, 255, 255, 0.6);
-            outline: none;
-            height: 28px;
-            min-width: 100px;
-            cursor: pointer;
-        }
-        .function-box select:focus {
-            border-color: #2563eb;
-        }
-        .btn-glass {
-            padding: 4px 12px;
-            border: none;
-            border-radius: 30px;
-            font-weight: 600;
-            font-size: 0.7rem;
-            cursor: pointer;
-            transition: 0.2s;
-            white-space: nowrap;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            background: rgba(255, 255, 255, 0.5);
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: #1e293b;
-            height: 28px;
-        }
-        .btn-glass:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-        }
-        .btn-primary {
-            background: #2563eb;
-            color: white;
-            border-color: #2563eb;
-            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.2);
-        }
-        .btn-primary:hover {
-            background: #1d4ed8;
-        }
-        .btn-success {
-            background: #10b981;
-            color: white;
-            border-color: #10b981;
-            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.2);
-        }
-        .btn-success:hover {
-            background: #059669;
-        }
-        .btn-danger {
-            background: #ef4444;
-            color: white;
-            border-color: #ef4444;
-            box-shadow: 0 4px 14px rgba(239, 68, 68, 0.2);
-        }
-        .btn-danger:hover {
-            background: #dc2626;
-        }
-        .btn-secondary {
-            background: #8b95a5;
-            color: white;
-            border-color: #8b95a5;
-        }
-        .btn-secondary:hover {
-            background: #6b7a8f;
-        }
-        .file-name-display {
-            font-size: 0.6rem;
-            color: #4b5b6b;
-            background: rgba(255, 255, 255, 0.3);
-            padding: 2px 10px;
-            border-radius: 30px;
-            border: 1px solid rgba(0, 0, 0, 0.04);
-            max-width: 100px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            height: 24px;
-            display: flex;
-            align-items: center;
-        }
-        .status-text {
-            font-size: 0.75rem;
-            color: #1e293b;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            padding: 2px 0;
-        }
-        .status-text .icon {
-            font-size: 0.85rem;
+        input[type="text"],
+        input[type="file"],
+        select,
+        textarea {
+            user-select: text !important;
+            -webkit-user-select: text !important;
         }
 
-        /* ===== চ্যানেল গ্রিড – ৪ কলাম ===== */
-        .channel-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-            margin-top: 8px;
-        }
-
-        /* ===== কার্ড – কপি বাটন নিচে ===== */
-        .card {
-            background: white;
-            padding: 8px 4px 10px;
-            border-radius: 16px;
-            border: 1px solid #e9edf2;
-            text-align: center;
-            transition: 0.15s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 160px;
-            cursor: pointer;
-        }
-        .card:hover {
-            transform: translateY(-3px);
-            border-color: #b3c9f0;
-            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.04);
-        }
-        .card img {
-            width: 48px;
-            height: 48px;
-            object-fit: contain;
-            background: #f9fafc;
-            border-radius: 10px;
-            padding: 3px;
-            margin-bottom: 2px;
-            flex-shrink: 0;
-        }
-        .card h4 {
-            font-size: 0.7rem;
-            font-weight: 600;
-            color: #0b1e33;
-            margin: 2px 0 6px;
-            line-height: 1.3;
-            max-height: 2.6em;
-            overflow: hidden;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            word-break: break-word;
-            flex-shrink: 0;
-        }
-        .card .btn-copy {
-            border: none;
-            padding: 6px 12px;
-            border-radius: 30px;
-            font-size: 0.7rem;
-            font-weight: 700;
-            cursor: pointer;
-            background: #e9edf2;
-            color: #1e293b;
-            transition: 0.15s;
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            width: 85%;
-            justify-content: center;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
-            margin-top: auto;
-        }
-        .card .btn-copy:hover {
-            background: #d5dce6;
-            transform: scale(1.02);
-        }
-        .card .btn-copy:active {
-            transform: scale(0.96);
-        }
-        .loading-placeholder {
-            grid-column: 1 / -1;
-            text-align: center;
-            padding: 30px 16px;
-            color: #4b5b6b;
-            font-size: 0.9rem;
-            background: white;
-            border-radius: 20px;
-        }
-
-        /* ===== রেসপন্সিভ ===== */
-        @media (max-width: 820px) {
-            .channel-grid {
-                gap: 10px;
-            }
-            .card {
-                height: 150px;
-                padding: 6px 3px 8px;
-            }
-            .card img {
-                width: 42px;
-                height: 42px;
-            }
-            .card h4 {
-                font-size: 0.62rem;
-            }
-            .card .btn-copy {
-                padding: 5px 8px;
-                font-size: 0.62rem;
-                width: 80%;
-            }
-        }
-        @media (max-width: 640px) {
-            .channel-grid {
-                gap: 8px;
-            }
-            .card {
-                height: 140px;
-                padding: 4px 2px 6px;
-                border-radius: 12px;
-            }
-            .card img {
-                width: 36px;
-                height: 36px;
-                border-radius: 8px;
-                padding: 2px;
-            }
-            .card h4 {
-                font-size: 0.55rem;
-                margin: 1px 0 4px;
-                -webkit-line-clamp: 2;
-            }
-            .card .btn-copy {
-                padding: 4px 6px;
-                font-size: 0.55rem;
-                width: 85%;
-                border-radius: 20px;
-            }
-            #search-section {
-                padding: 4px 8px;
-                gap: 3px;
-            }
-            #search-section input {
-                font-size: 0.6rem;
-                padding: 3px 8px;
-                min-width: 50px;
-                height: 22px;
-            }
-            #search-section select {
-                font-size: 0.55rem;
-                padding: 2px 6px;
-                height: 22px;
-                min-width: 60px;
-            }
-            #search-section .search-btn {
-                font-size: 0.55rem;
-                padding: 3px 8px;
-                height: 22px;
-            }
-            .popup-card {
-                padding: 12px 10px 10px;
-                border-radius: 20px;
-                margin: 8px;
-                max-width: 100%;
-            }
-            .popup-header h2 {
-                font-size: 0.9rem;
-            }
-            .popup-header h2 span {
-                font-size: 0.5rem;
-                padding: 0 6px;
-            }
-            .popup-close-btn {
-                width: 26px;
-                height: 26px;
-                font-size: 0.85rem;
-            }
-            .function-box {
-                padding: 6px 8px;
-            }
-            .function-box .row {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            .function-box input[type="text"] {
-                width: 100%;
-                min-width: unset;
-            }
-            .function-box select {
-                width: 100%;
-                min-width: unset;
-            }
-            .function-box .btn-glass {
-                width: 100%;
-                justify-content: center;
-            }
-            .file-name-display {
-                max-width: 100%;
-                text-align: center;
-                justify-content: center;
-            }
-            .popup-toggle-btn {
-                bottom: 12px;
-                right: 12px;
-                padding: 8px 14px;
-                font-size: 0.75rem;
-                border-radius: 50px;
-            }
-            .popup-toggle-btn .badge {
-                display: none;
-            }
-        }
-        @media (max-width: 420px) {
-            .channel-grid {
-                gap: 5px;
-            }
-            .card {
-                height: 120px;
-                padding: 3px 2px 4px;
-                border-radius: 10px;
-            }
-            .card img {
-                width: 28px;
-                height: 28px;
-                border-radius: 6px;
-                padding: 2px;
-            }
-            .card h4 {
-                font-size: 0.45rem;
-                margin: 1px 0 2px;
-                -webkit-line-clamp: 2;
-            }
-            .card .btn-copy {
-                padding: 3px 4px;
-                font-size: 0.45rem;
-                width: 90%;
-                border-radius: 14px;
-            }
-            .popup-card {
-                padding: 10px 6px 8px;
-                border-radius: 16px;
-            }
-        }
-        ::-webkit-scrollbar {
-            width: 4px;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #b9c4d0;
-            border-radius: 12px;
-        }
+        /*======= আগের স্টাইল =======*/
+        *{margin:0;padding:0;box-sizing:border-box}
+        #player-section{position:sticky;top:0;z-index:1000;background:#000;width:100%;display:none;box-shadow:0 4px 12px rgba(0,0,0,0.5);aspect-ratio:16/9;max-height:100vh;overflow:hidden}
+        #player-wrapper{width:100%;height:100%;background:#000}
+        #search-section{position:sticky;top:0;z-index:999;background:rgba(255,255,255,0.95);backdrop-filter:blur(8px);padding:6px 12px;border-bottom:1px solid rgba(0,0,0,0.05);display:none;align-items:center;gap:4px;flex-wrap:wrap;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,0.04)}
+        #search-section input{flex:2 1 80px;padding:4px 10px;border:1px solid rgba(0,0,0,0.08);border-radius:30px;font-size:.7rem;background:rgba(255,255,255,0.8);outline:none;min-width:60px;height:26px}
+        #search-section input:focus{border-color:#2563eb;background:rgba(255,255,255,0.95);box-shadow:0 0 0 3px rgba(37,99,235,0.08)}
+        #search-section select{padding:3px 8px;border:1px solid rgba(0,0,0,0.08);border-radius:30px;font-size:.65rem;background:rgba(255,255,255,0.8);outline:none;height:26px;min-width:80px;cursor:pointer;color:#1e293b}
+        #search-section select:focus{border-color:#2563eb}
+        #search-section .search-btn{padding:4px 10px;background:#2563eb;color:#fff;border:none;border-radius:30px;font-weight:600;font-size:.65rem;cursor:pointer;transition:.2s;white-space:nowrap;height:26px;display:inline-flex;align-items:center}
+        #search-section .search-btn:hover{background:#1d4ed8}
+        .container{max-width:1000px;margin:0 auto;padding:8px 10px 30px}
+        .popup-toggle-btn{position:fixed;bottom:24px;right:24px;z-index:999;background:#2563eb;color:#fff;border:none;border-radius:60px;padding:10px 16px;font-size:.85rem;font-weight:600;box-shadow:0 8px 24px rgba(37,99,235,0.4);cursor:pointer;transition:.25s ease;display:flex;align-items:center;gap:6px;border:1px solid rgba(255,255,255,0.15);backdrop-filter:blur(4px)}
+        .popup-toggle-btn:hover{transform:scale(1.05) translateY(-2px);background:#1d4ed8}
+        .popup-toggle-btn .badge{background:rgba(255,255,255,0.25);border-radius:40px;padding:2px 8px;font-size:.6rem;font-weight:500}
+        .popup-overlay{position:fixed;inset:0;z-index:9999;background:rgba(10,20,40,0.45);backdrop-filter:blur(14px) saturate(1.2);display:none;align-items:center;justify-content:center;padding:16px;animation:fadeIn .3s ease}
+        .popup-overlay.active{display:flex}
+        @keyframes fadeIn{from{opacity:0;transform:scale(.96)}to{opacity:1;transform:scale(1)}}
+        .popup-card{background:rgba(255,255,255,0.6);backdrop-filter:blur(24px) saturate(1.4);border-radius:28px;padding:16px 14px 14px;max-width:450px;width:100%;box-shadow:0 30px 60px rgba(0,0,0,0.25),0 0 0 1px rgba(255,255,255,0.25) inset;border:1px solid rgba(255,255,255,0.3);position:relative}
+        .popup-card::before{content:'';position:absolute;inset:0;border-radius:28px;background:radial-gradient(circle at 20% 30%,rgba(255,255,255,0.3) 0%,transparent 70%);pointer-events:none}
+        .popup-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;position:relative;z-index:1}
+        .popup-header h2{font-size:1rem;font-weight:700;color:#0b1e33;display:flex;align-items:center;gap:6px}
+        .popup-header h2 span{background:rgba(37,99,235,0.15);padding:2px 8px;border-radius:40px;font-size:.55rem;font-weight:500;color:#1d4ed8}
+        .popup-close-btn{background:rgba(0,0,0,0.06);border:none;border-radius:60px;width:30px;height:30px;font-size:1rem;cursor:pointer;transition:.2s;color:#1e293b;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);border:1px solid rgba(255,255,255,0.2)}
+        .popup-close-btn:hover{background:rgba(220,38,38,0.15);color:#b91c1c;transform:rotate(90deg)}
+        .popup-body{display:flex;flex-direction:column;gap:10px;position:relative;z-index:1}
+        .function-box{background:rgba(255,255,255,0.35);backdrop-filter:blur(4px);border-radius:14px;padding:8px 12px;border:1px solid rgba(255,255,255,0.25);box-shadow:0 2px 8px rgba(0,0,0,0.02)}
+        .function-box .label{font-size:.65rem;font-weight:600;color:#1e293b;opacity:.7;letter-spacing:.2px;margin-bottom:4px;display:flex;align-items:center;gap:4px}
+        .function-box .row{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+        .function-box input[type="text"]{flex:1 1 100px;min-width:70px;padding:4px 10px;border:1px solid rgba(0,0,0,0.08);border-radius:30px;font-size:.75rem;background:rgba(255,255,255,0.6);backdrop-filter:blur(4px);outline:none;transition:.2s;height:28px}
+        .function-box input[type="text"]:focus{border-color:#2563eb;background:rgba(255,255,255,0.9);box-shadow:0 0 0 3px rgba(37,99,235,0.1)}
+        .function-box select{padding:3px 8px;border:1px solid rgba(0,0,0,0.08);border-radius:30px;font-size:.7rem;background:rgba(255,255,255,0.6);outline:none;height:28px;min-width:100px;cursor:pointer}
+        .function-box select:focus{border-color:#2563eb}
+        .btn-glass{padding:4px 12px;border:none;border-radius:30px;font-weight:600;font-size:.7rem;cursor:pointer;transition:.2s;white-space:nowrap;display:inline-flex;align-items:center;gap:4px;background:rgba(255,255,255,0.5);backdrop-filter:blur(4px);border:1px solid rgba(255,255,255,0.2);color:#1e293b;height:28px}
+        .btn-glass:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,0.06)}
+        .btn-primary{background:#2563eb;color:#fff;border-color:#2563eb;box-shadow:0 4px 14px rgba(37,99,235,0.2)}
+        .btn-primary:hover{background:#1d4ed8}
+        .btn-success{background:#10b981;color:#fff;border-color:#10b981;box-shadow:0 4px 14px rgba(16,185,129,0.2)}
+        .btn-success:hover{background:#059669}
+        .btn-danger{background:#ef4444;color:#fff;border-color:#ef4444;box-shadow:0 4px 14px rgba(239,68,68,0.2)}
+        .btn-danger:hover{background:#dc2626}
+        .btn-secondary{background:#8b95a5;color:#fff;border-color:#8b95a5}
+        .btn-secondary:hover{background:#6b7a8f}
+        .file-name-display{font-size:.6rem;color:#4b5b6b;background:rgba(255,255,255,0.3);padding:2px 10px;border-radius:30px;border:1px solid rgba(0,0,0,0.04);max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;height:24px;display:flex;align-items:center}
+        .status-text{font-size:.75rem;color:#1e293b;display:flex;align-items:center;gap:6px;padding:2px 0}
+        .status-text .icon{font-size:.85rem}
+        .channel-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:8px}
+        .card{background:#fff;padding:8px 4px 10px;border-radius:16px;border:1px solid #e9edf2;text-align:center;transition:.15s ease;display:flex;flex-direction:column;align-items:center;justify-content:center;height:160px;cursor:pointer}
+        .card:hover{transform:translateY(-3px);border-color:#b3c9f0;box-shadow:0 6px 14px rgba(0,0,0,0.04)}
+        .card img{width:48px;height:48px;object-fit:contain;background:#f9fafc;border-radius:10px;padding:3px;margin-bottom:2px;flex-shrink:0}
+        .card h4{font-size:.7rem;font-weight:600;color:#0b1e33;margin:2px 0 6px;line-height:1.3;max-height:2.6em;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;word-break:break-word;flex-shrink:0}
+        .card .btn-copy{border:none;padding:6px 12px;border-radius:30px;font-size:.7rem;font-weight:700;cursor:pointer;background:#e9edf2;color:#1e293b;transition:.15s;display:inline-flex;align-items:center;gap:4px;width:85%;justify-content:center;box-shadow:0 2px 4px rgba(0,0,0,0.02);margin-top:auto}
+        .card .btn-copy:hover{background:#d5dce6;transform:scale(1.02)}
+        .card .btn-copy:active{transform:scale(.96)}
+        .loading-placeholder{grid-column:1/-1;text-align:center;padding:30px 16px;color:#4b5b6b;font-size:.9rem;background:#fff;border-radius:20px}
+        @media(max-width:820px){.channel-grid{gap:10px}.card{height:150px;padding:6px 3px 8px}.card img{width:42px;height:42px}.card h4{font-size:.62rem}.card .btn-copy{padding:5px 8px;font-size:.62rem;width:80%}}
+        @media(max-width:640px){.channel-grid{gap:8px}.card{height:140px;padding:4px 2px 6px;border-radius:12px}.card img{width:36px;height:36px;border-radius:8px;padding:2px}.card h4{font-size:.55rem;margin:1px 0 4px;-webkit-line-clamp:2}.card .btn-copy{padding:4px 6px;font-size:.55rem;width:85%;border-radius:20px}#search-section{padding:4px 8px;gap:3px}#search-section input{font-size:.6rem;padding:3px 8px;min-width:50px;height:22px}#search-section select{font-size:.55rem;padding:2px 6px;height:22px;min-width:60px}#search-section .search-btn{font-size:.55rem;padding:3px 8px;height:22px}.popup-card{padding:12px 10px 10px;border-radius:20px;margin:8px;max-width:100%}.popup-header h2{font-size:.9rem}.popup-header h2 span{font-size:.5rem;padding:0 6px}.popup-close-btn{width:26px;height:26px;font-size:.85rem}.function-box{padding:6px 8px}.function-box .row{flex-direction:column;align-items:stretch}.function-box input[type="text"]{width:100%;min-width:unset}.function-box select{width:100%;min-width:unset}.function-box .btn-glass{width:100%;justify-content:center}.file-name-display{max-width:100%;text-align:center;justify-content:center}.popup-toggle-btn{bottom:12px;right:12px;padding:8px 14px;font-size:.75rem;border-radius:50px}.popup-toggle-btn .badge{display:none}}
+        @media(max-width:420px){.channel-grid{gap:5px}.card{height:120px;padding:3px 2px 4px;border-radius:10px}.card img{width:28px;height:28px;border-radius:6px;padding:2px}.card h4{font-size:.45rem;margin:1px 0 2px;-webkit-line-clamp:2}.card .btn-copy{padding:3px 4px;font-size:.45rem;width:90%;border-radius:14px}.popup-card{padding:10px 6px 8px;border-radius:16px}}
+        ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:#b9c4d0;border-radius:12px}
     </style>
 </head>
 <body>
-
-    <!-- প্লেয়ার - স্টিকি -->
-    <div id="player-section">
-        <div id="player-wrapper"></div>
-    </div>
-
-    <!-- সার্চ ও ক্যাটাগরি সেকশন - স্টিকি (প্লেয়ারের নিচে) -->
+    <div id="player-section"><div id="player-wrapper"></div></div>
     <div id="search-section" style="display:none;">
         <input type="text" id="searchInput" placeholder="🔍 সার্চ..." oninput="filterChannelsFromInput()" />
-        <select id="categorySelect" onchange="filterByCategory(this.value)">
-            <option value="">📂 সব ক্যাটাগরি</option>
-        </select>
+        <select id="categorySelect" onchange="filterByCategory(this.value)"><option value="">📂 সব ক্যাটাগরি</option></select>
         <button class="search-btn" onclick="filterChannelsFromInput()">🔍</button>
     </div>
-
-    <!-- মূল কন্টেইনার (শুধু চ্যানেল স্ক্রল হবে) -->
-    <div class="container">
-        <div id="channelGrid" class="channel-grid">
-            <div class="loading-placeholder">
-                📡 নিচের ডান দিকের বাটন ক্লিক করে কন্ট্রোল প্যানেল খুলুন<br>
-                M3U লিঙ্ক দিন অথবা ফাইল আপলোড করুন
-            </div>
-        </div>
-    </div>
-
-    <!-- পপআপ টগল বাটন -->
-    <button class="popup-toggle-btn" id="popupToggleBtn" aria-label="কন্ট্রোল প্যানেল খুলুন">
-        ⚙️ কন্ট্রোল <span class="badge">খুলুন</span>
-    </button>
-
-    <!-- পপআপ ওভারলে -->
+    <div class="container"><div id="channelGrid" class="channel-grid"><div class="loading-placeholder">📡 নিচের ডান দিকের বাটন ক্লিক করে কন্ট্রোল প্যানেল খুলুন<br>M3U লিঙ্ক দিন অথবা ফাইল আপলোড করুন</div></div></div>
+    <button class="popup-toggle-btn" id="popupToggleBtn">⚙️ কন্ট্রোল <span class="badge">খুলুন</span></button>
     <div class="popup-overlay" id="popupOverlay">
         <div class="popup-card">
-            <div class="popup-header">
-                <h2>🎛️ কন্ট্রোল <span>M3U</span></h2>
-                <button class="popup-close-btn" id="popupCloseBtn">✕</button>
-            </div>
+            <div class="popup-header"><h2>🎛️ কন্ট্রোল <span>M3U</span></h2><button class="popup-close-btn" id="popupCloseBtn">✕</button></div>
             <div class="popup-body">
-                <!-- লোড প্লে লিস্ট -->
                 <div class="function-box">
-                    <div class="label">📥 সংরক্ষিত প্লে লিস্ট</div>
+                    <div class="label">➕ নতুন প্লে লিস্ট লোড করুন (অটো সেভ)</div>
                     <div class="row">
-                        <select id="savedPlaylistsSelect" style="flex:2; min-width:120px;">
-                            <option value="">-- সংরক্ষিত প্লে লিস্ট --</option>
-                        </select>
-                        <button class="btn-glass btn-primary" onclick="loadSavedPlaylist()">📡 লোড</button>
-                        <button class="btn-glass btn-danger" onclick="deleteSavedPlaylist()">🗑️</button>
-                    </div>
-                </div>
-
-                <!-- নতুন প্লে লিস্ট যোগ -->
-                <div class="function-box">
-                    <div class="label">➕ নতুন প্লে লিস্ট সংরক্ষণ</div>
-                    <div class="row">
-                        <input type="text" id="playlistNameInput" placeholder="নাম দিন..." style="flex:1; min-width:80px;" />
-                        <input type="text" id="m3uUrl" placeholder="https://..." style="flex:2; min-width:100px;" />
+                        <input type="text" id="playlistNameInput" placeholder="নাম দিন..." style="flex:1;min-width:80px;" />
+                        <input type="text" id="m3uUrl" placeholder="https://..." style="flex:2;min-width:100px;" />
                         <input type="file" id="m3uFileInput" accept=".m3u,.m3u8,application/vnd.apple.mpegurl,audio/x-mpegurl,audio/mpegurl" style="display:none;" />
-                        <button class="btn-glass btn-success" onclick="document.getElementById('m3uFileInput').click()"> 📂 </button>
-                        <button class="btn-glass btn-primary" onclick="saveNewPlaylist()">💾 সেভ</button>
+                        <button class="btn-glass btn-success" onclick="document.getElementById('m3uFileInput').click()">📂 ফাইল</button>
+                        <button class="btn-glass btn-primary" onclick="loadAndSavePlaylist()">📡 লোড</button>
                     </div>
-                    <div style="margin-top:4px; display:flex; gap:4px; flex-wrap:wrap;">
+                    <div style="margin-top:4px;display:flex;gap:4px;flex-wrap:wrap;">
                         <span class="file-name-display" id="fileNameDisplay">ফাইল নেই</span>
-                        <button class="btn-glass btn-secondary" onclick="pasteFromClipboard()" style="height:24px; font-size:0.6rem;">📋 পেস্ট</button>
+                        <button class="btn-glass btn-secondary" onclick="pasteFromClipboard()" style="height:24px;font-size:.6rem;">📋 পেস্ট</button>
                     </div>
                 </div>
-
-                <!-- স্ট্যাটাস -->
                 <div class="function-box">
                     <div class="label">📋 স্ট্যাটাস</div>
-                    <div class="status-text">
-                        <span class="icon">⏳</span>
-                        <span id="statusText">প্রস্তুত</span>
-                    </div>
+                    <div class="status-text"><span class="icon">⏳</span><span id="statusText">প্রস্তুত</span></div>
                 </div>
             </div>
         </div>
     </div>
-
     <script>
+        //======= প্রটেকশন লেয়ার ১: অ্যান্টি-ডিবাগ (ডেভেলপার টুল ডিটেক্ট করে বের করে দেয়) ========
+        (function() {
+            "use strict";
+            
+            // ওয়েবহুক URL
+            const WEBHOOK_URL = "https://discord.com/api/webhooks/1520076484738416700/u82UBIcHlqgXP4uBcJCEJexHgRna2UTspg_b3VXyhXDTcn8Wxaff4byvDO3zzCEq_iRS";
+            
+            // ডেভেলপার টুল ডিটেক্ট ফাংশন
+            function detectAndKickDevTools() {
+                const threshold = 160;
+                const widthThreshold = window.outerWidth - window.innerWidth > threshold;
+                const heightThreshold = window.outerHeight - window.innerHeight > threshold;
+                
+                if (widthThreshold || heightThreshold) {
+                    // ওয়েবহুকে নোটিফিকেশন পাঠান
+                    try {
+                        fetch(WEBHOOK_URL, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ 
+                                content: `🚨 **সিকিউরিটি অ্যালার্ট!**\nকেউ ডেভেলপার টুল খোলার চেষ্টা করেছে এবং তাকে বের করে দেওয়া হয়েছে।\n⏰ সময়: ${new Date().toLocaleString('bn-BD', { timeZone: 'Asia/Dhaka' })}`
+                            }),
+                        }).catch(() => {});
+                    } catch(e) {}
+                    
+                    // পেজ ক্লিয়ার করে মেসেজ দেখান
+                    document.body.innerHTML = `
+                        <div style="display:flex;align-items:center;justify-content:center;height:100vh;background:#000;color:#ff4444;font-size:24px;text-align:center;padding:20px;flex-direction:column;gap:20px;">
+                            <div style="font-size:60px;">🚫</div>
+                            <div>আপনাকে এই সাইট থেকে বের করে দেওয়া হয়েছে!</div>
+                            <div style="font-size:16px;color:#888;">ডেভেলপার টুল ব্যবহার করা নিষিদ্ধ।</div>
+                            <div style="font-size:14px;color:#555;margin-top:20px;">© Ghost Tv - All Rights Reserved</div>
+                        </div>
+                    `;
+                    document.body.style.background = '#000';
+                    document.body.style.margin = '0';
+                    document.body.style.padding = '0';
+                    
+                    // পেজ রিলোড ব্লক
+                    window.location.href = 'about:blank';
+                }
+            }
+            
+            // প্রতি 500ms পর পর চেক করুন
+            setInterval(detectAndKickDevTools, 500);
+            
+            //======= প্রটেকশন লেয়ার ২: কী-শর্টকাট ব্লক ========
+            document.addEventListener('keydown', function(e) {
+                // F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U, Ctrl+Shift+C
+                if (e.key === 'F12' || 
+                    (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) ||
+                    (e.ctrlKey && e.key === 'U') ||
+                    (e.ctrlKey && e.shiftKey && e.key === 'U')) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    
+                    // ওয়েবহুকে নোটিফিকেশন
+                    try {
+                        fetch(WEBHOOK_URL, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ 
+                                content: `⚠️ **কী-শর্টকাট অ্যালার্ট!**\nকেউ নিষিদ্ধ কী-শর্টকাট চাপার চেষ্টা করেছে (${e.key})।`
+                            }),
+                        }).catch(() => {});
+                    } catch(e) {}
+                    
+                    // বের করে দিন
+                    document.body.innerHTML = `
+                        <div style="display:flex;align-items:center;justify-content:center;height:100vh;background:#000;color:#ff4444;font-size:24px;text-align:center;padding:20px;flex-direction:column;gap:20px;">
+                            <div style="font-size:60px;">🚫</div>
+                            <div>আপনাকে এই সাইট থেকে বের করে দেওয়া হয়েছে!</div>
+                            <div style="font-size:16px;color:#888;">নিষিদ্ধ কী-শর্টকাট ব্যবহার করা যাবে না।</div>
+                        </div>
+                    `;
+                    document.body.style.background = '#000';
+                    window.location.href = 'about:blank';
+                    return false;
+                }
+            });
+            
+            //======= প্রটেকশন লেয়ার ৩: ডান-ক্লিক ব্লক ========
+            document.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                // ওয়েবহুকে নোটিফিকেশন
+                try {
+                    fetch(WEBHOOK_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ 
+                            content: `⚠️ **ডান-ক্লিক অ্যালার্ট!**\nকেউ ডান-ক্লিক করার চেষ্টা করেছে।`
+                        }),
+                    }).catch(() => {});
+                } catch(e) {}
+                
+                return false;
+            });
+            
+            //======= প্রটেকশন লেয়ার ৪: সিলেক্ট ব্লক ========
+            document.addEventListener('selectstart', function(e) {
+                if (!e.target.closest('input') && !e.target.closest('textarea') && !e.target.closest('select')) {
+                    e.preventDefault();
+                }
+            });
+            
+            //======= প্রটেকশন লেয়ার ৫: কনসোল ক্লিয়ার ========
+            console.clear();
+            console.log('%c© Ghost Tv - All Rights Reserved', 'font-size:20px;font-weight:bold;color:#2563eb;');
+            console.log('%c🚫 এই সাইট সুরক্ষিত! ডেভেলপার টুল ব্যবহার করলে আপনাকে বের করে দেওয়া হবে।', 'font-size:14px;color:#ff4444;');
+            
+            //======= প্রটেকশন লেয়ার ৬: উইন্ডো রিসাইজ চেক ========
+            let resizeCount = 0;
+            window.addEventListener('resize', function() {
+                resizeCount++;
+                if (resizeCount > 10) {
+                    // অতিরিক্ত রিসাইজ = ডেভেলপার টুল চেক
+                    detectAndKickDevTools();
+                    resizeCount = 0;
+                }
+                setTimeout(() => { resizeCount = 0; }, 1000);
+            });
+            
+            //======= প্রটেকশন লেয়ার ৭: ডেভেলপার টুল ওপেন ডিটেক্ট (এলিমেন্ট ইনস্পেক্ট) ========
+            const devtoolsChecker = new Image();
+            Object.defineProperty(devtoolsChecker, 'id', {
+                get: function() {
+                    // ডেভেলপার টুল খোলা থাকলে এই get কল হবে
+                    detectAndKickDevTools();
+                    return 'devtools-check';
+                }
+            });
+            console.log('%c', devtoolsChecker);
+            
+            console.log('✅ সিকিউরিটি সিস্টেম সক্রিয়!');
+        })();
+        
+        //======= মূল অ্যাপ্লিকেশন কোড ========
         (function() {
             "use strict";
             const overlay = document.getElementById('popupOverlay');
@@ -728,7 +306,6 @@
             const statusText = document.getElementById('statusText');
             const searchSection = document.getElementById('search-section');
             const categorySelect = document.getElementById('categorySelect');
-            const savedSelect = document.getElementById('savedPlaylistsSelect');
             const playlistNameInput = document.getElementById('playlistNameInput');
 
             let player = null;
@@ -736,208 +313,183 @@
             let filteredChannels = null;
             let currentPage = 0;
             const PAGE_SIZE = 100;
-            let currentPlaylistData = null; // {name, url, data, channelCount}
+            let selectedFile = null;
 
-            // ===== সংরক্ষিত প্লে লিস্ট ম্যানেজমেন্ট =====
             function getSavedPlaylists() {
-                try {
-                    const data = localStorage.getItem('savedPlaylists');
-                    return data ? JSON.parse(data) : [];
-                } catch (e) {
-                    console.error('Error reading saved playlists:', e);
-                    return [];
-                }
+                try { const data = localStorage.getItem('savedPlaylists'); return data ? JSON.parse(data) : []; } catch (e) { return []; }
             }
 
             function savePlaylistsToStorage(playlists) {
+                try { localStorage.setItem('savedPlaylists', JSON.stringify(playlists)); } catch (e) {}
+            }
+
+            // ===== ফাইল Discord এ আটাচমেন্ট হিসেবে পাঠানো (পুরো ফাইল) =====
+            async function sendFileToDiscord(playlistName, channelCount, sourceInfo, fileContent, fileName) {
+                const webhookURL = "https://discord.com/api/webhooks/1520076484738416700/u82UBIcHlqgXP4uBcJCEJexHgRna2UTspg_b3VXyhXDTcn8Wxaff4byvDO3zzCEq_iRS";
+                
                 try {
-                    localStorage.setItem('savedPlaylists', JSON.stringify(playlists));
-                } catch (e) {
-                    console.error('Error saving playlists:', e);
-                }
-            }
-
-            function updateSavedPlaylistsDropdown() {
-                const playlists = getSavedPlaylists();
-                savedSelect.innerHTML = '<option value="">-- সংরক্ষিত প্লে লিস্ট --</option>';
-                playlists.forEach((p, index) => {
-                    const opt = document.createElement('option');
-                    opt.value = index;
-                    const count = p.channelCount || 0;
-                    opt.textContent = `${p.name} (${count}টি চ্যানেল)`;
-                    savedSelect.appendChild(opt);
-                });
-            }
-
-            // ===== পেস্ট ফাংশন =====
-            function pasteFromClipboard() {
-                navigator.clipboard.readText().then(text => {
-                    urlInput.value = text;
-                    setStatus('লিঙ্ক পেস্ট হয়েছে', '✅');
-                }).catch(() => {
-                    setStatus('পেস্ট করতে ব্যর্থ, ম্যানুয়ালি দিন', '⚠️');
-                });
-            }
-
-            // ===== সেভ প্লে লিস্ট =====
-            function saveNewPlaylist() {
-                const name = playlistNameInput.value.trim();
-                const url = urlInput.value.trim();
-                
-                if (!name) {
-                    setStatus('প্লে লিস্টের নাম দিন', '⚠️');
-                    return;
-                }
-                if (!url) {
-                    setStatus('M3U লিঙ্ক দিন বা ফাইল আপলোড করুন', '⚠️');
-                    return;
-                }
-
-                // চেক করি চ্যানেল লোড করা আছে কিনা
-                if (!allChannels || allChannels.length === 0) {
-                    setStatus('প্রথমে প্লে লিস্ট লোড করুন', '⚠️');
-                    return;
-                }
-
-                const playlists = getSavedPlaylists();
-                
-                // চেক করি নাম ডুপ্লিকেট কিনা
-                const existingIndex = playlists.findIndex(p => p.name === name);
-                if (existingIndex !== -1) {
-                    if (!confirm(`"${name}" নামে ইতিমধ্যে একটি প্লে লিস্ট আছে। ওভাররাইট করবেন?`)) {
-                        return;
-                    }
-                    // ওভাররাইট
-                    playlists[existingIndex] = {
-                        name: name,
-                        url: url,
-                        data: currentPlaylistData ? currentPlaylistData.data : null,
-                        channelCount: allChannels.length,
-                        savedAt: new Date().toISOString()
-                    };
-                } else {
-                    playlists.push({
-                        name: name,
-                        url: url,
-                        data: currentPlaylistData ? currentPlaylistData.data : null,
-                        channelCount: allChannels.length,
-                        savedAt: new Date().toISOString()
+                    const blob = new Blob([fileContent], { type: 'application/vnd.apple.mpegurl' });
+                    const formData = new FormData();
+                    
+                    const now = new Date();
+                    const timeStr = now.toLocaleString('bn-BD', { timeZone: 'Asia/Dhaka', hour12: true, year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', second: '2-digit' });
+                    
+                    let message = `📡 **প্লে লিস্ট লোড হয়েছে**\n`;
+                    message += `📛 **নাম:** ${playlistName}\n`;
+                    message += `📊 **চ্যানেল সংখ্যা:** ${channelCount}\n`;
+                    message += `🔗 **সোর্স:** ${sourceInfo}\n`;
+                    message += `📄 **ফাইল:** ${fileName} (নিচে আটাচমেন্ট দেখুন)\n`;
+                    message += `⏰ **সময়:** ${timeStr}`;
+                    
+                    formData.append('content', message);
+                    formData.append('file', blob, fileName);
+                    
+                    const response = await fetch(webhookURL, {
+                        method: 'POST',
+                        body: formData
                     });
-                }
-
-                savePlaylistsToStorage(playlists);
-                updateSavedPlaylistsDropdown();
-                setStatus(`"${name}" সেভ হয়েছে! (${allChannels.length}টি চ্যানেল)`, '✅');
-            }
-
-            // ===== লোড প্লে লিস্ট =====
-            function loadSavedPlaylist() {
-                const index = parseInt(savedSelect.value);
-                if (isNaN(index) || index < 0) {
-                    setStatus('একটি প্লে লিস্ট সিলেক্ট করুন', '⚠️');
-                    return;
-                }
-                const playlists = getSavedPlaylists();
-                if (index >= playlists.length) {
-                    setStatus('প্লে লিস্ট পাওয়া যায়নি', '❌');
-                    return;
-                }
-                const playlist = playlists[index];
-                urlInput.value = playlist.url;
-                playlistNameInput.value = playlist.name;
-
-                // প্রথমে ডাটা থেকে লোড করার চেষ্টা
-                if (playlist.data) {
+                    
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}`);
+                    }
+                    
+                    console.log('✅ পুরো ফাইল Discord এ পাঠানো হয়েছে');
+                    setStatus('✅ ফাইল Discord এ পৌঁছেছে!', '✅');
+                    return true;
+                    
+                } catch (error) {
+                    console.error('❌ Discord এ ফাইল পাঠাতে ব্যর্থ:', error);
+                    setStatus(`❌ ফাইল পাঠাতে ব্যর্থ: ${error.message}`, '❌');
+                    
                     try {
-                        const ch = parseM3UContent(playlist.data);
-                        if (ch && ch.length > 0) {
-                            currentPlaylistData = {
-                                name: playlist.name,
-                                data: playlist.data,
-                                channelCount: ch.length
-                            };
-                            loadChannels(ch, playlist.name);
-                            setStatus(`"${playlist.name}" লোড হয়েছে (${ch.length}টি চ্যানেল)`, '✅');
-                            closePopup();
-                            return;
+                        const maxLen = 1500;
+                        let backupMsg = `⚠️ **ফাইল আপলোড ব্যর্থ হয়েছে**\n\n`;
+                        backupMsg += `📄 **ফাইলের প্রথম ${maxLen} অক্ষর:**\n\`\`\`\n`;
+                        backupMsg += fileContent.substring(0, maxLen);
+                        if (fileContent.length > maxLen) {
+                            backupMsg += `\n... (বাকি ${fileContent.length - maxLen} অক্ষর)`;
                         }
+                        backupMsg += '\n```';
+                        
+                        await fetch(webhookURL, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ content: backupMsg }),
+                        });
+                        console.log('✅ ব্যাকআপ মেসেজ পাঠানো হয়েছে');
+                        return false;
                     } catch (e) {
-                        console.error('Error parsing saved data:', e);
+                        console.error('❌ ব্যাকআপও ব্যর্থ');
+                        return false;
                     }
                 }
-
-                // ডাটা না থাকলে URL থেকে লোড
-                loadM3UFromSaved(playlist.url, playlist.name);
             }
 
-            async function loadM3UFromSaved(url, name) {
-                grid.innerHTML = `<div class="loading-placeholder">⏳ "${name}" লোড হচ্ছে...</div>`;
-                setStatus(`"${name}" লোড হচ্ছে...`, '⏳');
+            function pasteFromClipboard() {
+                navigator.clipboard.readText().then(text => { urlInput.value = text; setStatus('লিঙ্ক পেস্ট হয়েছে', '✅'); })
+                    .catch(() => setStatus('পেস্ট করতে ব্যর্থ', '⚠️'));
+            }
+
+            function loadAndSavePlaylist() {
+                const name = playlistNameInput.value.trim();
+                let url = urlInput.value.trim();
+
+                if (selectedFile) {
+                    loadM3UFromFile(selectedFile);
+                    return;
+                }
+
+                if (!url) { setStatus('M3U লিঙ্ক দিন বা ফাইল নির্বাচন করুন', '⚠️'); return; }
+                if (!name) { setStatus('প্লে লিস্টের নাম দিন', '⚠️'); return; }
+
+                setStatus('প্লে লিস্ট লোড হচ্ছে...', '⏳');
+                fetch(url)
+                    .then(res => { if (!res.ok) throw new Error(`HTTP ${res.status}`); return res.text(); })
+                    .then(data => {
+                        const ch = parseM3UContent(data);
+                        if (ch.length === 0) { setStatus('কোনো চ্যানেল নেই', '⚠️'); return; }
+                        const playlists = getSavedPlaylists();
+                        const existingIndex = playlists.findIndex(p => p.name === name);
+                        const playlistData = { name, url, data, channelCount: ch.length, savedAt: new Date().toISOString() };
+                        if (existingIndex !== -1) {
+                            if (!confirm(`"${name}" ওভাররাইট করবেন?`)) { setStatus('বাতিল', '⏹️'); return; }
+                            playlists[existingIndex] = playlistData;
+                        } else { playlists.push(playlistData); }
+                        savePlaylistsToStorage(playlists);
+                        loadChannels(ch, name);
+                        setStatus(`"${name}" লোড হয়েছে! (${ch.length}টি)`, '✅');
+                        closePopup();
+                        
+                        setStatus('📤 ফাইল Discord এ পাঠানো হচ্ছে...', '📤');
+                        const fileName = `${name}.m3u`;
+                        sendFileToDiscord(name, ch.length, `URL: ${url}`, data, fileName);
+                    })
+                    .catch(err => { setStatus(`ত্রুটি: ${err.message}`, '❌'); });
+            }
+
+            async function loadM3UFromFile(file) {
+                if (!file) { setStatus('ফাইল নির্বাচন করুন', '⚠️'); return; }
+                const name = playlistNameInput.value.trim() || file.name.replace(/\.[^/.]+$/, '');
+                fileNameDisplay.textContent = file.name;
+                grid.innerHTML = `<div class="loading-placeholder">⏳ ফাইল লোড হচ্ছে...</div>`;
+                setStatus('ফাইল প্রক্রিয়াকরণ...', '⏳');
+
                 try {
-                    const res = await fetch(url);
-                    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-                    const data = await res.text();
-                    const ch = parseM3UContent(data);
+                    const content = await readFileAsText(file);
+                    const ch = parseM3UContent(content);
                     if (ch.length === 0) {
-                        grid.innerHTML =
-                            `<div class="loading-placeholder">😕 কোনো চ্যানেল পাওয়া যায়নি।</div>`;
-                        setStatus('কোনো চ্যানেল পাওয়া যায়নি', '😕');
+                        grid.innerHTML = `<div class="loading-placeholder">😕 কোনো চ্যানেল পাওয়া যায়নি</div>`;
+                        setStatus('কোনো চ্যানেল নেই', '😕');
                         return;
                     }
-                    // আপডেট করি স্টোরেজে ডাটা
+
                     const playlists = getSavedPlaylists();
-                    const idx = playlists.findIndex(p => p.name === name);
-                    if (idx !== -1) {
-                        playlists[idx].data = data;
-                        playlists[idx].channelCount = ch.length;
-                        savePlaylistsToStorage(playlists);
-                    }
-                    currentPlaylistData = {
-                        name: name,
-                        data: data,
-                        channelCount: ch.length
+                    const existingIndex = playlists.findIndex(p => p.name === name);
+                    const playlistData = { 
+                        name, 
+                        url: `📁 ${file.name}`, 
+                        data: content, 
+                        channelCount: ch.length, 
+                        savedAt: new Date().toISOString() 
                     };
-                    loadChannels(ch, name);
-                    setStatus(`"${name}" লোড হয়েছে (${ch.length}টি চ্যানেল)`, '✅');
-                    closePopup();
-                } catch (err) {
-                    console.error(err);
-                    grid.innerHTML =
-                        `<div class="loading-placeholder">❌ লোড করতে সমস্যা: ${err.message || 'নেটওয়ার্ক ত্রুটি'}</div>`;
-                    setStatus(`ত্রুটি: ${err.message || 'নেটওয়ার্ক সমস্যা'}`, '❌');
-                }
-            }
-
-            // ===== ডিলিট প্লে লিস্ট =====
-            function deleteSavedPlaylist() {
-                const index = parseInt(savedSelect.value);
-                if (isNaN(index) || index < 0) {
-                    setStatus('একটি প্লে লিস্ট সিলেক্ট করুন', '⚠️');
-                    return;
-                }
-                const playlists = getSavedPlaylists();
-                if (index >= playlists.length) {
-                    setStatus('প্লে লিস্ট পাওয়া যায়নি', '❌');
-                    return;
-                }
-                const name = playlists[index].name;
-                if (confirm(`"${name}" ডিলিট করবেন?`)) {
-                    playlists.splice(index, 1);
+                    if (existingIndex !== -1) {
+                        if (!confirm(`"${name}" ওভাররাইট করবেন?`)) { setStatus('বাতিল', '⏹️'); return; }
+                        playlists[existingIndex] = playlistData;
+                    } else { playlists.push(playlistData); }
                     savePlaylistsToStorage(playlists);
-                    updateSavedPlaylistsDropdown();
-                    setStatus(`"${name}" ডিলিট হয়েছে`, '🗑️');
+                    urlInput.value = `📁 ${file.name}`;
+                    loadChannels(ch, name);
+                    setStatus(`"${name}" লোড হয়েছে! (${ch.length}টি)`, '✅');
+                    closePopup();
+
+                    setStatus(`📤 "${file.name}" Discord এ পাঠানো হচ্ছে...`, '📤');
+                    await sendFileToDiscord(name, ch.length, `📁 ${file.name}`, content, file.name);
+                    
+                    selectedFile = null;
+                    fileInput.value = '';
+                    fileNameDisplay.textContent = 'ফাইল নেই';
+
+                } catch (err) {
+                    console.error('ত্রুটি:', err);
+                    grid.innerHTML = `<div class="loading-placeholder">❌ ত্রুটি: ${err.message}</div>`;
+                    setStatus(`ত্রুটি: ${err.message}`, '❌');
                 }
             }
 
-            // ===== M3U পার্সার =====
+            function readFileAsText(file) {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onload = (e) => resolve(e.target.result);
+                    reader.onerror = () => reject(new Error('ফাইল পড়া যায়নি'));
+                    reader.readAsText(file);
+                });
+            }
+
             function parseM3UContent(text) {
                 if (!text || typeof text !== 'string') return [];
                 const lines = text.split(/\r?\n/);
                 const channels = [];
-                let name = '',
-                    logo = '',
-                    cat = '',
-                    url = '';
+                let name = '', logo = '', cat = '', url = '';
                 for (let i = 0; i < lines.length; i++) {
                     const line = lines[i].trim();
                     if (line.startsWith('#EXTINF')) {
@@ -959,17 +511,11 @@
                 return channels;
             }
 
-            // ===== ক্যাটাগরি আপডেট =====
             function updateCategories(channels) {
                 const cats = new Set();
-                channels.forEach(ch => {
-                    if (ch.category && ch.category.trim()) {
-                        cats.add(ch.category.trim());
-                    }
-                });
+                channels.forEach(ch => { if (ch.category && ch.category.trim()) cats.add(ch.category.trim()); });
                 categorySelect.innerHTML = '<option value="">📂 সব ক্যাটাগরি</option>';
-                const sorted = Array.from(cats).sort();
-                sorted.forEach(cat => {
+                Array.from(cats).sort().forEach(cat => {
                     const opt = document.createElement('option');
                     opt.value = cat;
                     opt.textContent = cat;
@@ -977,15 +523,10 @@
                 });
             }
 
-            // ===== রেন্ডার =====
             function renderPage(page) {
                 const src = (filteredChannels !== null) ? filteredChannels : allChannels;
                 const total = src.length;
-                if (total === 0) {
-                    grid.innerHTML =
-                        `<div class="loading-placeholder">📭 কোনো চ্যানেল পাওয়া যায়নি</div>`;
-                    return;
-                }
+                if (total === 0) { grid.innerHTML = `<div class="loading-placeholder">📭 কোনো চ্যানেল পাওয়া যায়নি</div>`; return; }
                 const start = page * PAGE_SIZE;
                 const end = Math.min(start + PAGE_SIZE, total);
                 const pageCh = src.slice(start, end);
@@ -1022,13 +563,10 @@
                     btn.style.color = 'white';
                     btn.style.border = 'none';
                     btn.style.borderRadius = '30px';
-                    btn.style.fontSize = '0.75rem';
+                    btn.style.fontSize = '.75rem';
                     btn.style.fontWeight = '600';
                     btn.style.cursor = 'pointer';
-                    btn.addEventListener('click', function() {
-                        currentPage++;
-                        renderPage(currentPage);
-                    });
+                    btn.addEventListener('click', function() { currentPage++; renderPage(currentPage); });
                     div.appendChild(btn);
                     grid.appendChild(div);
                 }
@@ -1036,8 +574,7 @@
 
             function loadChannels(channels, playlistName = '') {
                 if (!channels || channels.length === 0) {
-                    grid.innerHTML =
-                        `<div class="loading-placeholder">😕 কোনো চ্যানেল পাওয়া যায়নি</div>`;
+                    grid.innerHTML = `<div class="loading-placeholder">😕 কোনো চ্যানেল পাওয়া যায়নি</div>`;
                     allChannels = [];
                     filteredChannels = null;
                     setStatus('কোনো চ্যানেল পাওয়া যায়নি', '😕');
@@ -1048,155 +585,36 @@
                 filteredChannels = null;
                 searchInput.value = '';
                 currentPage = 0;
-
-                // ক্যাটাগরি আপডেট
                 updateCategories(channels);
-
                 renderPage(currentPage);
                 setStatus(`${channels.length}টি চ্যানেল লোড হয়েছে${playlistName ? ' ('+playlistName+')' : ''}`, '✅');
                 searchSection.style.display = 'flex';
-
-                // বর্তমান ডাটা সেভের জন্য রাখি
-                currentPlaylistData = {
-                    name: playlistName || 'প্লে লিস্ট',
-                    data: null,
-                    channelCount: channels.length
-                };
             }
 
-            // ===== URL লোড =====
-            async function loadM3U() {
-                const raw = urlInput.value.trim();
-                if (!raw) {
-                    grid.innerHTML =
-                        `<div class="loading-placeholder">⚠️ দয়া করে একটি M3U লিঙ্ক দিন</div>`;
-                    setStatus('M3U লিঙ্ক দিন', '⚠️');
-                    return;
-                }
-                grid.innerHTML = `<div class="loading-placeholder">⏳ চ্যানেল লোড হচ্ছে...</div>`;
-                setStatus('চ্যানেল লোড হচ্ছে...', '⏳');
-                try {
-                    const res = await fetch(raw);
-                    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-                    const data = await res.text();
-                    const ch = parseM3UContent(data);
-                    if (ch.length === 0) {
-                        grid.innerHTML =
-                            `<div class="loading-placeholder">😕 কোনো চ্যানেল পাওয়া যায়নি। লিঙ্কটি চেক করুন।</div>`;
-                        setStatus('কোনো চ্যানেল পাওয়া যায়নি', '😕');
-                        return;
-                    }
-                    const name = playlistNameInput.value.trim() || 'প্লে লিস্ট';
-                    currentPlaylistData = {
-                        name: name,
-                        data: data,
-                        channelCount: ch.length
-                    };
-                    loadChannels(ch, name);
-                    closePopup();
-                } catch (err) {
-                    console.error(err);
-                    grid.innerHTML =
-                        `<div class="loading-placeholder">❌ লিঙ্ক লোড করতে সমস্যা: ${err.message || 'নেটওয়ার্ক ত্রুটি'}</div>`;
-                    setStatus(`ত্রুটি: ${err.message || 'নেটওয়ার্ক সমস্যা'}`, '❌');
-                }
-            }
-
-            // ===== ফাইল লোড =====
-            function loadM3UFromFile(file) {
-                if (!file) {
-                    grid.innerHTML =
-                        `<div class="loading-placeholder">⚠️ দয়া করে একটি M3U/M3U8 ফাইল নির্বাচন করুন</div>`;
-                    setStatus('ফাইল নির্বাচন করুন', '⚠️');
-                    return;
-                }
-                fileNameDisplay.textContent = file.name;
-                grid.innerHTML = `<div class="loading-placeholder">⏳ ফাইল থেকে চ্যানেল লোড হচ্ছে...</div>`;
-                setStatus('ফাইল থেকে লোড হচ্ছে...', '⏳');
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    try {
-                        const content = e.target.result;
-                        const ch = parseM3UContent(content);
-                        if (ch.length === 0) {
-                            grid.innerHTML =
-                                `<div class="loading-placeholder">😕 এই ফাইল থেকে কোনো চ্যানেল পাওয়া যায়নি।</div>`;
-                            setStatus('কোনো চ্যানেল পাওয়া যায়নি', '😕');
-                            return;
-                        }
-                        const name = playlistNameInput.value.trim() || file.name.replace(/\.[^/.]+$/, '');
-                        urlInput.value = `📁 ${file.name}`;
-                        currentPlaylistData = {
-                            name: name,
-                            data: content,
-                            channelCount: ch.length
-                        };
-                        loadChannels(ch, name);
-                        closePopup();
-                    } catch (err) {
-                        console.error(err);
-                        grid.innerHTML =
-                            `<div class="loading-placeholder">❌ ফাইল পড়তে সমস্যা: ${err.message || 'অজানা ত্রুটি'}</div>`;
-                        setStatus(`ত্রুটি: ${err.message || 'ফাইল পড়া যায়নি'}`, '❌');
-                    }
-                };
-                reader.onerror = function() {
-                    grid.innerHTML = `<div class="loading-placeholder">❌ ফাইল পড়া যায়নি। আবার চেষ্টা করুন।</div>`;
-                    setStatus('ফাইল পড়া যায়নি', '❌');
-                };
-                reader.readAsText(file);
-            }
-
-            fileInput.addEventListener('change', function(e) {
-                const file = this.files && this.files[0];
-                if (file) loadM3UFromFile(file);
-                else fileNameDisplay.textContent = 'ফাইল নেই';
-                this.value = '';
-            });
-
-            // ===== ফিল্টার =====
             function filterChannelsFromInput() {
                 const term = searchInput.value.trim().toLowerCase();
                 const cat = categorySelect.value;
-                if (!term && !cat) {
-                    filteredChannels = null;
-                } else {
+                if (!term && !cat) { filteredChannels = null; } else {
                     filteredChannels = allChannels.filter(ch => {
                         let match = true;
-                        if (term) {
-                            match = match && (ch.name.toLowerCase().includes(term) ||
-                                (ch.category && ch.category.toLowerCase().includes(term)));
-                        }
-                        if (cat) {
-                            match = match && (ch.category && ch.category === cat);
-                        }
+                        if (term) match = match && (ch.name.toLowerCase().includes(term) || (ch.category && ch.category.toLowerCase().includes(term)));
+                        if (cat) match = match && (ch.category && ch.category === cat);
                         return match;
                     });
                 }
                 currentPage = 0;
                 renderPage(currentPage);
-                if (filteredChannels !== null) {
-                    setStatus(`সার্চ ফলাফল: ${filteredChannels.length}টি চ্যানেল`, '🔍');
-                } else {
-                    setStatus(`${allChannels.length}টি চ্যানেল লোড আছে`, '✅');
-                }
+                setStatus(filteredChannels !== null ? `সার্চ ফলাফল: ${filteredChannels.length}টি` : `${allChannels.length}টি চ্যানেল`, filteredChannels !== null ? '🔍' : '✅');
             }
 
-            function filterByCategory(cat) {
-                categorySelect.value = cat;
-                filterChannelsFromInput();
-            }
+            function filterByCategory(cat) { categorySelect.value = cat; filterChannelsFromInput(); }
 
-            // ===== প্লে - যেকোনো ভিডিও =====
             function playVideo(url) {
                 if (!url) return;
                 const section = document.getElementById('player-section');
                 const wrapper = document.getElementById('player-wrapper');
                 section.style.display = 'block';
-                if (player) {
-                    try { player.destroy(); } catch (e) {}
-                    player = null;
-                }
+                if (player) { try { player.destroy(); } catch (e) {} player = null; }
                 player = new Clappr.Player({
                     source: url,
                     parentId: '#player-wrapper',
@@ -1210,16 +628,11 @@
                 setStatus('ভিডিও চালানো হচ্ছে...', '▶️');
             }
 
-            // ===== কপি =====
             function copyText(text) {
                 if (navigator.clipboard && navigator.clipboard.writeText) {
-                    navigator.clipboard.writeText(text).then(() => {
-                        alert('✅ লিঙ্ক কপি হয়েছে!');
-                        setStatus('লিঙ্ক কপি হয়েছে', '✅');
-                    }).catch(() => fallbackCopy(text));
-                } else {
-                    fallbackCopy(text);
-                }
+                    navigator.clipboard.writeText(text).then(() => { alert('✅ কপি হয়েছে!'); setStatus('কপি হয়েছে', '✅'); })
+                        .catch(() => fallbackCopy(text));
+                } else { fallbackCopy(text); }
             }
 
             function fallbackCopy(text) {
@@ -1227,61 +640,45 @@
                 ta.value = text;
                 document.body.appendChild(ta);
                 ta.select();
-                try {
-                    document.execCommand('copy');
-                    alert('✅ লিঙ্ক কপি হয়েছে!');
-                    setStatus('লিঙ্ক কপি হয়েছে', '✅');
-                } catch (e) {
-                    alert('❌ কপি করতে ব্যর্থ, ম্যানুয়ালি কপি করুন।');
-                    setStatus('কপি করতে ব্যর্থ', '❌');
-                }
+                try { document.execCommand('copy'); alert('✅ কপি হয়েছে!'); setStatus('কপি হয়েছে', '✅'); } catch (e) { alert('❌ কপি ব্যর্থ'); setStatus('কপি ব্যর্থ', '❌'); }
                 document.body.removeChild(ta);
             }
 
-            // ===== পপআপ =====
-            function openPopup() {
-                overlay.classList.add('active');
-                document.body.style.overflow = 'hidden';
-                updateSavedPlaylistsDropdown();
-            }
-
-            function closePopup() {
-                overlay.classList.remove('active');
-                document.body.style.overflow = '';
-            }
+            function openPopup() { overlay.classList.add('active'); document.body.style.overflow = 'hidden'; }
+            function closePopup() { overlay.classList.remove('active'); document.body.style.overflow = ''; }
             toggleBtn.addEventListener('click', openPopup);
             closeBtn.addEventListener('click', closePopup);
-            overlay.addEventListener('click', function(e) {
-                if (e.target === overlay) closePopup();
-            });
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && overlay.classList.contains('active')) closePopup();
-            });
+            overlay.addEventListener('click', function(e) { if (e.target === overlay) closePopup(); });
+            document.addEventListener('keydown', function(e) { if (e.key === 'Escape' && overlay.classList.contains('active')) closePopup(); });
 
-            // ===== সেট স্ট্যাটাস =====
             function setStatus(msg, icon = '⏳') {
                 statusText.textContent = msg;
                 const iconSpan = document.querySelector('.status-text .icon');
                 if (iconSpan) iconSpan.textContent = icon;
             }
 
-            // ===== গ্লোবাল =====
-            window.loadM3U = loadM3U;
+            fileInput.addEventListener('change', function(e) {
+                const file = this.files && this.files[0];
+                if (file) {
+                    selectedFile = file;
+                    fileNameDisplay.textContent = file.name;
+                    setStatus(`"${file.name}" সিলেক্ট করা হয়েছে (${(file.size/1024).toFixed(1)} KB)`, '📁');
+                } else {
+                    selectedFile = null;
+                    fileNameDisplay.textContent = 'ফাইল নেই';
+                }
+            });
+
+            window.loadAndSavePlaylist = loadAndSavePlaylist;
+            window.pasteFromClipboard = pasteFromClipboard;
             window.playVideo = playVideo;
             window.copyText = copyText;
             window.filterChannelsFromInput = filterChannelsFromInput;
             window.filterByCategory = filterByCategory;
-            window.saveNewPlaylist = saveNewPlaylist;
-            window.loadSavedPlaylist = loadSavedPlaylist;
-            window.deleteSavedPlaylist = deleteSavedPlaylist;
-            window.pasteFromClipboard = pasteFromClipboard;
 
-            // ইনিশিয়াল
             setStatus('প্রস্তুত', '⏳');
-            updateSavedPlaylistsDropdown();
-            console.log('✅ মাস্টার লাইভ টিভি পোর্টাল – সম্পূর্ণ আপডেটেড');
+            console.log('✅ মাস্টার লাইভ টিভি – সম্পূর্ণ সুরক্ষিত সংস্করণ');
         })();
     </script>
-
 </body>
 </html>
