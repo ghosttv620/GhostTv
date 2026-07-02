@@ -1640,6 +1640,55 @@
         .suggested-item.livetv-suggested.remote-selected-suggested .suggested-name {
             color: #22c55e !important;
         }
+        /* ===== নতুন হেডলাইন স্টাইল ===== */
+        .suggested-title .headline-text {
+            color: #ff0000;
+            font-weight: 800;
+            font-size: 16px;
+            white-space: nowrap;
+            overflow: hidden;
+            display: inline-block;
+            animation: marquee 20s linear infinite;
+            text-shadow: 0 0 10px rgba(255,0,0,0.3);
+            letter-spacing: 0.5px;
+        }
+        /* বিভিন্ন এনিমেশন ইফেক্ট - এলোমেলোভাবে পরিবর্তন হবে */
+        .suggested-title .headline-text.effect-glitch {
+            animation: glitch 3s infinite;
+            text-shadow: 2px 0 #ff0000, -2px 0 #00ff00;
+        }
+        .suggested-title .headline-text.effect-flicker {
+            animation: flicker 2s infinite;
+        }
+        .suggested-title .headline-text.effect-neon {
+            animation: neon 2s ease-in-out infinite alternate;
+            text-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 40px #ff0000;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(2px, -2px); }
+            60% { transform: translate(-1px, 1px); }
+            80% { transform: translate(1px, -1px); }
+            100% { transform: translate(0); }
+        }
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        @keyframes neon {
+            0% { text-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000, 0 0 20px #ff0000; }
+            100% { text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 40px #ff0000, 0 0 80px #ff0000; }
+        }
+        .suggested-title .headline-wrapper {
+            overflow: hidden;
+            flex: 1;
+            margin-left: 8px;
+        }
     </style>
 </head>
 <body>
@@ -1883,7 +1932,9 @@
             <div class="suggested-section suggested-scroll w-full md:w-1/3 md:h-full" id="suggestedSection">
                 <div class="suggested-title">
                     <img id="currentVideoThumb" class="current-thumb" src="" alt="বর্তমান ভিডিওর পোস্টার">
-                    <span>➤➤➤</i> 👻 Ghost TV • 🔥 Watch Next</span>
+                    <div class="headline-wrapper">
+                        <span class="headline-text" id="headlineText">কোন চ্যানেল প্লে না হইলে অন্য আরেকটা প্লেয়ার সিলেক্ট করে ট্রাই করুন / এবং কোন ধরনের প্রবলেম থাকলে মেনু বাটন এ ক্লিক করে প্রবলেম ফিক্স এর মাধ্যমে আমাদেরকে জানাবেন</span>
+                    </div>
                 </div>
                 <div class="suggested-grid" id="suggestedGrid"></div>
             </div>
@@ -1943,6 +1994,7 @@
         let doubleClickTimeout = null;
         let isVideoFullscreen = false;
         let isVoiceEnabled = true;
+        let effectInterval = null;
 
         function showToast(message) {
             const toast = document.getElementById('toast-notice');
@@ -2259,10 +2311,8 @@
                 }
             });
             const toShow = unique.slice(0, 12);
-            // নির্ধারণ করি সাজেস্টেড ভিডিওগুলো কোন পেজের
             let suggestedPage = 'movie';
             if (activePageGlobal === 'livetv' || activePageGlobal === 'home') {
-                // যদি হোম বা লাইভ টিভি পেজ থেকে আসে, চেক করি ভিডিওগুলো লাইভ টিভি কিনা
                 const isLiveTv = toShow.some(m => {
                     if (globalDataStore.livetv) {
                         for (let cat of globalDataStore.livetv) {
@@ -3069,76 +3119,30 @@
             }
         }
 
-        document.addEventListener('dblclick', function(e) {
-            const videoModal = document.getElementById('videoModal');
-            if (videoModal.style.display === 'flex') {
-                toggleVideoFullscreen();
+        // হেডলাইনের জন্য এনিমেশন ইফেক্ট পরিবর্তন
+        function changeHeadlineEffect() {
+            const headline = document.getElementById('headlineText');
+            if (!headline) return;
+            const effects = ['', 'effect-glitch', 'effect-flicker', 'effect-neon'];
+            const currentEffect = effects.find(e => headline.classList.contains(e));
+            let nextEffect = '';
+            do {
+                const randomIndex = Math.floor(Math.random() * effects.length);
+                nextEffect = effects[randomIndex];
+            } while (nextEffect === currentEffect && effects.length > 1);
+            effects.forEach(e => headline.classList.remove(e));
+            if (nextEffect) {
+                headline.classList.add(nextEffect);
             }
-        });
+        }
 
-        document.addEventListener('keydown', function(e) {
-            const videoModal = document.getElementById('videoModal');
-            if (videoModal.style.display !== 'flex') return;
-            if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
-                const currentTime = Date.now();
-                const key = e.key;
-                if (lastClickElement === key && currentTime - lastClickTime < 500) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    const currentVideoName = document.getElementById('videoTitle').textContent;
-                    let currentPage = activePageGlobal;
-                    if (currentPage === 'home' || currentPage === 'favorite' || currentPage === 'search-section') {
-                        currentPage = 'movie';
-                    }
-                    const categories = globalDataStore[currentPage] || [];
-                    let allVideos = [];
-                    categories.forEach(cat => {
-                        if (cat && cat.movies) {
-                            allVideos = allVideos.concat(cat.movies);
-                        }
-                    });
-                    const filtered = allVideos.filter(v => v.name !== currentVideoName);
-                    if (filtered.length > 0) {
-                        const randomMovie = filtered[Math.floor(Math.random() * filtered.length)];
-                        if (randomMovie) {
-                            handleMovieClick(randomMovie);
-                            showToast(`⏭️ চেঞ্জ করা হয়েছে: ${randomMovie.name}`);
-                            speakNotification(`Now playing ${randomMovie.name}`);
-                        }
-                    } else {
-                        showToast('❌ অন্য কোনো ভিডিও পাওয়া যায়নি');
-                    }
-                    lastClickElement = null;
-                    lastClickTime = 0;
-                    clearTimeout(doubleClickTimeout);
-                    return;
-                }
-                lastClickElement = key;
-                lastClickTime = currentTime;
-                clearTimeout(doubleClickTimeout);
-                doubleClickTimeout = setTimeout(() => {
-                    lastClickElement = null;
-                    lastClickTime = 0;
-                }, 500);
-            }
-        });
-
-        document.addEventListener('fullscreenchange', () => {
-            isVideoFullscreen = !!document.fullscreenElement;
-            updateFullscreenOverlayState();
-        });
-        document.addEventListener('webkitfullscreenchange', () => {
-            isVideoFullscreen = !!document.webkitFullscreenElement;
-            updateFullscreenOverlayState();
-        });
-        document.addEventListener('mozfullscreenchange', () => {
-            isVideoFullscreen = !!document.mozFullScreenElement;
-            updateFullscreenOverlayState();
-        });
-        document.addEventListener('MSFullscreenChange', () => {
-            isVideoFullscreen = !!document.msFullscreenElement;
-            updateFullscreenOverlayState();
-        });
+        function startHeadlineEffectRotation() {
+            if (effectInterval) clearInterval(effectInterval);
+            // প্রতি 5 সেকেন্ডে ইফেক্ট পরিবর্তন
+            effectInterval = setInterval(changeHeadlineEffect, 5000);
+            // প্রথমে একটি র্যান্ডম ইফেক্ট সেট করুন
+            setTimeout(changeHeadlineEffect, 100);
+        }
 
         function openVideoModal(movie) {
             if (!movie || !movie.link) return;
@@ -3325,6 +3329,8 @@
             suggested = suggested.sort(() => Math.random() - 0.5);
             currentSuggestedMovies = suggested;
             renderSuggestedVideos(suggested);
+            // হেডলাইন এনিমেশন শুরু করুন
+            startHeadlineEffectRotation();
             setTimeout(updateFullscreenOverlayState, 300);
         }
 
@@ -3338,6 +3344,15 @@
             lastClickElement = null;
             lastClickTime = 0;
             clearTimeout(doubleClickTimeout);
+            if (effectInterval) {
+                clearInterval(effectInterval);
+                effectInterval = null;
+            }
+            // হেডলাইন থেকে সব ইফেক্ট ক্লাস রিমুভ করুন
+            const headline = document.getElementById('headlineText');
+            if (headline) {
+                headline.className = 'headline-text';
+            }
         }
 
         function updateFullscreenOverlayState() {
@@ -3612,4 +3627,4 @@
         }
     </script>
 </body>
-    </html>
+</html>
