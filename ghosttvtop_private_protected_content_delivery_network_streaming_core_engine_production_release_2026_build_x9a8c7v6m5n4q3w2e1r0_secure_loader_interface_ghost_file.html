@@ -300,7 +300,50 @@
         .scroll-row::-webkit-scrollbar {
             display: none;
         }
-        .poster-img {
+        /* ---- লাইভ টিভি পোস্টার স্টাইল (ছোট বৃত্তাকৃতি) ---- */
+        .poster.livetv-poster .poster-img-wrapper {
+            width: 80%;
+            aspect-ratio: 1/1;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid rgba(229, 9, 20, 0.4);
+            box-shadow: 0 0 20px rgba(229, 9, 20, 0.15);
+            background: #1e293b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+        }
+        .poster.livetv-poster:hover .poster-img-wrapper {
+            border-color: #e50914;
+            box-shadow: 0 0 30px rgba(229, 9, 20, 0.35);
+            transform: scale(1.02);
+        }
+        .poster.livetv-poster .poster-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            border-radius: 50%;
+            aspect-ratio: 1/1;
+        }
+        .poster.livetv-poster .poster-name {
+            margin-top: 8px;
+            text-align: center;
+            font-size: 13px;
+            font-weight: 600;
+            line-height: 1.3;
+            color: #e2e8f0;
+            padding: 0 2px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            transition: color 0.15s ease;
+        }
+        /* অন্যান্য পোস্টার (মুভি/অ্যাডাল্ট) এর জন্য আগের স্টাইল */
+        .poster:not(.livetv-poster) .poster-img {
             aspect-ratio: 2 / 2.85;
             object-fit: cover;
             border-radius: 14px;
@@ -310,7 +353,7 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
             display: block;
         }
-        .poster-name {
+        .poster:not(.livetv-poster) .poster-name {
             margin-top: 6px;
             text-align: center;
             font-size: 13px;
@@ -586,7 +629,6 @@
         #toast-notice {
             position: fixed;
             bottom: 80px;
-            /* নিচে থেকে 80px উপরে (নেভিগেশন বার + ফাঁকা) */
             right: 16px;
             background: rgba(20, 28, 45, 0.65);
             backdrop-filter: blur(20px);
@@ -607,7 +649,6 @@
             pointer-events: none;
             transition: none;
         }
-        /* এনিমেশন: ডান দিক থেকে স্লাইড ইন */
         @keyframes slideInRight {
             0% {
                 opacity: 0;
@@ -643,11 +684,9 @@
         #toast-notice .toast-text {
             display: inline;
         }
-        /* স্মল স্ক্রিনে অ্যাডজাস্ট */
         @media (max-width: 480px) {
             #toast-notice {
                 bottom: 75px;
-                /* মোবাইলে নিচে থেকে সামান্য বেশি */
                 right: 12px;
                 padding: 10px 16px;
                 font-size: 12px;
@@ -1270,9 +1309,8 @@
                 display: flex !important;
             }
         }
-        /* ================================================================ 🆕 ফুলস্ক্রিনে হেডার ওভারলে – শুধু বড় স্ক্রিনে ================================================================ */
+        /* ================================================================ ফুলস্ক্রিনে হেডার ওভারলে – শুধু বড় স্ক্রিনে ================================================================ */
         @media (min-width: 768px) {
-            /* যখন ফুলস্ক্রিন একটিভ, হেডারকে ওভারলে হিসেবে দেখাও */
             body.ghost-fs-overlay-active #videoModal .glass-header {
                 position: fixed !important;
                 top: 0 !important;
@@ -1306,12 +1344,10 @@
             body.ghost-fs-overlay-active #videoModal .glass-header button:hover {
                 color: #e50914 !important;
             }
-            /* ভিডিওর উপরে হেডার থাকার জন্য ভিডিও কন্টেইনার সামান্য প্যাডিং */
             body.ghost-fs-overlay-active #videoModal .video-container-box {
                 padding-top: 60px !important;
                 box-sizing: border-box !important;
             }
-            /* ফুলস্ক্রিনে ভিডিও কন্টেইনার পুরো উচ্চতা নেয় */
             body.ghost-fs-overlay-active #videoModal .video-container-box {
                 height: 100vh !important;
                 min-height: 100vh !important;
@@ -1331,14 +1367,12 @@
                 width: 100% !important;
                 height: 100% !important;
             }
-            /* ফুলস্ক্রিনে মডাল লেআউট পুরো স্ক্রিন */
             body.ghost-fs-overlay-active #videoModal .flex-col.md\:flex-row {
                 height: 100vh !important;
                 max-height: 100vh !important;
                 min-height: 100vh !important;
                 flex-direction: column !important;
             }
-            /* সাজেস্টেড লুকান */
             body.ghost-fs-overlay-active #videoModal .suggested-section {
                 display: none !important;
             }
@@ -1348,7 +1382,6 @@
             body.ghost-fs-overlay-active #videoModal .suggested-title {
                 display: none !important;
             }
-            /* মোবাইলে ফুলস্ক্রিন ওভারলে নিষ্ক্রিয় */
             @media (max-width: 767px) {
                 body.ghost-fs-overlay-active #videoModal .glass-header {
                     position: sticky !important;
@@ -1383,7 +1416,6 @@
                 }
             }
         }
-        /* ---- নতুন স্টাইল: টপবার ডান পাশের বাটন গ্রুপ ---- */
         .topbar-actions {
             display: flex;
             align-items: center;
@@ -1423,7 +1455,6 @@
         .play-toggle-btn:hover {
             color: #e50914;
         }
-        /* DevTools সতর্কতা পপআপ */
         #devtoolsAlert {
             display: none;
             position: fixed;
@@ -1501,6 +1532,114 @@
         .devtools-alert-box .alert-btn:active {
             transform: scale(0.96);
         }
+        /* ===== লাইভ টিভি পোস্টারের জন্য অতিরিক্ত স্টাইল (ছোট বৃত্তাকৃতি) ===== */
+        .poster.livetv-poster .poster-img-wrapper {
+            width: 72%;
+            aspect-ratio: 1/1;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid rgba(229, 9, 20, 0.35);
+            box-shadow: 0 0 16px rgba(229, 9, 20, 0.12);
+            background: #1e293b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+        }
+        .poster.livetv-poster:hover .poster-img-wrapper {
+            border-color: #e50914;
+            box-shadow: 0 0 28px rgba(229, 9, 20, 0.3);
+            transform: scale(1.02);
+        }
+        .poster.livetv-poster .poster-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            border-radius: 50%;
+            aspect-ratio: 1/1;
+        }
+        .poster.livetv-poster .poster-name {
+            margin-top: 8px;
+            text-align: center;
+            font-size: 12px;
+            font-weight: 600;
+            line-height: 1.3;
+            color: #e2e8f0;
+            padding: 0 2px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            transition: color 0.15s ease;
+        }
+        .poster.livetv-poster.remote-selected-poster .poster-img-wrapper {
+            border-color: #22c55e !important;
+            box-shadow: 0 0 35px rgba(34, 197, 94, 0.45) !important;
+        }
+        .poster.livetv-poster.remote-selected-poster .poster-name {
+            color: #22c55e !important;
+        }
+        .poster.livetv-poster .fav-heart-badge {
+            bottom: 48px;
+        }
+        .poster.livetv-poster .premium-badge {
+            top: 6px;
+            right: 6px;
+        }
+        /* ===== সাজেস্টেড আইটেমে লাইভ টিভি পোস্টার স্টাইল (ছোট বৃত্তাকৃতি) ===== */
+        .suggested-item.livetv-suggested .suggested-img-wrapper {
+            width: 72%;
+            aspect-ratio: 1/1;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid rgba(229, 9, 20, 0.35);
+            box-shadow: 0 0 16px rgba(229, 9, 20, 0.12);
+            background: #1e293b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+        }
+        .suggested-item.livetv-suggested:hover .suggested-img-wrapper {
+            border-color: #e50914;
+            box-shadow: 0 0 28px rgba(229, 9, 20, 0.3);
+            transform: scale(1.02);
+        }
+        .suggested-item.livetv-suggested .suggested-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            border-radius: 50%;
+            aspect-ratio: 1/1;
+        }
+        .suggested-item.livetv-suggested .suggested-name {
+            margin-top: 6px;
+            text-align: center;
+            font-size: 11px;
+            font-weight: 600;
+            line-height: 1.3;
+            color: #e2e8f0;
+            padding: 4px 2px 8px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            transition: color 0.15s ease;
+            background: transparent;
+            min-height: 32px;
+            border-radius: 0;
+        }
+        .suggested-item.livetv-suggested.remote-selected-suggested .suggested-img-wrapper {
+            border-color: #22c55e !important;
+            box-shadow: 0 0 35px rgba(34, 197, 94, 0.45) !important;
+        }
+        .suggested-item.livetv-suggested.remote-selected-suggested .suggested-name {
+            color: #22c55e !important;
+        }
     </style>
 </head>
 <body>
@@ -1537,7 +1676,6 @@
             <div class="ghost-problem-btn" onclick="openGhostProblemModal(); toggleSidebar();">
                 <i class="fas fa-ghost"></i> <span>Ghost Problem Fix</span>
             </div>
-            <!-- 🆕 ভয়েজ মোড টগল বাটন (এপিকে ডাউনলোডের উপরে) -->
             <div class="voice-toggle-btn" onclick="toggleVoiceMode(); toggleSidebar();">
                 <i class="fas fa-volume-up"></i> <span>ভয়েজ মোড</span>
                 <span class="toggle-status" id="voiceModeStatus">অন</span>
@@ -1763,7 +1901,7 @@
             <button class="alert-btn" onclick="closeDevtoolsAlert()">আমি বুঝেছি</button>
         </div>
     </div>
-    <!-- ===== নতুন নোটিফিকেশন এলিমেন্ট (গ্লাস, চিকন, ডান দিক, একেবারে নিচে) ===== -->
+    <!-- ===== নোটিফিকেশন এলিমেন্ট ===== -->
     <div id="toast-notice">
         <span class="toast-icon"><i class="fas fa-bell"></i></span>
         <span class="toast-text" id="toastMessage"></span>
@@ -1804,22 +1942,18 @@
         let lastClickElement = null;
         let doubleClickTimeout = null;
         let isVideoFullscreen = false;
-        // ---- 🆕 ভয়েজ মোড স্টেট ----
         let isVoiceEnabled = true;
-        // ---- নোটিফিকেশন ফাংশন ----
+
         function showToast(message) {
             const toast = document.getElementById('toast-notice');
             const toastMsg = document.getElementById('toastMessage');
             toastMsg.innerText = message;
-            // Remove previous animation classes
             toast.classList.remove('show', 'hide');
-            // Force reflow
             void toast.offsetWidth;
             toast.style.display = 'block';
             toast.classList.add('show');
             clearTimeout(toast._timer);
             clearTimeout(toast._hideTimer);
-            // Set timer to hide after 2 seconds
             toast._timer = setTimeout(() => {
                 toast.classList.remove('show');
                 toast.classList.add('hide');
@@ -1829,6 +1963,7 @@
                 }, 350);
             }, 2000);
         }
+
         function getDeviceId() {
             let id = localStorage.getItem('ghost_device_id');
             if (!id) {
@@ -1838,6 +1973,7 @@
             return id;
         }
         myDeviceId = getDeviceId();
+
         function loadFavorites() {
             const saved = localStorage.getItem('ghost_favorites');
             if (saved) {
@@ -1849,10 +1985,12 @@
             }
         }
         loadFavorites();
+
         function savePlayerSettings(page, playerType) {
             localStorage.setItem(`ghost_player_${page}`, playerType);
             showToast(` ${page.toUpperCase()} পেজের জন্য প্লেয়ার সেট করা হয়েছে!`);
         }
+
         function loadPlayerSettings() {
             ['movie', 'livetv', 'adult'].forEach(page => {
                 const savedPlayer = localStorage.getItem(`ghost_player_${page}`) || 'videojs';
@@ -1860,7 +1998,7 @@
                 if (selectEl) selectEl.value = savedPlayer;
             });
         }
-        // ---- 🆕 ভয়েজ মোড টগল ফাংশন ----
+
         function toggleVoiceMode() {
             isVoiceEnabled = !isVoiceEnabled;
             const statusEl = document.getElementById('voiceModeStatus');
@@ -1875,12 +2013,13 @@
             }
             localStorage.setItem('ghost_voice_enabled', isVoiceEnabled ? 'true' : 'false');
         }
+
         function loadVoiceModeSettings() {
             const saved = localStorage.getItem('ghost_voice_enabled');
             if (saved !== null) {
                 isVoiceEnabled = saved === 'true';
             } else {
-                isVoiceEnabled = true; // ডিফল্ট অন
+                isVoiceEnabled = true;
             }
             const statusEl = document.getElementById('voiceModeStatus');
             if (isVoiceEnabled) {
@@ -1891,14 +2030,10 @@
                 statusEl.classList.add('off');
             }
         }
-        // ---- 🆕 ভয়েস স্পিক ফাংশন ----
+
         function speakMessage(message) {
             if (!isVoiceEnabled) return;
-            if (!window.speechSynthesis) {
-                console.warn('Speech synthesis not supported in this browser.');
-                return;
-            }
-            // Cancel any ongoing speech
+            if (!window.speechSynthesis) return;
             window.speechSynthesis.cancel();
             const utterance = new SpeechSynthesisUtterance(message);
             utterance.lang = 'en-US';
@@ -1915,19 +2050,18 @@
             }
             window.speechSynthesis.speak(utterance);
         }
-        // ---- 🆕 ওয়েলকাম ভয়েস (শুধু প্রথমবার) ----
+
         function playWelcomeVoice() {
             if (sessionStorage.getItem('ghost_welcome_played')) return;
             speakMessage("Welcome to Ghost Corporation. Developer by Ghost Nirob.");
             sessionStorage.setItem('ghost_welcome_played', 'true');
         }
-        // ---- 🆕 নোটিফিকেশন ভয়েস ----
+
         function speakNotification(message) {
-            // নোটিফিকেশন আসলে ভয়েস বলবে (যদি অন থাকে)
             if (!isVoiceEnabled) return;
             speakMessage(message);
         }
-        // ---- রিমোট ফোকাস ----
+
         function clearRemoteFocus() {
             document.querySelectorAll(
                 '.remote-selected-name, .remote-selected-nav, .remote-selected-sidebar, .remote-selected-suggested-name, .remote-selected-poster, .remote-selected-suggested'
@@ -1937,6 +2071,7 @@
             });
             remoteFocusTarget = null;
         }
+
         function focusRemoteOnPoster(posterElement, movieData) {
             clearRemoteFocus();
             if (!posterElement) return;
@@ -1946,18 +2081,21 @@
             remoteFocusTarget = { type: 'poster', element: posterElement, movie: movieData };
             posterElement.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
+
         function focusRemoteOnNav(navButton) {
             clearRemoteFocus();
             if (!navButton) return;
             navButton.classList.add('remote-selected-nav');
             remoteFocusTarget = { type: 'nav', element: navButton };
         }
+
         function focusRemoteOnSidebar(sidebarItem) {
             clearRemoteFocus();
             if (!sidebarItem) return;
             sidebarItem.classList.add('remote-selected-sidebar');
             remoteFocusTarget = { type: 'sidebar', element: sidebarItem };
         }
+
         function focusRemoteOnSuggested(suggestedItem, movieData) {
             clearRemoteFocus();
             if (!suggestedItem) return;
@@ -1967,6 +2105,7 @@
             remoteFocusTarget = { type: 'suggested', element: suggestedItem, movie: movieData };
             suggestedItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
+
         function attachRemoteSelectionToPoster(posterElement, movieData) {
             if (!posterElement) return;
             posterElement.addEventListener('click', function(e) {
@@ -1979,7 +2118,7 @@
                 return false;
             });
         }
-        // ---- ফেভারিট ----
+
         function toggleFavorite(movie) {
             if (!movie || !movie.link) return;
             const index = favoritesList.findIndex(f => f.link === movie.link);
@@ -2000,18 +2139,39 @@
             if (document.getElementById('favorite').classList.contains('active')) renderFavoritePage();
             renderSuggestedVideos(currentSuggestedMovies);
         }
-        // ---- পোস্টার ক্রিয়েট ----
-        function createPoster(movie) {
+
+        function createPoster(movie, isLiveTv = false) {
             if (!movie) return document.createElement('div');
             const div = document.createElement('div');
-            div.className = "poster";
+            if (isLiveTv) {
+                div.className = "poster livetv-poster";
+            } else {
+                div.className = "poster";
+            }
             const premiumBadge = movie.premium ? `<span class="premium-badge">🜲 𝗩𝗜𝗣</span>` : '';
             const isFav = favoritesList.some(f => f.link === movie.link);
             const favHeart = isFav ? `<span class="fav-heart-badge"><i class="fas fa-heart"></i></span>` : '';
-            div.innerHTML = `
-                <div class="relative">${premiumBadge}${favHeart}<img src="${movie.logo || 'https://picsum.photos/400/220'}" class="poster-img" alt="${movie.name || ''}" loading="lazy"></div>
-                <p class="poster-name">${movie.name || ''}</p>
-            `;
+            if (isLiveTv) {
+                div.innerHTML = `
+                    <div class="relative">
+                        ${premiumBadge}
+                        ${favHeart}
+                        <div class="poster-img-wrapper">
+                            <img src="${movie.logo || 'https://picsum.photos/400/400'}" class="poster-img" alt="${movie.name || ''}" loading="lazy">
+                        </div>
+                    </div>
+                    <p class="poster-name">${movie.name || ''}</p>
+                `;
+            } else {
+                div.innerHTML = `
+                    <div class="relative">
+                        ${premiumBadge}
+                        ${favHeart}
+                        <img src="${movie.logo || 'https://picsum.photos/400/220'}" class="poster-img" alt="${movie.name || ''}" loading="lazy">
+                    </div>
+                    <p class="poster-name">${movie.name || ''}</p>
+                `;
+            }
             attachRemoteSelectionToPoster(div, movie);
             let pressTimer;
             let isLongPress = false;
@@ -2048,6 +2208,7 @@
             });
             return div;
         }
+
         function attachRemoteFocusToNav() {
             document.querySelectorAll('.nav-item').forEach(btn => {
                 btn.addEventListener('click', function(e) {
@@ -2060,7 +2221,7 @@
                 });
             });
         }
-        // ---- ভিডিও ----
+
         async function handleMovieClick(movie) {
             if (!movie) return;
             if (movie.premium) {
@@ -2080,6 +2241,7 @@
             }
             openVideoModal(movie);
         }
+
         function renderSuggestedVideos(movies) {
             const grid = document.getElementById('suggestedGrid');
             if (!grid) return;
@@ -2097,15 +2259,43 @@
                 }
             });
             const toShow = unique.slice(0, 12);
+            // নির্ধারণ করি সাজেস্টেড ভিডিওগুলো কোন পেজের
+            let suggestedPage = 'movie';
+            if (activePageGlobal === 'livetv' || activePageGlobal === 'home') {
+                // যদি হোম বা লাইভ টিভি পেজ থেকে আসে, চেক করি ভিডিওগুলো লাইভ টিভি কিনা
+                const isLiveTv = toShow.some(m => {
+                    if (globalDataStore.livetv) {
+                        for (let cat of globalDataStore.livetv) {
+                            if (cat.movies && cat.movies.some(v => v.link === m.link)) return true;
+                        }
+                    }
+                    return false;
+                });
+                suggestedPage = isLiveTv ? 'livetv' : 'movie';
+            }
+            const isLiveTvSuggested = (suggestedPage === 'livetv');
             toShow.forEach(movie => {
                 const item = document.createElement('div');
-                item.className = 'suggested-item';
+                if (isLiveTvSuggested) {
+                    item.className = 'suggested-item livetv-suggested';
+                } else {
+                    item.className = 'suggested-item';
+                }
                 const isFav = favoritesList.some(f => f.link === movie.link);
                 const favIcon = isFav ? `<i class="fas fa-heart text-red-500 text-[11px] ml-1"></i>` : '';
-                item.innerHTML = `
-                    <img src="${movie.logo || 'https://picsum.photos/400/220'}" alt="${movie.name || ''}" loading="lazy">
-                    <div class="suggested-name">${movie.name || ''} ${favIcon}</div>
-                `;
+                if (isLiveTvSuggested) {
+                    item.innerHTML = `
+                        <div class="suggested-img-wrapper">
+                            <img src="${movie.logo || 'https://picsum.photos/400/400'}" class="suggested-img" alt="${movie.name || ''}" loading="lazy">
+                        </div>
+                        <div class="suggested-name">${movie.name || ''} ${favIcon}</div>
+                    `;
+                } else {
+                    item.innerHTML = `
+                        <img src="${movie.logo || 'https://picsum.photos/400/220'}" alt="${movie.name || ''}" loading="lazy">
+                        <div class="suggested-name">${movie.name || ''} ${favIcon}</div>
+                    `;
+                }
                 item.addEventListener('click', function(e) {
                     focusRemoteOnSuggested(this, movie);
                     handleMovieClick(movie);
@@ -2118,11 +2308,12 @@
                 grid.appendChild(item);
             });
         }
-        // ---- পেজ চেঞ্জ ----
+
         function toggleSidebar() {
             document.getElementById('sidebar').classList.toggle('active');
             document.querySelector('.backdrop').classList.toggle('active');
         }
+
         function changePage(pageId) {
             activePageGlobal = pageId;
             const sections = document.querySelectorAll('.page-section');
@@ -2145,6 +2336,7 @@
             if (pageId === 'favorite') renderFavoritePage();
             clearRemoteFocus();
         }
+
         function renderHomePage() {
             const homeContainer = document.getElementById('content-home');
             if (!homeContainer) return;
@@ -2178,12 +2370,14 @@
                 homeContainer.appendChild(section);
                 const rowDiv = document.getElementById(`home-row-${type}`);
                 if (rowDiv) {
+                    const isLiveTv = (type === 'livetv');
                     rowMovies.slice(0, 15).forEach(movie => {
-                        if (movie) rowDiv.appendChild(createPoster(movie));
+                        if (movie) rowDiv.appendChild(createPoster(movie, isLiveTv));
                     });
                 }
             });
         }
+
         function renderFullPageLagFree(type) {
             const container = document.getElementById(`content-${type}`);
             const categories = globalDataStore[type];
@@ -2193,6 +2387,7 @@
                 container.innerHTML = `<div class="text-gray-500 text-center py-12 text-sm">কোন কন্টেন্ট নেই</div>`;
                 return;
             }
+            const isLiveTv = (type === 'livetv');
             categories.forEach((category, catIndex) => {
                 if (!category) return;
                 const section = document.createElement('div');
@@ -2215,7 +2410,7 @@
                         for (let i = 0; i < batchSize; i++) {
                             if (chunkIndex >= moviesToRender.length) return;
                             const movie = moviesToRender[chunkIndex];
-                            if (movie) row.appendChild(createPoster(movie));
+                            if (movie) row.appendChild(createPoster(movie, isLiveTv));
                             chunkIndex++;
                         }
                         if (chunkIndex < moviesToRender.length) setTimeout(renderChunk, 2);
@@ -2224,6 +2419,7 @@
                 }
             });
         }
+
         function renderFavoritePage() {
             const container = document.getElementById('content-favorite');
             if (!container) return;
@@ -2234,9 +2430,10 @@
                 return;
             }
             favoritesList.forEach(movie => {
-                if (movie) container.appendChild(createPoster(movie));
+                if (movie) container.appendChild(createPoster(movie, false));
             });
         }
+
         function showAll(type, catIndex) {
             const cat = globalDataStore[type]?.[catIndex];
             if (cat) {
@@ -2246,12 +2443,13 @@
                     contentDiv.innerHTML = '';
                     let modalMovies = cat.movies || [];
                     let mIdx = 0;
+                    const isLiveTv = (type === 'livetv');
 
                     function streamModalData() {
                         let batch = 100;
                         for (let i = 0; i < batch; i++) {
                             if (mIdx >= modalMovies.length) return;
-                            contentDiv.appendChild(createPoster(modalMovies[mIdx]));
+                            contentDiv.appendChild(createPoster(modalMovies[mIdx], isLiveTv));
                             mIdx++;
                         }
                         if (mIdx < modalMovies.length) setTimeout(streamModalData, 2);
@@ -2261,15 +2459,18 @@
                 }
             }
         }
+
         function openModal() {
             const modal = document.getElementById('modal');
             modal.classList.remove('hidden');
             modal.style.background = '#000';
             history.pushState({ modalOpen: true }, '');
         }
+
         function closeModal() {
             document.getElementById('modal').classList.add('hidden');
         }
+
         function handleSearch(query) {
             const txt = query.trim().toLowerCase();
             const searchContainer = document.getElementById('content-search');
@@ -2307,7 +2508,7 @@
                     let maxBatch = 100;
                     for (let i = 0; i < maxBatch; i++) {
                         if (sIdx >= foundItems.length) return;
-                        searchContainer.appendChild(createPoster(foundItems[sIdx]));
+                        searchContainer.appendChild(createPoster(foundItems[sIdx], false));
                         sIdx++;
                     }
                     if (sIdx < foundItems.length) setTimeout(streamSearchData, 2);
@@ -2315,7 +2516,7 @@
                 streamSearchData();
             }
         }
-        // ---- ইউজার ভেরিফাই ----
+
         async function verifyUser(username, password, isAuto = false) {
             try {
                 const res = await fetch(`https://api.jsonbin.io/v3/b/${USER_BIN}/latest`, {
@@ -2366,6 +2567,7 @@
                 return false;
             }
         }
+
         async function resetDeviceId() {
             const user = document.getElementById('loginUser')?.value.trim();
             const pass = document.getElementById('loginPass')?.value.trim();
@@ -2433,6 +2635,7 @@
                 showToast("⚠️ রিসেট করতে সমস্যা হয়েছে!");
             }
         }
+
         async function checkAutoLogin() {
             const savedUser = localStorage.getItem('ghost_user');
             const savedPass = localStorage.getItem('ghost_pass');
@@ -2440,6 +2643,7 @@
                 await verifyUser(savedUser, savedPass, true);
             }
         }
+
         async function handleLogin() {
             const user = document.getElementById('loginUser').value.trim();
             const pass = document.getElementById('loginPass').value.trim();
@@ -2451,11 +2655,13 @@
             btn.innerText = "লগইন করুন";
             btn.disabled = false;
         }
+
         function showLoginError(msg) {
             const err = document.getElementById('loginError');
             err.innerText = msg;
             err.classList.remove('hidden');
         }
+
         async function updateJsonBin(updatedData) {
             try {
                 await fetch(`https://api.jsonbin.io/v3/b/${USER_BIN}`, {
@@ -2468,6 +2674,7 @@
                 });
             } catch (e) {}
         }
+
         function updateAuthHeaderUI() {
             const area = document.getElementById('auth-status-area');
             if (currentUserData) {
@@ -2488,6 +2695,7 @@
                 `;
             }
         }
+
         function handleLogout() {
             showCustomConfirm("আপনি কি লগআউট করতে চান?").then(confirmed => {
                 if (confirmed) {
@@ -2500,7 +2708,7 @@
                 }
             });
         }
-        // ---- অ্যাডাল্ট ----
+
         function toggleAdultNavVisibility(isChecked) {
             const adultBtn = document.getElementById('btn-adult');
             if (isChecked) {
@@ -2515,13 +2723,14 @@
             }
             renderHomePage();
         }
+
         function loadAdultVisibilitySettings() {
             const isVisible = localStorage.getItem('ghost_adult_visible') === 'true';
             const checkbox = document.getElementById('adultVisibilityToggle');
             if (checkbox) checkbox.checked = isVisible;
             document.getElementById('btn-adult').style.display = isVisible ? 'flex' : 'none';
         }
-        // ---- স্লাইডার ----
+
         function initSliderControl() {
             if (sliderInterval) clearInterval(sliderInterval);
             const slides = document.querySelectorAll('.slide');
@@ -2532,6 +2741,7 @@
                 slides[currentSlideIdx].classList.add('active');
             }, 3200);
         }
+
         async function fetchAndRenderSlider() {
             const sliderContainer = document.getElementById('dynamic-slider');
             let sliderData = [
@@ -2579,7 +2789,7 @@
             currentSlideIdx = 0;
             initSliderControl();
         }
-        // ---- কনফর্ম, প্রিমিয়াম, লগইন ----
+
         function showCustomConfirm(messageText) {
             return new Promise((resolve) => {
                 const modal = document.getElementById('customConfirmModal');
@@ -2604,12 +2814,14 @@
                 });
             });
         }
+
         function showPremiumAlert(message) {
             const modal = document.getElementById('premiumAlertModal');
             document.getElementById('premiumAlertMessage').innerText = message || "⚠️ এই কন্টেন্টটি প্রিমিয়াম! লগইন করুন।";
             modal.style.display = 'flex';
             setTimeout(() => modal.classList.add('show'), 10);
         }
+
         function closePremiumAlert() {
             const modal = document.getElementById('premiumAlertModal');
             modal.classList.remove('show');
@@ -2618,6 +2830,7 @@
                 openLoginModal();
             }, 300);
         }
+
         async function openLoginModal() {
             const modal = document.getElementById('loginModal');
             modal.style.display = 'flex';
@@ -2628,11 +2841,12 @@
             modal.style.justifyContent = 'center';
             modal.style.alignItems = 'center';
         }
+
         function closeLoginModal() {
             document.getElementById('loginModal').style.display = 'none';
             document.getElementById('loginError').classList.add('hidden');
         }
-        // ---- Ghost Problem Fix মডাল ----
+
         function openGhostProblemModal() {
             const modal = document.getElementById('ghostProblemModal');
             modal.style.display = 'flex';
@@ -2654,6 +2868,7 @@
             });
             setTimeout(() => modal.classList.add('show'), 10);
         }
+
         function closeGhostProblemModal() {
             const modal = document.getElementById('ghostProblemModal');
             modal.classList.remove('show');
@@ -2661,7 +2876,7 @@
                 modal.style.display = 'none';
             }, 350);
         }
-        // ---- Ghost Problem Fix: Discord webhook ----
+
         async function sendGhostProblem() {
             const movieName = document.getElementById('problemMovieName').value.trim();
             const problemDesc = document.getElementById('problemDescription').value.trim();
@@ -2738,7 +2953,7 @@
                 sendBtn.disabled = false;
             }
         }
-        // ---- ভিডিও প্লেয়ার কন্ট্রোল ফাংশন ----
+
         function togglePlayStop() {
             const btn = document.getElementById('playStopToggleBtn');
             let isPlaying = false;
@@ -2784,6 +2999,7 @@
             }
             btn.innerHTML = isPlaying ? '<i class="fas fa-pause"></i>' : '<i class="fas fa-play"></i>';
         }
+
         function toggleVideoFullscreen() {
             const activePlayer = vjsPlayer || plyrPlayer || dPlayerInstance || clapprPlayerInstance;
             if (!activePlayer) {
@@ -2825,7 +3041,7 @@
             }
             showToast('⛶ ফুলস্ক্রিন টগল');
         }
-        // ---- ভিডিও মডাল ----
+
         function destroyAllPlayers() {
             if (vjsPlayer) {
                 try {
@@ -2852,6 +3068,7 @@
                 clapprPlayerInstance = null;
             }
         }
+
         document.addEventListener('dblclick', function(e) {
             const videoModal = document.getElementById('videoModal');
             if (videoModal.style.display === 'flex') {
@@ -2859,31 +3076,20 @@
             }
         });
 
-        // ---- NEW FEATURE: Double Press Navigation for TV Remote (Right/Left) ----
         document.addEventListener('keydown', function(e) {
             const videoModal = document.getElementById('videoModal');
-            // Only work when video player is visible
             if (videoModal.style.display !== 'flex') return;
-
-            // Check for Right (ArrowRight) or Left (ArrowLeft) key
             if (e.key === 'ArrowRight' || e.key === 'ArrowLeft') {
                 const currentTime = Date.now();
                 const key = e.key;
-
-                // If the same key was pressed within 500ms, it's a double press
                 if (lastClickElement === key && currentTime - lastClickTime < 500) {
                     e.preventDefault();
                     e.stopPropagation();
-
                     const currentVideoName = document.getElementById('videoTitle').textContent;
                     let currentPage = activePageGlobal;
-
-                    // If on home, favorite, or search, default to 'movie' for navigation
                     if (currentPage === 'home' || currentPage === 'favorite' || currentPage === 'search-section') {
                         currentPage = 'movie';
                     }
-
-                    // Gather all videos from the current page's categories
                     const categories = globalDataStore[currentPage] || [];
                     let allVideos = [];
                     categories.forEach(cat => {
@@ -2891,36 +3097,25 @@
                             allVideos = allVideos.concat(cat.movies);
                         }
                     });
-
-                    // Filter out the currently playing video
                     const filtered = allVideos.filter(v => v.name !== currentVideoName);
-
                     if (filtered.length > 0) {
-                        // Pick a random video from the filtered list
                         const randomMovie = filtered[Math.floor(Math.random() * filtered.length)];
                         if (randomMovie) {
                             handleMovieClick(randomMovie);
                             showToast(`⏭️ চেঞ্জ করা হয়েছে: ${randomMovie.name}`);
-                            // Speak the new video name if voice mode is on
                             speakNotification(`Now playing ${randomMovie.name}`);
                         }
                     } else {
                         showToast('❌ অন্য কোনো ভিডিও পাওয়া যায়নি');
                     }
-
-                    // Reset double-click tracking
                     lastClickElement = null;
                     lastClickTime = 0;
                     clearTimeout(doubleClickTimeout);
                     return;
                 }
-
-                // Store the key and time for the first press
                 lastClickElement = key;
                 lastClickTime = currentTime;
                 clearTimeout(doubleClickTimeout);
-
-                // Reset if second press doesn't come within 500ms
                 doubleClickTimeout = setTimeout(() => {
                     lastClickElement = null;
                     lastClickTime = 0;
@@ -3144,9 +3339,7 @@
             lastClickTime = 0;
             clearTimeout(doubleClickTimeout);
         }
-        // ============================================================
-        // 🆕 ফুলস্ক্রিনে হেডার ওভারলে কন্ট্রোল – শুধু বড় স্ক্রিনে
-        // ============================================================
+
         function updateFullscreenOverlayState() {
             if (window.innerWidth < 768) {
                 document.body.classList.remove('ghost-fs-overlay-active');
@@ -3162,9 +3355,7 @@
                 document.body.classList.remove('ghost-fs-overlay-active');
             }
         }
-        // ============================================================
-        // 🆕 অটো-ফুলস্ক্রিন অন প্লে – শুধু বড় স্ক্রিনে
-        // ============================================================
+
         let ghostAutoFSInitDone = false;
 
         function attachFullscreenOnPlay(videoElement) {
@@ -3260,7 +3451,7 @@
                 });
             }, 3000);
         }
-        // ---- DevTools ডিটেক্ট ও সতর্কতা ----
+
         let alertShown = false;
 
         function detectDevTools() {
@@ -3278,7 +3469,7 @@
             }
         }
         setInterval(detectDevTools, 1500);
-        // ---- ডাটা ফেচ ----
+
         async function fetchData(type) {
             try {
                 const response = await fetch(KEYS[type].url);
@@ -3295,7 +3486,7 @@
         function attachRemoteFocusToSidebar() {
             document.querySelectorAll(
                     '.sidebar a, .sidebar .menu-item-box, .sidebar .ghost-problem-btn, .sidebar .apk-download-btn, .sidebar .voice-toggle-btn'
-                    )
+                )
                 .forEach(item => {
                     item.addEventListener('click', function(e) {
                         focusRemoteOnSidebar(this);
@@ -3307,11 +3498,9 @@
                     });
                 });
         }
-        // ---- ইনিশিয়ালাইজ ----
+
         async function initPortal() {
-            // Load voice mode settings
             loadVoiceModeSettings();
-            // Load voices early
             if (window.speechSynthesis) {
                 window.speechSynthesis.getVoices();
             }
@@ -3372,10 +3561,9 @@
             } else {
                 changePage('home');
             }
-            // ---- Play welcome voice on first load ----
             setTimeout(playWelcomeVoice, 1500);
         }
-        // ---- উইন্ডো ইভেন্ট ----
+
         window.addEventListener("orientationchange", function() {
             const videoModal = document.getElementById('videoModal');
             if (videoModal.style.display === 'flex' && vjsPlayer) {
@@ -3402,17 +3590,15 @@
                 }
             }
         });
-        // ---- 🆕 showToast ওভাররাইড করে নোটিফিকেশন ভয়েস যোগ করা ----
+
         const originalShowToast = showToast;
         showToast = function(message) {
             originalShowToast(message);
-            // নোটিফিকেশন ভয়েস (শুধুমাত্র যদি ভয়েজ মোড অন থাকে)
             speakNotification(message);
         };
         window.onload = initPortal;
     </script>
     <script>
-        // Register Service Worker
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/sw.js')
@@ -3426,4 +3612,4 @@
         }
     </script>
 </body>
-</html>
+    </html>
