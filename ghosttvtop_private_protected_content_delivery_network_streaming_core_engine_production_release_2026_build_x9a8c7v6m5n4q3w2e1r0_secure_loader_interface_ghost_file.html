@@ -243,6 +243,12 @@
     .suggested-item.remote-selected-suggested .suggested-name {
       color: #22c55e !important;
     }
+    /* টপবার বাটন ফোকাস স্টাইল */
+    .topbar-btn-focused {
+      color: #22c55e !important;
+      transform: scale(1.15);
+      text-shadow: 0 0 20px rgba(34, 197, 94, 0.4);
+    }
     .container {
       padding: 8px 4px;
       max-width: 100%;
@@ -1428,9 +1434,10 @@
       font-size: 20px;
       padding: 4px 6px;
       cursor: pointer;
-      transition: color 0.2s;
+      transition: color 0.2s, transform 0.2s;
       border-radius: 6px;
       line-height: 1;
+      position: relative;
     }
     .topbar-actions button:hover {
       color: #e50914;
@@ -1448,7 +1455,7 @@
       font-size: 20px;
       padding: 4px 6px;
       cursor: pointer;
-      transition: color 0.2s;
+      transition: color 0.2s, transform 0.2s;
       border-radius: 6px;
       line-height: 1;
     }
@@ -1941,7 +1948,7 @@
   <!-- ===== ভিডিও মডাল ===== -->
   <div id="videoModal">
     <div class="glass-header">
-      <button onclick="closeVideoModal()" class="text-gray-400 hover:text-white text-lg font-medium flex items-center gap-1">
+      <button id="topBackBtn" onclick="closeVideoModal()" class="text-gray-400 hover:text-white text-lg font-medium flex items-center gap-1">
         <i class="fas fa-arrow-left"></i>
       </button>
       <h3 id="videoTitle" class="text-lg font-semibold truncate px-3 text-center flex-1">ভিডিও</h3>
@@ -2027,12 +2034,209 @@
     let currentSuggestedMovies = [];
     let remoteFocusTarget = null;
     let currentPlayingMovie = null;
-    let lastClickTime = 0;
-    let lastClickElement = null;
-    let doubleClickTimeout = null;
     let isVideoFullscreen = false;
     let isVoiceEnabled = true;
     let effectInterval = null;
+
+    // ===== টপবার বাটন ফোকাস ট্র্যাকিং =====
+    let topbarButtons = [];
+    let topbarFocusIndex = -1;
+
+    function initTopbarButtons() {
+      topbarButtons = [
+        document.getElementById('topBackBtn'),
+        document.getElementById('playStopToggleBtn'),
+        document.getElementById('fullscreenBtn')
+      ].filter(btn => btn !== null);
+      topbarFocusIndex = -1;
+    }
+
+    function clearTopbarFocus() {
+      topbarButtons.forEach(btn => {
+        btn.classList.remove('topbar-btn-focused');
+      });
+      topbarFocusIndex = -1;
+    }
+
+    function focusTopbarButton(index) {
+      clearTopbarFocus();
+      if (topbarButtons.length === 0) return;
+      if (index < 0) index = topbarButtons.length - 1;
+      if (index >= topbarButtons.length) index = 0;
+      topbarFocusIndex = index;
+      const btn = topbarButtons[index];
+      if (btn) {
+        btn.classList.add('topbar-btn-focused');
+        // ভয়েস ফিডব্যাক
+        const btnText = btn.id === 'topBackBtn' ? 'ব্যাক বাটন' :
+          btn.id === 'playStopToggleBtn' ? 'স্টার্ট স্টপ বাটন' :
+          'ফুলস্ক্রিন বাটন';
+        speakNotification(`ফোকাস: ${btnText}`);
+      }
+    }
+
+    function getRandomChannel() {
+      const currentPage = activePageGlobal;
+      let allMovies = [];
+      if (globalDataStore[currentPage]) {
+        globalDataStore[currentPage].forEach(cat => {
+          if (cat && cat.movies) {
+            allMovies = allMovies.concat(cat.movies);
+          }
+        });
+      }
+      const currentLink = currentPlayingMovie ? currentPlayingMovie.link : null;
+      const otherMovies = allMovies.filter(m => m.link !== currentLink);
+      if (otherMovies.length === 0) return null;
+      const randomIndex = Math.floor(Math.random() * otherMovies.length);
+      return otherMovies[randomIndex];
+    }
+
+    function changeToRandomChannel() {
+      const newMovie = getRandomChannel();
+      if (!newMovie) {
+        showToast('⚠️ অন্য কোনো চ্যানেল পাওয়া যায়নি!');
+        return;
+      }
+      showToast(`🔄 চ্যানেল পরিবর্তন: ${newMovie.name}`);
+      speakNotification(`Channel changed to ${newMovie.name}`);
+      handleMovieClick(newMovie);
+    }
+
+    // ===== ভিডিও এলিমেন্টে ক্লিক/ট্যাপ হ্যান্ডলার =====
+    let clickTimeoutFS = null;
+    let lastClickElementFS = null;
+    let lastClickTimeFS = 0;
+
+    function handleVideoClick(e) {
+      const now = Date.now();
+      const timeSinceLastClick = now - lastClickTimeFS;
+      lastClickTimeFS = now;
+
+      // ডাবল ক্লিক বা ডাবল ট্যাপ চেক
+      if (timeSinceLastClick < 400 && lastClickElementFS === e.target) {
+        // ডাবল ক্লিক - চ্যানেল চেঞ্জ
+        e.preventDefault();
+        e.stopPropagation();
+        changeToRandomChannel();
+        lastClickElementFS = null;
+        if (clickTimeoutFS) {
+          clearTimeout(clickTimeoutFS);
+          clickTimeoutFS = null;
+        }
+        return;
+      }
+
+      lastClickElementFS = e.target;
+      if (clickTimeoutFS) {
+        clearTimeout(clickTimeoutFS);
+        clickTimeoutFS = null;
+      }
+      clickTimeoutFS = setTimeout(() => {
+        lastClickElementFS = null;
+        clickTimeoutFS = null;
+      }, 400);
+    }
+
+    // ===== ডানে/বামে ক্লিক/ট্যাপ হ্যান্ডলার (টপবার ফোকাস) =====
+    let leftRightClickTimeout = null;
+    let lastLeftRightClickTime = 0;
+    let lastLeftRightClickTarget = null;
+
+    function handleLeftRightClick(e) {
+      // শুধুমাত্র ভিডিও এলিমেন্টে কাজ করবে
+      const target = e.target;
+      if (!target.closest('video') && !target.closest('.video-js') && !target.closest('.plyr') && !target.closest(
+          '.dplayer-container') && !target.closest('.clappr-container')) {
+        return;
+      }
+
+      const now = Date.now();
+      const timeSinceLastClick = now - lastLeftRightClickTime;
+      lastLeftRightClickTime = now;
+
+      // ডাবল ক্লিক চেক (আমরা সিঙ্গেল ক্লিক হিসাবে বিবেচনা করব)
+      if (timeSinceLastClick < 400 && lastLeftRightClickTarget === e.target) {
+        // ডাবল ক্লিক - চ্যানেল চেঞ্জ (উপর/নিচের মতো)
+        e.preventDefault();
+        e.stopPropagation();
+        changeToRandomChannel();
+        lastLeftRightClickTarget = null;
+        if (leftRightClickTimeout) {
+          clearTimeout(leftRightClickTimeout);
+          leftRightClickTimeout = null;
+        }
+        return;
+      }
+
+      // সিঙ্গেল ক্লিক - টপবার বাটন ফোকাস
+      // এখানে আমরা ডান/বাম ক্লিকের দিক নির্ণয় করি
+      // ক্লিকের x পজিশন দেখে ডান না বাম
+      const rect = e.target.getBoundingClientRect();
+      const clickX = e.clientX || (e.touches && e.touches[0] && e.touches[0].clientX);
+      if (clickX === undefined) return;
+
+      const centerX = rect.left + rect.width / 2;
+      const isRight = clickX > centerX;
+
+      if (isRight) {
+        // ডানে ক্লিক - পরবর্তী বাটনে ফোকাস
+        focusTopbarButton(topbarFocusIndex + 1);
+      } else {
+        // বামে ক্লিক - আগের বাটনে ফোকাস
+        focusTopbarButton(topbarFocusIndex - 1);
+      }
+
+      lastLeftRightClickTarget = e.target;
+      if (leftRightClickTimeout) {
+        clearTimeout(leftRightClickTimeout);
+        leftRightClickTimeout = null;
+      }
+      leftRightClickTimeout = setTimeout(() => {
+        lastLeftRightClickTarget = null;
+        leftRightClickTimeout = null;
+      }, 400);
+
+      e.preventDefault();
+      e.stopPropagation();
+    }
+
+    // ===== ভিডিও এলিমেন্টে ইভেন্ট অ্যাটাচ =====
+    function attachVideoControls(videoElement) {
+      if (!videoElement) return;
+      if (videoElement._ghostControlsAttached) return;
+      videoElement._ghostControlsAttached = true;
+
+      // সিঙ্গেল/ডাবল ক্লিক - চ্যানেল চেঞ্জ (উপর/নিচের মতো)
+      videoElement.addEventListener('click', handleVideoClick);
+      videoElement.addEventListener('touchend', function(e) {
+        const touch = e.changedTouches[0];
+        if (!touch) return;
+        const fakeEvent = {
+          target: e.target,
+          clientX: touch.clientX,
+          clientY: touch.clientY,
+          preventDefault: () => e.preventDefault(),
+          stopPropagation: () => e.stopPropagation()
+        };
+        handleVideoClick(fakeEvent);
+      }, { passive: false });
+
+      // ডান/বাম ক্লিক - টপবার ফোকাস
+      videoElement.addEventListener('click', handleLeftRightClick);
+      videoElement.addEventListener('touchend', function(e) {
+        const touch = e.changedTouches[0];
+        if (!touch) return;
+        const fakeEvent = {
+          target: e.target,
+          clientX: touch.clientX,
+          clientY: touch.clientY,
+          preventDefault: () => e.preventDefault(),
+          stopPropagation: () => e.stopPropagation()
+        };
+        handleLeftRightClick(fakeEvent);
+      }, { passive: false });
+    }
 
     function showToast(message) {
       const toast = document.getElementById('toast-notice');
@@ -3221,128 +3425,19 @@
 
     function startHeadlineEffectRotation() {
       if (effectInterval) clearInterval(effectInterval);
-      // প্রতি 5 সেকেন্ডে ইফেক্ট পরিবর্তন
       effectInterval = setInterval(changeHeadlineEffect, 5000);
-      // প্রথমে একটি র্যান্ডম ইফেক্ট সেট করুন
       setTimeout(changeHeadlineEffect, 100);
     }
-
-    // ========== ফুলস্ক্রিনে ডাবল ক্লিক: চ্যানেল চেঞ্জ ফাংশন ==========
-    let doubleClickTimeoutFS = null;
-
-    function handleFullscreenDoubleClick(e) {
-      const now = Date.now();
-      const timeSinceLastClick = now - lastClickTime;
-      lastClickTime = now;
-
-      if (timeSinceLastClick < 400 && lastClickElement === e.target) {
-        // ডাবল ক্লিক শনাক্ত
-        e.preventDefault();
-        e.stopPropagation();
-
-        // বর্তমান পেজের (movie/livetv/adult) ভিডিও লিস্ট থেকে র‍্যান্ডম চ্যানেল নির্বাচন
-        const currentPage = activePageGlobal;
-        let allMovies = [];
-        if (globalDataStore[currentPage]) {
-          globalDataStore[currentPage].forEach(cat => {
-            if (cat && cat.movies) {
-              allMovies = allMovies.concat(cat.movies);
-            }
-          });
-        }
-
-        // বর্তমান ভিডিও বাদ দিয়ে অন্য একটি চ্যানেল প্লে করো
-        const currentLink = currentPlayingMovie ? currentPlayingMovie.link : null;
-        const otherMovies = allMovies.filter(m => m.link !== currentLink);
-
-        if (otherMovies.length === 0) {
-          showToast('⚠️ অন্য কোনো চ্যানেল পাওয়া যায়নি!');
-          return;
-        }
-
-        // র‍্যান্ডম চ্যানেল নির্বাচন
-        const randomIndex = Math.floor(Math.random() * otherMovies.length);
-        const newMovie = otherMovies[randomIndex];
-        if (newMovie) {
-          showToast(`🔄 চ্যানেল পরিবর্তন: ${newMovie.name}`);
-          speakNotification(`Channel changed to ${newMovie.name}`);
-          // নতুন চ্যানেল খুলুন
-          handleMovieClick(newMovie);
-        }
-
-        // ডাবল ক্লিক রিসেট
-        lastClickElement = null;
-        if (doubleClickTimeoutFS) {
-          clearTimeout(doubleClickTimeoutFS);
-          doubleClickTimeoutFS = null;
-        }
-        return;
-      }
-
-      // সিঙ্গেল ক্লিক: এলিমেন্ট ট্র্যাক রাখুন
-      lastClickElement = e.target;
-      if (doubleClickTimeoutFS) {
-        clearTimeout(doubleClickTimeoutFS);
-        doubleClickTimeoutFS = null;
-      }
-      doubleClickTimeoutFS = setTimeout(() => {
-        lastClickElement = null;
-        doubleClickTimeoutFS = null;
-      }, 400);
-    }
-
-    // ফুলস্ক্রিন ভিডিও এলিমেন্টে ডাবল ক্লিক ইভেন্ট অ্যাটাচ করুন
-    function attachFullscreenDoubleClick(videoElement) {
-      if (!videoElement) return;
-      if (videoElement._ghostDblClickAttached) return;
-      videoElement._ghostDblClickAttached = true;
-      videoElement.addEventListener('dblclick', handleFullscreenDoubleClick);
-      // টাচ ডিভাইসের জন্য ট্যাপ ডিটেক্ট (২টা ট্যাপ)
-      let lastTouchTime = 0;
-      let lastTouchTarget = null;
-      videoElement.addEventListener('touchend', function(e) {
-        const now = Date.now();
-        const timeSinceLastTouch = now - lastTouchTime;
-        lastTouchTime = now;
-        if (timeSinceLastTouch < 400 && lastTouchTarget === e.target) {
-          e.preventDefault();
-          e.stopPropagation();
-          const currentPage = activePageGlobal;
-          let allMovies = [];
-          if (globalDataStore[currentPage]) {
-            globalDataStore[currentPage].forEach(cat => {
-              if (cat && cat.movies) {
-                allMovies = allMovies.concat(cat.movies);
-              }
-            });
-          }
-          const currentLink = currentPlayingMovie ? currentPlayingMovie.link : null;
-          const otherMovies = allMovies.filter(m => m.link !== currentLink);
-          if (otherMovies.length === 0) {
-            showToast('⚠️ অন্য কোনো চ্যানেল পাওয়া যায়নি!');
-            return;
-          }
-          const randomIndex = Math.floor(Math.random() * otherMovies.length);
-          const newMovie = otherMovies[randomIndex];
-          if (newMovie) {
-            showToast(`🔄 চ্যানেল পরিবর্তন: ${newMovie.name}`);
-            speakNotification(`Channel changed to ${newMovie.name}`);
-            handleMovieClick(newMovie);
-          }
-          lastTouchTarget = null;
-          return;
-        }
-        lastTouchTarget = e.target;
-        setTimeout(() => { lastTouchTarget = null; }, 400);
-      }, { passive: false });
-    }
-
-    // ========== শেষ ==========
 
     function openVideoModal(movie) {
       if (!movie || !movie.link) return;
       currentPlayingMovie = movie;
       destroyAllPlayers();
+
+      // টপবার বাটন ইনিশিয়ালাইজ
+      initTopbarButtons();
+      clearTopbarFocus();
+
       const videoModal = document.getElementById('videoModal');
       document.getElementById('videoTitle').textContent = movie.name || '';
       const thumb = document.getElementById('currentVideoThumb');
@@ -3391,12 +3486,16 @@
           vjsPlayer.on('pause', function() {
             document.getElementById('playStopToggleBtn').innerHTML = '<i class="fas fa-play"></i>';
           });
+          // ভিডিও কন্ট্রোল অ্যাটাচ
+          const videoEl2 = vjsPlayer.el().querySelector('video');
+          if (videoEl2) {
+            attachVideoControls(videoEl2);
+          }
+          // ফুলস্ক্রিনে অটো না - শুধু ম্যানুয়াল
           vjsPlayer.play();
           if (window.innerWidth >= 768) {
             attachFullscreenOnPlay(vjsPlayer.el());
           }
-          // ফুলস্ক্রিন ডাবল ক্লিক অ্যাটাচ
-          attachFullscreenDoubleClick(vjsPlayer.el());
         });
       } else if (selectedPlayer === 'plyr') {
         const videoEl = document.createElement('video');
@@ -3427,11 +3526,11 @@
         plyrPlayer.on('pause', () => {
           document.getElementById('playStopToggleBtn').innerHTML = '<i class="fas fa-play"></i>';
         });
+        attachVideoControls(videoEl);
         videoEl.play();
         if (window.innerWidth >= 768) {
           attachFullscreenOnPlay(videoEl);
         }
-        attachFullscreenDoubleClick(videoEl);
       } else if (selectedPlayer === 'dplayer') {
         const dpDiv = document.createElement('div');
         dpDiv.id = 'myDPlayer';
@@ -3470,9 +3569,15 @@
         };
         if (window.innerWidth >= 768) {
           const videoEl = document.querySelector('#myDPlayer video');
-          if (videoEl) attachFullscreenOnPlay(videoEl);
-          if (videoEl) attachFullscreenDoubleClick(videoEl);
+          if (videoEl) {
+            attachFullscreenOnPlay(videoEl);
+            attachVideoControls(videoEl);
+          }
         }
+        setTimeout(() => {
+          const videoEl = document.querySelector('#myDPlayer video');
+          if (videoEl) attachVideoControls(videoEl);
+        }, 500);
       } else if (selectedPlayer === 'clappr') {
         const clapprDiv = document.createElement('div');
         clapprDiv.id = 'myClapprPlayer';
@@ -3500,9 +3605,15 @@
         });
         if (window.innerWidth >= 768) {
           const videoEl = document.querySelector('#myClapprPlayer video');
-          if (videoEl) attachFullscreenOnPlay(videoEl);
-          if (videoEl) attachFullscreenDoubleClick(videoEl);
+          if (videoEl) {
+            attachFullscreenOnPlay(videoEl);
+            attachVideoControls(videoEl);
+          }
         }
+        setTimeout(() => {
+          const videoEl = document.querySelector('#myClapprPlayer video');
+          if (videoEl) attachVideoControls(videoEl);
+        }, 500);
       }
       let suggested = [];
       const currentPage = pageContext;
@@ -3532,7 +3643,6 @@
       suggested = suggested.sort(() => Math.random() - 0.5);
       currentSuggestedMovies = suggested;
       renderSuggestedVideos(suggested);
-      // হেডলাইন এনিমেশন শুরু করুন
       startHeadlineEffectRotation();
       setTimeout(updateFullscreenOverlayState, 300);
     }
@@ -3544,14 +3654,11 @@
       document.getElementById('suggestedGrid').innerHTML = '';
       currentSuggestedMovies = [];
       currentPlayingMovie = null;
-      lastClickElement = null;
-      lastClickTime = 0;
-      clearTimeout(doubleClickTimeout);
+      clearTopbarFocus();
       if (effectInterval) {
         clearInterval(effectInterval);
         effectInterval = null;
       }
-      // হেডলাইন থেকে সব ইফেক্ট ক্লাস রিমুভ করুন
       const headline = document.getElementById('headlineText');
       if (headline) {
         headline.className = 'headline-text';
@@ -3626,12 +3733,8 @@
         if (window.innerWidth < 768) return;
         if (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document
           .msFullscreenElement) return;
-        setTimeout(() => {
-          if (window.innerWidth >= 768 && !document.fullscreenElement && !document
-            .webkitFullscreenElement) {
-            requestFS(this);
-          }
-        }, 400);
+        // ফুলস্ক্রিন অটো না - শুধু ম্যানুয়াল
+        // এই অংশটি সরিয়ে দেওয়া হয়েছে যাতে অটো ফুলস্ক্রিন না হয়
       }, {
         passive: true
       });
@@ -3742,6 +3845,8 @@
       renderFullPageLagFree('adult');
       attachRemoteFocusToNav();
       attachRemoteFocusToSidebar();
+      // টপবার বাটন ইনিশিয়ালাইজ
+      initTopbarButtons();
       if (window.innerWidth >= 768) {
         initGhostAutoFullscreen();
         document.addEventListener('fullscreenchange', updateFullscreenOverlayState);
@@ -3818,6 +3923,34 @@
           closeVideoModal();
         } else {
           closeModal();
+        }
+      }
+      // কী-বোর্ড শর্টকাট: উপরে/নিচে arrow keys
+      if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+        if (document.getElementById('videoModal').style.display === 'flex') {
+          e.preventDefault();
+          changeToRandomChannel();
+        }
+      }
+      // ডান/বাম arrow keys - টপবার ফোকাস
+      if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
+        if (document.getElementById('videoModal').style.display === 'flex') {
+          e.preventDefault();
+          if (e.key === "ArrowRight") {
+            focusTopbarButton(topbarFocusIndex + 1);
+          } else {
+            focusTopbarButton(topbarFocusIndex - 1);
+          }
+        }
+      }
+      // Enter key - ফোকাসড বাটন ক্লিক
+      if (e.key === "Enter") {
+        if (topbarFocusIndex >= 0 && topbarFocusIndex < topbarButtons.length) {
+          const btn = topbarButtons[topbarFocusIndex];
+          if (btn) {
+            e.preventDefault();
+            btn.click();
+          }
         }
       }
     });
