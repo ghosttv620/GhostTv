@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ghost Video Upload</title>
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#0f172a;
+color:white;
+padding:15px;
+}
+
+.container{
+max-width:520px;
+margin:auto;
+}
+
+.card{
+background:#1e293b;
+border-radius:15px;
+padding:20px;
+margin-bottom:20px;
+box-shadow:0 0 15px rgba(0,0,0,0.5);
+}
+
+h2{
+text-align:center;
+margin-bottom:20px;
+color:#67e8f9;
+}
+
+input,button{
+width:100%;
+padding:14px;
+border:none;
+border-radius:10px;
+margin-top:10px;
+font-size:16px;
+}
+
+input{
+background:#334155;
+color:white;
+}
+
+button{
+background:#06b6d4;
+color:white;
+font-weight:bold;
+cursor:pointer;
+}
+
+button:hover{
+opacity:0.9;
+}
+
+.copyBtn{
+background:#22c55e;
+margin-top:8px;
+}
+
+.deleteBtn{
+background:#ef4444;
+margin-top:8px;
+}
+
+.settingsLink{
+display:inline-block;
+color:#67e8f9;
+font-size:13px;
+text-decoration:none;
+margin-top:15px;
+cursor:pointer;
+transition: color 0.2s;
+}
+
+.settingsLink:hover{
+color:#22d3ee;
+text-decoration:underline;
+}
+
+.setupInput{
+background:#1e293b;
+border:1px solid #475569;
+color:white;
+padding:10px;
+margin-top:8px;
+font-size:14px;
+}
+
+.btnRow{
+display:flex;
+gap:10px;
+margin-top:8px;
+}
+
+.btnRow button{
+margin-top:0;
+padding:10px;
+font-size:14px;
+}
+
+#status{
+text-align:center;
+margin-top:15px;
+font-weight:bold;
+min-height:30px;
+}
+
+.videoItem{
+background:#334155;
+padding:12px;
+border-radius:12px;
+margin-top:15px;
+}
+
+.videoName{
+margin:10px 0;
+word-break:break-all;
+font-size:14px;
+}
+
+video{
+width:100%;
+border-radius:10px;
+max-height:280px;
+background:#000;
+}
+
+.progressBox{
+width:100%;
+height:22px;
+background:#334155;
+border-radius:20px;
+overflow:hidden;
+margin-top:15px;
+display:none;
+}
+
+.progressBar{
+width:0%;
+height:100%;
+background:#22c55e;
+text-align:center;
+line-height:22px;
+font-size:12px;
+font-weight:bold;
+transition:0.2s;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<div class="card">
+
+<h2>Ghost Video Upload</h2>
+
+<input type="file" id="file" accept="video/*">
+
+<button onclick="uploadVideo()">
+Upload Video
+</button>
+
+<div class="progressBox" id="progressBox">
+<div class="progressBar" id="progressBar">0%</div>
+</div>
+
+<div id="status"></div>
+
+<div style="text-align: right; margin-top: 5px;">
+<span class="settingsLink" onclick="toggleSettings()">⚙️ GitHub Settings</span>
+</div>
+
+<div id="settingsArea" style="display: none; border-top: 1px solid #334155; margin-top: 15px; padding-top: 15px;">
+<h3 style="color:#67e8f9; font-size:15px; margin-bottom:10px; text-align:center;">GitHub Configuration</h3>
+<div style="font-size: 13px; color: #94a3b8; margin-bottom: 8px;">Token:</div>
+<input type="password" id="ghTokenInput" class="setupInput" placeholder="GitHub Token (ghp_xxxx)">
+<div style="font-size: 13px; color: #94a3b8; margin-top: 8px; margin-bottom: 4px;">Owner:</div>
+<input type="text" id="ghOwnerInput" class="setupInput" placeholder="Repository Owner">
+<div style="font-size: 13px; color: #94a3b8; margin-top: 8px; margin-bottom: 4px;">Repository:</div>
+<input type="text" id="ghRepoInput" class="setupInput" placeholder="Repository Name">
+<div style="font-size: 13px; color: #94a3b8; margin-top: 8px; margin-bottom: 4px;">Release Tag:</div>
+<input type="text" id="ghTagInput" class="setupInput" placeholder="Release Tag">
+<div class="btnRow">
+<button onclick="saveSettings()" style="background:#22c55e; flex:1;">Save Settings</button>
+<button onclick="clearSettings()" style="background:#ef4444; flex:1;">Clear</button>
+</div>
+</div>
+
+</div>
+
+<div class="card">
+
+<h2>Uploaded Videos</h2>
+
+<div id="videoList"></div>
+
+</div>
+
+</div>
+
+<script>
+
+// ==========================
+// GITHUB SETTINGS & CONFIGS
+// ==========================
+let TOKEN = localStorage.getItem("gh_token") || "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";
+if (TOKEN === "YOUR_NEW_GITHUB_TOKEN") {
+  TOKEN = "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";
+  localStorage.setItem("gh_token", TOKEN);
+}
+let OWNER = localStorage.getItem("gh_owner") || "nirob1520";
+let REPO = localStorage.getItem("gh_repo") || "Roaster-Prime";
+let TAG = localStorage.getItem("gh_tag") || "GhostLiveTv";
+
+// Initialize settings inputs in DOM
+function initSettingsInputs() {
+  document.getElementById("ghTokenInput").value = (TOKEN === "YOUR_NEW_GITHUB_TOKEN") ? "" : TOKEN;
+  document.getElementById("ghOwnerInput").value = OWNER;
+  document.getElementById("ghRepoInput").value = REPO;
+  document.getElementById("ghTagInput").value = TAG;
+}
+
+function toggleSettings() {
+  const area = document.getElementById("settingsArea");
+  if (area.style.display === "none") {
+    area.style.display = "block";
+    initSettingsInputs();
+  } else {
+    area.style.display = "none";
+  }
+}
+
+function saveSettings() {
+  const tokenVal = document.getElementById("ghTokenInput").value.trim();
+  const ownerVal = document.getElementById("ghOwnerInput").value.trim();
+  const repoVal = document.getElementById("ghRepoInput").value.trim();
+  const tagVal = document.getElementById("ghTagInput").value.trim();
+  
+  if (!ownerVal || !repoVal || !tagVal) {
+    alert("Owner, Repository এবং Tag খালি রাখা যাবে না!");
+    return;
+  }
+  
+  localStorage.setItem("gh_token", tokenVal || "YOUR_NEW_GITHUB_TOKEN");
+  localStorage.setItem("gh_owner", ownerVal);
+  localStorage.setItem("gh_repo", repoVal);
+  localStorage.setItem("gh_tag", tagVal);
+  
+  TOKEN = tokenVal || "YOUR_NEW_GITHUB_TOKEN";
+  OWNER = ownerVal;
+  REPO = repoVal;
+  TAG = tagVal;
+  
+  showToast("⚙️ সেটিংস সফলভাবে সংরক্ষিত হয়েছে!");
+  document.getElementById("settingsArea").style.display = "none";
+  loadVideos();
+}
+
+function clearSettings() {
+  if (confirm("আপনি কি সমস্ত সেটিংস রিসেট করতে চান?")) {
+    localStorage.clear();
+    TOKEN = "YOUR_NEW_GITHUB_TOKEN";
+    OWNER = "nirob1520";
+    REPO = "Roaster-Prime";
+    TAG = "GhostLiveTv";
+    initSettingsInputs();
+    showToast("🧹 সেটিংস রিসেট করা হয়েছে!");
+    document.getElementById("settingsArea").style.display = "none";
+    loadVideos();
+  }
+}
+
+// Generate Headers based on Token configuration
+function getHeaders() {
+  const headers = {
+    Accept: "application/vnd.github+json"
+  };
+  if (TOKEN && TOKEN !== "YOUR_NEW_GITHUB_TOKEN" && TOKEN.trim() !== "") {
+    headers["Authorization"] = `token ${TOKEN}`;
+  }
+  return headers;
+}
+
+// ==========================
+// LOAD VIDEOS
+// ==========================
+async function loadVideos() {
+  const videoList = document.getElementById("videoList");
+  videoList.innerHTML = "<p style='text-align:center;color:orange;'>লোড হচ্ছে...</p>";
+
+  const hasToken = TOKEN && TOKEN !== "YOUR_NEW_GITHUB_TOKEN" && TOKEN.trim() !== "";
+
+  try {
+    const res = await fetch(
+      `https://api.github.com/repos/${OWNER}/${REPO}/releases/tags/${TAG}`,
+      {
+        headers: getHeaders()
+      }
+    );
+
+    if (res.status === 404) {
+      videoList.innerHTML = "<p style='text-align:center;color:#94a3b8;'>কোনো রিলিজ বা ভিডিও পাওয়া যায়নি।</p>";
+      return;
+    }
+
+    if (!res.ok) {
+      videoList.innerHTML = `<p style="color:red;text-align:center;">Error ${res.status}: ${res.statusText}</p>`;
+      return;
+    }
+
+    const data = await res.json();
+    videoList.innerHTML = "";
+
+    if (!data.assets || data.assets.length === 0) {
+      videoList.innerHTML = "<p style='text-align:center;color:#94a3b8;'>কোনো ভিডিও নেই</p>";
+      return;
+    }
+
+    data.assets.reverse().forEach(asset => {
+      const link = asset.browser_download_url;
+      // Strip off unique prefix timestamp from displaying name
+      const displayName = asset.name.replace(/^\d+_/, '');
+      
+      const div = document.createElement("div");
+      div.className = "videoItem";
+      
+      div.innerHTML = `
+        <video controls>
+          <source src="${link}">
+        </video>
+        <div class="videoName">${displayName}</div>
+        <div style="display: flex; gap: 8px;">
+          <button class="copyBtn" style="flex: 1;" onclick="copyLink('${link}')">📋 Copy Link</button>
+          ${hasToken ? `<button class="deleteBtn" style="flex: 1;" onclick="deleteVideo(${asset.id})">🗑️ Delete</button>` : ''}
+        </div>
+      `;
+      
+      videoList.appendChild(div);
+    });
+
+  } catch (error) {
+    console.error(error);
+    videoList.innerHTML = "<p style='color:red;text-align:center;'>লোড করতে সমস্যা হয়েছে</p>";
+  }
+}
+
+// ==========================
+// UPLOAD VIDEO
+// ==========================
+async function uploadVideo() {
+  const file = document.getElementById("file").files[0];
+  if (!file) {
+    alert("ভিডিও সিলেক্ট করুন");
+    return;
+  }
+
+  const hasToken = TOKEN && TOKEN !== "YOUR_NEW_GITHUB_TOKEN" && TOKEN.trim() !== "";
+  if (!hasToken) {
+    alert("ভিডিও আপলোড করার জন্য অনুগ্রহ করে Settings-এ গিয়ে GitHub Token সেট করুন।");
+    document.getElementById("settingsArea").style.display = "block";
+    initSettingsInputs();
+    return;
+  }
+
+  const status = document.getElementById("status");
+  const progressBox = document.getElementById("progressBox");
+  const progressBar = document.getElementById("progressBar");
+
+  progressBox.style.display = "block";
+  progressBar.style.width = "0%";
+  progressBar.innerHTML = "0%";
+  status.innerHTML = "Uploading... ⏳";
+
+  try {
+    status.innerHTML = "Checking release... ⏳";
+    let release;
+
+    const getReleaseRes = await fetch(
+      `https://api.github.com/repos/${OWNER}/${REPO}/releases/tags/${TAG}`,
+      {
+        headers: getHeaders()
+      }
+    );
+
+    if (getReleaseRes.status === 404) {
+      status.innerHTML = "Creating release... ⏳";
+      const createReleaseRes = await fetch(
+        `https://api.github.com/repos/${OWNER}/${REPO}/releases`,
+        {
+          method: "POST",
+          headers: {
+            ...getHeaders(),
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({
+            tag_name: TAG,
+            name: `Ghost Live TV Releases`,
+            body: `Videos uploaded via Ghost Video Upload.`,
+            draft: false,
+            prerelease: false
+          })
+        }
+      );
+
+      if (!createReleaseRes.ok) {
+        throw new Error(`Release তৈরি করা যায়নি (${createReleaseRes.statusText})`);
+      }
+      release = await createReleaseRes.json();
+    } else if (!getReleaseRes.ok) {
+      throw new Error(`Release তথ্য নেওয়া যায়নি (${getReleaseRes.statusText})`);
+    } else {
+      release = await getReleaseRes.json();
+    }
+
+    const uploadUrl = release.upload_url.replace("{?name,label}", "");
+    
+    // Add unique timestamp prefix to prevent file duplicate conflict errors
+    const uniqueFileName = `${Date.now()}_${file.name}`;
+    
+    status.innerHTML = "Initializing upload... ⏳";
+
+    const xhr = new XMLHttpRequest();
+    xhr.open(
+      "POST",
+      `${uploadUrl}?name=${encodeURIComponent(uniqueFileName)}`
+    );
+
+    xhr.setRequestHeader("Authorization", `token ${TOKEN}`);
+    xhr.setRequestHeader("Content-Type", "application/octet-stream");
+
+    xhr.upload.onprogress = (event) => {
+      if (event.lengthComputable) {
+        const percent = Math.round((event.loaded / event.total) * 100);
+        progressBar.style.width = percent + "%";
+        progressBar.innerHTML = percent + "%";
+        status.innerHTML = `Uploading ${percent}%`;
+      }
+    };
+
+    xhr.onload = () => {
+      if (xhr.status === 201) {
+        progressBar.style.width = "100%";
+        progressBar.innerHTML = "100%";
+        status.innerHTML = "✅ Upload Successful!";
+        document.getElementById("file").value = "";
+
+        setTimeout(() => {
+          loadVideos();
+          progressBox.style.display = "none";
+          status.innerHTML = "";
+          showToast("🎉 ভিডিওটি সফলভাবে আপলোড হয়েছে!");
+        }, 1500);
+      } else {
+        status.innerHTML = `❌ Upload Failed (${xhr.status})`;
+      }
+    };
+
+    xhr.onerror = () => {
+      status.innerHTML = "❌ Network Error";
+    };
+
+    xhr.send(file);
+
+  } catch (error) {
+    console.error(error);
+    status.innerHTML = `❌ Error: ${error.message}`;
+  }
+}
+
+// ==========================
+// DELETE VIDEO
+// ==========================
+async function deleteVideo(assetId) {
+  if (!confirm("আপনি কি নিশ্চিত যে এই ভিডিওটি মুছে ফেলতে চান?")) {
+    return;
+  }
+
+  try {
+    const res = await fetch(
+      `https://api.github.com/repos/${OWNER}/${REPO}/releases/assets/${assetId}`,
+      {
+        method: "DELETE",
+        headers: getHeaders()
+      }
+    );
+
+    if (res.status === 204) {
+      showToast("🗑️ ভিডিওটি ডিলিট করা হয়েছে!");
+      loadVideos();
+    } else {
+      alert(`ডিলিট করতে সমস্যা হয়েছে: ${res.statusText}`);
+    }
+  } catch (error) {
+    console.error(error);
+    alert(`Error: ${error.message}`);
+  }
+}
+
+// ==========================
+// COPY LINK
+// ==========================
+function copyLink(link) {
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(link).then(() => {
+      showToast("✅ লিংক কপি হয়েছে!");
+    }).catch(err => {
+      fallbackCopyText(link);
+    });
+  } else {
+    fallbackCopyText(link);
+  }
+}
+
+function fallbackCopyText(text) {
+  const textArea = document.createElement("textarea");
+  textArea.value = text;
+  textArea.style.position = "fixed"; // avoid scrolling to bottom
+  document.body.appendChild(textArea);
+  textArea.focus();
+  textArea.select();
+  try {
+    document.execCommand('copy');
+    showToast("✅ লিংক কপি হয়েছে!");
+  } catch (err) {
+    console.error('Fallback copy failed', err);
+    alert("লিংক কপি করা যায়নি। লিংকটি এখানে রইলো: " + text);
+  }
+  document.body.removeChild(textArea);
+}
+
+// ==========================
+// TOAST NOTIFICATION
+// ==========================
+function showToast(message) {
+  let toast = document.getElementById("toast-notification");
+  if (!toast) {
+    toast = document.createElement("div");
+    toast.id = "toast-notification";
+    toast.style.position = "fixed";
+    toast.style.bottom = "20px";
+    toast.style.left = "50%";
+    toast.style.transform = "translateX(-50%) translateY(20px)";
+    toast.style.background = "#22c55e";
+    toast.style.color = "white";
+    toast.style.padding = "12px 24px";
+    toast.style.borderRadius = "10px";
+    toast.style.fontWeight = "bold";
+    toast.style.boxShadow = "0 10px 25px rgba(0,0,0,0.4)";
+    toast.style.zIndex = "1000";
+    toast.style.transition = "all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)";
+    toast.style.opacity = "0";
+    document.body.appendChild(toast);
+  }
+
+  toast.innerText = message;
+  toast.style.opacity = "1";
+  toast.style.transform = "translateX(-50%) translateY(0)";
+
+  setTimeout(() => {
+    toast.style.opacity = "0";
+    toast.style.transform = "translateX(-50%) translateY(20px)";
+  }, 2500);
+}
+
+// ==========================
+// AUTO LOAD
+// ==========================
+loadVideos();
+
+</script>
+
+</body>
+</html>
