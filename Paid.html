@@ -11,138 +11,124 @@
             font-family: system-ui, -apple-system, sans-serif;
             background: transparent;
             min-height: auto;
-            padding: 12px;
+            padding: 8px;
         }
         .bangla {
             font-family: 'Hind Siliguri', system-ui, sans-serif;
         }
         .plan-card {
-            transition: transform 0.2s ease;
+            transition: transform 0.15s ease;
         }
         .plan-card:hover {
             transform: scale(1.01);
         }
-        #successMsg {
-            display: none;
-            background: rgba(34, 197, 94, 0.15);
-            border: 1px solid #22c55e;
-            color: #22c55e;
-            padding: 10px 16px;
-            border-radius: 12px;
-            text-align: center;
-            font-weight: 600;
-            font-size: 14px;
-            margin-top: 16px;
-            backdrop-filter: blur(4px);
+        .plan-list li {
+            font-size: 13px;
         }
-        #successMsg i {
-            margin-right: 8px;
+        .plan-list li span {
+            font-size: 14px;
+        }
+        @media (max-width: 480px) {
+            body {
+                padding: 4px;
+            }
+            .plan-card {
+                padding: 12px !important;
+            }
+            .plan-card h2 {
+                font-size: 18px !important;
+            }
+            .plan-card .price {
+                font-size: 24px !important;
+            }
+            .plan-card .price span {
+                font-size: 11px !important;
+            }
+            .plan-card .sub-title {
+                font-size: 13px !important;
+            }
+            .plan-card .plan-list li {
+                font-size: 12px !important;
+            }
+            .plan-card button {
+                font-size: 14px !important;
+                padding: 10px !important;
+            }
+            .badge {
+                font-size: 10px !important;
+                padding: 1px 10px !important;
+                top: -8px !important;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="max-w-3xl w-full mx-auto">
-        <!-- হেডার টাইটেল সরানো হয়েছে -->
+    <div class="max-w-sm w-full mx-auto">
+        <!-- শুধু একটি কলামে দুটি কার্ড -->
+        <div class="flex flex-col gap-4">
 
-        <div class="grid md:grid-cols-2 gap-6">
-            <!-- Prime -->
-            <div class="plan-card bg-zinc-900/80 backdrop-blur-sm rounded-2xl p-5 border border-zinc-700/60 shadow-lg">
-                <div class="text-center mb-5">
-                    <h2 class="text-2xl font-bold">Prime</h2>
-                    <p class="bangla text-base text-zinc-400 mt-0.5">প্রাইম সাবস্ক্রিপশন</p>
-                    <div class="mt-4 text-3xl font-bold">৯৯৳<span class="text-sm font-normal text-zinc-400">/মাস</span></div>
+            <!-- Prime Card -->
+            <div class="plan-card bg-zinc-900/80 backdrop-blur-sm rounded-xl p-4 border border-zinc-700/60 shadow-md">
+                <div class="text-center mb-3">
+                    <h2 class="text-xl font-bold">Prime</h2>
+                    <p class="bangla text-sm text-zinc-400 mt-0.5">প্রাইম সাবস্ক্রিপশন</p>
+                    <div class="mt-2 text-2xl font-bold price">৯৯৳<span class="text-xs font-normal text-zinc-400">/মাস</span></div>
                 </div>
-
-                <div class="bg-zinc-800/60 rounded-xl p-4 mb-5">
-                    <ul class="space-y-2.5 text-sm">
+                <div class="bg-zinc-800/60 rounded-lg p-3 mb-3">
+                    <ul class="space-y-1.5 plan-list">
                         <li class="flex items-center gap-2">
-                            <span class="text-green-500 text-base">✓</span>
-                            মুভি
+                            <span class="text-green-500 text-sm">✓</span> মুভি
                         </li>
                         <li class="flex items-center gap-2">
-                            <span class="text-green-500 text-base">✓</span>
-                            টিভি
+                            <span class="text-green-500 text-sm">✓</span> টিভি
                         </li>
                         <li class="flex items-center gap-2">
-                            <span class="text-green-500 text-base">✓</span>
-                            VIP এক্সেস
+                            <span class="text-green-500 text-sm">✓</span> VIP এক্সেস
                         </li>
                     </ul>
                 </div>
+                <a href="https://wa.me/qr/L3CV4ZSUM2MPH1" target="_blank" class="block w-full bg-white/90 text-black py-2.5 rounded-lg font-semibold text-sm hover:bg-white transition shadow-sm text-center">
+                    সাবস্ক্রাইব করুন
+                </a>
+            </div>
 
-                <button onclick="subscribe('Prime')"
-                class="w-full bg-white/90 text-black py-3 rounded-xl font-semibold text-base hover:bg-white transition shadow-md">
-                সাবস্ক্রাইব করুন
-            </button>
+            <!-- Premium Card -->
+            <div class="plan-card bg-gradient-to-br from-orange-600/90 to-red-600/90 rounded-xl p-4 border-2 border-orange-400/60 relative shadow-md">
+                <div class="absolute -top-2.5 left-1/2 -translate-x-1/2 bg-orange-500 text-white text-[10px] px-3 py-0.5 rounded-full font-medium tracking-wide badge">
+                    জনপ্রিয়
+                </div>
+                <div class="text-center mb-3">
+                    <h2 class="text-xl font-bold">Premium</h2>
+                    <p class="bangla text-sm text-orange-100 mt-0.5 sub-title">প্রিমিয়াম সাবস্ক্রিপশন</p>
+                    <div class="mt-2 text-2xl font-bold price">১৫০৳<span class="text-xs font-normal text-orange-100">/মাস</span></div>
+                </div>
+                <div class="bg-black/30 rounded-lg p-3 mb-3">
+                    <ul class="space-y-1.5 plan-list">
+                        <li class="flex items-center gap-2">
+                            <span class="text-green-400 text-sm">✓</span> মুভি
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-green-400 text-sm">✓</span> টিভি
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-green-400 text-sm">✓</span> অ্যাডাল্ট
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-green-400 text-sm">✓</span> VIP এক্সেস
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <span class="text-green-400 text-sm">✓</span> ২৪ ঘন্টা সাপোর্ট
+                        </li>
+                    </ul>
+                </div>
+                <a href="https://wa.me/qr/L3CV4ZSUM2MPH1" target="_blank" class="block w-full bg-white/90 text-black py-2.5 rounded-lg font-semibold text-sm hover:bg-white transition shadow-sm text-center">
+                    সাবস্ক্রাইব করুন
+                </a>
+            </div>
+
         </div>
 
-        <!-- Premium -->
-        <div class="plan-card bg-gradient-to-br from-orange-600/90 to-red-600/90 rounded-2xl p-5 border-2 border-orange-400/60 relative shadow-lg">
-            <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-orange-500 text-white text-[11px] px-4 py-0.5 rounded-full font-medium tracking-wide">
-                জনপ্রিয়
-            </div>
-
-            <div class="text-center mb-5">
-                <h2 class="text-2xl font-bold">Premium</h2>
-                <p class="bangla text-base text-orange-100 mt-0.5">প্রিমিয়াম সাবস্ক্রিপশন</p>
-                <div class="mt-4 text-3xl font-bold">১৫০<span class="text-sm font-normal text-orange-100">/মাস</span></div>
-            </div>
-
-            <div class="bg-black/30 rounded-xl p-4 mb-5">
-                <ul class="space-y-2.5 text-sm">
-                    <li class="flex items-center gap-2">
-                        <span class="text-green-400 text-base">✓</span>
-                        মুভি
-                    </li>
-                    <li class="flex items-center gap-2">
-                        <span class="text-green-400 text-base">✓</span>
-                        টিভি
-                    </li>
-                    <li class="flex items-center gap-2">
-                        <span class="text-green-400 text-base">✓</span>
-                        অ্যাডাল্ট
-                    </li>
-                    <li class="flex items-center gap-2">
-                        <span class="text-green-400 text-base">✓</span>
-                        VIP এক্সেস
-                    </li>
-                </ul>
-            </div>
-
-            <button onclick="subscribe('Premium')"
-            class="w-full bg-white/90 text-black py-3 rounded-xl font-semibold text-base hover:bg-white transition shadow-md">
-            সাবস্ক্রাইব করুন
-        </button>
+        <p class="text-center text-zinc-500 mt-4 text-[10px]">যেকোনো সময় ক্যানসেল করতে পারবেন</p>
     </div>
-</div>
-
-<!-- সাকসেস মেসেজ (পপআপের ভেতরে) -->
-<div id="successMsg">
-    <i class="fas fa-check-circle"></i>
-    <span id="successText"></span>
-</div>
-
-<p class="text-center text-zinc-500 mt-6 text-xs">যেকোনো সময় ক্যানসেল করতে পারবেন</p>
-</div>
-
-<!-- Font Awesome for icon -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
-<script>
-    function subscribe(plan) {
-        const msgDiv = document.getElementById('successMsg');
-        const msgText = document.getElementById('successText');
-        const planName = plan === 'Prime' ? 'প্রাইম' : 'প্রিমিয়াম';
-
-        msgText.innerText = `${planName} প্ল্যান সাবস্ক্রিপশন সফল! আপনাকে ধন্যবাদ।`;
-        msgDiv.style.display = 'block';
-
-        // ৫ সেকেন্ড পর মেসেজ আড়াল
-        clearTimeout(window.msgTimeout);
-        window.msgTimeout = setTimeout(() => {
-            msgDiv.style.display = 'none';
-        }, 5000);
-    }
-</script>
 </body>
 </html>
