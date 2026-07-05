@@ -24,13 +24,12 @@
     </script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@clappr/player@latest/dist/clappr.min.js">
     </script>
-
-    <!-- ===== নতুন JW Player লাইব্রেরি (Ghost Ultra) ===== -->
-    <script src="https://content.jwplatform.com/libraries/IDzF9Zmk.js"></script>
+    <!-- ===== JW Player লাইব্রেরি (Ghost Ultra) ===== -->
+    <script src="https://content.jwplatform.com/libraries/IDzF9Zmk.js">
+    </script>
     <script>
         jwplayer.key = "Khpp2dHxlBJHC8MCmLnBuV2jK/DwDnJMniwF6EO9HC/riJ712ZmbHg==";
     </script>
-
     <style>
         /* ===== রিসেট ও বেসিক ===== */
         * {
@@ -43,6 +42,7 @@
             user-select: none;
             -webkit-touch-callout: none;
         }
+
         body {
             font-family: 'Noto Sans Bengali', system-ui, sans-serif;
             background-color: #000;
@@ -50,6 +50,7 @@
             padding-bottom: 70px;
             overflow-x: hidden;
         }
+
         header {
             background-color: #1a1f29;
             padding: 12px 16px;
@@ -62,6 +63,7 @@
             box-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
             border-bottom: 1px solid rgba(255, 255, 255, 0.06);
         }
+
         .header-left {
             display: flex;
             align-items: center;
@@ -69,6 +71,7 @@
             flex: 1;
             min-width: 0;
         }
+
         .menu-btn {
             font-size: 22px;
             cursor: pointer;
@@ -76,9 +79,11 @@
             transition: 0.3s;
             padding: 4px 6px;
         }
+
         .menu-btn:hover {
             color: #e50914;
         }
+
         .logo {
             font-size: 18px;
             font-weight: 700;
@@ -88,6 +93,7 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
+
         .sidebar {
             position: fixed;
             top: 0;
@@ -106,13 +112,16 @@
             display: flex;
             flex-direction: column;
         }
+
         .sidebar.active {
             left: 0;
         }
+
         .sidebar-menu-items {
             flex-grow: 1;
             padding-bottom: 12px;
         }
+
         .sidebar a,
         .sidebar .menu-item-box {
             display: flex;
@@ -127,17 +136,20 @@
             transition: 0.25s ease;
             cursor: pointer;
         }
+
         .sidebar a:hover,
         .sidebar .menu-item-box:hover {
             background: rgba(229, 9, 20, 0.7);
             padding-left: 32px;
         }
+
         .sidebar a i,
         .menu-item-box i {
             width: 22px;
             text-align: center;
             font-size: 18px;
         }
+
         .sidebar .ghost-problem-btn {
             display: flex;
             align-items: center;
@@ -153,16 +165,19 @@
             background: linear-gradient(135deg, rgba(229, 9, 20, 0.15), rgba(229, 9, 20, 0.05));
             border-left: 3px solid #e50914;
         }
+
         .sidebar .ghost-problem-btn:hover {
             background: rgba(229, 9, 20, 0.7);
             padding-left: 32px;
         }
+
         .sidebar .ghost-problem-btn i {
             width: 22px;
             text-align: center;
             font-size: 18px;
             color: #e50914;
         }
+
         /* --- এপিকে ডাউনলোড বাটন --- */
         .sidebar .apk-download-btn {
             display: flex;
@@ -179,16 +194,19 @@
             background: linear-gradient(135deg, rgba(0, 200, 80, 0.15), rgba(0, 200, 80, 0.05));
             border-left: 3px solid #00c850;
         }
+
         .sidebar .apk-download-btn:hover {
             background: rgba(0, 200, 80, 0.7);
             padding-left: 32px;
         }
+
         .sidebar .apk-download-btn i {
             width: 22px;
             text-align: center;
             font-size: 18px;
             color: #00c850;
         }
+
         /* ---- ভয়েজ মোড টগল বাটন (সাইডবারে) ---- */
         .sidebar .voice-toggle-btn {
             display: flex;
@@ -205,16 +223,19 @@
             background: linear-gradient(135deg, rgba(59, 130, 246, 0.15), rgba(59, 130, 246, 0.05));
             border-left: 3px solid #3b82f6;
         }
+
         .sidebar .voice-toggle-btn:hover {
             background: rgba(59, 130, 246, 0.7);
             padding-left: 32px;
         }
+
         .sidebar .voice-toggle-btn i {
             width: 22px;
             text-align: center;
             font-size: 18px;
             color: #3b82f6;
         }
+
         .sidebar .voice-toggle-btn .toggle-status {
             margin-left: auto;
             font-size: 12px;
@@ -224,51 +245,72 @@
             background: rgba(34, 197, 94, 0.2);
             color: #22c55e;
         }
+
         .sidebar .voice-toggle-btn .toggle-status.off {
             background: rgba(239, 68, 68, 0.2);
             color: #ef4444;
         }
+
+        /* ===== সাইডবারে অ্যাডাল্ট আইটেম — ডিফল্ট লুকানো ===== */
+        #sidebar-adult-item {
+            display: none !important;
+        }
+
+        #sidebar-adult-item.visible {
+            display: flex !important;
+        }
+
         .remote-selected-name {
             color: #22c55e !important;
             transition: color 0.15s ease;
         }
+
         .remote-selected-nav {
             color: #22c55e !important;
         }
+
         .remote-selected-sidebar {
             color: #22c55e !important;
         }
+
         .remote-selected-suggested-name {
             color: #22c55e !important;
         }
+
         .poster.remote-selected-poster .poster-name {
             color: #22c55e !important;
         }
+
         .suggested-item.remote-selected-suggested .suggested-name {
             color: #22c55e !important;
         }
+
         /* টপবার বাটন ফোকাস স্টাইল */
         .topbar-btn-focused {
             color: #22c55e !important;
             transform: scale(1.15);
             text-shadow: 0 0 20px rgba(34, 197, 94, 0.4);
         }
+
         .container {
             padding: 8px 4px;
             max-width: 100%;
             margin: 0 auto;
         }
+
         .page-section {
             display: none;
             opacity: 0;
             transform: scale(0.96) translateY(12px);
             transition: opacity 0.35s ease, transform 0.35s ease;
         }
+
         .page-section.active {
             display: block;
             opacity: 1;
             transform: scale(1) translateY(0);
         }
+
         .poster {
             transition: all 0.25s ease;
             will-change: transform;
@@ -281,6 +323,7 @@
             border-radius: 14px;
             overflow: hidden;
         }
+
         @media (min-width: 640px) {
             .poster {
                 width: 140px;
@@ -288,6 +331,7 @@
                 min-width: 140px;
             }
         }
+
         @media (min-width: 1024px) {
             .poster {
                 width: 170px;
@@ -295,9 +339,11 @@
                 min-width: 170px;
             }
         }
+
         .poster:hover {
             transform: scale(1.05);
         }
+
         .scroll-row {
             scrollbar-width: none;
             overflow-x: auto;
@@ -307,9 +353,11 @@
             -webkit-overflow-scrolling: touch;
             flex-wrap: nowrap;
         }
+
         .scroll-row::-webkit-scrollbar {
             display: none;
         }
+
         /* ---- লাইভ টিভি পোস্টার স্টাইল (ছোট বৃত্তাকৃতি) ---- */
         .poster.livetv-poster .poster-img-wrapper {
             width: 80%;
@@ -325,11 +373,13 @@
             margin: 0 auto;
             transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
         }
+
         .poster.livetv-poster:hover .poster-img-wrapper {
             border-color: #e50914;
             box-shadow: 0 0 30px rgba(229, 9, 20, 0.35);
             transform: scale(1.02);
         }
+
         .poster.livetv-poster .poster-img {
             width: 100%;
             height: 100%;
@@ -338,6 +388,7 @@
             border-radius: 50%;
             aspect-ratio: 1/1;
         }
+
         .poster.livetv-poster .poster-name {
             margin-top: 8px;
             text-align: center;
@@ -352,6 +403,7 @@
             overflow: hidden;
             transition: color 0.15s ease;
         }
+
         /* অন্যান্য পোস্টার (মুভি/অ্যাডাল্ট) এর জন্য আগের স্টাইল */
         .poster:not(.livetv-poster) .poster-img {
             aspect-ratio: 2 / 2.85;
@@ -363,6 +415,7 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
             display: block;
         }
+
         .poster:not(.livetv-poster) .poster-name {
             margin-top: 6px;
             text-align: center;
@@ -377,12 +430,14 @@
             overflow: hidden;
             transition: color 0.15s ease;
         }
+
         .glass-header {
             background: rgba(0, 0, 0, 0.88);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
+
         #videoModal {
             display: none;
             position: fixed;
@@ -394,6 +449,7 @@
             align-items: center;
             overflow-y: auto;
         }
+
         #videoModal .glass-header {
             width: 100%;
             padding: 14px 18px;
@@ -407,6 +463,7 @@
             top: 0;
             z-index: 10;
         }
+
         #videoModal .glass-header h3 {
             font-size: 1rem;
             font-weight: 600;
@@ -416,6 +473,7 @@
             text-overflow: ellipsis;
             color: #f1f5f9;
         }
+
         .video-container-box {
             width: 100%;
             aspect-ratio: 16 / 9;
@@ -426,14 +484,17 @@
             justify-content: center;
             flex-shrink: 0;
         }
+
         .video-js {
             width: 100% !important;
             height: 100% !important;
         }
+
         .vjs-theme-ghost .vjs-big-play-button {
             background-color: #e50914 !important;
             border-color: #e50914 !important;
         }
+
         .suggested-section {
             width: 100%;
             background: #0b0f17;
@@ -442,6 +503,7 @@
             overflow-y: auto;
             min-height: 120px;
         }
+
         .suggested-section .suggested-title {
             font-size: 16px;
             font-weight: 700;
@@ -452,6 +514,7 @@
             align-items: center;
             gap: 10px;
         }
+
         .suggested-title .current-thumb {
             width: 44px;
             height: 44px;
@@ -461,12 +524,14 @@
             flex-shrink: 0;
             background: #1a1f2e;
         }
+
         /* সাজেস্টেড গ্রিড – আগের মতো */
         .suggested-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 12px;
         }
+
         @media (max-width: 360px) {
             .suggested-grid {
                 gap: 8px;
@@ -477,12 +542,14 @@
                 min-height: 30px;
             }
         }
+
         @media (max-width: 640px) {
             .suggested-grid {
                 grid-template-columns: repeat(3, 1fr);
                 gap: 10px;
             }
         }
+
         @media (min-width: 641px) and (max-width: 767px) {
             .suggested-grid {
                 grid-template-columns: repeat(3, 1fr);
@@ -500,6 +567,7 @@
                 aspect-ratio: 2 / 2.4;
             }
         }
+
         @media (min-width: 1024px) {
             .suggested-grid {
                 gap: 14px;
@@ -513,6 +581,7 @@
                 border-radius: 0 0 12px 12px;
             }
         }
+
         .suggested-item {
             cursor: pointer;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -522,11 +591,13 @@
             border: 1px solid rgba(255, 255, 255, 0.06);
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
         }
+
         .suggested-item:hover {
             transform: scale(1.04);
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
             border-color: rgba(229, 9, 20, 0.4);
         }
+
         .suggested-item img {
             width: 100%;
             aspect-ratio: 2 / 2.6;
@@ -534,6 +605,7 @@
             display: block;
             background: #1a1f2e;
         }
+
         .suggested-item .suggested-name {
             padding: 8px 6px 10px;
             font-size: 12px;
@@ -550,10 +622,12 @@
             background: rgba(0, 0, 0, 0.6);
             border-radius: 0 0 12px 12px;
         }
+
         .suggested-item .suggested-name i {
             margin-left: 3px;
             font-size: 10px;
         }
+
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -567,6 +641,7 @@
             z-index: 100;
             border-top: 1px solid rgba(255, 255, 255, 0.05);
         }
+
         .nav-item {
             display: flex;
             flex-direction: column;
@@ -583,17 +658,21 @@
             font-weight: 500;
             letter-spacing: 0.3px;
         }
+
         .nav-item i {
             font-size: 20px;
             margin-bottom: 2px;
             transition: transform 0.25s ease;
         }
+
         .nav-item.active {
             color: #e50914;
         }
+
         .nav-item.active i {
             transform: scale(1.15);
         }
+
         .backdrop {
             position: fixed;
             top: 0;
@@ -605,9 +684,11 @@
             display: none;
             backdrop-filter: blur(2px);
         }
+
         .backdrop.active {
             display: block;
         }
+
         .slider-container {
             position: relative;
             width: 100%;
@@ -618,11 +699,13 @@
             border: 1px solid rgba(255, 255, 255, 0.06);
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
         }
+
         @media (min-width: 768px) {
             .slider-container {
                 height: 300px;
             }
         }
+
         .slide {
             position: absolute;
             inset: 0;
@@ -631,10 +714,12 @@
             cursor: pointer;
             display: none;
         }
+
         .slide.active {
             opacity: 1;
             display: block;
         }
+
         /* ===== নতুন নোটিফিকেশন স্টাইল - গ্লাস, চিকন, ডান দিক থেকে, একেবারে নিচে ===== */
         #toast-notice {
             position: fixed;
@@ -659,6 +744,7 @@
             pointer-events: none;
             transition: none;
         }
+
         @keyframes slideInRight {
             0% {
                 opacity: 0;
@@ -669,6 +755,7 @@
                 transform: translateX(0) scale(1);
             }
         }
+
         @keyframes slideOutRight {
             0% {
                 opacity: 1;
@@ -679,21 +766,26 @@
                 transform: translateX(40px) scale(0.95);
             }
         }
+
         #toast-notice.show {
             display: block;
             animation: slideInRight 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
         }
+
         #toast-notice.hide {
             animation: slideOutRight 0.35s cubic-bezier(0.4, 0, 0.2, 1) forwards;
         }
+
         #toast-notice .toast-icon {
             margin-right: 10px;
             font-size: 14px;
             color: #e50914;
         }
+
         #toast-notice .toast-text {
             display: inline;
         }
+
         @media (max-width: 480px) {
             #toast-notice {
                 bottom: 75px;
@@ -705,6 +797,7 @@
                 border-radius: 14px;
             }
         }
+
         @media (max-width: 360px) {
             #toast-notice {
                 right: 8px;
@@ -715,6 +808,7 @@
                 bottom: 70px;
             }
         }
+
         #customConfirmModal {
             display: none;
             position: fixed;
@@ -728,9 +822,11 @@
             opacity: 0;
             transition: opacity 0.3s ease;
         }
+
         #customConfirmModal.show {
             opacity: 1;
         }
+
         .confirm-box {
             background: rgba(20, 28, 45, 0.8);
             backdrop-filter: blur(24px);
@@ -744,9 +840,11 @@
             transform: scale(0.88);
             transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
+
         #customConfirmModal.show .confirm-box {
             transform: scale(1);
         }
+
         #premiumAlertModal {
             display: none;
             position: fixed;
@@ -760,9 +858,11 @@
             opacity: 0;
             transition: opacity 0.3s ease;
         }
+
         #premiumAlertModal.show {
             opacity: 1;
         }
+
         .premium-glass-box {
             background: rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(28px);
@@ -777,21 +877,26 @@
             transform: scale(0.88);
             transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
+
         #premiumAlertModal.show .premium-glass-box {
             transform: scale(1);
         }
+
         .sidebar-player-footer {
             background: rgba(10, 14, 23, 0.95);
             border-top: 1px solid rgba(255, 255, 255, 0.06);
             padding: 16px 14px;
             margin-top: auto;
         }
+
         .player-select-box {
             margin-bottom: 12px;
         }
+
         .player-select-box:last-child {
             margin-bottom: 0;
         }
+
         .player-select-box label {
             font-size: 10px;
             color: #9aa3b5;
@@ -801,6 +906,7 @@
             letter-spacing: 0.6px;
             font-weight: 600;
         }
+
         .player-select-box select {
             width: 100%;
             background: #0b0f17;
@@ -813,26 +919,31 @@
             font-weight: 500;
             appearance: auto;
         }
+
         .player-select-box select:focus {
             border-color: #e50914;
             box-shadow: 0 0 0 2px rgba(229, 9, 20, 0.2);
         }
+
         .modal-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 14px;
             padding: 16px 4px;
         }
+
         @media (min-width: 640px) {
             .modal-grid {
                 grid-template-columns: repeat(4, 1fr);
             }
         }
+
         @media (min-width: 1024px) {
             .modal-grid {
                 grid-template-columns: repeat(5, 1fr);
             }
         }
+
         .fav-heart-badge {
             position: absolute;
             bottom: 44px;
@@ -845,6 +956,7 @@
             color: #ef4444;
             border: 1px solid rgba(239, 68, 68, 0.3);
         }
+
         .premium-badge {
             position: absolute;
             top: 6px;
@@ -858,6 +970,7 @@
             letter-spacing: 0.5px;
             box-shadow: 0 2px 8px rgba(245, 158, 11, 0.4);
         }
+
         #loginModal .modal-card {
             background: #161d2b;
             border: 1px solid #2a3348;
@@ -868,31 +981,38 @@
             position: relative;
             box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7);
         }
+
         #loginModal {
             justify-content: center;
             align-items: center;
         }
+
         input::placeholder {
             color: #6b7a93;
             font-weight: 400;
             opacity: 0.8;
         }
+
         .suggested-scroll {
             max-height: 500px;
             overflow-y: auto;
             scrollbar-width: thin;
             scrollbar-color: #e50914 transparent;
         }
+
         .suggested-scroll::-webkit-scrollbar {
             width: 4px;
         }
+
         .suggested-scroll::-webkit-scrollbar-thumb {
             background: #e50914;
             border-radius: 10px;
         }
+
         .suggested-scroll::-webkit-scrollbar-track {
             background: transparent;
         }
+
         #loginModal {
             display: none !important;
             position: fixed !important;
@@ -900,9 +1020,11 @@
             background: rgba(0, 0, 0, 0.8) !important;
             z-index: 9999 !important;
         }
+
         #loginModal[style*="display: flex"] {
             display: flex !important;
         }
+
         .loading-spinner {
             display: flex;
             flex-direction: column;
@@ -911,6 +1033,7 @@
             padding: 50px 20px;
             gap: 16px;
         }
+
         .loading-spinner .spinner {
             width: 48px;
             height: 48px;
@@ -919,37 +1042,46 @@
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
         }
+
         .loading-spinner .loading-text {
             color: #9aa3b5;
             font-size: 14px;
             font-weight: 500;
             letter-spacing: 0.5px;
         }
+
         @keyframes spin {
             to {
                 transform: rotate(360deg);
             }
         }
+
         .modal-background-fix {
             background: #000 !important;
         }
+
         #modal {
             background: #000 !important;
         }
+
         #modal .glass-header {
             background: rgba(0, 0, 0, 0.95) !important;
         }
+
         #modal .modal-grid {
             background: #000 !important;
         }
+
         .suggested-section {
             min-height: 350px;
         }
+
         @media (min-width: 768px) {
             .suggested-section {
                 min-height: 450px;
             }
         }
+
         .scroll-row {
             display: flex;
             gap: 8px;
@@ -958,6 +1090,7 @@
             flex-wrap: nowrap;
             scroll-behavior: smooth;
         }
+
         @media (max-width: 480px) {
             .poster {
                 width: calc(33.333% - 6px) !important;
@@ -977,6 +1110,7 @@
                 padding: 2px 1px 8px 1px !important;
             }
         }
+
         @media (max-width: 360px) {
             .poster {
                 width: calc(33.333% - 4px) !important;
@@ -991,6 +1125,7 @@
                 gap: 4px !important;
             }
         }
+
         @media (max-width: 480px) {
             .modal-grid {
                 grid-template-columns: repeat(3, 1fr) !important;
@@ -1004,11 +1139,13 @@
                 flex: 0 0 100% !important;
             }
         }
+
         #content-search {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 10px;
         }
+
         @media (max-width: 480px) {
             #content-search {
                 gap: 6px;
@@ -1020,11 +1157,13 @@
                 flex: 0 0 100% !important;
             }
         }
+
         #content-favorite {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 10px;
         }
+
         @media (max-width: 480px) {
             #content-favorite {
                 gap: 6px;
@@ -1036,6 +1175,7 @@
                 flex: 0 0 100% !important;
             }
         }
+
         .reset-device-btn {
             background: rgba(229, 9, 20, 0.12);
             border: 1px solid rgba(229, 9, 20, 0.25);
@@ -1053,16 +1193,20 @@
             flex-shrink: 0;
             height: 28px;
         }
+
         .reset-device-btn:hover {
             background: rgba(229, 9, 20, 0.2);
             border-color: #e50914;
         }
+
         .reset-device-btn:active {
             transform: scale(0.95);
         }
+
         .reset-device-btn i {
             font-size: 10px;
         }
+
         .login-card-header {
             display: flex;
             align-items: center;
@@ -1070,23 +1214,28 @@
             margin-bottom: 12px;
             gap: 8px;
         }
+
         .login-card-header h2 {
             margin-bottom: 0 !important;
             font-size: 18px;
         }
+
         .login-btn-wrapper {
             display: flex;
             align-items: center;
             gap: 10px;
             width: 100%;
         }
+
         .login-btn-wrapper .login-submit-btn {
             flex: 1;
             min-width: 0;
         }
+
         .login-btn-wrapper .reset-device-btn {
             flex-shrink: 0;
         }
+
         #ghostProblemModal {
             display: none;
             position: fixed;
@@ -1100,9 +1249,11 @@
             opacity: 0;
             transition: opacity 0.35s ease;
         }
+
         #ghostProblemModal.show {
             opacity: 1;
         }
+
         .ghost-problem-box {
             background: rgba(20, 28, 45, 0.75);
             backdrop-filter: blur(32px);
@@ -1116,15 +1267,18 @@
             transform: scale(0.92) translateY(20px);
             transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
+
         #ghostProblemModal.show .ghost-problem-box {
             transform: scale(1) translateY(0);
         }
+
         .ghost-problem-box .modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 18px;
         }
+
         .ghost-problem-box .modal-header h2 {
             font-size: 20px;
             font-weight: 700;
@@ -1133,10 +1287,12 @@
             align-items: center;
             gap: 10px;
         }
+
         .ghost-problem-box .modal-header h2 i {
             color: #e50914;
             font-size: 22px;
         }
+
         .ghost-problem-box .modal-header .close-btn {
             color: #94a3b8;
             font-size: 24px;
@@ -1146,13 +1302,16 @@
             border: none;
             padding: 0 4px;
         }
+
         .ghost-problem-box .modal-header .close-btn:hover {
             color: #fff;
             transform: rotate(90deg);
         }
+
         .ghost-problem-box .input-group {
             margin-bottom: 14px;
         }
+
         .ghost-problem-box .input-group label {
             display: block;
             font-size: 12px;
@@ -1162,6 +1321,7 @@
             letter-spacing: 0.5px;
             margin-bottom: 4px;
         }
+
         .ghost-problem-box .input-group input,
         .ghost-problem-box .input-group textarea {
             width: 100%;
@@ -1176,20 +1336,24 @@
             font-family: inherit;
             resize: vertical;
         }
+
         .ghost-problem-box .input-group input:focus,
         .ghost-problem-box .input-group textarea:focus {
             border-color: #e50914;
             box-shadow: 0 0 0 3px rgba(229, 9, 20, 0.15);
         }
+
         .ghost-problem-box .input-group input::placeholder,
         .ghost-problem-box .input-group textarea::placeholder {
             color: #6b7a93;
             font-weight: 400;
         }
+
         .ghost-problem-box .input-group textarea {
             min-height: 100px;
             max-height: 200px;
         }
+
         .ghost-problem-box .send-btn {
             width: 100%;
             background: linear-gradient(135deg, #e50914, #b8070f);
@@ -1208,18 +1372,22 @@
             margin-top: 4px;
             box-shadow: 0 4px 24px rgba(229, 9, 20, 0.25);
         }
+
         .ghost-problem-box .send-btn:hover {
             transform: scale(1.02);
             box-shadow: 0 6px 32px rgba(229, 9, 20, 0.4);
         }
+
         .ghost-problem-box .send-btn:active {
             transform: scale(0.96);
         }
+
         .ghost-problem-box .send-btn:disabled {
             opacity: 0.6;
             cursor: not-allowed;
             transform: none;
         }
+
         .ghost-problem-box .char-counter {
             text-align: right;
             font-size: 11px;
@@ -1227,6 +1395,7 @@
             margin-top: 2px;
             padding-right: 4px;
         }
+
         .ghost-problem-box .success-msg {
             display: none;
             text-align: center;
@@ -1238,12 +1407,15 @@
             align-items: center;
             justify-content: center;
         }
+
         .ghost-problem-box .success-msg.show {
             display: flex;
         }
+
         .ghost-problem-box .success-msg i {
             font-size: 20px;
         }
+
         .sr-only {
             position: absolute;
             width: 1px;
@@ -1254,6 +1426,7 @@
             clip: rect(0, 0, 0, 0);
             border: 0;
         }
+
         /* ===== বড় স্ক্রিনে ভিডিও প্লেয়ার ফুলস্ক্রিন, সাজেস্টেড লুকানো ===== */
         @media (min-width: 768px) {
             #videoModal .suggested-section {
@@ -1297,6 +1470,7 @@
                 display: none !important;
             }
         }
+
         @media (max-width: 767px) {
             #videoModal .suggested-section {
                 display: block !important;
@@ -1319,7 +1493,10 @@
                 display: flex !important;
             }
         }
-        /* ================================================================ ফুলস্ক্রিনে হেডার ওভারলে – শুধু বড় স্ক্রিনে ================================================================ */
+
+        /* ================================================================
+        ফুলস্ক্রিনে হেডার ওভারলে – শুধু বড় স্ক্রিনে
+        ================================================================ */
         @media (min-width: 768px) {
             body.ghost-fs-overlay-active #videoModal .glass-header {
                 position: fixed !important;
@@ -1426,11 +1603,13 @@
                 }
             }
         }
+
         .topbar-actions {
             display: flex;
             align-items: center;
             gap: 6px;
         }
+
         .topbar-actions button {
             background: none;
             border: none;
@@ -1443,15 +1622,19 @@
             line-height: 1;
             position: relative;
         }
+
         .topbar-actions button:hover {
             color: #e50914;
         }
+
         .topbar-actions .stop-icon {
             font-size: 18px;
         }
+
         .topbar-actions .fullscreen-icon {
             font-size: 20px;
         }
+
         .play-toggle-btn {
             background: none;
             border: none;
@@ -1463,9 +1646,11 @@
             border-radius: 6px;
             line-height: 1;
         }
+
         .play-toggle-btn:hover {
             color: #e50914;
         }
+
         #devtoolsAlert {
             display: none;
             position: fixed;
@@ -1479,9 +1664,11 @@
             opacity: 0;
             transition: opacity 0.4s ease;
         }
+
         #devtoolsAlert.show {
             opacity: 1;
         }
+
         .devtools-alert-box {
             background: rgba(20, 28, 45, 0.75);
             backdrop-filter: blur(28px);
@@ -1496,14 +1683,17 @@
             transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
             text-align: center;
         }
+
         #devtoolsAlert.show .devtools-alert-box {
             transform: scale(1) translateY(0);
         }
+
         .devtools-alert-box .alert-icon {
             font-size: 48px;
             color: #f59e0b;
             margin-bottom: 12px;
         }
+
         .devtools-alert-box h3 {
             font-size: 18px;
             font-weight: 700;
@@ -1514,9 +1704,11 @@
             justify-content: center;
             gap: 8px;
         }
+
         .devtools-alert-box h3 i {
             color: #e50914;
         }
+
         .devtools-alert-box p {
             color: #cbd5e1;
             font-size: 14px;
@@ -1524,6 +1716,7 @@
             margin-bottom: 20px;
             padding: 0 4px;
         }
+
         .devtools-alert-box .alert-btn {
             background: linear-gradient(135deg, #e50914, #b8070f);
             color: #fff;
@@ -1536,13 +1729,16 @@
             transition: 0.25s;
             box-shadow: 0 4px 24px rgba(229, 9, 20, 0.25);
         }
+
         .devtools-alert-box .alert-btn:hover {
             transform: scale(1.02);
             box-shadow: 0 6px 32px rgba(229, 9, 20, 0.4);
         }
+
         .devtools-alert-box .alert-btn:active {
             transform: scale(0.96);
         }
+
         /* ===== লাইভ টিভি পোস্টারের জন্য অতিরিক্ত স্টাইল (ছোট বৃত্তাকৃতি) ===== */
         .poster.livetv-poster .poster-img-wrapper {
             width: 72%;
@@ -1558,11 +1754,13 @@
             margin: 0 auto;
             transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
         }
+
         .poster.livetv-poster:hover .poster-img-wrapper {
             border-color: #e50914;
             box-shadow: 0 0 28px rgba(229, 9, 20, 0.3);
             transform: scale(1.02);
         }
+
         .poster.livetv-poster .poster-img {
             width: 100%;
             height: 100%;
@@ -1571,6 +1769,7 @@
             border-radius: 50%;
             aspect-ratio: 1/1;
         }
+
         .poster.livetv-poster .poster-name {
             margin-top: 8px;
             text-align: center;
@@ -1585,20 +1784,25 @@
             overflow: hidden;
             transition: color 0.15s ease;
         }
+
         .poster.livetv-poster.remote-selected-poster .poster-img-wrapper {
             border-color: #22c55e !important;
             box-shadow: 0 0 35px rgba(34, 197, 94, 0.45) !important;
         }
+
         .poster.livetv-poster.remote-selected-poster .poster-name {
             color: #22c55e !important;
         }
+
         .poster.livetv-poster .fav-heart-badge {
             bottom: 48px;
         }
+
         .poster.livetv-poster .premium-badge {
             top: 6px;
             right: 6px;
         }
+
         /* ===== সাজেস্টেড আইটেমে লাইভ টিভি পোস্টার স্টাইল (ছোট বৃত্তাকৃতি) ===== */
         .suggested-item.livetv-suggested .suggested-img-wrapper {
             width: 72%;
@@ -1614,11 +1818,13 @@
             margin: 0 auto;
             transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
         }
+
         .suggested-item.livetv-suggested:hover .suggested-img-wrapper {
             border-color: #e50914;
             box-shadow: 0 0 28px rgba(229, 9, 20, 0.3);
             transform: scale(1.02);
         }
+
         .suggested-item.livetv-suggested .suggested-img {
             width: 100%;
             height: 100%;
@@ -1627,6 +1833,7 @@
             border-radius: 50%;
             aspect-ratio: 1/1;
         }
+
         .suggested-item.livetv-suggested .suggested-name {
             margin-top: 6px;
             text-align: center;
@@ -1644,13 +1851,16 @@
             min-height: 32px;
             border-radius: 0;
         }
+
         .suggested-item.livetv-suggested.remote-selected-suggested .suggested-img-wrapper {
             border-color: #22c55e !important;
             box-shadow: 0 0 35px rgba(34, 197, 94, 0.45) !important;
         }
+
         .suggested-item.livetv-suggested.remote-selected-suggested .suggested-name {
             color: #22c55e !important;
         }
+
         /* ===== নতুন হেডলাইন স্টাইল ===== */
         .suggested-title .headline-text {
             color: #ff0000;
@@ -1663,18 +1873,22 @@
             text-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
             letter-spacing: 0.5px;
         }
+
         /* বিভিন্ন এনিমেশন ইফেক্ট - এলোমেলোভাবে পরিবর্তন হবে */
         .suggested-title .headline-text.effect-glitch {
             animation: glitch 3s infinite;
             text-shadow: 2px 0 #ff0000, -2px 0 #00ff00;
         }
+
         .suggested-title .headline-text.effect-flicker {
             animation: flicker 2s infinite;
         }
+
         .suggested-title .headline-text.effect-neon {
             animation: neon 2s ease-in-out infinite alternate;
             text-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 40px #ff0000;
         }
+
         @keyframes marquee {
             0% {
                 transform: translateX(100%);
@@ -1683,6 +1897,7 @@
                 transform: translateX(-100%);
             }
         }
+
         @keyframes glitch {
             0% {
                 transform: translate(0);
@@ -1703,6 +1918,7 @@
                 transform: translate(0);
             }
         }
+
         @keyframes flicker {
             0%,
             100% {
@@ -1712,6 +1928,7 @@
                 opacity: 0.5;
             }
         }
+
         @keyframes neon {
             0% {
                 text-shadow: 0 0 5px #ff0000, 0 0 10px #ff0000, 0 0 20px #ff0000;
@@ -1720,6 +1937,7 @@
                 text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000, 0 0 40px #ff0000, 0 0 80px #ff0000;
             }
         }
+
         .suggested-title .headline-wrapper {
             overflow: hidden;
             flex: 1;
@@ -1732,18 +1950,22 @@
             height: 100% !important;
             position: relative;
         }
+
         #jwplayer-container .jwplayer {
             width: 100% !important;
             height: 100% !important;
         }
+
         #jwplayer-container .jw-wrapper {
             width: 100% !important;
             height: 100% !important;
         }
+
         #jwplayer-container .jw-media {
             width: 100% !important;
             height: 100% !important;
         }
+
         #jwplayer-container video {
             width: 100% !important;
             height: 100% !important;
@@ -1752,6 +1974,7 @@
     </style>
 </head>
 <body>
+
     <header>
         <div class="header-left">
             <div class="menu-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></div>
@@ -1763,7 +1986,9 @@
             </button>
         </div>
     </header>
+
     <div class="backdrop" onclick="toggleSidebar()"></div>
+
     <!-- ===== সাইডবার ===== -->
     <div class="sidebar" id="sidebar">
         <div class="sidebar-menu-items">
@@ -1776,27 +2001,28 @@
             <a href="#" onclick="changePage('home'); toggleSidebar();"><i class="fas fa-home"></i> হোম</a>
             <a href="#" onclick="changePage('movie'); toggleSidebar();"><i class="fas fa-film"></i> মুভি</a>
             <a href="#" onclick="changePage('livetv'); toggleSidebar();"><i class="fas fa-tv"></i> লাইভ টিভি</a>
-            <div class="menu-item-box justify-between cursor-pointer">
+
+            <!-- ===== অ্যাডাল্ট সাইডবার আইটেম — ডিফল্ট লুকানো, লগইন + adult="on" থাকলেই দেখা যাবে ===== -->
+            <div class="menu-item-box justify-between cursor-pointer" id="sidebar-adult-item">
                 <div class="flex items-center gap-[16px]" onclick="if(document.getElementById('adultVisibilityToggle').checked) { changePage('adult'); toggleSidebar(); } else { showToast('⚠️ আগে চেকবক্সে টিক দিন!'); }">
                     <i class="fas fa-exclamation-triangle text-amber-500"></i>
                     <span>১৮+ এডাল্ট</span>
                 </div>
                 <input type="checkbox" id="adultVisibilityToggle" onchange="toggleAdultNavVisibility(this.checked)" class="w-5 h-5 accent-red-600 cursor-pointer">
             </div>
+
             <div class="ghost-problem-btn" onclick="openGhostProblemModal(); toggleSidebar();">
-                <i class="fas fa-ghost"></i>
-                <span>Ghost Problem Fix</span>
+                <i class="fas fa-ghost"></i> <span>Ghost Problem Fix</span>
             </div>
             <div class="voice-toggle-btn" onclick="toggleVoiceMode(); toggleSidebar();">
-                <i class="fas fa-volume-up"></i>
-                <span>ভয়েজ মোড</span>
+                <i class="fas fa-volume-up"></i> <span>ভয়েজ মোড</span>
                 <span class="toggle-status" id="voiceModeStatus">অন</span>
             </div>
             <a href="https://github.com/ghosttv620/GhostTv/releases/download/Ghost_Tv/Ghost_Tv.apk" target="_blank" class="apk-download-btn" onclick="toggleSidebar();">
-                <i class="fas fa-download"></i>
-                <span>Ghost Tv Apk</span>
+                <i class="fas fa-download"></i> <span>Ghost Tv Apk</span>
             </a>
         </div>
+
         <div class="sidebar-player-footer">
             <div class="player-select-box">
                 <label><i class="fas fa-film mr-1"></i> Movie Page Player</label>
@@ -1827,6 +2053,7 @@
             </div>
         </div>
     </div>
+
     <!-- ===== কন্টেইনার ===== -->
     <div class="container">
         <section id="search-section" class="page-section">
@@ -1835,6 +2062,7 @@
                 <div id="content-search"></div>
             </div>
         </section>
+
         <section id="home" class="page-section active">
             <div class="px-2 max-w-full mx-auto">
                 <div class="slider-container" id="dynamic-slider">
@@ -1853,6 +2081,7 @@
                 </div>
             </div>
         </section>
+
         <section id="movie" class="page-section"><div class="pt-6 px-2 max-w-full mx-auto" id="content-movie"><div class="loading-spinner"><div class="spinner"></div><div class="loading-text">মুভি লোড হচ্ছে...</div></div></div></section>
         <section id="livetv" class="page-section"><div class="pt-6 px-2 max-w-full mx-auto" id="content-livetv"><div class="loading-spinner"><div class="spinner"></div><div class="loading-text">লাইভ টিভি লোড হচ্ছে...</div></div></div></section>
         <section id="adult" class="page-section"><div class="pt-6 px-2 max-w-full mx-auto" id="content-adult"><div class="loading-spinner"><div class="spinner"></div><div class="loading-text">অ্যাডাল্ট লোড হচ্ছে...</div></div></div></section>
@@ -1862,6 +2091,7 @@
             </div>
         </section>
     </div>
+
     <!-- ===== Ghost Problem Fix মডাল ===== -->
     <div id="ghostProblemModal">
         <div class="ghost-problem-box">
@@ -1888,6 +2118,7 @@
             </form>
         </div>
     </div>
+
     <!-- ===== অন্যান্য মডাল ===== -->
     <div id="customConfirmModal">
         <div class="confirm-box text-center">
@@ -1902,6 +2133,7 @@
             </div>
         </div>
     </div>
+
     <div id="premiumAlertModal">
         <div class="premium-glass-box">
             <div class="text-yellow-500 text-4xl mb-3 flex justify-center">
@@ -1916,6 +2148,7 @@
             </button>
         </div>
     </div>
+
     <div id="loginModal" class="p-4" style="display:none !important;">
         <div class="modal-card">
             <button onclick="closeLoginModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl transition">✕</button>
@@ -1962,6 +2195,7 @@
             </div>
         </div>
     </div>
+
     <div id="modal" class="hidden fixed inset-0 bg-black z-[2000] overflow-y-auto modal-background-fix">
         <div class="max-w-5xl mx-auto px-4 py-0">
             <div class="glass-header sticky top-0 z-10 py-3" style="background: rgba(0,0,0,0.95) !important;">
@@ -1973,6 +2207,7 @@
             <div id="modalContent" class="modal-grid" style="background: #000 !important;"></div>
         </div>
     </div>
+
     <!-- ===== ভিডিও মডাল ===== -->
     <div id="videoModal">
         <div class="glass-header">
@@ -2004,6 +2239,7 @@
             </div>
         </div>
     </div>
+
     <!-- DevTools সতর্কতা পপআপ -->
     <div id="devtoolsAlert">
         <div class="devtools-alert-box">
@@ -2016,11 +2252,13 @@
             <button class="alert-btn" onclick="closeDevtoolsAlert()">আমি বুঝেছি</button>
         </div>
     </div>
+
     <!-- ===== নোটিফিকেশন এলিমেন্ট ===== -->
     <div id="toast-notice">
         <span class="toast-icon"><i class="fas fa-bell"></i></span>
         <span class="toast-text" id="toastMessage"></span>
     </div>
+
     <nav class="bottom-nav">
         <button class="nav-item active" onclick="changePage('home')" id="btn-home"><i class="fas fa-home"></i><span>Home</span></button>
         <button class="nav-item" onclick="changePage('movie')" id="btn-movie"><i class="fas fa-film"></i><span>Movie</span></button>
@@ -2028,25 +2266,18 @@
         <button class="nav-item" onclick="changePage('adult')" id="btn-adult" style="display: none;"><i class="fas fa-exclamation-triangle"></i><span>Adult</span></button>
         <button class="nav-item" onclick="changePage('favorite')" id="btn-favorite"><i class="fas fa-heart"></i><span>Favorite</span></button>
     </nav>
+
     <script>
         // ---- কনফিগারেশন ----
         const MASTER_KEY = "$2a$10$HxsYIZoT7QPdPK.EtQZnG.e7AqIWHwpgQ/wsSSavXR3kTM6r.bsWG";
         const USER_BIN = "6a351a15da38895dfedcd033";
         const DISCORD_WEBHOOK = "https://discord.com/api/webhooks/1520076484738416700/u82UBIcHlqgXP4uBcJCEJexHgRna2UTspg_b3VXyhXDTcn8Wxaff4byvDO3zzCEq_iRS";
         const KEYS = {
-            movie: {
-                url: "https://raw.githubusercontent.com/ghosttv620/Ghost-Movie/main/Ghost%20Movie.json",
-                title: "Movies"
-            },
-            livetv: {
-                url: "https://raw.githubusercontent.com/ghosttv620/Ghost-Tv/main/Ghost%20Tv.json",
-                title: "Live TV"
-            },
-            adult: {
-                url: "https://raw.githubusercontent.com/ghosttv620/Ghost-Adult/main/Ghost%20Adult.json",
-                title: "18+ Adult"
-            }
+            movie: { url: "https://raw.githubusercontent.com/ghosttv620/Ghost-Movie/main/Ghost%20Movie.json", title: "Movies" },
+            livetv: { url: "https://raw.githubusercontent.com/ghosttv620/Ghost-Tv/main/Ghost%20Tv.json", title: "Live TV" },
+            adult: { url: "https://raw.githubusercontent.com/ghosttv620/Ghost-Adult/main/Ghost%20Adult.json", title: "18+ Adult" }
         };
+
         // ---- গ্লোবাল স্টেট ----
         let globalDataStore = {};
         let currentUserData = null;
@@ -2065,6 +2296,7 @@
         let isVideoFullscreen = false;
         let isVoiceEnabled = true;
         let effectInterval = null;
+
         // ===== টপবার বাটন ফোকাস ট্র্যাকিং =====
         let topbarButtons = [];
         let topbarFocusIndex = -1;
@@ -2131,6 +2363,7 @@
             speakNotification(`Channel changed to ${newMovie.name}`);
             handleMovieClick(newMovie);
         }
+
         // ===== ভিডিওতে ডাবল ক্লিক = ডান/বাম অনুযায়ী স্কিপ =====
         let lastClickTimeVideo = 0;
         let clickTimerVideo = null;
@@ -2149,6 +2382,7 @@
                 }
                 return;
             }
+
             const now = Date.now();
             const timeSinceLastClick = now - lastClickTimeVideo;
             let clickX = 0;
@@ -2159,9 +2393,11 @@
             } else if (e.changedTouches && e.changedTouches[0]) {
                 clickX = e.changedTouches[0].clientX;
             }
+
             if (timeSinceLastClick < 400 && Math.abs(clickX - lastClickXVideo) < 50) {
                 e.preventDefault();
                 e.stopPropagation();
+
                 let rect = null;
                 if (e.target) {
                     rect = e.target.getBoundingClientRect();
@@ -2174,11 +2410,13 @@
                 }
                 const centerX = rect.left + rect.width / 2;
                 const isRight = clickX > centerX;
+
                 let player = vjsPlayer || plyrPlayer || jwPlayerInstance || clapprPlayerInstance;
                 if (!player) {
                     showToast('⚠️ প্লেয়ার পাওয়া যায়নি!');
                     return;
                 }
+
                 let currentTime = 0;
                 let duration = 0;
                 if (vjsPlayer) {
@@ -2194,10 +2432,12 @@
                     currentTime = clapprPlayerInstance.getCurrentTime();
                     duration = clapprPlayerInstance.getDuration();
                 }
+
                 if (!duration || duration === 0 || isNaN(duration)) {
                     showToast('⚠️ ভিডিওর সময় পাওয়া যায়নি!');
                     return;
                 }
+
                 let newTime;
                 if (isRight) {
                     newTime = currentTime + 10;
@@ -2206,6 +2446,7 @@
                     newTime = currentTime - 10;
                     if (newTime < 0) newTime = 0;
                 }
+
                 if (vjsPlayer) {
                     vjsPlayer.currentTime(newTime);
                 } else if (plyrPlayer) {
@@ -2215,15 +2456,18 @@
                 } else if (clapprPlayerInstance) {
                     clapprPlayerInstance.seek(newTime);
                 }
+
                 const direction = isRight ? '⏩ ফরোয়ার্ড' : '⏪ রিওয়াইন্ড';
                 showToast(`${direction} ১০ সেকেন্ড! (${Math.round(newTime)}/${Math.round(duration)})`);
                 speakNotification(isRight ? 'Forward 10 seconds' : 'Rewind 10 seconds');
+
                 if (clickTimerVideo) {
                     clearTimeout(clickTimerVideo);
                     clickTimerVideo = null;
                 }
                 return;
             }
+
             lastClickTimeVideo = now;
             lastClickXVideo = clickX;
             if (clickTimerVideo) {
@@ -2231,10 +2475,12 @@
                 clickTimerVideo = null;
             }
         }
+
         // ===== ভিডিও এলিমেন্টে ক্লিক/ট্যাপ হ্যান্ডলার =====
         function handleVideoClick(e) {
             handleVideoClickForSkip(e);
         }
+
         // ===== ডানে/বামে ক্লিক/ট্যাপ হ্যান্ডলার (টপবার ফোকাস) - শুধু লাইভ টিভি পেজে =====
         let leftRightClickTimeout = null;
         let lastLeftRightClickTime = 0;
@@ -2249,9 +2495,11 @@
                     '.jwplayer') && !target.closest('.clappr-container')) {
                 return;
             }
+
             const now = Date.now();
             const timeSinceLastClick = now - lastLeftRightClickTime;
             lastLeftRightClickTime = now;
+
             if (timeSinceLastClick < 400 && lastLeftRightClickTarget === e.target) {
                 e.preventDefault();
                 e.stopPropagation();
@@ -2263,16 +2511,20 @@
                 }
                 return;
             }
+
             const rect = e.target.getBoundingClientRect();
             const clickX = e.clientX || (e.touches && e.touches[0] && e.touches[0].clientX);
             if (clickX === undefined) return;
+
             const centerX = rect.left + rect.width / 2;
             const isRight = clickX > centerX;
+
             if (isRight) {
                 focusTopbarButton(topbarFocusIndex + 1);
             } else {
                 focusTopbarButton(topbarFocusIndex - 1);
             }
+
             lastLeftRightClickTarget = e.target;
             if (leftRightClickTimeout) {
                 clearTimeout(leftRightClickTimeout);
@@ -2282,14 +2534,17 @@
                 lastLeftRightClickTarget = null;
                 leftRightClickTimeout = null;
             }, 400);
+
             e.preventDefault();
             e.stopPropagation();
         }
+
         // ===== ভিডিও এলিমেন্টে ইভেন্ট অ্যাটাচ =====
         function attachVideoControls(videoElement) {
             if (!videoElement) return;
             if (videoElement._ghostControlsAttached) return;
             videoElement._ghostControlsAttached = true;
+
             videoElement.addEventListener('click', handleVideoClick);
             videoElement.addEventListener('touchend', function(e) {
                 const touch = e.changedTouches[0];
@@ -2303,6 +2558,7 @@
                 };
                 handleVideoClick(fakeEvent);
             }, { passive: false });
+
             videoElement.addEventListener('click', handleLeftRightClick);
             videoElement.addEventListener('touchend', function(e) {
                 const touch = e.changedTouches[0];
@@ -2351,11 +2607,7 @@
         function loadFavorites() {
             const saved = localStorage.getItem('ghost_favorites');
             if (saved) {
-                try {
-                    favoritesList = JSON.parse(saved);
-                } catch (e) {
-                    favoritesList = [];
-                }
+                try { favoritesList = JSON.parse(saved); } catch (e) { favoritesList = []; }
             }
         }
         loadFavorites();
@@ -2436,13 +2688,11 @@
 
         function clearRemoteFocus() {
             document.querySelectorAll(
-                    '.remote-selected-name, .remote-selected-nav, .remote-selected-sidebar, .remote-selected-suggested-name, .remote-selected-poster, .remote-selected-suggested'
-                    )
-                .forEach(el => {
-                    el.classList.remove('remote-selected-name', 'remote-selected-nav', 'remote-selected-sidebar',
-                        'remote-selected-suggested-name', 'remote-selected-poster',
-                    'remote-selected-suggested');
-                });
+                '.remote-selected-name, .remote-selected-nav, .remote-selected-sidebar, .remote-selected-suggested-name, .remote-selected-poster, .remote-selected-suggested'
+            ).forEach(el => {
+                el.classList.remove('remote-selected-name', 'remote-selected-nav', 'remote-selected-sidebar',
+                    'remote-selected-suggested-name', 'remote-selected-poster', 'remote-selected-suggested');
+            });
             remoteFocusTarget = null;
         }
 
@@ -2522,29 +2772,35 @@
             } else {
                 div.className = "poster";
             }
+
             const premiumBadge = movie.premium ? `<span class="premium-badge">🜲 𝗩𝗜𝗣</span>` : '';
             const isFav = favoritesList.some(f => f.link === movie.link);
             const favHeart = isFav ? `<span class="fav-heart-badge"><i class="fas fa-heart"></i></span>` : '';
+
             if (isLiveTv) {
                 div.innerHTML = `
-                    <div class="relative">
-                        ${premiumBadge} ${favHeart}
-                        <div class="poster-img-wrapper">
-                            <img src="${movie.logo || 'https://picsum.photos/400/400'}" class="poster-img" alt="${movie.name || ''}" loading="lazy">
-                        </div>
-                    </div>
-                    <p class="poster-name">${movie.name || ''}</p>
-                `;
+                <div class="relative">
+                  ${premiumBadge}
+                  ${favHeart}
+                  <div class="poster-img-wrapper">
+                    <img src="${movie.logo || 'https://picsum.photos/400/400'}" class="poster-img" alt="${movie.name || ''}" loading="lazy">
+                  </div>
+                </div>
+                <p class="poster-name">${movie.name || ''}</p>
+              `;
             } else {
                 div.innerHTML = `
-                    <div class="relative">
-                        ${premiumBadge} ${favHeart}
-                        <img src="${movie.logo || 'https://picsum.photos/400/220'}" class="poster-img" alt="${movie.name || ''}" loading="lazy">
-                    </div>
-                    <p class="poster-name">${movie.name || ''}</p>
-                `;
+                <div class="relative">
+                  ${premiumBadge}
+                  ${favHeart}
+                  <img src="${movie.logo || 'https://picsum.photos/400/220'}" class="poster-img" alt="${movie.name || ''}" loading="lazy">
+                </div>
+                <p class="poster-name">${movie.name || ''}</p>
+              `;
             }
+
             attachRemoteSelectionToPoster(div, movie);
+
             let pressTimer;
             let isLongPress = false;
             const startPress = (e) => {
@@ -2563,11 +2819,13 @@
             const endPress = (e) => {
                 clearTimeout(pressTimer);
             };
+
             div.addEventListener('mousedown', startPress);
             div.addEventListener('touchstart', startPress, { passive: true });
             div.addEventListener('mouseup', endPress);
             div.addEventListener('mouseleave', endPress);
             div.addEventListener('touchend', endPress);
+
             div.addEventListener('click', (e) => {
                 if (isLongPress) {
                     e.preventDefault();
@@ -2578,6 +2836,7 @@
                 focusRemoteOnPoster(div, movie);
                 handleMovieClick(movie);
             });
+
             return div;
         }
 
@@ -2600,14 +2859,14 @@
                 if (!currentUserData) {
                     showPremiumAlert(
                         "⚠️ এই কন্টেন্টটি প্রিমিয়াম! দেখতে হলে প্রথমে ডানদিকের কোণায় ক্লিক করে লগইন করুন।"
-                        );
+                    );
                     return;
                 }
                 const isValid = await verifyUser(currentUserData.username, currentUserData.password, true);
                 if (!isValid) {
                     showPremiumAlert(
                         "⚠️ সেশন শেষ বা ডিভাইস চেঞ্জ হয়েছে! অনুগ্রহ করে পুনরায় সঠিক আইডি পাসওয়ার্ড দিয়ে লগইন করুন।"
-                        );
+                    );
                     return;
                 }
             }
@@ -2620,9 +2879,10 @@
             grid.innerHTML = '';
             if (!movies || movies.length === 0) {
                 grid.innerHTML =
-                    `<div class="col-span-full text-gray-400 text-center py-6 text-sm">কোন সাজেস্টেড ভিডিও নেই</div>`;
+                `<div class="col-span-full text-gray-400 text-center py-6 text-sm">কোন সাজেস্টেড ভিডিও নেই</div>`;
                 return;
             }
+
             const unique = [];
             const seen = new Set();
             movies.forEach(m => {
@@ -2631,8 +2891,10 @@
                     unique.push(m);
                 }
             });
+
             const visibleMovies = unique.filter(m => !m.hidden);
             const toShow = visibleMovies.slice(0, 12);
+
             let suggestedPage = 'movie';
             if (activePageGlobal === 'livetv' || activePageGlobal === 'home') {
                 const isLiveTv = toShow.some(m => {
@@ -2645,7 +2907,9 @@
                 });
                 suggestedPage = isLiveTv ? 'livetv' : 'movie';
             }
+
             const isLiveTvSuggested = (suggestedPage === 'livetv');
+
             toShow.forEach(movie => {
                 const item = document.createElement('div');
                 if (isLiveTvSuggested) {
@@ -2653,21 +2917,24 @@
                 } else {
                     item.className = 'suggested-item';
                 }
+
                 const isFav = favoritesList.some(f => f.link === movie.link);
                 const favIcon = isFav ? `<i class="fas fa-heart text-red-500 text-[11px] ml-1"></i>` : '';
+
                 if (isLiveTvSuggested) {
                     item.innerHTML = `
-                        <div class="suggested-img-wrapper">
-                            <img src="${movie.logo || 'https://picsum.photos/400/400'}" class="suggested-img" alt="${movie.name || ''}" loading="lazy">
-                        </div>
-                        <div class="suggested-name">${movie.name || ''} ${favIcon}</div>
-                    `;
+                  <div class="suggested-img-wrapper">
+                    <img src="${movie.logo || 'https://picsum.photos/400/400'}" class="suggested-img" alt="${movie.name || ''}" loading="lazy">
+                  </div>
+                  <div class="suggested-name">${movie.name || ''} ${favIcon}</div>
+                `;
                 } else {
                     item.innerHTML = `
-                        <img src="${movie.logo || 'https://picsum.photos/400/220'}" alt="${movie.name || ''}" loading="lazy">
-                        <div class="suggested-name">${movie.name || ''} ${favIcon}</div>
-                    `;
+                  <img src="${movie.logo || 'https://picsum.photos/400/220'}" alt="${movie.name || ''}" loading="lazy">
+                  <div class="suggested-name">${movie.name || ''} ${favIcon}</div>
+                `;
                 }
+
                 item.addEventListener('click', function(e) {
                     focusRemoteOnSuggested(this, movie);
                     handleMovieClick(movie);
@@ -2677,6 +2944,7 @@
                     focusRemoteOnSuggested(this, movie);
                     return false;
                 });
+
                 grid.appendChild(item);
             });
         }
@@ -2693,9 +2961,11 @@
             setTimeout(() => {
                 document.getElementById(pageId)?.classList.add('active');
             }, 50);
+
             document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
             const navBtn = document.getElementById(`btn-${pageId}`);
             if (navBtn) navBtn.classList.add('active');
+
             const titleMap = {
                 home: 'Ghost Tv',
                 movie: 'Movie',
@@ -2705,6 +2975,7 @@
                 'search-section': 'Search'
             };
             document.getElementById('header-title').innerText = titleMap[pageId] || 'ɢʜᴏꜱᴛ_ᴛᴠ';
+
             if (pageId === 'favorite') renderFavoritePage();
             clearRemoteFocus();
         }
@@ -2715,12 +2986,15 @@
             const loader = document.getElementById('homeLoader');
             if (loader) loader.style.display = 'none';
             homeContainer.innerHTML = '';
+
             let typesToRender = ['movie', 'livetv'];
             const isAdultVisible = localStorage.getItem('ghost_adult_visible') === 'true';
             if (isAdultVisible) typesToRender.push('adult');
+
             typesToRender.forEach(type => {
                 const categories = globalDataStore[type];
                 if (!categories || categories.length === 0) return;
+
                 let rowMovies = [];
                 for (let i = 0; i < categories.length; i++) {
                     if (categories[i] && categories[i].movies) {
@@ -2728,19 +3002,22 @@
                         rowMovies = rowMovies.concat([...visibleMovies]);
                     }
                 }
+
                 if (rowMovies.length === 0) return;
+
                 const section = document.createElement('div');
                 section.className = "mb-10";
                 section.innerHTML = `
-                    <div class="flex justify-between items-center mb-3 px-1">
-                        <h2 class="text-xl font-bold uppercase tracking-wider text-red-500">${KEYS[type].title}</h2>
-                        <button onclick="changePage('${type}')" class="text-gray-400 hover:text-white text-xs font-bold border border-gray-700 px-3 py-1 rounded-full flex items-center gap-1 transition hover:border-red-500">
-                            SEE ALL <i class="fas fa-arrow-right text-[10px]"></i>
-                        </button>
-                    </div>
-                    <div id="home-row-${type}" class="scroll-row"></div>
-                `;
+                <div class="flex justify-between items-center mb-3 px-1">
+                  <h2 class="text-xl font-bold uppercase tracking-wider text-red-500">${KEYS[type].title}</h2>
+                  <button onclick="changePage('${type}')" class="text-gray-400 hover:text-white text-xs font-bold border border-gray-700 px-3 py-1 rounded-full flex items-center gap-1 transition hover:border-red-500">
+                    SEE ALL <i class="fas fa-arrow-right text-[10px]"></i>
+                  </button>
+                </div>
+                <div id="home-row-${type}" class="scroll-row"></div>
+              `;
                 homeContainer.appendChild(section);
+
                 const rowDiv = document.getElementById(`home-row-${type}`);
                 if (rowDiv) {
                     const isLiveTv = (type === 'livetv');
@@ -2756,26 +3033,30 @@
             const categories = globalDataStore[type];
             if (!container) return;
             container.innerHTML = '';
+
             if (!categories || categories.length === 0) {
-                container.innerHTML =
-                `<div class="text-gray-500 text-center py-12 text-sm">কোন কন্টেন্ট নেই</div>`;
+                container.innerHTML = `<div class="text-gray-500 text-center py-12 text-sm">কোন কন্টেন্ট নেই</div>`;
                 return;
             }
+
             const isLiveTv = (type === 'livetv');
+
             categories.forEach((category, catIndex) => {
                 if (!category) return;
                 const visibleMovies = (category.movies || []).filter(m => !m.hidden);
                 if (visibleMovies.length === 0) return;
+
                 const section = document.createElement('div');
                 section.className = "mb-10";
                 section.innerHTML = `
-                    <div class="flex justify-between items-center mb-3 px-1">
-                        <h2 class="text-xl font-bold">${category.name || ''}</h2>
-                        <button onclick="showAll('${type}', ${catIndex})" class="text-red-500 font-medium text-sm transition hover:text-red-400">See All</button>
-                    </div>
-                    <div id="row-${type}-${catIndex}" class="scroll-row"></div>
-                `;
+                <div class="flex justify-between items-center mb-3 px-1">
+                  <h2 class="text-xl font-bold">${category.name || ''}</h2>
+                  <button onclick="showAll('${type}', ${catIndex})" class="text-red-500 font-medium text-sm transition hover:text-red-400">See All</button>
+                </div>
+                <div id="row-${type}-${catIndex}" class="scroll-row"></div>
+              `;
                 container.appendChild(section);
+
                 const row = document.getElementById(`row-${type}-${catIndex}`);
                 if (row && visibleMovies.length > 0) {
                     let chunkIndex = 0;
@@ -2799,12 +3080,14 @@
             const container = document.getElementById('content-favorite');
             if (!container) return;
             container.innerHTML = '';
+
             const visibleFavorites = favoritesList.filter(m => !m.hidden);
             if (visibleFavorites.length === 0) {
                 container.innerHTML =
                     `<div class="text-gray-500 text-center col-span-full py-20 text-sm"><i class="fas fa-heart-broken block text-3xl mb-2 text-gray-700"></i>ফেবারেট লিস্ট ফাঁকা</div>`;
                 return;
             }
+
             visibleFavorites.forEach(movie => {
                 if (movie) container.appendChild(createPoster(movie, false));
             });
@@ -2858,6 +3141,7 @@
             changePage('search-section');
             if (!searchContainer) return;
             searchContainer.innerHTML = '';
+
             let foundItems = [];
             ['movie', 'livetv', 'adult'].forEach(type => {
                 if (globalDataStore[type]) {
@@ -2875,6 +3159,7 @@
                     });
                 }
             });
+
             if (foundItems.length === 0) {
                 searchContainer.innerHTML =
                     `<div class="text-gray-500 text-center col-span-full py-20 text-sm"><i class="fas fa-search-minus block text-3xl mb-2 text-gray-700"></i>কোনো কিছু খুঁজে পাওয়া যায়নি!</div>`;
@@ -2894,6 +3179,42 @@
             }
         }
 
+        // ================================================================
+        //  NEW: সাইডবারে অ্যাডাল্ট আইটেমের ভিসিবিলিটি কন্ট্রোল
+        //  শর্ত:  লগইন থাকতে হবে && currentUserData.adult === "on"
+        // ================================================================
+        function updateAdultSidebarVisibility() {
+            const adultItem = document.getElementById('sidebar-adult-item');
+            if (!adultItem) return;
+
+            const isLoggedIn = currentUserData !== null;
+            const isAdultOn = isLoggedIn && (
+                currentUserData.adult === "on" ||
+                currentUserData.adult === true ||
+                currentUserData.adult === "true" ||
+                currentUserData.adult === 1
+            );
+
+            if (isAdultOn) {
+                adultItem.classList.add('visible');
+                // adultItem.style.display = 'flex';
+            } else {
+                adultItem.classList.remove('visible');
+                // adultItem.style.display = 'none';
+                // ইউজার যদি অ্যাডাল্ট পেজে থাকে আর অ্যাক্সেস হারায়, তাহলে হোমে পাঠানো ভালো
+                if (document.getElementById('adult').classList.contains('active')) {
+                    changePage('home');
+                }
+                // চেকবক্স আনচেক করে দেয়া (ভিজিবিলিটি অফ)
+                const chk = document.getElementById('adultVisibilityToggle');
+                if (chk && chk.checked) {
+                    chk.checked = false;
+                    toggleAdultNavVisibility(false);
+                }
+            }
+        }
+
+        // ===== লগইন ভেরিফাই =====
         async function verifyUser(username, password, isAuto = false) {
             try {
                 const res = await fetch(`https://api.jsonbin.io/v3/b/${USER_BIN}/latest`, {
@@ -2906,13 +3227,16 @@
                     if (!isAuto) showLoginError("সার্ভার সংযোগ ব্যর্থ!");
                     return false;
                 }
+
                 const responseData = await res.json();
                 const users = Array.isArray(responseData) ? responseData : (responseData.users || []);
                 const user = users.find(u => u.username === username && u.password === password);
+
                 if (!user) {
                     if (!isAuto) showLoginError("ভুল ইউজারনেম অথবা পাসওয়ার্ড!");
                     return false;
                 }
+
                 const today = new Date();
                 const expiryDate = new Date(user.expiry);
                 if (expiryDate < today) {
@@ -2920,10 +3244,12 @@
                     localStorage.clear();
                     return false;
                 }
+
                 if (user.device_id && user.device_id !== "" && user.device_id !== myDeviceId) {
                     if (!isAuto) showLoginError("এই অ্যাকাউন্টটি ইতিমধ্যে অন্য ডিভাইসে লগইন করা আছে!");
                     return false;
                 }
+
                 if (!user.device_id || user.device_id === "") {
                     user.device_id = myDeviceId;
                     if (Array.isArray(responseData)) {
@@ -2933,11 +3259,17 @@
                         await updateJsonBin(responseData);
                     }
                 }
+
                 currentUserData = user;
                 localStorage.setItem('ghost_user', username);
                 localStorage.setItem('ghost_pass', password);
+
                 updateAuthHeaderUI();
                 closeLoginModal();
+
+                // অ্যাডাল্ট সাইডবার ভিসিবিলিটি আপডেট
+                updateAdultSidebarVisibility();
+
                 return true;
             } catch (err) {
                 if (!isAuto) showLoginError("সার্ভার ত্রুটি! দয়া করে আবার চেষ্টা করুন।");
@@ -2952,6 +3284,7 @@
                 showToast("⚠️ প্রথমে ইউজারনেম ও পাসওয়ার্ড দিন!");
                 return;
             }
+
             try {
                 const res = await fetch(`https://api.jsonbin.io/v3/b/${USER_BIN}/latest`, {
                     headers: {
@@ -2963,6 +3296,7 @@
                     showToast("⚠️ সার্ভার সংযোগ ব্যর্থ!");
                     return;
                 }
+
                 const responseData = await res.json();
                 let users = [];
                 let isArray = false;
@@ -2975,11 +3309,13 @@
                     showToast("⚠️ ডেটা ফরম্যাট সঠিক নয়!");
                     return;
                 }
+
                 const userIndex = users.findIndex(u => u.username === user && u.password === pass);
                 if (userIndex === -1) {
                     showToast("⚠️ ইউজারনাম বা পাসওয়ার্ড ভুল!");
                     return;
                 }
+
                 users[userIndex].device_id = "";
                 let updateData;
                 if (isArray) {
@@ -2989,6 +3325,7 @@
                     if (responseData.slider) updateData.slider = responseData.slider;
                     if (responseData.others) updateData.others = responseData.others;
                 }
+
                 const putRes = await fetch(`https://api.jsonbin.io/v3/b/${USER_BIN}`, {
                     method: 'PUT',
                     headers: {
@@ -3001,10 +3338,12 @@
                     showToast("⚠️ রিসেট আপডেট করতে ব্যর্থ!");
                     return;
                 }
+
                 localStorage.removeItem('ghost_user');
                 localStorage.removeItem('ghost_pass');
                 currentUserData = null;
                 updateAuthHeaderUI();
+                updateAdultSidebarVisibility();
                 showToast("✅ ডিভাইস আইডি রিসেট হয়েছে! পুনরায় লগইন করুন।");
                 closeLoginModal();
             } catch (err) {
@@ -3019,12 +3358,15 @@
             if (savedUser && savedPass) {
                 await verifyUser(savedUser, savedPass, true);
             }
+            // অটোলগইন না থাকলেও সাইডবার আপডেট
+            updateAdultSidebarVisibility();
         }
 
         async function handleLogin() {
             const user = document.getElementById('loginUser').value.trim();
             const pass = document.getElementById('loginPass').value.trim();
             if (!user || !pass) return showLoginError("সব ঘর পূরণ করুন!");
+
             const btn = document.getElementById('loginSubmitBtn');
             btn.innerText = "যাচাই হচ্ছে...";
             btn.disabled = true;
@@ -3056,21 +3398,23 @@
             const area = document.getElementById('auth-status-area');
             if (currentUserData) {
                 area.innerHTML = `
-                    <div class="flex items-center gap-2">
-                        <span class="text-xs font-semibold text-green-400 bg-green-950/50 border border-green-800/60 px-3 py-1.5 rounded-full flex items-center gap-1">
-                            <span class="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></span>
-                            ${currentUserData.username}
-                        </span>
-                        <button onclick="handleLogout()" class="text-gray-500 hover:text-red-500 text-sm p-1"><i class="fas fa-sign-out-alt"></i></button>
-                    </div>
-                `;
+                <div class="flex items-center gap-2">
+                  <span class="text-xs font-semibold text-green-400 bg-green-950/50 border border-green-800/60 px-3 py-1.5 rounded-full flex items-center gap-1">
+                    <span class="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></span>
+                    ${currentUserData.username}
+                  </span>
+                  <button onclick="handleLogout()" class="text-gray-500 hover:text-red-500 text-sm p-1"><i class="fas fa-sign-out-alt"></i></button>
+                </div>
+              `;
             } else {
                 area.innerHTML = `
-                    <button onclick="openLoginModal()" class="bg-red-600 hover:bg-red-700 text-white text-xs font-bold px-4 py-2 rounded-full transition active:scale-95 shadow-lg shadow-red-600/20">
-                        <i class="fas fa-user-lock mr-1"></i> লগইন
-                    </button>
-                `;
+                <button onclick="openLoginModal()" class="bg-red-600 hover:bg-red-700 text-white text-xs font-bold px-4 py-2 rounded-full transition active:scale-95 shadow-lg shadow-red-600/20">
+                  <i class="fas fa-user-lock mr-1"></i> লগইন
+                </button>
+              `;
             }
+            // হেডার UI আপডেটের পর সাইডবার অ্যাডাল্ট ভিসিবিলিটি আপডেট
+            updateAdultSidebarVisibility();
         }
 
         function handleLogout() {
@@ -3080,6 +3424,7 @@
                     localStorage.removeItem('ghost_pass');
                     currentUserData = null;
                     updateAuthHeaderUI();
+                    updateAdultSidebarVisibility();
                     changePage('home');
                     showToast("✅ লগআউট সম্পন্ন!");
                 }
@@ -3121,11 +3466,13 @@
 
         async function fetchAndRenderSlider() {
             const sliderContainer = document.getElementById('dynamic-slider');
-            let sliderData = [{ img: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=1200",
-                title: "সর্বশেষ সব নতুন মুভি দেখুন এখানে", type: "movie", badge: "Movies" },
-            { img: "https://images.unsplash.com/photo-1593789198777-f29bc259780e?q=80&w=1200",
-                title: "বাফারিং ছাড়াই লাইভ টিভি চ্যানেল উপভোগ করুন", type: "livetv", badge: "Live TV" }
+            let sliderData = [
+                { img: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=1200", title: "সর্বশেষ সব নতুন মুভি দেখুন এখানে",
+                    type: "movie", badge: "Movies" },
+                { img: "https://images.unsplash.com/photo-1593789198777-f29bc259780e?q=80&w=1200",
+                    title: "বাফারিং ছাড়াই লাইভ টিভি চ্যানেল উপভোগ করুন", type: "livetv", badge: "Live TV" }
             ];
+
             try {
                 const res = await fetch(`https://api.jsonbin.io/v3/b/${USER_BIN}/latest`, {
                     headers: {
@@ -3133,35 +3480,34 @@
                         "X-Bin-Meta": "false"
                     }
                 });
-                if (!res.ok) {
-                    return;
-                }
+                if (!res.ok) { return; }
                 const data = await res.json();
                 if (data && data.slider && Array.isArray(data.slider)) {
                     sliderData = data.slider.filter(s => s.type !== 'adult');
                 }
-            } catch (e) {
-                return;
-            }
+            } catch (e) { return; }
+
             sliderContainer.innerHTML = '';
             sliderData.forEach((slide, index) => {
                 const activeClass = index === 0 ? 'active' : '';
                 const badgeText = slide.badge || (slide.type === 'movie' ? 'Movies' : 'Live TV');
                 const badgeColor = slide.type === 'movie' ? 'bg-red-600' : 'bg-blue-600';
+
                 const div = document.createElement('div');
                 div.className = `slide ${activeClass}`;
                 div.onclick = () => changePage(slide.type);
                 div.innerHTML = `
-                    <img src="${slide.img}" class="w-full h-full object-cover" alt="Banner" loading="lazy">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent flex items-end p-5">
-                        <div>
-                            <span class="${badgeColor} text-white text-[9px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">${badgeText}</span>
-                            <h2 class="text-lg md:text-2xl font-extrabold mt-1 text-white">${slide.title}</h2>
-                        </div>
-                    </div>
-                `;
+                <img src="${slide.img}" class="w-full h-full object-cover" alt="Banner" loading="lazy">
+                <div class="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent flex items-end p-5">
+                  <div>
+                    <span class="${badgeColor} text-white text-[9px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">${badgeText}</span>
+                    <h2 class="text-lg md:text-2xl font-extrabold mt-1 text-white">${slide.title}</h2>
+                  </div>
+                </div>
+              `;
                 sliderContainer.appendChild(div);
             });
+
             currentSlideIdx = 0;
             initSliderControl();
         }
@@ -3171,18 +3517,23 @@
                 const modal = document.getElementById('customConfirmModal');
                 const oldOkBtn = document.getElementById('confirmOkBtn');
                 const oldCancelBtn = document.getElementById('confirmCancelBtn');
+
                 document.getElementById('confirmMessage').innerText = messageText || "আপনি কি ফেবারেট করতে চান?";
+
                 const okBtn = oldOkBtn.cloneNode(true);
                 const cancelBtn = oldCancelBtn.cloneNode(true);
                 oldOkBtn.parentNode.replaceChild(okBtn, oldOkBtn);
                 oldCancelBtn.parentNode.replaceChild(cancelBtn, oldCancelBtn);
+
                 modal.style.display = 'flex';
                 setTimeout(() => modal.classList.add('show'), 10);
+
                 okBtn.addEventListener('click', () => {
                     modal.classList.remove('show');
                     setTimeout(() => modal.style.display = 'none', 300);
                     resolve(true);
                 });
+
                 cancelBtn.addEventListener('click', () => {
                     modal.classList.remove('show');
                     setTimeout(() => modal.style.display = 'none', 300);
@@ -3232,6 +3583,7 @@
             document.getElementById('ghostSuccessMsg').classList.remove('show');
             document.getElementById('ghostSendBtn').disabled = false;
             document.getElementById('ghostSendBtn').innerHTML = '<i class="fas fa-paper-plane"></i> সেন্ড করুন';
+
             const desc = document.getElementById('problemDescription');
             desc.addEventListener('input', function() {
                 const count = this.value.length;
@@ -3242,15 +3594,14 @@
                     showToast('⚠️ সর্বোচ্চ ১০০০ অক্ষর!');
                 }
             });
+
             setTimeout(() => modal.classList.add('show'), 10);
         }
 
         function closeGhostProblemModal() {
             const modal = document.getElementById('ghostProblemModal');
             modal.classList.remove('show');
-            setTimeout(() => {
-                modal.style.display = 'none';
-            }, 350);
+            setTimeout(() => { modal.style.display = 'none'; }, 350);
         }
 
         async function sendGhostProblem() {
@@ -3258,6 +3609,7 @@
             const problemDesc = document.getElementById('problemDescription').value.trim();
             const sendBtn = document.getElementById('ghostSendBtn');
             const successMsg = document.getElementById('ghostSuccessMsg');
+
             if (!movieName) {
                 showToast('⚠️ দয়া করে টিভি অথবা মুভির নাম লিখুন!');
                 document.getElementById('problemMovieName').focus();
@@ -3272,11 +3624,14 @@
                 showToast('⚠️ প্রবলেমটি একটু বিস্তারিত লিখুন (কমপক্ষে ৫ অক্ষর)');
                 return;
             }
+
             sendBtn.disabled = true;
             sendBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> সেন্ড হচ্ছে...';
+
             const username = currentUserData ? currentUserData.username : 'অতিথি';
             const deviceId = myDeviceId;
             const currentTime = new Date().toLocaleString('bn-BD', { timeZone: 'Asia/Dhaka' });
+
             const payload = {
                 embeds: [{
                     title: '👻 Ghost Problem Fix',
@@ -3295,12 +3650,14 @@
                     timestamp: new Date().toISOString()
                 }]
             };
+
             try {
                 const response = await fetch(DISCORD_WEBHOOK, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(payload)
                 });
+
                 if (response.ok) {
                     successMsg.classList.add('show');
                     sendBtn.innerHTML = '✅ সফল!';
@@ -3331,6 +3688,7 @@
         function togglePlayStop() {
             const btn = document.getElementById('playStopToggleBtn');
             let isPlaying = false;
+
             if (vjsPlayer) {
                 if (vjsPlayer.paused()) {
                     vjsPlayer.play();
@@ -3371,6 +3729,7 @@
                 showToast('⚠️ কোনো প্লেয়ার সক্রিয় নেই');
                 return;
             }
+
             btn.innerHTML = isPlaying ? '<i class="fas fa-pause"></i>' : '<i class="fas fa-play"></i>';
         }
 
@@ -3380,6 +3739,7 @@
                 showToast('⚠️ কোনো প্লেয়ার সক্রিয় নেই');
                 return;
             }
+
             if (vjsPlayer) {
                 if (vjsPlayer.isFullscreen()) {
                     vjsPlayer.exitFullscreen();
@@ -3410,6 +3770,7 @@
                     }
                 }
             }
+
             showToast('⛶ ফুলস্ক্রিন টগল');
         }
 
@@ -3442,6 +3803,7 @@
                 const randomIndex = Math.floor(Math.random() * effects.length);
                 nextEffect = effects[randomIndex];
             } while (nextEffect === currentEffect && effects.length > 1);
+
             effects.forEach(e => headline.classList.remove(e));
             if (nextEffect) {
                 headline.classList.add(nextEffect);
@@ -3456,27 +3818,35 @@
 
         function openVideoModal(movie) {
             if (!movie || !movie.link) return;
+
             currentPlayingMovie = movie;
             destroyAllPlayers();
             initTopbarButtons();
             clearTopbarFocus();
+
             const videoModal = document.getElementById('videoModal');
             document.getElementById('videoTitle').textContent = movie.name || '';
             const thumb = document.getElementById('currentVideoThumb');
             thumb.src = movie.logo || 'https://picsum.photos/100/100';
             thumb.alt = movie.name || 'বর্তমান ভিডিওর পোস্টার';
+
             videoModal.style.display = 'flex';
+
             const mountPoint = document.getElementById('player-mount-point');
             mountPoint.innerHTML = '';
+
             let pageContext = activePageGlobal;
             if (pageContext === 'home' || pageContext === 'favorite' || pageContext === 'search-section') {
                 pageContext = 'movie';
             }
+
             const selectedPlayer = localStorage.getItem(`ghost_player_${pageContext}`) || 'videojs';
             const isM3u8 = movie.link.includes(".m3u8");
+
             let lastSavedVolume = localStorage.getItem('ghost_global_volume');
             let initialVolume = lastSavedVolume !== null ? parseFloat(lastSavedVolume) : 1.0;
             let isMutedByDefault = initialVolume === 0;
+
             document.getElementById('playStopToggleBtn').innerHTML = '<i class="fas fa-pause"></i>';
 
             if (selectedPlayer === 'videojs') {
@@ -3486,6 +3856,7 @@
                 videoEl.setAttribute('controls', 'true');
                 videoEl.setAttribute('preload', 'auto');
                 mountPoint.appendChild(videoEl);
+
                 let videoType = isM3u8 ? "application/x-mpegURL" : "video/mp4";
                 vjsPlayer = videojs('myVideoPlayer', {
                     autoplay: true,
@@ -3493,9 +3864,11 @@
                     liveui: true
                 });
                 vjsPlayer.src({ src: movie.link, type: videoType });
+
                 vjsPlayer.ready(function() {
                     vjsPlayer.volume(initialVolume);
                     vjsPlayer.muted(isMutedByDefault);
+
                     vjsPlayer.on('volumechange', function() {
                         let currentVol = vjsPlayer.muted() ? 0 : vjsPlayer.volume();
                         localStorage.setItem('ghost_global_volume', currentVol);
@@ -3506,6 +3879,7 @@
                     vjsPlayer.on('pause', function() {
                         document.getElementById('playStopToggleBtn').innerHTML = '<i class="fas fa-play"></i>';
                     });
+
                     const videoEl2 = vjsPlayer.el().querySelector('video');
                     if (videoEl2) {
                         attachVideoControls(videoEl2);
@@ -3515,6 +3889,7 @@
                         attachFullscreenOnPlay(vjsPlayer.el());
                     }
                 });
+
             } else if (selectedPlayer === 'plyr') {
                 const videoEl = document.createElement('video');
                 videoEl.id = 'myPlyrPlayer';
@@ -3522,6 +3897,7 @@
                 videoEl.setAttribute('controls', 'true');
                 videoEl.setAttribute('playsinline', 'true');
                 mountPoint.appendChild(videoEl);
+
                 if (isM3u8 && Hls.isSupported()) {
                     const hls = new Hls();
                     hls.loadSource(movie.link);
@@ -3529,11 +3905,13 @@
                 } else {
                     videoEl.src = movie.link;
                 }
+
                 plyrPlayer = new Plyr('#myPlyrPlayer', {
                     autoplay: true,
                     volume: initialVolume,
                     muted: isMutedByDefault
                 });
+
                 plyrPlayer.on('volumechange', () => {
                     let currentVol = plyrPlayer.muted ? 0 : plyrPlayer.volume;
                     localStorage.setItem('ghost_global_volume', currentVol);
@@ -3544,11 +3922,13 @@
                 plyrPlayer.on('pause', () => {
                     document.getElementById('playStopToggleBtn').innerHTML = '<i class="fas fa-play"></i>';
                 });
+
                 attachVideoControls(videoEl);
                 videoEl.play();
                 if (window.innerWidth >= 768) {
                     attachFullscreenOnPlay(videoEl);
                 }
+
             } else if (selectedPlayer === 'jwplayer') {
                 const containerDiv = document.createElement('div');
                 containerDiv.id = 'jwplayer-container';
@@ -3577,15 +3957,12 @@
                         attachVideoControls(videoEl);
                     }
                 });
-
                 jwPlayerInstance.on('play', function() {
                     document.getElementById('playStopToggleBtn').innerHTML = '<i class="fas fa-pause"></i>';
                 });
-
                 jwPlayerInstance.on('pause', function() {
                     document.getElementById('playStopToggleBtn').innerHTML = '<i class="fas fa-play"></i>';
                 });
-
                 jwPlayerInstance.on('volume', function(event) {
                     let vol = event.volume / 100;
                     localStorage.setItem('ghost_global_volume', vol);
@@ -3594,11 +3971,13 @@
                 if (window.innerWidth >= 768) {
                     attachFullscreenOnPlay(document.querySelector('#jwplayer-container video'));
                 }
+
             } else if (selectedPlayer === 'clappr') {
                 const clapprDiv = document.createElement('div');
                 clapprDiv.id = 'myClapprPlayer';
                 clapprDiv.className = 'w-full h-full';
                 mountPoint.appendChild(clapprDiv);
+
                 clapprPlayerInstance = new Clappr.Player({
                     source: movie.link,
                     parentId: '#myClapprPlayer',
@@ -3607,18 +3986,21 @@
                     width: '100%',
                     height: '100%'
                 });
+
                 clapprPlayerInstance.on(Clappr.Events.PLAYER_VOLUMECHANGE, function() {
                     let currentVol = clapprPlayerInstance.volume / 100;
                     localStorage.setItem('ghost_global_volume', currentVol);
                 });
                 clapprPlayerInstance.setVolume(initialVolume * 100);
                 clapprPlayerInstance.play();
+
                 clapprPlayerInstance.on(Clappr.Events.PLAYER_PLAY, function() {
                     document.getElementById('playStopToggleBtn').innerHTML = '<i class="fas fa-pause"></i>';
                 });
                 clapprPlayerInstance.on(Clappr.Events.PLAYER_PAUSE, function() {
                     document.getElementById('playStopToggleBtn').innerHTML = '<i class="fas fa-play"></i>';
                 });
+
                 if (window.innerWidth >= 768) {
                     const videoEl = document.querySelector('#myClapprPlayer video');
                     if (videoEl) {
@@ -3643,6 +4025,7 @@
                     }
                 });
             }
+
             if (suggested.length === 0) {
                 ['movie', 'livetv', 'adult'].forEach(type => {
                     if (type !== currentPage && globalDataStore[type]) {
@@ -3657,9 +4040,11 @@
                     }
                 });
             }
+
             suggested = suggested.sort(() => Math.random() - 0.5);
             currentSuggestedMovies = suggested;
             renderSuggestedVideos(suggested);
+
             startHeadlineEffectRotation();
             setTimeout(updateFullscreenOverlayState, 300);
         }
@@ -3697,12 +4082,14 @@
                 document.body.classList.remove('ghost-fs-overlay-active');
             }
         }
+
         let ghostAutoFSInitDone = false;
 
         function attachFullscreenOnPlay(videoElement) {
             if (!videoElement) return;
             if (videoElement._ghostFSAttached) return;
             videoElement._ghostFSAttached = true;
+
             let userInteractionHandler = null;
             let fsAttempted = false;
 
@@ -3720,8 +4107,8 @@
                                 userInteractionHandler = function() {
                                     if (window.innerWidth < 768) return;
                                     if (!document.fullscreenElement && !document.webkitFullscreenElement) {
-                                        const req2 = el.requestFullscreen || el.webkitRequestFullscreen ||
-                                            el.mozRequestFullScreen || el.msRequestFullscreen;
+                                        const req2 = el.requestFullscreen || el.webkitRequestFullscreen || el
+                                            .mozRequestFullScreen || el.msRequestFullscreen;
                                         if (req2) {
                                             req2.call(el).catch(() => {});
                                         }
@@ -3740,11 +4127,13 @@
                     }
                 } catch (e) {}
             }
+
             videoElement.addEventListener('play', function onPlay() {
                 if (window.innerWidth < 768) return;
                 if (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement ||
                     document.msFullscreenElement) return;
             }, { passive: true });
+
             videoElement.addEventListener('fullscreenchange', updateFullscreenOverlayState);
             videoElement.addEventListener('webkitfullscreenchange', updateFullscreenOverlayState);
             videoElement.addEventListener('mozfullscreenchange', updateFullscreenOverlayState);
@@ -3754,6 +4143,7 @@
         function initGhostAutoFullscreen() {
             if (ghostAutoFSInitDone) return;
             ghostAutoFSInitDone = true;
+
             const observer = new MutationObserver(function(mutations) {
                 if (window.innerWidth < 768) return;
                 for (const mutation of mutations) {
@@ -3766,8 +4156,7 @@
                                 const videos = node.querySelectorAll('video');
                                 videos.forEach(attachFullscreenOnPlay);
                                 const containers = node.querySelectorAll(
-                                    '.video-js, #myPlyrPlayer, #jwplayer-container, #myClapprPlayer'
-                                    );
+                                    '.video-js, #myPlyrPlayer, #jwplayer-container, #myClapprPlayer');
                                 containers.forEach(function(container) {
                                     const v = container.querySelector('video');
                                     if (v) attachFullscreenOnPlay(v);
@@ -3778,7 +4167,9 @@
                 }
             });
             observer.observe(document.body, { childList: true, subtree: true });
+
             document.querySelectorAll('video').forEach(attachFullscreenOnPlay);
+
             setInterval(function() {
                 if (window.innerWidth < 768) return;
                 document.querySelectorAll('video').forEach(function(v) {
@@ -3788,6 +4179,7 @@
                 });
             }, 3000);
         }
+
         let alertShown = false;
 
         function detectDevTools() {
@@ -3809,9 +4201,7 @@
         async function fetchData(type) {
             try {
                 const response = await fetch(KEYS[type].url);
-                if (!response.ok) {
-                    return;
-                }
+                if (!response.ok) { return; }
                 const json = await response.json();
                 globalDataStore[type] = json.categories || [];
             } catch (error) {
@@ -3821,18 +4211,17 @@
 
         function attachRemoteFocusToSidebar() {
             document.querySelectorAll(
-                    '.sidebar a, .sidebar .menu-item-box, .sidebar .ghost-problem-btn, .sidebar .apk-download-btn, .sidebar .voice-toggle-btn'
-                    )
-                .forEach(item => {
-                    item.addEventListener('click', function(e) {
-                        focusRemoteOnSidebar(this);
-                    });
-                    item.addEventListener('contextmenu', function(e) {
-                        e.preventDefault();
-                        focusRemoteOnSidebar(this);
-                        return false;
-                    });
+                '.sidebar a, .sidebar .menu-item-box, .sidebar .ghost-problem-btn, .sidebar .apk-download-btn, .sidebar .voice-toggle-btn'
+            ).forEach(item => {
+                item.addEventListener('click', function(e) {
+                    focusRemoteOnSidebar(this);
                 });
+                item.addEventListener('contextmenu', function(e) {
+                    e.preventDefault();
+                    focusRemoteOnSidebar(this);
+                    return false;
+                });
+            });
         }
 
         async function initPortal() {
@@ -3844,14 +4233,18 @@
             await fetchAndRenderSlider();
             await checkAutoLogin();
             loadAdultVisibilitySettings();
+
             await Promise.all([fetchData('movie'), fetchData('livetv'), fetchData('adult')]);
+
             renderHomePage();
             renderFullPageLagFree('movie');
             renderFullPageLagFree('livetv');
             renderFullPageLagFree('adult');
+
             attachRemoteFocusToNav();
             attachRemoteFocusToSidebar();
             initTopbarButtons();
+
             if (window.innerWidth >= 768) {
                 initGhostAutoFullscreen();
                 document.addEventListener('fullscreenchange', updateFullscreenOverlayState);
@@ -3861,6 +4254,10 @@
                 setInterval(updateFullscreenOverlayState, 1000);
                 setTimeout(updateFullscreenOverlayState, 500);
             }
+
+            // অ্যাডাল্ট সাইডবার ভিসিবিলিটি চেক (অটোলগইন বা লগইন না থাকলে)
+            updateAdultSidebarVisibility();
+
             const urlParams = new URLSearchParams(window.location.search);
             const playToken = urlParams.get('play');
             let playedFromShare = false;
@@ -3892,14 +4289,17 @@
                     console.error("Error loading shared video:", e);
                 }
             }
+
             if (!playedFromShare) {
                 const mode = new URLSearchParams(window.location.search).get('mode');
                 changePage(mode && KEYS[mode] && mode !== 'adult' ? mode : 'home');
             } else {
                 changePage('home');
             }
+
             setTimeout(playWelcomeVoice, 1500);
         }
+
         window.addEventListener("orientationchange", function() {
             const videoModal = document.getElementById('videoModal');
             if (videoModal.style.display === 'flex' && vjsPlayer) {
@@ -3914,9 +4314,11 @@
                 }
             }
         });
+
         window.addEventListener('popstate', function(event) {
             if (event.state && event.state.modalOpen) closeModal();
         });
+
         document.addEventListener('keydown', e => {
             if (e.key === "Escape") {
                 if (document.getElementById('videoModal').style.display === 'flex') {
@@ -3951,13 +4353,16 @@
                 }
             }
         });
+
         const originalShowToast = showToast;
         showToast = function(message) {
             originalShowToast(message);
             speakNotification(message);
         };
+
         window.onload = initPortal;
     </script>
+
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
@@ -3971,5 +4376,6 @@
             });
         }
     </script>
+
 </body>
 </html>
