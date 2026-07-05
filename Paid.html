@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>সাবস্ক্রিপশন প্ল্যান</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+        .bangla {
+            font-family: 'Hind Siliguri', system-ui, sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-zinc-950 text-white min-h-screen flex items-center justify-center p-6">
+    <div class="max-w-4xl w-full">
+        <h1 class="text-4xl font-bold text-center mb-12">সাবস্ক্রিপশন প্ল্যান</h1>
+        
+        <div class="grid md:grid-cols-2 gap-8">
+            <!-- Prime -->
+            <div class="bg-zinc-900 rounded-3xl p-8 border border-zinc-700">
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-bold">Prime Subscription</h2>
+                    <p class="bangla text-2xl text-zinc-400 mt-1">প্রাইম সাবস্ক্রিপশন</p>
+                    <div class="mt-6 text-5xl font-bold">৯৯৯<span class="text-lg font-normal text-zinc-400">/মাস</span></div>
+                </div>
+                
+                <div class="bg-zinc-800 rounded-2xl p-6 mb-8">
+                    <ul class="space-y-4 text-lg">
+                        <li class="flex items-center gap-3">
+                            <span class="text-green-500 text-xl">✓</span>
+                            মুভি
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="text-green-500 text-xl">✓</span>
+                            টিভি
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="text-green-500 text-xl">✓</span>
+                            VIP এক্সেস
+                        </li>
+                    </ul>
+                </div>
+                
+                <button onclick="subscribe('Prime')" 
+                        class="w-full bg-white text-black py-5 rounded-2xl font-semibold text-xl hover:bg-zinc-200 transition">
+                    সাবস্ক্রাইব করুন
+                </button>
+            </div>
+
+            <!-- Premium -->
+            <div class="bg-gradient-to-br from-orange-600 to-red-600 rounded-3xl p-8 border-2 border-orange-400 relative">
+                <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-orange-500 text-white text-sm px-6 py-1 rounded-full font-medium">
+                    সবচেয়ে জনপ্রিয়
+                </div>
+                
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl font-bold">Premium Subscription</h2>
+                    <p class="bangla text-2xl text-orange-100 mt-1">প্রিমিয়াম সাবস্ক্রিপশন</p>
+                    <div class="mt-6 text-5xl font-bold">১৯৯৯<span class="text-lg font-normal text-orange-100">/মাস</span></div>
+                </div>
+                
+                <div class="bg-black/30 rounded-2xl p-6 mb-8">
+                    <ul class="space-y-4 text-lg">
+                        <li class="flex items-center gap-3">
+                            <span class="text-green-400 text-xl">✓</span>
+                            মুভি
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="text-green-400 text-xl">✓</span>
+                            টিভি
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="text-green-400 text-xl">✓</span>
+                            অ্যাডাল্ট
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <span class="text-green-400 text-xl">✓</span>
+                            VIP এক্সেস
+                        </li>
+                    </ul>
+                </div>
+                
+                <button onclick="subscribe('Premium')" 
+                        class="w-full bg-white text-black py-5 rounded-2xl font-semibold text-xl hover:bg-zinc-200 transition">
+                    সাবস্ক্রাইব করুন
+                </button>
+            </div>
+        </div>
+        
+        <p class="text-center text-zinc-500 mt-10 text-sm">যেকোনো সময় ক্যানসেল করতে পারবেন</p>
+    </div>
+
+    <script>
+        function subscribe(plan) {
+            alert(plan + " প্ল্যান সিলেক্ট করা হয়েছে!\n\nআপনাকে ধন্যবাদ। (ডেমো ভার্সন)");
+        }
+    </script>
+</body>
+</html>
