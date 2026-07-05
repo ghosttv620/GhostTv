@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>Gh👻st Tv</title>
+
     <!-- PWA Meta Tags -->
-    <link rel="manifest" href="manifest.json">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="Ghost Tv">
-    <link rel="apple-touch-icon" href="https://github.com/ghosttv620/GhostTv/releases/download/Ghost_Tv/Ghost.Tv.Logo.jpg">
-    <meta name="theme-color" content="#000000">
+    <link rel="manifest" href="manifest.json" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Ghost Tv" />
+    <link rel="apple-touch-icon" href="https://github.com/ghosttv620/GhostTv/releases/download/Ghost_Tv/Ghost.Tv.Logo.jpg" />
+    <meta name="theme-color" content="#000000" />
+
     <script src="https://cdn.tailwindcss.com">
     </script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
     <script src="https://vjs.zencdn.net/8.10.0/video.min.js">
     </script>
@@ -24,12 +26,14 @@
     </script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@clappr/player@latest/dist/clappr.min.js">
     </script>
-    <!-- ===== JW Player লাইব্রেরি (Ghost Ultra) ===== -->
+
+    <!-- JW Player -->
     <script src="https://content.jwplatform.com/libraries/IDzF9Zmk.js">
     </script>
     <script>
         jwplayer.key = "Khpp2dHxlBJHC8MCmLnBuV2jK/DwDnJMniwF6EO9HC/riJ712ZmbHg==";
     </script>
+
     <style>
         /* ===== রিসেট ও বেসিক ===== */
         * {
@@ -42,6 +46,7 @@
             user-select: none;
             -webkit-touch-callout: none;
         }
+
         body {
             font-family: 'Noto Sans Bengali', system-ui, sans-serif;
             background-color: #000;
@@ -49,6 +54,7 @@
             padding-bottom: 70px;
             overflow-x: hidden;
         }
+
         header {
             background-color: #1a1f29;
             padding: 12px 16px;
@@ -61,6 +67,7 @@
             box-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
             border-bottom: 1px solid rgba(255, 255, 255, 0.06);
         }
+
         .header-left {
             display: flex;
             align-items: center;
@@ -68,6 +75,7 @@
             flex: 1;
             min-width: 0;
         }
+
         .menu-btn {
             font-size: 22px;
             cursor: pointer;
@@ -78,6 +86,7 @@
         .menu-btn:hover {
             color: #e50914;
         }
+
         .logo {
             font-size: 18px;
             font-weight: 700;
@@ -87,6 +96,8 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
+
+        /* ===== সাইডবার ===== */
         .sidebar {
             position: fixed;
             top: 0;
@@ -137,6 +148,7 @@
             text-align: center;
             font-size: 18px;
         }
+
         .sidebar .ghost-problem-btn {
             display: flex;
             align-items: center;
@@ -162,7 +174,7 @@
             font-size: 18px;
             color: #e50914;
         }
-        /* --- এপিকে ডাউনলোড বাটন --- */
+
         .sidebar .apk-download-btn {
             display: flex;
             align-items: center;
@@ -188,7 +200,7 @@
             font-size: 18px;
             color: #00c850;
         }
-        /* ---- ভয়েজ মোড টগল বাটন (সাইডবারে) ---- */
+
         .sidebar .voice-toggle-btn {
             display: flex;
             align-items: center;
@@ -227,13 +239,14 @@
             background: rgba(239, 68, 68, 0.2);
             color: #ef4444;
         }
-        /* ===== সাইডবারে অ্যাডাল্ট আইটেম — ডিফল্ট লুকানো ===== */
+
         #sidebar-adult-item {
             display: none !important;
         }
         #sidebar-adult-item.visible {
             display: flex !important;
         }
+
         .remote-selected-name {
             color: #22c55e !important;
             transition: color 0.15s ease;
@@ -253,17 +266,19 @@
         .suggested-item.remote-selected-suggested .suggested-name {
             color: #22c55e !important;
         }
-        /* টপবার বাটন ফোকাস স্টাইল */
+
         .topbar-btn-focused {
             color: #22c55e !important;
             transform: scale(1.15);
             text-shadow: 0 0 20px rgba(34, 197, 94, 0.4);
         }
+
         .container {
             padding: 8px 4px;
             max-width: 100%;
             margin: 0 auto;
         }
+
         .page-section {
             display: none;
             opacity: 0;
@@ -275,6 +290,7 @@
             opacity: 1;
             transform: scale(1) translateY(0);
         }
+
         .poster {
             transition: all 0.25s ease;
             will-change: transform;
@@ -304,6 +320,7 @@
         .poster:hover {
             transform: scale(1.05);
         }
+
         .scroll-row {
             scrollbar-width: none;
             overflow-x: auto;
@@ -316,7 +333,7 @@
         .scroll-row::-webkit-scrollbar {
             display: none;
         }
-        /* ---- লাইভ টিভি পোস্টার স্টাইল (ছোট বৃত্তাকৃতি) ---- */
+
         .poster.livetv-poster .poster-img-wrapper {
             width: 80%;
             aspect-ratio: 1/1;
@@ -358,7 +375,7 @@
             overflow: hidden;
             transition: color 0.15s ease;
         }
-        /* অন্যান্য পোস্টার (মুভি/অ্যাডাল্ট) এর জন্য আগের স্টাইল */
+
         .poster:not(.livetv-poster) .poster-img {
             aspect-ratio: 2 / 2.85;
             object-fit: cover;
@@ -383,12 +400,14 @@
             overflow: hidden;
             transition: color 0.15s ease;
         }
+
         .glass-header {
             background: rgba(0, 0, 0, 0.88);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
+
         #videoModal {
             display: none;
             position: fixed;
@@ -422,6 +441,7 @@
             text-overflow: ellipsis;
             color: #f1f5f9;
         }
+
         .video-container-box {
             width: 100%;
             aspect-ratio: 16 / 9;
@@ -432,6 +452,7 @@
             justify-content: center;
             flex-shrink: 0;
         }
+
         .video-js {
             width: 100% !important;
             height: 100% !important;
@@ -440,6 +461,7 @@
             background-color: #e50914 !important;
             border-color: #e50914 !important;
         }
+
         .suggested-section {
             width: 100%;
             background: #0b0f17;
@@ -467,7 +489,7 @@
             flex-shrink: 0;
             background: #1a1f2e;
         }
-        /* সাজেস্টেড গ্রিড – আগের মতো */
+
         .suggested-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -519,6 +541,7 @@
                 border-radius: 0 0 12px 12px;
             }
         }
+
         .suggested-item {
             cursor: pointer;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -560,6 +583,7 @@
             margin-left: 3px;
             font-size: 10px;
         }
+
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -600,6 +624,7 @@
         .nav-item.active i {
             transform: scale(1.15);
         }
+
         .backdrop {
             position: fixed;
             top: 0;
@@ -614,6 +639,7 @@
         .backdrop.active {
             display: block;
         }
+
         .slider-container {
             position: relative;
             width: 100%;
@@ -641,7 +667,7 @@
             opacity: 1;
             display: block;
         }
-        /* ===== নতুন নোটিফিকেশন স্টাইল - গ্লাস, চিকন, ডান দিক থেকে, একেবারে নিচে ===== */
+
         #toast-notice {
             position: fixed;
             bottom: 80px;
@@ -721,6 +747,7 @@
                 bottom: 70px;
             }
         }
+
         #customConfirmModal {
             display: none;
             position: fixed;
@@ -753,6 +780,7 @@
         #customConfirmModal.show .confirm-box {
             transform: scale(1);
         }
+
         #premiumAlertModal {
             display: none;
             position: fixed;
@@ -786,6 +814,7 @@
         #premiumAlertModal.show .premium-glass-box {
             transform: scale(1);
         }
+
         .sidebar-player-footer {
             background: rgba(10, 14, 23, 0.95);
             border-top: 1px solid rgba(255, 255, 255, 0.06);
@@ -823,6 +852,7 @@
             border-color: #e50914;
             box-shadow: 0 0 0 2px rgba(229, 9, 20, 0.2);
         }
+
         .modal-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -839,6 +869,7 @@
                 grid-template-columns: repeat(5, 1fr);
             }
         }
+
         .fav-heart-badge {
             position: absolute;
             bottom: 44px;
@@ -864,6 +895,7 @@
             letter-spacing: 0.5px;
             box-shadow: 0 2px 8px rgba(245, 158, 11, 0.4);
         }
+
         #loginModal .modal-card {
             background: #161d2b;
             border: 1px solid #2a3348;
@@ -883,6 +915,7 @@
             font-weight: 400;
             opacity: 0.8;
         }
+
         .suggested-scroll {
             max-height: 500px;
             overflow-y: auto;
@@ -899,6 +932,7 @@
         .suggested-scroll::-webkit-scrollbar-track {
             background: transparent;
         }
+
         #loginModal {
             display: none !important;
             position: fixed !important;
@@ -909,6 +943,7 @@
         #loginModal[style*="display: flex"] {
             display: flex !important;
         }
+
         .loading-spinner {
             display: flex;
             flex-direction: column;
@@ -936,6 +971,7 @@
                 transform: rotate(360deg);
             }
         }
+
         .modal-background-fix {
             background: #000 !important;
         }
@@ -948,6 +984,7 @@
         #modal .modal-grid {
             background: #000 !important;
         }
+
         .suggested-section {
             min-height: 350px;
         }
@@ -956,6 +993,7 @@
                 min-height: 450px;
             }
         }
+
         .scroll-row {
             display: flex;
             gap: 8px;
@@ -997,6 +1035,7 @@
                 gap: 4px !important;
             }
         }
+
         @media (max-width: 480px) {
             .modal-grid {
                 grid-template-columns: repeat(3, 1fr) !important;
@@ -1010,6 +1049,7 @@
                 flex: 0 0 100% !important;
             }
         }
+
         #content-search {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -1026,6 +1066,7 @@
                 flex: 0 0 100% !important;
             }
         }
+
         #content-favorite {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -1042,6 +1083,7 @@
                 flex: 0 0 100% !important;
             }
         }
+
         .reset-device-btn {
             background: rgba(229, 9, 20, 0.12);
             border: 1px solid rgba(229, 9, 20, 0.25);
@@ -1069,6 +1111,7 @@
         .reset-device-btn i {
             font-size: 10px;
         }
+
         .login-card-header {
             display: flex;
             align-items: center;
@@ -1093,6 +1136,7 @@
         .login-btn-wrapper .reset-device-btn {
             flex-shrink: 0;
         }
+
         #ghostProblemModal {
             display: none;
             position: fixed;
@@ -1250,6 +1294,7 @@
         .ghost-problem-box .success-msg i {
             font-size: 20px;
         }
+
         .sr-only {
             position: absolute;
             width: 1px;
@@ -1260,6 +1305,7 @@
             clip: rect(0, 0, 0, 0);
             border: 0;
         }
+
         /* ===== বড় স্ক্রিনে ভিডিও প্লেয়ার ফুলস্ক্রিন, সাজেস্টেড লুকানো ===== */
         @media (min-width: 768px) {
             #videoModal .suggested-section {
@@ -1303,6 +1349,7 @@
                 display: none !important;
             }
         }
+
         @media (max-width: 767px) {
             #videoModal .suggested-section {
                 display: block !important;
@@ -1325,7 +1372,8 @@
                 display: flex !important;
             }
         }
-        /* ================================================================ ফুলস্ক্রিনে হেডার ওভারলে – শুধু বড় স্ক্রিনে ================================================================ */
+
+        /* ===== ফুলস্ক্রিনে হেডার ওভারলে – শুধু বড় স্ক্রিনে ===== */
         @media (min-width: 768px) {
             body.ghost-fs-overlay-active #videoModal .glass-header {
                 position: fixed !important;
@@ -1432,6 +1480,7 @@
                 }
             }
         }
+
         .topbar-actions {
             display: flex;
             align-items: center;
@@ -1458,6 +1507,7 @@
         .topbar-actions .fullscreen-icon {
             font-size: 20px;
         }
+
         .play-toggle-btn {
             background: none;
             border: none;
@@ -1472,6 +1522,7 @@
         .play-toggle-btn:hover {
             color: #e50914;
         }
+
         #devtoolsAlert {
             display: none;
             position: fixed;
@@ -1549,7 +1600,8 @@
         .devtools-alert-box .alert-btn:active {
             transform: scale(0.96);
         }
-        /* ===== লাইভ টিভি পোস্টারের জন্য অতিরিক্ত স্টাইল (ছোট বৃত্তাকৃতি) ===== */
+
+        /* ===== লাইভ টিভি পোস্টারের জন্য অতিরিক্ত স্টাইল ===== */
         .poster.livetv-poster .poster-img-wrapper {
             width: 72%;
             aspect-ratio: 1/1;
@@ -1605,7 +1657,7 @@
             top: 6px;
             right: 6px;
         }
-        /* ===== সাজেস্টেড আইটেমে লাইভ টিভি পোস্টার স্টাইল (ছোট বৃত্তাকৃতি) ===== */
+
         .suggested-item.livetv-suggested .suggested-img-wrapper {
             width: 72%;
             aspect-ratio: 1/1;
@@ -1657,7 +1709,7 @@
         .suggested-item.livetv-suggested.remote-selected-suggested .suggested-name {
             color: #22c55e !important;
         }
-        /* ===== নতুন হেডলাইন স্টাইল ===== */
+
         .suggested-title .headline-text {
             color: #ff0000;
             font-weight: 800;
@@ -1669,7 +1721,6 @@
             text-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
             letter-spacing: 0.5px;
         }
-        /* বিভিন্ন এনিমেশন ইফেক্ট - এলোমেলোভাবে পরিবর্তন হবে */
         .suggested-title .headline-text.effect-glitch {
             animation: glitch 3s infinite;
             text-shadow: 2px 0 #ff0000, -2px 0 #00ff00;
@@ -1731,7 +1782,8 @@
             flex: 1;
             margin-left: 8px;
         }
-        /* ===== JW Player এর জন্য স্টাইল ===== */
+
+        /* ===== JW Player ===== */
         #jwplayer-container {
             width: 100% !important;
             height: 100% !important;
@@ -1755,7 +1807,7 @@
             object-fit: fill !important;
         }
 
-        /* ===== Paid Modal (glassmorphism) ===== */
+        /* ===== Paid Modal ===== */
         #paidModal {
             display: none;
             position: fixed;
@@ -1866,7 +1918,6 @@
             max-width: 360px;
             line-height: 1.6;
         }
-
         @media (max-width: 640px) {
             .paid-modal-box {
                 max-width: 100%;
@@ -1895,9 +1946,199 @@
                 min-height: 320px;
             }
         }
+
+        /* ============================================================
+                   FULLSCREEN STRETCH MODE — applies to ALL video players
+                   ============================================================ */
+
+        /* 1) Native HTML5 <video> in fullscreen */
+        video:fullscreen {
+            object-fit: fill !important;
+            width: 100% !important;
+            height: 100% !important;
+        }
+        video:-webkit-full-screen {
+            object-fit: fill !important;
+            width: 100% !important;
+            height: 100% !important;
+        }
+        video:-moz-full-screen {
+            object-fit: fill !important;
+            width: 100% !important;
+            height: 100% !important;
+        }
+        video:-ms-fullscreen {
+            object-fit: fill !important;
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        /* 2) Video.js tech element inside fullscreen */
+        .vjs-tech:fullscreen {
+            object-fit: fill !important;
+            width: 100% !important;
+            height: 100% !important;
+        }
+        .vjs-tech:-webkit-full-screen {
+            object-fit: fill !important;
+            width: 100% !important;
+            height: 100% !important;
+        }
+        .vjs-tech:-moz-full-screen {
+            object-fit: fill !important;
+            width: 100% !important;
+            height: 100% !important;
+        }
+        .vjs-tech:-ms-fullscreen {
+            object-fit: fill !important;
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        /* 3) JW Player video inside fullscreen */
+        .jw-media video:fullscreen {
+            object-fit: fill !important;
+            width: 100% !important;
+            height: 100% !important;
+        }
+        .jw-media video:-webkit-full-screen {
+            object-fit: fill !important;
+            width: 100% !important;
+            height: 100% !important;
+        }
+        .jw-media video:-moz-full-screen {
+            object-fit: fill !important;
+            width: 100% !important;
+            height: 100% !important;
+        }
+        .jw-media video:-ms-fullscreen {
+            object-fit: fill !important;
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        /* 4) Plyr video inside fullscreen */
+        .plyr__video-wrapper video:fullscreen {
+            object-fit: fill !important;
+            width: 100% !important;
+            height: 100% !important;
+        }
+        .plyr__video-wrapper video:-webkit-full-screen {
+            object-fit: fill !important;
+            width: 100% !important;
+            height: 100% !important;
+        }
+        .plyr__video-wrapper video:-moz-full-screen {
+            object-fit: fill !important;
+            width: 100% !important;
+            height: 100% !important;
+        }
+        .plyr__video-wrapper video:-ms-fullscreen {
+            object-fit: fill !important;
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        /* 5) Clappr video inside fullscreen */
+        .clappr-container video:fullscreen {
+            object-fit: fill !important;
+            width: 100% !important;
+            height: 100% !important;
+        }
+        .clappr-container video:-webkit-full-screen {
+            object-fit: fill !important;
+            width: 100% !important;
+            height: 100% !important;
+        }
+        .clappr-container video:-moz-full-screen {
+            object-fit: fill !important;
+            width: 100% !important;
+            height: 100% !important;
+        }
+        .clappr-container video:-ms-fullscreen {
+            object-fit: fill !important;
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        /* 6) Any video inside a fullscreen container (fallback) */
+        :fullscreen video {
+            object-fit: fill !important;
+            width: 100% !important;
+            height: 100% !important;
+        }
+        :-webkit-full-screen video {
+            object-fit: fill !important;
+            width: 100% !important;
+            height: 100% !important;
+        }
+        :-moz-full-screen video {
+            object-fit: fill !important;
+            width: 100% !important;
+            height: 100% !important;
+        }
+        :-ms-fullscreen video {
+            object-fit: fill !important;
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        /* 7) Fullscreen container itself — ensures no padding/letterbox */
+        :fullscreen {
+            width: 100% !important;
+            height: 100% !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+        :-webkit-full-screen {
+            width: 100% !important;
+            height: 100% !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+        :-moz-full-screen {
+            width: 100% !important;
+            height: 100% !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+        :-ms-fullscreen {
+            width: 100% !important;
+            height: 100% !important;
+            padding: 0 !important;
+            margin: 0 !important;
+        }
+
+        /* 8) Video.js fullscreen wrapper */
+        .video-js.vjs-fullscreen {
+            width: 100% !important;
+            height: 100% !important;
+        }
+        .video-js.vjs-fullscreen .vjs-tech {
+            object-fit: fill !important;
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        /* 9) Plyr fullscreen wrapper */
+        .plyr--fullscreen .plyr__video-wrapper video {
+            object-fit: fill !important;
+            width: 100% !important;
+            height: 100% !important;
+        }
+
+        /* 10) JW Player fullscreen wrapper */
+        .jwplayer.jw-flag-fullscreen .jw-media video {
+            object-fit: fill !important;
+            width: 100% !important;
+            height: 100% !important;
+        }
     </style>
 </head>
+
 <body>
+
+    <!-- ===== HEADER ===== -->
     <header>
         <div class="header-left">
             <div class="menu-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></div>
@@ -1909,9 +2150,11 @@
             </button>
         </div>
     </header>
+
+    <!-- ===== BACKDROP ===== -->
     <div class="backdrop" onclick="toggleSidebar()"></div>
 
-    <!-- ===== সাইডবার ===== -->
+    <!-- ===== SIDEBAR ===== -->
     <div class="sidebar" id="sidebar">
         <div class="sidebar-menu-items">
             <div class="px-4 pt-16 pb-4">
@@ -1923,7 +2166,7 @@
             <a href="#" onclick="changePage('home'); toggleSidebar();"><i class="fas fa-home"></i> হোম</a>
             <a href="#" onclick="changePage('movie'); toggleSidebar();"><i class="fas fa-film"></i> মুভি</a>
             <a href="#" onclick="changePage('livetv'); toggleSidebar();"><i class="fas fa-tv"></i> লাইভ টিভি</a>
-            <!-- ===== অ্যাডাল্ট সাইডবার আইটেম — ডিফল্ট লুকানো, লগইন + adult="on" থাকলেই দেখা যাবে ===== -->
+
             <div class="menu-item-box justify-between cursor-pointer" id="sidebar-adult-item">
                 <div class="flex items-center gap-[16px]" onclick="if(document.getElementById('adultVisibilityToggle').checked) { changePage('adult'); toggleSidebar(); } else { showToast('⚠️ আগে চেকবক্সে টিক দিন!'); }">
                     <i class="fas fa-exclamation-triangle text-amber-500"></i>
@@ -1931,18 +2174,16 @@
                 </div>
                 <input type="checkbox" id="adultVisibilityToggle" onchange="toggleAdultNavVisibility(this.checked)" class="w-5 h-5 accent-red-600 cursor-pointer">
             </div>
+
             <div class="ghost-problem-btn" onclick="openGhostProblemModal(); toggleSidebar();">
-                <i class="fas fa-ghost"></i>
-                <span>Ghost Problem Fix</span>
+                <i class="fas fa-ghost"></i> <span>Ghost Problem Fix</span>
             </div>
             <div class="voice-toggle-btn" onclick="toggleVoiceMode(); toggleSidebar();">
-                <i class="fas fa-volume-up"></i>
-                <span>ভয়েজ মোড</span>
+                <i class="fas fa-volume-up"></i> <span>ভয়েজ মোড</span>
                 <span class="toggle-status" id="voiceModeStatus">অন</span>
             </div>
             <a href="https://github.com/ghosttv620/GhostTv/releases/download/Ghost_Tv/Ghost_Tv.apk" target="_blank" class="apk-download-btn" onclick="toggleSidebar();">
-                <i class="fas fa-download"></i>
-                <span>Ghost Tv Apk</span>
+                <i class="fas fa-download"></i> <span>Ghost Tv Apk</span>
             </a>
         </div>
         <div class="sidebar-player-footer">
@@ -1976,14 +2217,18 @@
         </div>
     </div>
 
-    <!-- ===== কন্টেইনার ===== -->
+    <!-- ===== CONTAINER ===== -->
     <div class="container">
+
+        <!-- SEARCH -->
         <section id="search-section" class="page-section">
             <div class="pt-4 px-2 max-w-full mx-auto">
                 <h2 class="text-xl font-bold uppercase tracking-wider text-red-500 mb-4 px-1">সার্চ রেজাল্ট</h2>
                 <div id="content-search"></div>
             </div>
         </section>
+
+        <!-- HOME -->
         <section id="home" class="page-section active">
             <div class="px-2 max-w-full mx-auto">
                 <div class="slider-container" id="dynamic-slider">
@@ -2002,9 +2247,17 @@
                 </div>
             </div>
         </section>
+
+        <!-- MOVIE -->
         <section id="movie" class="page-section"><div class="pt-6 px-2 max-w-full mx-auto" id="content-movie"><div class="loading-spinner"><div class="spinner"></div><div class="loading-text">মুভি লোড হচ্ছে...</div></div></div></section>
+
+        <!-- LIVE TV -->
         <section id="livetv" class="page-section"><div class="pt-6 px-2 max-w-full mx-auto" id="content-livetv"><div class="loading-spinner"><div class="spinner"></div><div class="loading-text">লাইভ টিভি লোড হচ্ছে...</div></div></div></section>
+
+        <!-- ADULT -->
         <section id="adult" class="page-section"><div class="pt-6 px-2 max-w-full mx-auto" id="content-adult"><div class="loading-spinner"><div class="spinner"></div><div class="loading-text">অ্যাডাল্ট লোড হচ্ছে...</div></div></div></section>
+
+        <!-- FAVORITE -->
         <section id="favorite" class="page-section">
             <div class="pt-4 px-2 max-w-full mx-auto">
                 <div id="content-favorite"></div>
@@ -2012,7 +2265,7 @@
         </section>
     </div>
 
-    <!-- ===== Ghost Problem Fix মডাল ===== -->
+    <!-- ===== GHOST PROBLEM MODAL ===== -->
     <div id="ghostProblemModal">
         <div class="ghost-problem-box">
             <div class="modal-header">
@@ -2039,7 +2292,7 @@
         </div>
     </div>
 
-    <!-- ===== অন্যান্য মডাল ===== -->
+    <!-- ===== CUSTOM CONFIRM ===== -->
     <div id="customConfirmModal">
         <div class="confirm-box text-center">
             <div class="text-red-500 text-3xl mb-3">
@@ -2053,6 +2306,8 @@
             </div>
         </div>
     </div>
+
+    <!-- ===== PREMIUM ALERT ===== -->
     <div id="premiumAlertModal">
         <div class="premium-glass-box">
             <div class="text-yellow-500 text-4xl mb-3 flex justify-center">
@@ -2068,7 +2323,7 @@
         </div>
     </div>
 
-    <!-- ===== লগইন মডাল ===== -->
+    <!-- ===== LOGIN MODAL ===== -->
     <div id="loginModal" class="p-4" style="display:none !important;">
         <div class="modal-card">
             <button onclick="closeLoginModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl transition">✕</button>
@@ -2096,17 +2351,12 @@
                     </div>
                 </div>
             </div>
-
-            <!-- ===== নতুন গ্লাসমরফিজম বাটন + সোশ্যাল বাটন ===== -->
             <div class="border-t border-gray-800 pt-4 mt-4">
-                <!-- গ্লাসমরফিজম বাটন (Subscription লেখা সরানো) -->
                 <button onclick="openPaidModal()" class="w-full bg-white/10 backdrop-blur-xl border border-white/20 text-white font-bold py-3.5 px-6 rounded-xl transition shadow-lg shadow-red-600/20 active:scale-95 text-sm uppercase tracking-wider hover:bg-white/20 hover:border-red-500/50 flex items-center justify-center gap-3" style="background: rgba(255,255,255,0.07); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);">
                     <i class="fas fa-crown text-yellow-400 text-base"></i>
                     <span>প্রিমিয়াম পেতে সাবস্ক্রাইব করুন</span>
                     <i class="fas fa-arrow-right text-yellow-400/70 text-xs"></i>
                 </button>
-
-                <!-- সোশ্যাল বাটন গ্রিড (আগের মতোই) -->
                 <div class="grid grid-cols-3 gap-2 mt-4">
                     <a href="https://wa.me/qr/L3CV4ZSUM2MPH1" target="_blank" class="flex flex-col items-center justify-center p-2.5 bg-emerald-950/40 border border-emerald-800/60 rounded-xl hover:bg-emerald-900/40 transition group">
                         <i class="fab fa-whatsapp text-emerald-400 text-lg mb-1 group-hover:scale-110 transition"></i>
@@ -2122,11 +2372,10 @@
                     </a>
                 </div>
             </div>
-            <!-- ===== শেষ ===== -->
         </div>
     </div>
 
-    <!-- ===== Paid.html মডাল (গ্লাসমরফিজম) ===== -->
+    <!-- ===== PAID MODAL ===== -->
     <div id="paidModal">
         <div class="paid-modal-box">
             <div class="paid-modal-header">
@@ -2134,18 +2383,17 @@
                 <button class="close-paid-btn" onclick="closePaidModal()" aria-label="Close">✕</button>
             </div>
             <div class="paid-modal-body" id="paidModalBody">
-                <!-- ডিফল্ট লোডার -->
                 <div class="paid-fallback" id="paidFallback">
                     <i class="fas fa-spinner fa-spin"></i>
                     <h3>লোড হচ্ছে...</h3>
                     <p>দয়া করে অপেক্ষা করুন</p>
                 </div>
-                <!-- iframe এর মাধ্যমে Paid.html লোড হবে -->
                 <iframe id="paidIframe" src="Paid.html" style="display:none;" onerror="handlePaidIframeError()"></iframe>
             </div>
         </div>
     </div>
 
+    <!-- ===== MODAL (for "See All") ===== -->
     <div id="modal" class="hidden fixed inset-0 bg-black z-[2000] overflow-y-auto modal-background-fix">
         <div class="max-w-5xl mx-auto px-4 py-0">
             <div class="glass-header sticky top-0 z-10 py-3" style="background: rgba(0,0,0,0.95) !important;">
@@ -2158,7 +2406,7 @@
         </div>
     </div>
 
-    <!-- ===== ভিডিও মডাল ===== -->
+    <!-- ===== VIDEO MODAL ===== -->
     <div id="videoModal">
         <div class="glass-header">
             <button id="topBackBtn" onclick="closeVideoModal()" class="text-gray-400 hover:text-white text-lg font-medium flex items-center gap-1">
@@ -2190,7 +2438,7 @@
         </div>
     </div>
 
-    <!-- DevTools সতর্কতা পপআপ -->
+    <!-- ===== DEVTOOLS ALERT ===== -->
     <div id="devtoolsAlert">
         <div class="devtools-alert-box">
             <div class="alert-icon"><i class="fas fa-shield-alt"></i></div>
@@ -2203,12 +2451,13 @@
         </div>
     </div>
 
-    <!-- ===== নোটিফিকেশন এলিমেন্ট ===== -->
+    <!-- ===== TOAST ===== -->
     <div id="toast-notice">
         <span class="toast-icon"><i class="fas fa-bell"></i></span>
         <span class="toast-text" id="toastMessage"></span>
     </div>
 
+    <!-- ===== BOTTOM NAV ===== -->
     <nav class="bottom-nav">
         <button class="nav-item active" onclick="changePage('home')" id="btn-home"><i class="fas fa-home"></i><span>Home</span></button>
         <button class="nav-item" onclick="changePage('movie')" id="btn-movie"><i class="fas fa-film"></i><span>Movie</span></button>
@@ -2218,7 +2467,9 @@
     </nav>
 
     <script>
-        // ---- কনফিগারেশন ----
+        // ================================================================
+        // CONFIG
+        // ================================================================
         const MASTER_KEY = "$2a$10$HxsYIZoT7QPdPK.EtQZnG.e7AqIWHwpgQ/wsSSavXR3kTM6r.bsWG";
         const USER_BIN = "6a351a15da38895dfedcd033";
         const DISCORD_WEBHOOK = "https://discord.com/api/webhooks/1520076484738416700/u82UBIcHlqgXP4uBcJCEJexHgRna2UTspg_b3VXyhXDTcn8Wxaff4byvDO3zzCEq_iRS";
@@ -2228,7 +2479,9 @@
             adult: { url: "https://raw.githubusercontent.com/ghosttv620/Ghost-Adult/main/Ghost%20Adult.json", title: "18+ Adult" }
         };
 
-        // ---- গ্লোবাল স্টেট ----
+        // ================================================================
+        // STATE
+        // ================================================================
         let globalDataStore = {};
         let currentUserData = null;
         let myDeviceId = "";
@@ -2246,263 +2499,37 @@
         let isVideoFullscreen = false;
         let isVoiceEnabled = true;
         let effectInterval = null;
-
-        // ===== টপবার বাটন ফোকাস ট্র্যাকিং =====
         let topbarButtons = [];
         let topbarFocusIndex = -1;
-
-        function initTopbarButtons() {
-            topbarButtons = [
-                document.getElementById('topBackBtn'),
-                document.getElementById('playStopToggleBtn'),
-                document.getElementById('fullscreenBtn')
-            ].filter(btn => btn !== null);
-            topbarFocusIndex = -1;
-        }
-
-        function clearTopbarFocus() {
-            topbarButtons.forEach(btn => {
-                btn.classList.remove('topbar-btn-focused');
-            });
-            topbarFocusIndex = -1;
-        }
-
-        function focusTopbarButton(index) {
-            clearTopbarFocus();
-            if (topbarButtons.length === 0) return;
-            if (index < 0) index = topbarButtons.length - 1;
-            if (index >= topbarButtons.length) index = 0;
-            topbarFocusIndex = index;
-            const btn = topbarButtons[index];
-            if (btn) {
-                btn.classList.add('topbar-btn-focused');
-                const btnText = btn.id === 'topBackBtn' ? 'ব্যাক বাটন' : btn.id === 'playStopToggleBtn' ? 'স্টার্ট স্টপ বাটন' :
-                    'ফুলস্ক্রিন বাটন';
-                speakNotification(`ফোকাস: ${btnText}`);
-            }
-        }
-
-        function getRandomChannel() {
-            const currentPage = activePageGlobal;
-            let allMovies = [];
-            if (globalDataStore[currentPage]) {
-                globalDataStore[currentPage].forEach(cat => {
-                    if (cat && cat.movies) {
-                        const visibleMovies = cat.movies.filter(m => !m.hidden);
-                        allMovies = allMovies.concat(visibleMovies);
-                    }
-                });
-            }
-            const currentLink = currentPlayingMovie ? currentPlayingMovie.link : null;
-            const otherMovies = allMovies.filter(m => m.link !== currentLink);
-            if (otherMovies.length === 0) return null;
-            const randomIndex = Math.floor(Math.random() * otherMovies.length);
-            return otherMovies[randomIndex];
-        }
-
-        function changeToRandomChannel() {
-            if (activePageGlobal !== 'livetv') {
-                return;
-            }
-            const newMovie = getRandomChannel();
-            if (!newMovie) {
-                showToast('⚠️ অন্য কোনো চ্যানেল পাওয়া যায়নি!');
-                return;
-            }
-            showToast(`🔄 চ্যানেল পরিবর্তন: ${newMovie.name}`);
-            speakNotification(`Channel changed to ${newMovie.name}`);
-            handleMovieClick(newMovie);
-        }
-
-        // ===== ভিডিওতে ডাবল ক্লিক = ডান/বাম অনুযায়ী স্কিপ =====
+        let leftRightClickTimeout = null;
+        let lastLeftRightClickTime = 0;
+        let lastLeftRightClickTarget = null;
+        let alertShown = false;
+        let ghostAutoFSInitDone = false;
         let lastClickTimeVideo = 0;
         let clickTimerVideo = null;
         let lastClickXVideo = 0;
 
-        function handleVideoClickForSkip(e) {
-            if (activePageGlobal !== 'movie' && activePageGlobal !== 'adult') {
-                const now = Date.now();
-                const timeSinceLastClick = now - lastClickTimeVideo;
-                lastClickTimeVideo = now;
-                if (timeSinceLastClick < 400) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    changeToRandomChannel();
-                    return;
-                }
-                return;
+        // ================================================================
+        // HELPERS
+        // ================================================================
+        function getDeviceId() {
+            let id = localStorage.getItem('ghost_device_id');
+            if (!id) {
+                id = 'dv_' + Math.random().toString(36).substring(2, 15) + Date.now().toString(36);
+                localStorage.setItem('ghost_device_id', id);
             }
-            const now = Date.now();
-            const timeSinceLastClick = now - lastClickTimeVideo;
-            let clickX = 0;
-            if (e.clientX !== undefined) {
-                clickX = e.clientX;
-            } else if (e.touches && e.touches[0]) {
-                clickX = e.touches[0].clientX;
-            } else if (e.changedTouches && e.changedTouches[0]) {
-                clickX = e.changedTouches[0].clientX;
-            }
-            if (timeSinceLastClick < 400 && Math.abs(clickX - lastClickXVideo) < 50) {
-                e.preventDefault();
-                e.stopPropagation();
-                let rect = null;
-                if (e.target) {
-                    rect = e.target.getBoundingClientRect();
-                } else if (e.currentTarget) {
-                    rect = e.currentTarget.getBoundingClientRect();
-                }
-                if (!rect) {
-                    showToast('⚠️ ভিডিও অবস্থান পাওয়া যায়নি!');
-                    return;
-                }
-                const centerX = rect.left + rect.width / 2;
-                const isRight = clickX > centerX;
-                let player = vjsPlayer || plyrPlayer || jwPlayerInstance || clapprPlayerInstance;
-                if (!player) {
-                    showToast('⚠️ প্লেয়ার পাওয়া যায়নি!');
-                    return;
-                }
-                let currentTime = 0;
-                let duration = 0;
-                if (vjsPlayer) {
-                    currentTime = vjsPlayer.currentTime();
-                    duration = vjsPlayer.duration();
-                } else if (plyrPlayer) {
-                    currentTime = plyrPlayer.currentTime;
-                    duration = plyrPlayer.duration;
-                } else if (jwPlayerInstance) {
-                    currentTime = jwPlayerInstance.getPosition();
-                    duration = jwPlayerInstance.getDuration();
-                } else if (clapprPlayerInstance) {
-                    currentTime = clapprPlayerInstance.getCurrentTime();
-                    duration = clapprPlayerInstance.getDuration();
-                }
-                if (!duration || duration === 0 || isNaN(duration)) {
-                    showToast('⚠️ ভিডিওর সময় পাওয়া যায়নি!');
-                    return;
-                }
-                let newTime;
-                if (isRight) {
-                    newTime = currentTime + 10;
-                    if (newTime > duration) newTime = duration;
-                } else {
-                    newTime = currentTime - 10;
-                    if (newTime < 0) newTime = 0;
-                }
-                if (vjsPlayer) {
-                    vjsPlayer.currentTime(newTime);
-                } else if (plyrPlayer) {
-                    plyrPlayer.currentTime = newTime;
-                } else if (jwPlayerInstance) {
-                    jwPlayerInstance.seek(newTime);
-                } else if (clapprPlayerInstance) {
-                    clapprPlayerInstance.seek(newTime);
-                }
-                const direction = isRight ? '⏩ ফরোয়ার্ড' : '⏪ রিওয়াইন্ড';
-                showToast(`${direction} ১০ সেকেন্ড! (${Math.round(newTime)}/${Math.round(duration)})`);
-                speakNotification(isRight ? 'Forward 10 seconds' : 'Rewind 10 seconds');
-                if (clickTimerVideo) {
-                    clearTimeout(clickTimerVideo);
-                    clickTimerVideo = null;
-                }
-                return;
-            }
-            lastClickTimeVideo = now;
-            lastClickXVideo = clickX;
-            if (clickTimerVideo) {
-                clearTimeout(clickTimerVideo);
-                clickTimerVideo = null;
+            return id;
+        }
+        myDeviceId = getDeviceId();
+
+        function loadFavorites() {
+            const saved = localStorage.getItem('ghost_favorites');
+            if (saved) {
+                try { favoritesList = JSON.parse(saved); } catch (e) { favoritesList = []; }
             }
         }
-
-        // ===== ভিডিও এলিমেন্টে ক্লিক/ট্যাপ হ্যান্ডলার =====
-        function handleVideoClick(e) {
-            handleVideoClickForSkip(e);
-        }
-
-        // ===== ডানে/বামে ক্লিক/ট্যাপ হ্যান্ডলার (টপবার ফোকাস) - শুধু লাইভ টিভি পেজে =====
-        let leftRightClickTimeout = null;
-        let lastLeftRightClickTime = 0;
-        let lastLeftRightClickTarget = null;
-
-        function handleLeftRightClick(e) {
-            if (activePageGlobal !== 'livetv') {
-                return;
-            }
-            const target = e.target;
-            if (!target.closest('video') && !target.closest('.video-js') && !target.closest('.plyr') && !target.closest(
-                    '.jwplayer') && !target.closest('.clappr-container')) {
-                return;
-            }
-            const now = Date.now();
-            const timeSinceLastClick = now - lastLeftRightClickTime;
-            lastLeftRightClickTime = now;
-            if (timeSinceLastClick < 400 && lastLeftRightClickTarget === e.target) {
-                e.preventDefault();
-                e.stopPropagation();
-                changeToRandomChannel();
-                lastLeftRightClickTarget = null;
-                if (leftRightClickTimeout) {
-                    clearTimeout(leftRightClickTimeout);
-                    leftRightClickTimeout = null;
-                }
-                return;
-            }
-            const rect = e.target.getBoundingClientRect();
-            const clickX = e.clientX || (e.touches && e.touches[0] && e.touches[0].clientX);
-            if (clickX === undefined) return;
-            const centerX = rect.left + rect.width / 2;
-            const isRight = clickX > centerX;
-            if (isRight) {
-                focusTopbarButton(topbarFocusIndex + 1);
-            } else {
-                focusTopbarButton(topbarFocusIndex - 1);
-            }
-            lastLeftRightClickTarget = e.target;
-            if (leftRightClickTimeout) {
-                clearTimeout(leftRightClickTimeout);
-                leftRightClickTimeout = null;
-            }
-            leftRightClickTimeout = setTimeout(() => {
-                lastLeftRightClickTarget = null;
-                leftRightClickTimeout = null;
-            }, 400);
-            e.preventDefault();
-            e.stopPropagation();
-        }
-
-        // ===== ভিডিও এলিমেন্টে ইভেন্ট অ্যাটাচ =====
-        function attachVideoControls(videoElement) {
-            if (!videoElement) return;
-            if (videoElement._ghostControlsAttached) return;
-            videoElement._ghostControlsAttached = true;
-            videoElement.addEventListener('click', handleVideoClick);
-            videoElement.addEventListener('touchend', function(e) {
-                const touch = e.changedTouches[0];
-                if (!touch) return;
-                const fakeEvent = {
-                    target: e.target,
-                    clientX: touch.clientX,
-                    clientY: touch.clientY,
-                    preventDefault: () => e.preventDefault(),
-                    stopPropagation: () => e.stopPropagation()
-                };
-                handleVideoClick(fakeEvent);
-            }, { passive: false });
-            videoElement.addEventListener('click', handleLeftRightClick);
-            videoElement.addEventListener('touchend', function(e) {
-                const touch = e.changedTouches[0];
-                if (!touch) return;
-                const fakeEvent = {
-                    target: e.target,
-                    clientX: touch.clientX,
-                    clientY: touch.clientY,
-                    preventDefault: () => e.preventDefault(),
-                    stopPropagation: () => e.stopPropagation()
-                };
-                handleLeftRightClick(fakeEvent);
-            }, { passive: false });
-        }
+        loadFavorites();
 
         function showToast(message) {
             const toast = document.getElementById('toast-notice');
@@ -2524,28 +2551,44 @@
             }, 2000);
         }
 
-        function getDeviceId() {
-            let id = localStorage.getItem('ghost_device_id');
-            if (!id) {
-                id = 'dv_' + Math.random().toString(36).substring(2, 15) + Date.now().toString(36);
-                localStorage.setItem('ghost_device_id', id);
-            }
-            return id;
+        function speakMessage(message) {
+            if (!isVoiceEnabled) return;
+            if (!window.speechSynthesis) return;
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(message);
+            utterance.lang = 'en-US';
+            utterance.rate = 0.95;
+            utterance.pitch = 1;
+            utterance.volume = 1;
+            const voices = window.speechSynthesis.getVoices();
+            const preferred = voices.find(v => v.lang === 'en-US' && (v.name.includes('Google') || v.name.includes(
+                'Natural') || v.name.includes('Samantha')));
+            if (preferred) utterance.voice = preferred;
+            window.speechSynthesis.speak(utterance);
         }
-        myDeviceId = getDeviceId();
 
-        function loadFavorites() {
-            const saved = localStorage.getItem('ghost_favorites');
-            if (saved) {
-                try {
-                    favoritesList = JSON.parse(saved);
-                } catch (e) {
-                    favoritesList = [];
-                }
-            }
+        function speakNotification(message) {
+            if (!isVoiceEnabled) return;
+            speakMessage(message);
         }
-        loadFavorites();
 
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('active');
+            document.querySelector('.backdrop').classList.toggle('active');
+        }
+
+        function closeModal() { document.getElementById('modal').classList.add('hidden'); }
+
+        function openModal() {
+            const modal = document.getElementById('modal');
+            modal.classList.remove('hidden');
+            modal.style.background = '#000';
+            history.pushState({ modalOpen: true }, '');
+        }
+
+        // ================================================================
+        // PLAYER SETTINGS
+        // ================================================================
         function savePlayerSettings(page, playerType) {
             localStorage.setItem(`ghost_player_${page}`, playerType);
             showToast(` ${page.toUpperCase()} পেজের জন্য প্লেয়ার সেট করা হয়েছে!`);
@@ -2553,12 +2596,15 @@
 
         function loadPlayerSettings() {
             ['movie', 'livetv', 'adult'].forEach(page => {
-                const savedPlayer = localStorage.getItem(`ghost_player_${page}`) || 'videojs';
-                const selectEl = document.getElementById(`player-select-${page}`);
-                if (selectEl) selectEl.value = savedPlayer;
+                const saved = localStorage.getItem(`ghost_player_${page}`) || 'videojs';
+                const el = document.getElementById(`player-select-${page}`);
+                if (el) el.value = saved;
             });
         }
 
+        // ================================================================
+        // VOICE MODE
+        // ================================================================
         function toggleVoiceMode() {
             isVoiceEnabled = !isVoiceEnabled;
             const statusEl = document.getElementById('voiceModeStatus');
@@ -2576,11 +2622,7 @@
 
         function loadVoiceModeSettings() {
             const saved = localStorage.getItem('ghost_voice_enabled');
-            if (saved !== null) {
-                isVoiceEnabled = saved === 'true';
-            } else {
-                isVoiceEnabled = true;
-            }
+            isVoiceEnabled = (saved !== null) ? saved === 'true' : true;
             const statusEl = document.getElementById('voiceModeStatus');
             if (isVoiceEnabled) {
                 statusEl.textContent = 'অন';
@@ -2591,43 +2633,111 @@
             }
         }
 
-        function speakMessage(message) {
-            if (!isVoiceEnabled) return;
-            if (!window.speechSynthesis) return;
-            window.speechSynthesis.cancel();
-            const utterance = new SpeechSynthesisUtterance(message);
-            utterance.lang = 'en-US';
-            utterance.rate = 0.95;
-            utterance.pitch = 1;
-            utterance.volume = 1;
-            const voices = window.speechSynthesis.getVoices();
-            const preferredVoice = voices.find(voice => voice.lang === 'en-US' && (voice.name.includes('Google') || voice.name
-                .includes('Natural') || voice.name.includes('Samantha')));
-            if (preferredVoice) {
-                utterance.voice = preferredVoice;
-            }
-            window.speechSynthesis.speak(utterance);
-        }
-
         function playWelcomeVoice() {
             if (sessionStorage.getItem('ghost_welcome_played')) return;
             speakMessage("Welcome to Ghost Corporation. Developer by Ghost Nirob.");
             sessionStorage.setItem('ghost_welcome_played', 'true');
         }
 
-        function speakNotification(message) {
-            if (!isVoiceEnabled) return;
-            speakMessage(message);
+        // ================================================================
+        // FAVORITES
+        // ================================================================
+        function toggleFavorite(movie) {
+            if (!movie || !movie.link) return;
+            const idx = favoritesList.findIndex(f => f.link === movie.link);
+            if (idx > -1) {
+                favoritesList.splice(idx, 1);
+                showToast("💔 ফেবারেট থেকে রিমুভ করা হয়েছে!");
+                speakNotification("Removed from favorites");
+            } else {
+                favoritesList.push(movie);
+                showToast("❤️ ফেবারেটে যুক্ত করা হয়েছে!");
+                speakNotification("Added to favorites");
+            }
+            localStorage.setItem('ghost_favorites', JSON.stringify(favoritesList));
+            renderHomePage();
+            renderFullPageLagFree('movie');
+            renderFullPageLagFree('livetv');
+            renderFullPageLagFree('adult');
+            if (document.getElementById('favorite').classList.contains('active')) renderFavoritePage();
+            renderSuggestedVideos(currentSuggestedMovies);
         }
 
+        // ================================================================
+        // CREATE POSTER
+        // ================================================================
+        function createPoster(movie, isLiveTv = false) {
+            if (!movie) return document.createElement('div');
+            const div = document.createElement('div');
+            div.className = isLiveTv ? "poster livetv-poster" : "poster";
+            const premiumBadge = movie.premium ? `<span class="premium-badge">🜲 𝗩𝗜𝗣</span>` : '';
+            const isFav = favoritesList.some(f => f.link === movie.link);
+            const favHeart = isFav ? `<span class="fav-heart-badge"><i class="fas fa-heart"></i></span>` : '';
+
+            if (isLiveTv) {
+                div.innerHTML = `
+                    <div class="relative">${premiumBadge}${favHeart}
+                        <div class="poster-img-wrapper">
+                            <img src="${movie.logo || 'https://picsum.photos/400/400'}" class="poster-img" alt="${movie.name || ''}" loading="lazy">
+                        </div>
+                    </div>
+                    <p class="poster-name">${movie.name || ''}</p>
+                `;
+            } else {
+                div.innerHTML = `
+                    <div class="relative">${premiumBadge}${favHeart}
+                        <img src="${movie.logo || 'https://picsum.photos/400/220'}" class="poster-img" alt="${movie.name || ''}" loading="lazy">
+                    </div>
+                    <p class="poster-name">${movie.name || ''}</p>
+                `;
+            }
+
+            attachRemoteSelectionToPoster(div, movie);
+
+            let pressTimer;
+            let isLongPress = false;
+            const startPress = (e) => {
+                isLongPress = false;
+                if (pressTimer) clearTimeout(pressTimer);
+                pressTimer = setTimeout(() => {
+                    isLongPress = true;
+                    const isCurrentlyFav = favoritesList.some(f => f.link === movie.link);
+                    const promptMsg = isCurrentlyFav ? "আপনি কি ফেবারেট থেকে রিমুভ করতে চান?" :
+                        "আপনি কি ফেবারেট করতে চান?";
+                    showCustomConfirm(promptMsg).then(confirmed => {
+                        if (confirmed) toggleFavorite(movie);
+                    });
+                }, 700);
+            };
+            const endPress = () => { clearTimeout(pressTimer); };
+            div.addEventListener('mousedown', startPress);
+            div.addEventListener('touchstart', startPress, { passive: true });
+            div.addEventListener('mouseup', endPress);
+            div.addEventListener('mouseleave', endPress);
+            div.addEventListener('touchend', endPress);
+            div.addEventListener('click', (e) => {
+                if (isLongPress) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    isLongPress = false;
+                    return false;
+                }
+                focusRemoteOnPoster(div, movie);
+                handleMovieClick(movie);
+            });
+            return div;
+        }
+
+        // ================================================================
+        // REMOTE FOCUS
+        // ================================================================
         function clearRemoteFocus() {
             document.querySelectorAll(
-                    '.remote-selected-name, .remote-selected-nav, .remote-selected-sidebar, .remote-selected-suggested-name, .remote-selected-poster, .remote-selected-suggested'
-                    )
-                .forEach(el => {
-                    el.classList.remove('remote-selected-name', 'remote-selected-nav', 'remote-selected-sidebar',
-                        'remote-selected-suggested-name', 'remote-selected-poster', 'remote-selected-suggested');
-                });
+                '.remote-selected-name, .remote-selected-nav, .remote-selected-sidebar, .remote-selected-suggested-name, .remote-selected-poster, .remote-selected-suggested'
+            ).forEach(el => {
+                el.classList.remove('remote-selected-name', 'remote-selected-nav', 'remote-selected-sidebar',
+                    'remote-selected-suggested-name', 'remote-selected-poster', 'remote-selected-suggested');
+            });
             remoteFocusTarget = null;
         }
 
@@ -2678,99 +2788,9 @@
             });
         }
 
-        function toggleFavorite(movie) {
-            if (!movie || !movie.link) return;
-            const index = favoritesList.findIndex(f => f.link === movie.link);
-            if (index > -1) {
-                favoritesList.splice(index, 1);
-                showToast("💔 ফেবারেট থেকে রিমুভ করা হয়েছে!");
-                speakNotification("Removed from favorites");
-            } else {
-                favoritesList.push(movie);
-                showToast("❤️ ফেবারেটে যুক্ত করা হয়েছে!");
-                speakNotification("Added to favorites");
-            }
-            localStorage.setItem('ghost_favorites', JSON.stringify(favoritesList));
-            renderHomePage();
-            renderFullPageLagFree('movie');
-            renderFullPageLagFree('livetv');
-            renderFullPageLagFree('adult');
-            if (document.getElementById('favorite').classList.contains('active')) renderFavoritePage();
-            renderSuggestedVideos(currentSuggestedMovies);
-        }
-
-        function createPoster(movie, isLiveTv = false) {
-            if (!movie) return document.createElement('div');
-            const div = document.createElement('div');
-            if (isLiveTv) {
-                div.className = "poster livetv-poster";
-            } else {
-                div.className = "poster";
-            }
-            const premiumBadge = movie.premium ? `<span class="premium-badge">🜲 𝗩𝗜𝗣</span>` : '';
-            const isFav = favoritesList.some(f => f.link === movie.link);
-            const favHeart = isFav ? `<span class="fav-heart-badge"><i class="fas fa-heart"></i></span>` : '';
-            if (isLiveTv) {
-                div.innerHTML = `
-                <div class="relative">
-                  ${premiumBadge} ${favHeart}
-                  <div class="poster-img-wrapper">
-                    <img src="${movie.logo || 'https://picsum.photos/400/400'}" class="poster-img" alt="${movie.name || ''}" loading="lazy">
-                  </div>
-                </div>
-                <p class="poster-name">${movie.name || ''}</p>
-              `;
-            } else {
-                div.innerHTML = `
-                <div class="relative">
-                  ${premiumBadge} ${favHeart}
-                  <img src="${movie.logo || 'https://picsum.photos/400/220'}" class="poster-img" alt="${movie.name || ''}" loading="lazy">
-                </div>
-                <p class="poster-name">${movie.name || ''}</p>
-              `;
-            }
-            attachRemoteSelectionToPoster(div, movie);
-            let pressTimer;
-            let isLongPress = false;
-            const startPress = (e) => {
-                isLongPress = false;
-                if (pressTimer) clearTimeout(pressTimer);
-                pressTimer = setTimeout(() => {
-                    isLongPress = true;
-                    const isCurrentlyFav = favoritesList.some(f => f.link === movie.link);
-                    const promptMsg = isCurrentlyFav ? "আপনি কি ফেবারেট থেকে রিমুভ করতে চান?" :
-                        "আপনি কি ফেবারেট করতে চান?";
-                    showCustomConfirm(promptMsg).then(confirmed => {
-                        if (confirmed) toggleFavorite(movie);
-                    });
-                }, 700);
-            };
-            const endPress = (e) => {
-                clearTimeout(pressTimer);
-            };
-            div.addEventListener('mousedown', startPress);
-            div.addEventListener('touchstart', startPress, { passive: true });
-            div.addEventListener('mouseup', endPress);
-            div.addEventListener('mouseleave', endPress);
-            div.addEventListener('touchend', endPress);
-            div.addEventListener('click', (e) => {
-                if (isLongPress) {
-                    e.preventDefault();
-                    e.stopPropagation();
-                    isLongPress = false;
-                    return false;
-                }
-                focusRemoteOnPoster(div, movie);
-                handleMovieClick(movie);
-            });
-            return div;
-        }
-
         function attachRemoteFocusToNav() {
             document.querySelectorAll('.nav-item').forEach(btn => {
-                btn.addEventListener('click', function(e) {
-                    focusRemoteOnNav(this);
-                });
+                btn.addEventListener('click', function() { focusRemoteOnNav(this); });
                 btn.addEventListener('contextmenu', function(e) {
                     e.preventDefault();
                     focusRemoteOnNav(this);
@@ -2779,24 +2799,434 @@
             });
         }
 
-        async function handleMovieClick(movie) {
-            if (!movie) return;
-            if (movie.premium) {
-                if (!currentUserData) {
-                    showPremiumAlert(
-                        "⚠️ এই কন্টেন্টটি প্রিমিয়াম! দেখতে হলে প্রথমে ডানদিকের কোণায় ক্লিক করে লগইন করুন।"
-                        );
+        function attachRemoteFocusToSidebar() {
+            document.querySelectorAll(
+                '.sidebar a, .sidebar .menu-item-box, .sidebar .ghost-problem-btn, .sidebar .apk-download-btn, .sidebar .voice-toggle-btn'
+            ).forEach(item => {
+                item.addEventListener('click', function() { focusRemoteOnSidebar(this); });
+                item.addEventListener('contextmenu', function(e) {
+                    e.preventDefault();
+                    focusRemoteOnSidebar(this);
+                    return false;
+                });
+            });
+        }
+
+        // ================================================================
+        // TOPBAR FOCUS
+        // ================================================================
+        function initTopbarButtons() {
+            topbarButtons = [
+                document.getElementById('topBackBtn'),
+                document.getElementById('playStopToggleBtn'),
+                document.getElementById('fullscreenBtn')
+            ].filter(btn => btn !== null);
+            topbarFocusIndex = -1;
+        }
+
+        function clearTopbarFocus() {
+            topbarButtons.forEach(btn => btn.classList.remove('topbar-btn-focused'));
+            topbarFocusIndex = -1;
+        }
+
+        function focusTopbarButton(index) {
+            clearTopbarFocus();
+            if (topbarButtons.length === 0) return;
+            if (index < 0) index = topbarButtons.length - 1;
+            if (index >= topbarButtons.length) index = 0;
+            topbarFocusIndex = index;
+            const btn = topbarButtons[index];
+            if (btn) {
+                btn.classList.add('topbar-btn-focused');
+                const label = btn.id === 'topBackBtn' ? 'ব্যাক বাটন' :
+                    btn.id === 'playStopToggleBtn' ? 'স্টার্ট স্টপ বাটন' : 'ফুলস্ক্রিন বাটন';
+                speakNotification(`ফোকাস: ${label}`);
+            }
+        }
+
+        // ================================================================
+        // RANDOM CHANNEL (Live TV)
+        // ================================================================
+        function getRandomChannel() {
+            const currentPage = activePageGlobal;
+            let allMovies = [];
+            if (globalDataStore[currentPage]) {
+                globalDataStore[currentPage].forEach(cat => {
+                    if (cat && cat.movies) {
+                        const visible = cat.movies.filter(m => !m.hidden);
+                        allMovies = allMovies.concat(visible);
+                    }
+                });
+            }
+            const currentLink = currentPlayingMovie ? currentPlayingMovie.link : null;
+            const others = allMovies.filter(m => m.link !== currentLink);
+            if (others.length === 0) return null;
+            return others[Math.floor(Math.random() * others.length)];
+        }
+
+        function changeToRandomChannel() {
+            if (activePageGlobal !== 'livetv') return;
+            const newMovie = getRandomChannel();
+            if (!newMovie) {
+                showToast('⚠️ অন্য কোনো চ্যানেল পাওয়া যায়নি!');
+                return;
+            }
+            showToast(`🔄 চ্যানেল পরিবর্তন: ${newMovie.name}`);
+            speakNotification(`Channel changed to ${newMovie.name}`);
+            handleMovieClick(newMovie);
+        }
+
+        // ================================================================
+        // VIDEO CLICK / SKIP
+        // ================================================================
+        function handleVideoClickForSkip(e) {
+            if (activePageGlobal !== 'movie' && activePageGlobal !== 'adult') {
+                const now = Date.now();
+                const timeSinceLastClick = now - lastClickTimeVideo;
+                lastClickTimeVideo = now;
+                if (timeSinceLastClick < 400) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    changeToRandomChannel();
                     return;
                 }
-                const isValid = await verifyUser(currentUserData.username, currentUserData.password, true);
-                if (!isValid) {
-                    showPremiumAlert(
-                        "⚠️ সেশন শেষ বা ডিভাইস চেঞ্জ হয়েছে! অনুগ্রহ করে পুনরায় সঠিক আইডি পাসওয়ার্ড দিয়ে লগইন করুন।"
-                        );
-                    return;
+                return;
+            }
+
+            const now = Date.now();
+            const timeSinceLastClick = now - lastClickTimeVideo;
+            let clickX = 0;
+            if (e.clientX !== undefined) clickX = e.clientX;
+            else if (e.touches && e.touches[0]) clickX = e.touches[0].clientX;
+            else if (e.changedTouches && e.changedTouches[0]) clickX = e.changedTouches[0].clientX;
+
+            if (timeSinceLastClick < 400 && Math.abs(clickX - lastClickXVideo) < 50) {
+                e.preventDefault();
+                e.stopPropagation();
+                let rect = e.target ? e.target.getBoundingClientRect() : null;
+                if (!rect) { showToast('⚠️ ভিডিও অবস্থান পাওয়া যায়নি!'); return; }
+                const centerX = rect.left + rect.width / 2;
+                const isRight = clickX > centerX;
+                let player = vjsPlayer || plyrPlayer || jwPlayerInstance || clapprPlayerInstance;
+                if (!player) { showToast('⚠️ প্লেয়ার পাওয়া যায়নি!'); return; }
+                let currentTime = 0,
+                    duration = 0;
+                if (vjsPlayer) { currentTime = vjsPlayer.currentTime();
+                    duration = vjsPlayer.duration(); } else if (plyrPlayer) { currentTime = plyrPlayer.currentTime;
+                    duration = plyrPlayer.duration; } else if (jwPlayerInstance) { currentTime = jwPlayerInstance
+                        .getPosition();
+                    duration = jwPlayerInstance.getDuration(); } else if (clapprPlayerInstance) { currentTime =
+                        clapprPlayerInstance.getCurrentTime();
+                    duration = clapprPlayerInstance.getDuration(); }
+                if (!duration || duration === 0 || isNaN(duration)) { showToast('⚠️ ভিডিওর সময় পাওয়া যায়নি!'); return; }
+                let newTime = isRight ? Math.min(currentTime + 10, duration) : Math.max(currentTime - 10, 0);
+                if (vjsPlayer) vjsPlayer.currentTime(newTime);
+                else if (plyrPlayer) plyrPlayer.currentTime = newTime;
+                else if (jwPlayerInstance) jwPlayerInstance.seek(newTime);
+                else if (clapprPlayerInstance) clapprPlayerInstance.seek(newTime);
+                const dir = isRight ? '⏩ ফরোয়ার্ড' : '⏪ রিওয়াইন্ড';
+                showToast(`${dir} ১০ সেকেন্ড! (${Math.round(newTime)}/${Math.round(duration)})`);
+                speakNotification(isRight ? 'Forward 10 seconds' : 'Rewind 10 seconds');
+                if (clickTimerVideo) { clearTimeout(clickTimerVideo);
+                    clickTimerVideo = null; }
+                return;
+            }
+            lastClickTimeVideo = now;
+            lastClickXVideo = clickX;
+            if (clickTimerVideo) { clearTimeout(clickTimerVideo);
+                clickTimerVideo = null; }
+        }
+
+        function handleVideoClick(e) { handleVideoClickForSkip(e); }
+
+        function handleLeftRightClick(e) {
+            if (activePageGlobal !== 'livetv') return;
+            const target = e.target;
+            if (!target.closest('video') && !target.closest('.video-js') && !target.closest('.plyr') && !target.closest(
+                    '.jwplayer') && !target.closest('.clappr-container')) return;
+            const now = Date.now();
+            const timeSinceLastClick = now - lastLeftRightClickTime;
+            lastLeftRightClickTime = now;
+            if (timeSinceLastClick < 400 && lastLeftRightClickTarget === e.target) {
+                e.preventDefault();
+                e.stopPropagation();
+                changeToRandomChannel();
+                lastLeftRightClickTarget = null;
+                if (leftRightClickTimeout) { clearTimeout(leftRightClickTimeout);
+                    leftRightClickTimeout = null; }
+                return;
+            }
+            const rect = e.target.getBoundingClientRect();
+            const clickX = e.clientX || (e.touches && e.touches[0] && e.touches[0].clientX);
+            if (clickX === undefined) return;
+            const centerX = rect.left + rect.width / 2;
+            const isRight = clickX > centerX;
+            if (isRight) focusTopbarButton(topbarFocusIndex + 1);
+            else focusTopbarButton(topbarFocusIndex - 1);
+            lastLeftRightClickTarget = e.target;
+            if (leftRightClickTimeout) { clearTimeout(leftRightClickTimeout);
+                leftRightClickTimeout = null; }
+            leftRightClickTimeout = setTimeout(() => {
+                lastLeftRightClickTarget = null;
+                leftRightClickTimeout = null;
+            }, 400);
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        function attachVideoControls(videoElement) {
+            if (!videoElement || videoElement._ghostControlsAttached) return;
+            videoElement._ghostControlsAttached = true;
+            videoElement.addEventListener('click', handleVideoClick);
+            videoElement.addEventListener('touchend', function(e) {
+                const touch = e.changedTouches[0];
+                if (!touch) return;
+                const fake = { target: e.target, clientX: touch.clientX, clientY: touch.clientY,
+                    preventDefault: () => e.preventDefault(), stopPropagation: () => e.stopPropagation() };
+                handleVideoClick(fake);
+            }, { passive: false });
+            videoElement.addEventListener('click', handleLeftRightClick);
+            videoElement.addEventListener('touchend', function(e) {
+                const touch = e.changedTouches[0];
+                if (!touch) return;
+                const fake = { target: e.target, clientX: touch.clientX, clientY: touch.clientY,
+                    preventDefault: () => e.preventDefault(), stopPropagation: () => e.stopPropagation() };
+                handleLeftRightClick(fake);
+            }, { passive: false });
+        }
+
+        // ================================================================
+        // FULLSCREEN STRETCH — JAVASCRIPT FALLBACK
+        // ================================================================
+        function setupFullscreenStretchFallback() {
+            function applyStretchToFullscreenVideos() {
+                const fsEl = document.fullscreenElement ||
+                    document.webkitFullscreenElement ||
+                    document.mozFullScreenElement ||
+                    document.msFullscreenElement;
+
+                // Remove stretch from all videos first
+                document.querySelectorAll('video').forEach(v => {
+                    v.style.objectFit = '';
+                    v.style.width = '';
+                    v.style.height = '';
+                    v.style.display = '';
+                });
+                document.querySelectorAll('.vjs-tech').forEach(el => {
+                    el.style.objectFit = '';
+                });
+                document.querySelectorAll('.jw-media video').forEach(el => {
+                    el.style.objectFit = '';
+                });
+                document.querySelectorAll('.plyr__video-wrapper video').forEach(el => {
+                    el.style.objectFit = '';
+                });
+                document.querySelectorAll('.clappr-container video').forEach(el => {
+                    el.style.objectFit = '';
+                });
+
+                if (fsEl) {
+                    // Apply stretch to every video inside the fullscreen element
+                    const videos = fsEl.querySelectorAll('video');
+                    videos.forEach(v => {
+                        v.style.objectFit = 'fill';
+                        v.style.width = '100%';
+                        v.style.height = '100%';
+                        v.style.display = 'block';
+                    });
+                    // Video.js
+                    fsEl.querySelectorAll('.vjs-tech').forEach(el => {
+                        el.style.objectFit = 'fill';
+                        el.style.width = '100%';
+                        el.style.height = '100%';
+                    });
+                    // JW Player
+                    fsEl.querySelectorAll('.jw-media video').forEach(el => {
+                        el.style.objectFit = 'fill';
+                        el.style.width = '100%';
+                        el.style.height = '100%';
+                    });
+                    // Plyr
+                    fsEl.querySelectorAll('.plyr__video-wrapper video').forEach(el => {
+                        el.style.objectFit = 'fill';
+                        el.style.width = '100%';
+                        el.style.height = '100%';
+                    });
+                    // Clappr
+                    fsEl.querySelectorAll('.clappr-container video').forEach(el => {
+                        el.style.objectFit = 'fill';
+                        el.style.width = '100%';
+                        el.style.height = '100%';
+                    });
+                    // Ensure container fills screen
+                    fsEl.style.width = '100%';
+                    fsEl.style.height = '100%';
+                    fsEl.style.padding = '0';
+                    fsEl.style.margin = '0';
                 }
             }
-            openVideoModal(movie);
+
+            // Listen to all fullscreen change events
+            ['fullscreenchange', 'webkitfullscreenchange', 'mozfullscreenchange', 'MSFullscreenChange'].forEach(evt => {
+                document.addEventListener(evt, applyStretchToFullscreenVideos);
+            });
+
+            // Also run once after a short delay to catch any initial fullscreen
+            setTimeout(applyStretchToFullscreenVideos, 300);
+
+            // Extra safety: run periodically while fullscreen is active
+            setInterval(() => {
+                const fsEl = document.fullscreenElement ||
+                    document.webkitFullscreenElement ||
+                    document.mozFullScreenElement ||
+                    document.msFullscreenElement;
+                if (fsEl) {
+                    applyStretchToFullscreenVideos();
+                }
+            }, 2000);
+        }
+
+        // ================================================================
+        // FULLSCREEN OVERLAY STATE
+        // ================================================================
+        function updateFullscreenOverlayState() {
+            if (window.innerWidth < 768) {
+                document.body.classList.remove('ghost-fs-overlay-active');
+                return;
+            }
+            const videoModal = document.getElementById('videoModal');
+            const isVisible = videoModal && videoModal.style.display === 'flex';
+            const isFS = !!(document.fullscreenElement || document.webkitFullscreenElement ||
+                document.mozFullScreenElement || document.msFullscreenElement);
+            if (isFS && isVisible) {
+                document.body.classList.add('ghost-fs-overlay-active');
+            } else {
+                document.body.classList.remove('ghost-fs-overlay-active');
+            }
+        }
+
+        // ================================================================
+        // FULLSCREEN ON PLAY (auto fullscreen)
+        // ================================================================
+        function attachFullscreenOnPlay(videoElement) {
+            if (!videoElement) return;
+            if (videoElement._ghostFSAttached) return;
+            videoElement._ghostFSAttached = true;
+
+            let userInteractionHandler = null;
+            let fsAttempted = false;
+
+            function requestFS(el) {
+                if (!el) return;
+                if (document.fullscreenElement || document.webkitFullscreenElement ||
+                    document.mozFullScreenElement || document.msFullscreenElement) return;
+                try {
+                    const req = el.requestFullscreen || el.webkitRequestFullscreen ||
+                        el.mozRequestFullScreen || el.msRequestFullscreen;
+                    if (req) {
+                        req.call(el).catch(() => {
+                            if (!userInteractionHandler && !fsAttempted) {
+                                fsAttempted = true;
+                                userInteractionHandler = function() {
+                                    if (window.innerWidth < 768) return;
+                                    if (!document.fullscreenElement && !document
+                                        .webkitFullscreenElement) {
+                                        const req2 = el.requestFullscreen || el
+                                            .webkitRequestFullscreen ||
+                                            el.mozRequestFullScreen || el.msRequestFullscreen;
+                                        if (req2) { req2.call(el).catch(() => {}); }
+                                    }
+                                    document.removeEventListener('click', userInteractionHandler);
+                                    document.removeEventListener('touchstart', userInteractionHandler);
+                                    document.removeEventListener('keydown', userInteractionHandler);
+                                    userInteractionHandler = null;
+                                    fsAttempted = false;
+                                };
+                                document.addEventListener('click', userInteractionHandler, { once: true });
+                                document.addEventListener('touchstart', userInteractionHandler, { once: true });
+                                document.addEventListener('keydown', userInteractionHandler, { once: true });
+                            }
+                        });
+                    }
+                } catch (e) {}
+            }
+
+            videoElement.addEventListener('play', function onPlay() {
+                if (window.innerWidth < 768) return;
+                if (document.fullscreenElement || document.webkitFullscreenElement ||
+                    document.mozFullScreenElement || document.msFullscreenElement) return;
+                // Don't auto-request here — let the user click the fullscreen button
+            }, { passive: true });
+
+            videoElement.addEventListener('fullscreenchange', updateFullscreenOverlayState);
+            videoElement.addEventListener('webkitfullscreenchange', updateFullscreenOverlayState);
+            videoElement.addEventListener('mozfullscreenchange', updateFullscreenOverlayState);
+            videoElement.addEventListener('MSFullscreenChange', updateFullscreenOverlayState);
+        }
+
+        function initGhostAutoFullscreen() {
+            if (ghostAutoFSInitDone) return;
+            ghostAutoFSInitDone = true;
+
+            const observer = new MutationObserver(function(mutations) {
+                if (window.innerWidth < 768) return;
+                for (const mutation of mutations) {
+                    for (const node of mutation.addedNodes) {
+                        if (node.nodeType === 1) {
+                            if (node.nodeName === 'VIDEO') attachFullscreenOnPlay(node);
+                            if (node.querySelector) {
+                                node.querySelectorAll('video').forEach(attachFullscreenOnPlay);
+                                node.querySelectorAll(
+                                    '.video-js, #myPlyrPlayer, #jwplayer-container, #myClapprPlayer'
+                                ).forEach(function(container) {
+                                    const v = container.querySelector('video');
+                                    if (v) attachFullscreenOnPlay(v);
+                                });
+                            }
+                        }
+                    }
+                }
+            });
+            observer.observe(document.body, { childList: true, subtree: true });
+
+            document.querySelectorAll('video').forEach(attachFullscreenOnPlay);
+            setInterval(function() {
+                if (window.innerWidth < 768) return;
+                document.querySelectorAll('video').forEach(function(v) {
+                    if (!v._ghostFSAttached) attachFullscreenOnPlay(v);
+                });
+            }, 3000);
+        }
+
+        // ================================================================
+        // VIDEO MODAL
+        // ================================================================
+        function destroyAllPlayers() {
+            if (vjsPlayer) { try { vjsPlayer.dispose(); } catch (e) {} vjsPlayer = null; }
+            if (plyrPlayer) { try { plyrPlayer.destroy(); } catch (e) {} plyrPlayer = null; }
+            if (jwPlayerInstance) { try { jwPlayerInstance.remove(); } catch (e) {} jwPlayerInstance = null; }
+            if (clapprPlayerInstance) { try { clapprPlayerInstance.destroy(); } catch (e) {} clapprPlayerInstance =
+                null; }
+        }
+
+        function changeHeadlineEffect() {
+            const headline = document.getElementById('headlineText');
+            if (!headline) return;
+            const effects = ['', 'effect-glitch', 'effect-flicker', 'effect-neon'];
+            const current = effects.find(e => headline.classList.contains(e));
+            let next = '';
+            do {
+                const rand = Math.floor(Math.random() * effects.length);
+                next = effects[rand];
+            } while (next === current && effects.length > 1);
+            effects.forEach(e => headline.classList.remove(e));
+            if (next) headline.classList.add(next);
+        }
+
+        function startHeadlineEffectRotation() {
+            if (effectInterval) clearInterval(effectInterval);
+            effectInterval = setInterval(changeHeadlineEffect, 5000);
+            setTimeout(changeHeadlineEffect, 100);
         }
 
         function renderSuggestedVideos(movies) {
@@ -2804,19 +3234,18 @@
             if (!grid) return;
             grid.innerHTML = '';
             if (!movies || movies.length === 0) {
-                grid.innerHTML = `<div class="col-span-full text-gray-400 text-center py-6 text-sm">কোন সাজেস্টেড ভিডিও নেই</div>`;
+                grid.innerHTML =
+                    `<div class="col-span-full text-gray-400 text-center py-6 text-sm">কোন সাজেস্টেড ভিডিও নেই</div>`;
                 return;
             }
             const unique = [];
             const seen = new Set();
             movies.forEach(m => {
-                if (m && m.link && !seen.has(m.link)) {
-                    seen.add(m.link);
-                    unique.push(m);
-                }
+                if (m && m.link && !seen.has(m.link)) { seen.add(m.link);
+                    unique.push(m); }
             });
-            const visibleMovies = unique.filter(m => !m.hidden);
-            const toShow = visibleMovies.slice(0, 12);
+            const visible = unique.filter(m => !m.hidden);
+            const toShow = visible.slice(0, 12);
             let suggestedPage = 'movie';
             if (activePageGlobal === 'livetv' || activePageGlobal === 'home') {
                 const isLiveTv = toShow.some(m => {
@@ -2830,28 +3259,27 @@
                 suggestedPage = isLiveTv ? 'livetv' : 'movie';
             }
             const isLiveTvSuggested = (suggestedPage === 'livetv');
+
             toShow.forEach(movie => {
                 const item = document.createElement('div');
-                if (isLiveTvSuggested) {
-                    item.className = 'suggested-item livetv-suggested';
-                } else {
-                    item.className = 'suggested-item';
-                }
+                item.className = isLiveTvSuggested ? 'suggested-item livetv-suggested' : 'suggested-item';
                 const isFav = favoritesList.some(f => f.link === movie.link);
                 const favIcon = isFav ? `<i class="fas fa-heart text-red-500 text-[11px] ml-1"></i>` : '';
+
                 if (isLiveTvSuggested) {
                     item.innerHTML = `
-                  <div class="suggested-img-wrapper">
-                    <img src="${movie.logo || 'https://picsum.photos/400/400'}" class="suggested-img" alt="${movie.name || ''}" loading="lazy">
-                  </div>
-                  <div class="suggested-name">${movie.name || ''} ${favIcon}</div>
-                `;
+                        <div class="suggested-img-wrapper">
+                            <img src="${movie.logo || 'https://picsum.photos/400/400'}" class="suggested-img" alt="${movie.name || ''}" loading="lazy">
+                        </div>
+                        <div class="suggested-name">${movie.name || ''} ${favIcon}</div>
+                    `;
                 } else {
                     item.innerHTML = `
-                  <img src="${movie.logo || 'https://picsum.photos/400/220'}" alt="${movie.name || ''}" loading="lazy">
-                  <div class="suggested-name">${movie.name || ''} ${favIcon}</div>
-                `;
+                        <img src="${movie.logo || 'https://picsum.photos/400/220'}" alt="${movie.name || ''}" loading="lazy">
+                        <div class="suggested-name">${movie.name || ''} ${favIcon}</div>
+                    `;
                 }
+
                 item.addEventListener('click', function(e) {
                     focusRemoteOnSuggested(this, movie);
                     handleMovieClick(movie);
@@ -2865,251 +3293,355 @@
             });
         }
 
-        function toggleSidebar() {
-            document.getElementById('sidebar').classList.toggle('active');
-            document.querySelector('.backdrop').classList.toggle('active');
-        }
-
-        function changePage(pageId) {
-            activePageGlobal = pageId;
-            const sections = document.querySelectorAll('.page-section');
-            sections.forEach(section => section.classList.remove('active'));
-            setTimeout(() => {
-                document.getElementById(pageId)?.classList.add('active');
-            }, 50);
-            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
-            const navBtn = document.getElementById(`btn-${pageId}`);
-            if (navBtn) navBtn.classList.add('active');
-            const titleMap = {
-                home: 'Ghost Tv',
-                movie: 'Movie',
-                livetv: 'Live TV',
-                adult: '18+ Adult',
-                favorite: 'Favorite',
-                'search-section': 'Search'
-            };
-            document.getElementById('header-title').innerText = titleMap[pageId] || 'ɢʜᴏꜱᴛ_ᴛᴠ';
-            if (pageId === 'favorite') renderFavoritePage();
-            clearRemoteFocus();
-        }
-
-        function renderHomePage() {
-            const homeContainer = document.getElementById('content-home');
-            if (!homeContainer) return;
-            const loader = document.getElementById('homeLoader');
-            if (loader) loader.style.display = 'none';
-            homeContainer.innerHTML = '';
-            let typesToRender = ['movie', 'livetv'];
-            const isAdultVisible = localStorage.getItem('ghost_adult_visible') === 'true';
-            if (isAdultVisible) typesToRender.push('adult');
-            typesToRender.forEach(type => {
-                const categories = globalDataStore[type];
-                if (!categories || categories.length === 0) return;
-                let rowMovies = [];
-                for (let i = 0; i < categories.length; i++) {
-                    if (categories[i] && categories[i].movies) {
-                        const visibleMovies = categories[i].movies.filter(m => !m.hidden);
-                        rowMovies = rowMovies.concat([...visibleMovies]);
-                    }
+        async function handleMovieClick(movie) {
+            if (!movie) return;
+            if (movie.premium) {
+                if (!currentUserData) {
+                    showPremiumAlert(
+                        "⚠️ এই কন্টেন্টটি প্রিমিয়াম! দেখতে হলে প্রথমে ডানদিকের কোণায় ক্লিক করে লগইন করুন।");
+                    return;
                 }
-                if (rowMovies.length === 0) return;
-                const section = document.createElement('div');
-                section.className = "mb-10";
-                section.innerHTML = `
-                <div class="flex justify-between items-center mb-3 px-1">
-                  <h2 class="text-xl font-bold uppercase tracking-wider text-red-500">${KEYS[type].title}</h2>
-                  <button onclick="changePage('${type}')" class="text-gray-400 hover:text-white text-xs font-bold border border-gray-700 px-3 py-1 rounded-full flex items-center gap-1 transition hover:border-red-500">
-                    SEE ALL <i class="fas fa-arrow-right text-[10px]"></i>
-                  </button>
-                </div>
-                <div id="home-row-${type}" class="scroll-row"></div>
-              `;
-                homeContainer.appendChild(section);
-                const rowDiv = document.getElementById(`home-row-${type}`);
-                if (rowDiv) {
-                    const isLiveTv = (type === 'livetv');
-                    rowMovies.slice(0, 15).forEach(movie => {
-                        if (movie) rowDiv.appendChild(createPoster(movie, isLiveTv));
+                const isValid = await verifyUser(currentUserData.username, currentUserData.password, true);
+                if (!isValid) {
+                    showPremiumAlert(
+                        "⚠️ সেশন শেষ বা ডিভাইস চেঞ্জ হয়েছে! অনুগ্রহ করে পুনরায় সঠিক আইডি পাসওয়ার্ড দিয়ে লগইন করুন।"
+                        );
+                    return;
+                }
+            }
+            openVideoModal(movie);
+        }
+
+        function openVideoModal(movie) {
+            if (!movie || !movie.link) return;
+            currentPlayingMovie = movie;
+            destroyAllPlayers();
+            initTopbarButtons();
+            clearTopbarFocus();
+
+            const videoModal = document.getElementById('videoModal');
+            document.getElementById('videoTitle').textContent = movie.name || '';
+            const thumb = document.getElementById('currentVideoThumb');
+            thumb.src = movie.logo || 'https://picsum.photos/100/100';
+            thumb.alt = movie.name || 'বর্তমান ভিডিওর পোস্টার';
+            videoModal.style.display = 'flex';
+
+            const mountPoint = document.getElementById('player-mount-point');
+            mountPoint.innerHTML = '';
+
+            let pageContext = activePageGlobal;
+            if (pageContext === 'home' || pageContext === 'favorite' || pageContext === 'search-section') {
+                pageContext = 'movie';
+            }
+            const selectedPlayer = localStorage.getItem(`ghost_player_${pageContext}`) || 'videojs';
+            const isM3u8 = movie.link.includes(".m3u8");
+            const lastSavedVolume = localStorage.getItem('ghost_global_volume');
+            const initialVolume = lastSavedVolume !== null ? parseFloat(lastSavedVolume) : 1.0;
+            const isMutedByDefault = initialVolume === 0;
+
+            document.getElementById('playStopToggleBtn').innerHTML = '<i class="fas fa-pause"></i>';
+
+            if (selectedPlayer === 'videojs') {
+                const videoEl = document.createElement('video');
+                videoEl.id = 'myVideoPlayer';
+                videoEl.className = 'video-js vjs-default-skin vjs-big-play-centered vjs-theme-ghost w-full h-full';
+                videoEl.setAttribute('controls', 'true');
+                videoEl.setAttribute('preload', 'auto');
+                mountPoint.appendChild(videoEl);
+
+                const videoType = isM3u8 ? "application/x-mpegURL" : "video/mp4";
+                vjsPlayer = videojs('myVideoPlayer', { autoplay: true, controls: true, liveui: true });
+                vjsPlayer.src({ src: movie.link, type: videoType });
+                vjsPlayer.ready(function() {
+                    vjsPlayer.volume(initialVolume);
+                    vjsPlayer.muted(isMutedByDefault);
+                    vjsPlayer.on('volumechange', function() {
+                        const vol = vjsPlayer.muted() ? 0 : vjsPlayer.volume();
+                        localStorage.setItem('ghost_global_volume', vol);
                     });
-                }
-            });
-        }
-
-        function renderFullPageLagFree(type) {
-            const container = document.getElementById(`content-${type}`);
-            const categories = globalDataStore[type];
-            if (!container) return;
-            container.innerHTML = '';
-            if (!categories || categories.length === 0) {
-                container.innerHTML = `<div class="text-gray-500 text-center py-12 text-sm">কোন কন্টেন্ট নেই</div>`;
-                return;
-            }
-            const isLiveTv = (type === 'livetv');
-            categories.forEach((category, catIndex) => {
-                if (!category) return;
-                const visibleMovies = (category.movies || []).filter(m => !m.hidden);
-                if (visibleMovies.length === 0) return;
-                const section = document.createElement('div');
-                section.className = "mb-10";
-                section.innerHTML = `
-                <div class="flex justify-between items-center mb-3 px-1">
-                  <h2 class="text-xl font-bold">${category.name || ''}</h2>
-                  <button onclick="showAll('${type}', ${catIndex})" class="text-red-500 font-medium text-sm transition hover:text-red-400">See All</button>
-                </div>
-                <div id="row-${type}-${catIndex}" class="scroll-row"></div>
-              `;
-                container.appendChild(section);
-                const row = document.getElementById(`row-${type}-${catIndex}`);
-                if (row && visibleMovies.length > 0) {
-                    let chunkIndex = 0;
-
-                    function renderChunk() {
-                        const batchSize = 100;
-                        for (let i = 0; i < batchSize; i++) {
-                            if (chunkIndex >= visibleMovies.length) return;
-                            const movie = visibleMovies[chunkIndex];
-                            if (movie) row.appendChild(createPoster(movie, isLiveTv));
-                            chunkIndex++;
-                        }
-                        if (chunkIndex < visibleMovies.length) setTimeout(renderChunk, 2);
-                    }
-                    renderChunk();
-                }
-            });
-        }
-
-        function renderFavoritePage() {
-            const container = document.getElementById('content-favorite');
-            if (!container) return;
-            container.innerHTML = '';
-            const visibleFavorites = favoritesList.filter(m => !m.hidden);
-            if (visibleFavorites.length === 0) {
-                container.innerHTML =
-                    `<div class="text-gray-500 text-center col-span-full py-20 text-sm"><i class="fas fa-heart-broken block text-3xl mb-2 text-gray-700"></i>ফেবারেট লিস্ট ফাঁকা</div>`;
-                return;
-            }
-            visibleFavorites.forEach(movie => {
-                if (movie) container.appendChild(createPoster(movie, false));
-            });
-        }
-
-        function showAll(type, catIndex) {
-            const cat = globalDataStore[type]?.[catIndex];
-            if (cat) {
-                document.getElementById('modalTitle').textContent = cat.name || '';
-                const contentDiv = document.getElementById('modalContent');
-                if (contentDiv) {
-                    contentDiv.innerHTML = '';
-                    const modalMovies = (cat.movies || []).filter(m => !m.hidden);
-                    let mIdx = 0;
-                    const isLiveTv = (type === 'livetv');
-
-                    function streamModalData() {
-                        let batch = 100;
-                        for (let i = 0; i < batch; i++) {
-                            if (mIdx >= modalMovies.length) return;
-                            contentDiv.appendChild(createPoster(modalMovies[mIdx], isLiveTv));
-                            mIdx++;
-                        }
-                        if (mIdx < modalMovies.length) setTimeout(streamModalData, 2);
-                    }
-                    openModal();
-                    streamModalData();
-                }
-            }
-        }
-
-        function openModal() {
-            const modal = document.getElementById('modal');
-            modal.classList.remove('hidden');
-            modal.style.background = '#000';
-            history.pushState({ modalOpen: true }, '');
-        }
-
-        function closeModal() {
-            document.getElementById('modal').classList.add('hidden');
-        }
-
-        function handleSearch(query) {
-            const txt = query.trim().toLowerCase();
-            const searchContainer = document.getElementById('content-search');
-            if (!txt) {
-                changePage('home');
-                if (searchContainer) searchContainer.innerHTML = '';
-                return;
-            }
-            changePage('search-section');
-            if (!searchContainer) return;
-            searchContainer.innerHTML = '';
-            let foundItems = [];
-            ['movie', 'livetv', 'adult'].forEach(type => {
-                if (globalDataStore[type]) {
-                    globalDataStore[type].forEach(cat => {
-                        if (cat && cat.movies) {
-                            cat.movies.forEach(movie => {
-                                if (movie && !movie.hidden && movie.name && movie.name.toLowerCase()
-                                    .includes(txt)) {
-                                    if (!foundItems.some(item => item.link === movie.link)) {
-                                        foundItems.push(movie);
-                                    }
-                                }
-                            });
-                        }
+                    vjsPlayer.on('play', function() {
+                        document.getElementById('playStopToggleBtn').innerHTML = '<i class="fas fa-pause"></i>';
                     });
-                }
-            });
-            if (foundItems.length === 0) {
-                searchContainer.innerHTML =
-                    `<div class="text-gray-500 text-center col-span-full py-20 text-sm"><i class="fas fa-search-minus block text-3xl mb-2 text-gray-700"></i>কোনো কিছু খুঁজে পাওয়া যায়নি!</div>`;
-            } else {
-                let sIdx = 0;
+                    vjsPlayer.on('pause', function() {
+                        document.getElementById('playStopToggleBtn').innerHTML = '<i class="fas fa-play"></i>';
+                    });
+                    const videoEl2 = vjsPlayer.el().querySelector('video');
+                    if (videoEl2) attachVideoControls(videoEl2);
+                    vjsPlayer.play();
+                    if (window.innerWidth >= 768) attachFullscreenOnPlay(vjsPlayer.el());
+                });
+            } else if (selectedPlayer === 'plyr') {
+                const videoEl = document.createElement('video');
+                videoEl.id = 'myPlyrPlayer';
+                videoEl.className = 'w-full h-full';
+                videoEl.setAttribute('controls', 'true');
+                videoEl.setAttribute('playsinline', 'true');
+                mountPoint.appendChild(videoEl);
 
-                function streamSearchData() {
-                    let maxBatch = 100;
-                    for (let i = 0; i < maxBatch; i++) {
-                        if (sIdx >= foundItems.length) return;
-                        searchContainer.appendChild(createPoster(foundItems[sIdx], false));
-                        sIdx++;
-                    }
-                    if (sIdx < foundItems.length) setTimeout(streamSearchData, 2);
+                if (isM3u8 && Hls.isSupported()) {
+                    const hls = new Hls();
+                    hls.loadSource(movie.link);
+                    hls.attachMedia(videoEl);
+                } else {
+                    videoEl.src = movie.link;
                 }
-                streamSearchData();
+
+                plyrPlayer = new Plyr('#myPlyrPlayer', {
+                    autoplay: true,
+                    volume: initialVolume,
+                    muted: isMutedByDefault
+                });
+                plyrPlayer.on('volumechange', () => {
+                    const vol = plyrPlayer.muted ? 0 : plyrPlayer.volume;
+                    localStorage.setItem('ghost_global_volume', vol);
+                });
+                plyrPlayer.on('play', () => {
+                    document.getElementById('playStopToggleBtn').innerHTML = '<i class="fas fa-pause"></i>';
+                });
+                plyrPlayer.on('pause', () => {
+                    document.getElementById('playStopToggleBtn').innerHTML = '<i class="fas fa-play"></i>';
+                });
+                attachVideoControls(videoEl);
+                videoEl.play();
+                if (window.innerWidth >= 768) attachFullscreenOnPlay(videoEl);
+            } else if (selectedPlayer === 'jwplayer') {
+                const containerDiv = document.createElement('div');
+                containerDiv.id = 'jwplayer-container';
+                containerDiv.className = 'w-full h-full';
+                mountPoint.appendChild(containerDiv);
+
+                jwPlayerInstance = jwplayer('jwplayer-container').setup({
+                    file: movie.link,
+                    width: "100%",
+                    height: "100%",
+                    aspectratio: "16:9",
+                    stretching: "fill",
+                    preload: "auto",
+                    autostart: true,
+                    mute: isMutedByDefault,
+                    controls: true,
+                    playbackRateControls: false
+                });
+
+                jwPlayerInstance.on('ready', function() {
+                    if (initialVolume !== undefined) jwPlayerInstance.setVolume(initialVolume * 100);
+                    const videoEl = document.querySelector('#jwplayer-container video');
+                    if (videoEl) attachVideoControls(videoEl);
+                });
+                jwPlayerInstance.on('play', function() {
+                    document.getElementById('playStopToggleBtn').innerHTML = '<i class="fas fa-pause"></i>';
+                });
+                jwPlayerInstance.on('pause', function() {
+                    document.getElementById('playStopToggleBtn').innerHTML = '<i class="fas fa-play"></i>';
+                });
+                jwPlayerInstance.on('volume', function(event) {
+                    const vol = event.volume / 100;
+                    localStorage.setItem('ghost_global_volume', vol);
+                });
+                if (window.innerWidth >= 768) {
+                    attachFullscreenOnPlay(document.querySelector('#jwplayer-container video'));
+                }
+            } else if (selectedPlayer === 'clappr') {
+                const clapprDiv = document.createElement('div');
+                clapprDiv.id = 'myClapprPlayer';
+                clapprDiv.className = 'w-full h-full';
+                mountPoint.appendChild(clapprDiv);
+
+                clapprPlayerInstance = new Clappr.Player({
+                    source: movie.link,
+                    parentId: '#myClapprPlayer',
+                    autoPlay: true,
+                    mute: isMutedByDefault,
+                    width: '100%',
+                    height: '100%'
+                });
+                clapprPlayerInstance.on(Clappr.Events.PLAYER_VOLUMECHANGE, function() {
+                    const vol = clapprPlayerInstance.volume / 100;
+                    localStorage.setItem('ghost_global_volume', vol);
+                });
+                clapprPlayerInstance.setVolume(initialVolume * 100);
+                clapprPlayerInstance.play();
+                clapprPlayerInstance.on(Clappr.Events.PLAYER_PLAY, function() {
+                    document.getElementById('playStopToggleBtn').innerHTML = '<i class="fas fa-pause"></i>';
+                });
+                clapprPlayerInstance.on(Clappr.Events.PLAYER_PAUSE, function() {
+                    document.getElementById('playStopToggleBtn').innerHTML = '<i class="fas fa-play"></i>';
+                });
+                if (window.innerWidth >= 768) {
+                    const videoEl = document.querySelector('#myClapprPlayer video');
+                    if (videoEl) { attachFullscreenOnPlay(videoEl);
+                        attachVideoControls(videoEl); }
+                }
+                setTimeout(() => {
+                    const videoEl = document.querySelector('#myClapprPlayer video');
+                    if (videoEl) attachVideoControls(videoEl);
+                }, 500);
             }
+
+            // Build suggested list
+            let suggested = [];
+            const currentPage = pageContext;
+            if (globalDataStore[currentPage]) {
+                globalDataStore[currentPage].forEach(cat => {
+                    if (cat && cat.movies) {
+                        cat.movies.forEach(m => {
+                            if (m && !m.hidden && m.link && m.link !== movie.link) suggested.push(m);
+                        });
+                    }
+                });
+            }
+            if (suggested.length === 0) {
+                ['movie', 'livetv', 'adult'].forEach(type => {
+                    if (type !== currentPage && globalDataStore[type]) {
+                        globalDataStore[type].forEach(cat => {
+                            if (cat && cat.movies) {
+                                cat.movies.forEach(m => {
+                                    if (m && !m.hidden && m.link && m.link !== movie.link) suggested
+                                        .push(m);
+                                });
+                            }
+                        });
+                    }
+                });
+            }
+            suggested = suggested.sort(() => Math.random() - 0.5);
+            currentSuggestedMovies = suggested;
+            renderSuggestedVideos(suggested);
+            startHeadlineEffectRotation();
+            setTimeout(updateFullscreenOverlayState, 300);
+        }
+
+        function closeVideoModal() {
+            document.body.classList.remove('ghost-fs-overlay-active');
+            destroyAllPlayers();
+            document.getElementById('videoModal').style.display = 'none';
+            document.getElementById('suggestedGrid').innerHTML = '';
+            currentSuggestedMovies = [];
+            currentPlayingMovie = null;
+            clearTopbarFocus();
+            if (effectInterval) { clearInterval(effectInterval);
+                effectInterval = null; }
+            const headline = document.getElementById('headlineText');
+            if (headline) headline.className = 'headline-text';
         }
 
         // ================================================================
-        // NEW: সাইডবারে অ্যাডাল্ট আইটেমের ভিসিবিলিটি কন্ট্রোল
-        // শর্ত: লগইন থাকতে হবে && currentUserData.adult === "on"
+        // TOGGLE PLAY/STOP & FULLSCREEN
         // ================================================================
-        function updateAdultSidebarVisibility() {
-            const adultItem = document.getElementById('sidebar-adult-item');
-            if (!adultItem) return;
-            const isLoggedIn = currentUserData !== null;
-            const isAdultOn = isLoggedIn && (currentUserData.adult === "on" || currentUserData.adult === true ||
-                currentUserData.adult === "true" || currentUserData.adult === 1);
-            if (isAdultOn) {
-                adultItem.classList.add('visible');
+        function togglePlayStop() {
+            const btn = document.getElementById('playStopToggleBtn');
+            let isPlaying = false;
+            if (vjsPlayer) {
+                if (vjsPlayer.paused()) { vjsPlayer.play();
+                    isPlaying = true; } else { vjsPlayer.pause();
+                    vjsPlayer.currentTime(0);
+                    isPlaying = false; }
+            } else if (plyrPlayer) {
+                if (plyrPlayer.paused) { plyrPlayer.play();
+                    isPlaying = true; } else { plyrPlayer.pause();
+                    plyrPlayer.currentTime = 0;
+                    isPlaying = false; }
+            } else if (jwPlayerInstance) {
+                if (jwPlayerInstance.getState() === 'paused' || jwPlayerInstance.getState() === 'idle') {
+                    jwPlayerInstance.play();
+                    isPlaying = true;
+                } else { jwPlayerInstance.pause();
+                    jwPlayerInstance.seek(0);
+                    isPlaying = false; }
+            } else if (clapprPlayerInstance) {
+                if (clapprPlayerInstance.isPaused()) { clapprPlayerInstance.play();
+                    isPlaying = true; } else { clapprPlayerInstance.pause();
+                    clapprPlayerInstance.seek(0);
+                    isPlaying = false; }
             } else {
-                adultItem.classList.remove('visible');
-                if (document.getElementById('adult').classList.contains('active')) {
-                    changePage('home');
-                }
-                const chk = document.getElementById('adultVisibilityToggle');
-                if (chk && chk.checked) {
-                    chk.checked = false;
-                    toggleAdultNavVisibility(false);
-                }
+                showToast('⚠️ কোনো প্লেয়ার সক্রিয় নেই');
+                return;
             }
+            btn.innerHTML = isPlaying ? '<i class="fas fa-pause"></i>' : '<i class="fas fa-play"></i>';
         }
 
-        // ===== লগইন ভেরিফাই =====
+        function toggleVideoFullscreen() {
+            const active = vjsPlayer || plyrPlayer || jwPlayerInstance || clapprPlayerInstance;
+            if (!active) { showToast('⚠️ কোনো প্লেয়ার সক্রিয় নেই'); return; }
+            if (vjsPlayer) {
+                if (vjsPlayer.isFullscreen()) vjsPlayer.exitFullscreen();
+                else vjsPlayer.requestFullscreen();
+            } else if (plyrPlayer) {
+                if (plyrPlayer.fullscreen.active) plyrPlayer.fullscreen.exit();
+                else plyrPlayer.fullscreen.enter();
+            } else if (jwPlayerInstance) {
+                if (jwPlayerInstance.getFullscreen()) jwPlayerInstance.setFullscreen(false);
+                else jwPlayerInstance.setFullscreen(true);
+            } else if (clapprPlayerInstance) {
+                const container = document.getElementById('myClapprPlayer');
+                if (container) {
+                    if (document.fullscreenElement) document.exitFullscreen();
+                    else if (container.requestFullscreen) container.requestFullscreen();
+                    else if (container.webkitRequestFullscreen) container.webkitRequestFullscreen();
+                }
+            }
+            showToast('⛶ ফুলস্ক্রিন টগল');
+        }
+
+        // ================================================================
+        // CUSTOM CONFIRM
+        // ================================================================
+        function showCustomConfirm(messageText) {
+            return new Promise((resolve) => {
+                const modal = document.getElementById('customConfirmModal');
+                const oldOk = document.getElementById('confirmOkBtn');
+                const oldCancel = document.getElementById('confirmCancelBtn');
+                document.getElementById('confirmMessage').innerText = messageText || "আপনি কি ফেবারেট করতে চান?";
+                const okBtn = oldOk.cloneNode(true);
+                const cancelBtn = oldCancel.cloneNode(true);
+                oldOk.parentNode.replaceChild(okBtn, oldOk);
+                oldCancel.parentNode.replaceChild(cancelBtn, oldCancel);
+                modal.style.display = 'flex';
+                setTimeout(() => modal.classList.add('show'), 10);
+                okBtn.addEventListener('click', () => {
+                    modal.classList.remove('show');
+                    setTimeout(() => modal.style.display = 'none', 300);
+                    resolve(true);
+                });
+                cancelBtn.addEventListener('click', () => {
+                    modal.classList.remove('show');
+                    setTimeout(() => modal.style.display = 'none', 300);
+                    resolve(false);
+                });
+            });
+        }
+
+        // ================================================================
+        // PREMIUM ALERT
+        // ================================================================
+        function showPremiumAlert(message) {
+            const modal = document.getElementById('premiumAlertModal');
+            document.getElementById('premiumAlertMessage').innerText = message ||
+                "⚠️ এই কন্টেন্টটি প্রিমিয়াম! লগইন করুন।";
+            modal.style.display = 'flex';
+            setTimeout(() => modal.classList.add('show'), 10);
+        }
+
+        function closePremiumAlert() {
+            const modal = document.getElementById('premiumAlertModal');
+            modal.classList.remove('show');
+            setTimeout(() => { modal.style.display = 'none';
+                openLoginModal(); }, 300);
+        }
+
+        // ================================================================
+        // LOGIN / AUTH
+        // ================================================================
+        function showLoginError(msg) {
+            const err = document.getElementById('loginError');
+            err.innerText = msg;
+            err.classList.remove('hidden');
+        }
+
         async function verifyUser(username, password, isAuto = false) {
             try {
                 const res = await fetch(`https://api.jsonbin.io/v3/b/${USER_BIN}/latest`, {
-                    headers: {
-                        "X-Master-Key": MASTER_KEY,
-                        "X-Bin-Meta": "false"
-                    }
+                    headers: { "X-Master-Key": MASTER_KEY, "X-Bin-Meta": "false" }
                 });
                 if (!res.ok) {
                     if (!isAuto) showLoginError("সার্ভার সংযোগ ব্যর্থ!");
@@ -3155,73 +3687,14 @@
             }
         }
 
-        async function resetDeviceId() {
-            const user = document.getElementById('loginUser')?.value.trim();
-            const pass = document.getElementById('loginPass')?.value.trim();
-            if (!user || !pass) {
-                showToast("⚠️ প্রথমে ইউজারনেম ও পাসওয়ার্ড দিন!");
-                return;
-            }
+        async function updateJsonBin(updatedData) {
             try {
-                const res = await fetch(`https://api.jsonbin.io/v3/b/${USER_BIN}/latest`, {
-                    headers: {
-                        "X-Master-Key": MASTER_KEY,
-                        "X-Bin-Meta": "false"
-                    }
-                });
-                if (!res.ok) {
-                    showToast("⚠️ সার্ভার সংযোগ ব্যর্থ!");
-                    return;
-                }
-                const responseData = await res.json();
-                let users = [];
-                let isArray = false;
-                if (Array.isArray(responseData)) {
-                    users = responseData;
-                    isArray = true;
-                } else if (responseData.users && Array.isArray(responseData.users)) {
-                    users = responseData.users;
-                } else {
-                    showToast("⚠️ ডেটা ফরম্যাট সঠিক নয়!");
-                    return;
-                }
-                const userIndex = users.findIndex(u => u.username === user && u.password === pass);
-                if (userIndex === -1) {
-                    showToast("⚠️ ইউজারনাম বা পাসওয়ার্ড ভুল!");
-                    return;
-                }
-                users[userIndex].device_id = "";
-                let updateData;
-                if (isArray) {
-                    updateData = users;
-                } else {
-                    updateData = { users: users };
-                    if (responseData.slider) updateData.slider = responseData.slider;
-                    if (responseData.others) updateData.others = responseData.others;
-                }
-                const putRes = await fetch(`https://api.jsonbin.io/v3/b/${USER_BIN}`, {
+                await fetch(`https://api.jsonbin.io/v3/b/${USER_BIN}`, {
                     method: 'PUT',
-                    headers: {
-                        "Content-Type": "application/json",
-                        "X-Master-Key": MASTER_KEY
-                    },
-                    body: JSON.stringify(updateData)
+                    headers: { "Content-Type": "application/json", "X-Master-Key": MASTER_KEY },
+                    body: JSON.stringify(updatedData)
                 });
-                if (!putRes.ok) {
-                    showToast("⚠️ রিসেট আপডেট করতে ব্যর্থ!");
-                    return;
-                }
-                localStorage.removeItem('ghost_user');
-                localStorage.removeItem('ghost_pass');
-                currentUserData = null;
-                updateAuthHeaderUI();
-                updateAdultSidebarVisibility();
-                showToast("✅ ডিভাইস আইডি রিসেট হয়েছে! পুনরায় লগইন করুন।");
-                closeLoginModal();
-            } catch (err) {
-                console.error("Reset error:", err);
-                showToast("⚠️ রিসেট করতে সমস্যা হয়েছে!");
-            }
+            } catch (e) {}
         }
 
         async function checkAutoLogin() {
@@ -3245,43 +3718,24 @@
             btn.disabled = false;
         }
 
-        function showLoginError(msg) {
-            const err = document.getElementById('loginError');
-            err.innerText = msg;
-            err.classList.remove('hidden');
-        }
-
-        async function updateJsonBin(updatedData) {
-            try {
-                await fetch(`https://api.jsonbin.io/v3/b/${USER_BIN}`, {
-                    method: 'PUT',
-                    headers: {
-                        "Content-Type": "application/json",
-                        "X-Master-Key": MASTER_KEY
-                    },
-                    body: JSON.stringify(updatedData)
-                });
-            } catch (e) {}
-        }
-
         function updateAuthHeaderUI() {
             const area = document.getElementById('auth-status-area');
             if (currentUserData) {
                 area.innerHTML = `
-                <div class="flex items-center gap-2">
-                  <span class="text-xs font-semibold text-green-400 bg-green-950/50 border border-green-800/60 px-3 py-1.5 rounded-full flex items-center gap-1">
-                    <span class="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></span>
-                    ${currentUserData.username}
-                  </span>
-                  <button onclick="handleLogout()" class="text-gray-500 hover:text-red-500 text-sm p-1"><i class="fas fa-sign-out-alt"></i></button>
-                </div>
-              `;
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs font-semibold text-green-400 bg-green-950/50 border border-green-800/60 px-3 py-1.5 rounded-full flex items-center gap-1">
+                            <span class="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></span>
+                            ${currentUserData.username}
+                        </span>
+                        <button onclick="handleLogout()" class="text-gray-500 hover:text-red-500 text-sm p-1"><i class="fas fa-sign-out-alt"></i></button>
+                    </div>
+                `;
             } else {
                 area.innerHTML = `
-                <button onclick="openLoginModal()" class="bg-red-600 hover:bg-red-700 text-white text-xs font-bold px-4 py-2 rounded-full transition active:scale-95 shadow-lg shadow-red-600/20">
-                  <i class="fas fa-user-lock mr-1"></i> লগইন
-                </button>
-              `;
+                    <button onclick="openLoginModal()" class="bg-red-600 hover:bg-red-700 text-white text-xs font-bold px-4 py-2 rounded-full transition active:scale-95 shadow-lg shadow-red-600/20">
+                        <i class="fas fa-user-lock mr-1"></i> লগইন
+                    </button>
+                `;
             }
             updateAdultSidebarVisibility();
         }
@@ -3298,6 +3752,84 @@
                     showToast("✅ লগআউট সম্পন্ন!");
                 }
             });
+        }
+
+        function openLoginModal() {
+            const modal = document.getElementById('loginModal');
+            modal.style.display = 'flex';
+            modal.style.position = 'fixed';
+            modal.style.inset = '0';
+            modal.style.background = 'rgba(0,0,0,0.8)';
+            modal.style.zIndex = '9999';
+            modal.style.justifyContent = 'center';
+            modal.style.alignItems = 'center';
+        }
+
+        function closeLoginModal() {
+            document.getElementById('loginModal').style.display = 'none';
+            document.getElementById('loginError').classList.add('hidden');
+        }
+
+        async function resetDeviceId() {
+            const user = document.getElementById('loginUser')?.value.trim();
+            const pass = document.getElementById('loginPass')?.value.trim();
+            if (!user || !pass) { showToast("⚠️ প্রথমে ইউজারনেম ও পাসওয়ার্ড দিন!"); return; }
+            try {
+                const res = await fetch(`https://api.jsonbin.io/v3/b/${USER_BIN}/latest`, {
+                    headers: { "X-Master-Key": MASTER_KEY, "X-Bin-Meta": "false" }
+                });
+                if (!res.ok) { showToast("⚠️ সার্ভার সংযোগ ব্যর্থ!"); return; }
+                const responseData = await res.json();
+                let users = [];
+                let isArray = false;
+                if (Array.isArray(responseData)) { users = responseData;
+                    isArray = true; } else if (responseData.users && Array.isArray(responseData.users)) { users =
+                        responseData.users; } else { showToast("⚠️ ডেটা ফরম্যাট সঠিক নয়!"); return; }
+                const userIndex = users.findIndex(u => u.username === user && u.password === pass);
+                if (userIndex === -1) { showToast("⚠️ ইউজারনাম বা পাসওয়ার্ড ভুল!"); return; }
+                users[userIndex].device_id = "";
+                let updateData = isArray ? users : { users: users };
+                if (!isArray) {
+                    if (responseData.slider) updateData.slider = responseData.slider;
+                    if (responseData.others) updateData.others = responseData.others;
+                }
+                const putRes = await fetch(`https://api.jsonbin.io/v3/b/${USER_BIN}`, {
+                    method: 'PUT',
+                    headers: { "Content-Type": "application/json", "X-Master-Key": MASTER_KEY },
+                    body: JSON.stringify(updateData)
+                });
+                if (!putRes.ok) { showToast("⚠️ রিসেট আপডেট করতে ব্যর্থ!"); return; }
+                localStorage.removeItem('ghost_user');
+                localStorage.removeItem('ghost_pass');
+                currentUserData = null;
+                updateAuthHeaderUI();
+                updateAdultSidebarVisibility();
+                showToast("✅ ডিভাইস আইডি রিসেট হয়েছে! পুনরায় লগইন করুন।");
+                closeLoginModal();
+            } catch (err) {
+                console.error("Reset error:", err);
+                showToast("⚠️ রিসেট করতে সমস্যা হয়েছে!");
+            }
+        }
+
+        // ================================================================
+        // ADULT VISIBILITY
+        // ================================================================
+        function updateAdultSidebarVisibility() {
+            const adultItem = document.getElementById('sidebar-adult-item');
+            if (!adultItem) return;
+            const isLoggedIn = currentUserData !== null;
+            const isAdultOn = isLoggedIn && (currentUserData.adult === "on" || currentUserData.adult === true ||
+                currentUserData.adult === "true" || currentUserData.adult === 1);
+            if (isAdultOn) {
+                adultItem.classList.add('visible');
+            } else {
+                adultItem.classList.remove('visible');
+                if (document.getElementById('adult').classList.contains('active')) changePage('home');
+                const chk = document.getElementById('adultVisibilityToggle');
+                if (chk && chk.checked) { chk.checked = false;
+                    toggleAdultNavVisibility(false); }
+            }
         }
 
         function toggleAdultNavVisibility(isChecked) {
@@ -3322,123 +3854,9 @@
             document.getElementById('btn-adult').style.display = isVisible ? 'flex' : 'none';
         }
 
-        function initSliderControl() {
-            if (sliderInterval) clearInterval(sliderInterval);
-            const slides = document.querySelectorAll('.slide');
-            if (slides.length <= 1) return;
-            sliderInterval = setInterval(() => {
-                slides[currentSlideIdx].classList.remove('active');
-                currentSlideIdx = (currentSlideIdx + 1) % slides.length;
-                slides[currentSlideIdx].classList.add('active');
-            }, 3200);
-        }
-
-        async function fetchAndRenderSlider() {
-            const sliderContainer = document.getElementById('dynamic-slider');
-            let sliderData = [
-                { img: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=1200",
-                    title: "সর্বশেষ সব নতুন মুভি দেখুন এখানে", type: "movie", badge: "Movies" },
-                { img: "https://images.unsplash.com/photo-1593789198777-f29bc259780e?q=80&w=1200",
-                    title: "বাফারিং ছাড়াই লাইভ টিভি চ্যানেল উপভোগ করুন", type: "livetv", badge: "Live TV" }
-            ];
-            try {
-                const res = await fetch(`https://api.jsonbin.io/v3/b/${USER_BIN}/latest`, {
-                    headers: {
-                        "X-Master-Key": MASTER_KEY,
-                        "X-Bin-Meta": "false"
-                    }
-                });
-                if (!res.ok) {
-                    return;
-                }
-                const data = await res.json();
-                if (data && data.slider && Array.isArray(data.slider)) {
-                    sliderData = data.slider.filter(s => s.type !== 'adult');
-                }
-            } catch (e) {
-                return;
-            }
-            sliderContainer.innerHTML = '';
-            sliderData.forEach((slide, index) => {
-                const activeClass = index === 0 ? 'active' : '';
-                const badgeText = slide.badge || (slide.type === 'movie' ? 'Movies' : 'Live TV');
-                const badgeColor = slide.type === 'movie' ? 'bg-red-600' : 'bg-blue-600';
-                const div = document.createElement('div');
-                div.className = `slide ${activeClass}`;
-                div.onclick = () => changePage(slide.type);
-                div.innerHTML = `
-                <img src="${slide.img}" class="w-full h-full object-cover" alt="Banner" loading="lazy">
-                <div class="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent flex items-end p-5">
-                  <div>
-                    <span class="${badgeColor} text-white text-[9px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">${badgeText}</span>
-                    <h2 class="text-lg md:text-2xl font-extrabold mt-1 text-white">${slide.title}</h2>
-                  </div>
-                </div>
-              `;
-                sliderContainer.appendChild(div);
-            });
-            currentSlideIdx = 0;
-            initSliderControl();
-        }
-
-        function showCustomConfirm(messageText) {
-            return new Promise((resolve) => {
-                const modal = document.getElementById('customConfirmModal');
-                const oldOkBtn = document.getElementById('confirmOkBtn');
-                const oldCancelBtn = document.getElementById('confirmCancelBtn');
-                document.getElementById('confirmMessage').innerText = messageText || "আপনি কি ফেবারেট করতে চান?";
-                const okBtn = oldOkBtn.cloneNode(true);
-                const cancelBtn = oldCancelBtn.cloneNode(true);
-                oldOkBtn.parentNode.replaceChild(okBtn, oldOkBtn);
-                oldCancelBtn.parentNode.replaceChild(cancelBtn, oldCancelBtn);
-                modal.style.display = 'flex';
-                setTimeout(() => modal.classList.add('show'), 10);
-                okBtn.addEventListener('click', () => {
-                    modal.classList.remove('show');
-                    setTimeout(() => modal.style.display = 'none', 300);
-                    resolve(true);
-                });
-                cancelBtn.addEventListener('click', () => {
-                    modal.classList.remove('show');
-                    setTimeout(() => modal.style.display = 'none', 300);
-                    resolve(false);
-                });
-            });
-        }
-
-        function showPremiumAlert(message) {
-            const modal = document.getElementById('premiumAlertModal');
-            document.getElementById('premiumAlertMessage').innerText = message ||
-                "⚠️ এই কন্টেন্টটি প্রিমিয়াম! লগইন করুন।";
-            modal.style.display = 'flex';
-            setTimeout(() => modal.classList.add('show'), 10);
-        }
-
-        function closePremiumAlert() {
-            const modal = document.getElementById('premiumAlertModal');
-            modal.classList.remove('show');
-            setTimeout(() => {
-                modal.style.display = 'none';
-                openLoginModal();
-            }, 300);
-        }
-
-        async function openLoginModal() {
-            const modal = document.getElementById('loginModal');
-            modal.style.display = 'flex';
-            modal.style.position = 'fixed';
-            modal.style.inset = '0';
-            modal.style.background = 'rgba(0,0,0,0.8)';
-            modal.style.zIndex = '9999';
-            modal.style.justifyContent = 'center';
-            modal.style.alignItems = 'center';
-        }
-
-        function closeLoginModal() {
-            document.getElementById('loginModal').style.display = 'none';
-            document.getElementById('loginError').classList.add('hidden');
-        }
-
+        // ================================================================
+        // GHOST PROBLEM MODAL
+        // ================================================================
         function openGhostProblemModal() {
             const modal = document.getElementById('ghostProblemModal');
             modal.style.display = 'flex';
@@ -3464,9 +3882,7 @@
         function closeGhostProblemModal() {
             const modal = document.getElementById('ghostProblemModal');
             modal.classList.remove('show');
-            setTimeout(() => {
-                modal.style.display = 'none';
-            }, 350);
+            setTimeout(() => { modal.style.display = 'none'; }, 350);
         }
 
         async function sendGhostProblem() {
@@ -3474,25 +3890,20 @@
             const problemDesc = document.getElementById('problemDescription').value.trim();
             const sendBtn = document.getElementById('ghostSendBtn');
             const successMsg = document.getElementById('ghostSuccessMsg');
-            if (!movieName) {
-                showToast('⚠️ দয়া করে টিভি অথবা মুভির নাম লিখুন!');
-                document.getElementById('problemMovieName').focus();
-                return;
-            }
-            if (!problemDesc) {
-                showToast('⚠️ দয়া করে প্রবলেমটি লিখুন!');
-                document.getElementById('problemDescription').focus();
-                return;
-            }
-            if (problemDesc.length < 5) {
-                showToast('⚠️ প্রবলেমটি একটু বিস্তারিত লিখুন (কমপক্ষে ৫ অক্ষর)');
-                return;
-            }
+
+            if (!movieName) { showToast('⚠️ দয়া করে টিভি অথবা মুভির নাম লিখুন!');
+                document.getElementById('problemMovieName').focus(); return; }
+            if (!problemDesc) { showToast('⚠️ দয়া করে প্রবলেমটি লিখুন!');
+                document.getElementById('problemDescription').focus(); return; }
+            if (problemDesc.length < 5) { showToast('⚠️ প্রবলেমটি একটু বিস্তারিত লিখুন (কমপক্ষে ৫ অক্ষর)'); return; }
+
             sendBtn.disabled = true;
             sendBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> সেন্ড হচ্ছে...';
+
             const username = currentUserData ? currentUserData.username : 'অতিথি';
             const deviceId = myDeviceId;
             const currentTime = new Date().toLocaleString('bn-BD', { timeZone: 'Asia/Dhaka' });
+
             const payload = {
                 embeds: [{
                     title: '👻 Ghost Problem Fix',
@@ -3504,13 +3915,11 @@
                         { name: '📱 ডিভাইস', value: deviceId, inline: true },
                         { name: '📅 সময়', value: currentTime, inline: false }
                     ],
-                    footer: {
-                        text: 'Ghost TV — Problem Report',
-                        icon_url: 'https://img.icons8.com/color/48/ghost.png'
-                    },
+                    footer: { text: 'Ghost TV — Problem Report', icon_url: 'https://img.icons8.com/color/48/ghost.png' },
                     timestamp: new Date().toISOString()
                 }]
             };
+
             try {
                 const response = await fetch(DISCORD_WEBHOOK, {
                     method: 'POST',
@@ -3544,525 +3953,24 @@
             }
         }
 
-        function togglePlayStop() {
-            const btn = document.getElementById('playStopToggleBtn');
-            let isPlaying = false;
-            if (vjsPlayer) {
-                if (vjsPlayer.paused()) {
-                    vjsPlayer.play();
-                    isPlaying = true;
-                } else {
-                    vjsPlayer.pause();
-                    vjsPlayer.currentTime(0);
-                    isPlaying = false;
-                }
-            } else if (plyrPlayer) {
-                if (plyrPlayer.paused) {
-                    plyrPlayer.play();
-                    isPlaying = true;
-                } else {
-                    plyrPlayer.pause();
-                    plyrPlayer.currentTime = 0;
-                    isPlaying = false;
-                }
-            } else if (jwPlayerInstance) {
-                if (jwPlayerInstance.getState() === 'paused' || jwPlayerInstance.getState() === 'idle') {
-                    jwPlayerInstance.play();
-                    isPlaying = true;
-                } else {
-                    jwPlayerInstance.pause();
-                    jwPlayerInstance.seek(0);
-                    isPlaying = false;
-                }
-            } else if (clapprPlayerInstance) {
-                if (clapprPlayerInstance.isPaused()) {
-                    clapprPlayerInstance.play();
-                    isPlaying = true;
-                } else {
-                    clapprPlayerInstance.pause();
-                    clapprPlayerInstance.seek(0);
-                    isPlaying = false;
-                }
-            } else {
-                showToast('⚠️ কোনো প্লেয়ার সক্রিয় নেই');
-                return;
-            }
-            btn.innerHTML = isPlaying ? '<i class="fas fa-pause"></i>' : '<i class="fas fa-play"></i>';
-        }
-
-        function toggleVideoFullscreen() {
-            const activePlayer = vjsPlayer || plyrPlayer || jwPlayerInstance || clapprPlayerInstance;
-            if (!activePlayer) {
-                showToast('⚠️ কোনো প্লেয়ার সক্রিয় নেই');
-                return;
-            }
-            if (vjsPlayer) {
-                if (vjsPlayer.isFullscreen()) {
-                    vjsPlayer.exitFullscreen();
-                } else {
-                    vjsPlayer.requestFullscreen();
-                }
-            } else if (plyrPlayer) {
-                if (plyrPlayer.fullscreen.active) {
-                    plyrPlayer.fullscreen.exit();
-                } else {
-                    plyrPlayer.fullscreen.enter();
-                }
-            } else if (jwPlayerInstance) {
-                if (jwPlayerInstance.getFullscreen()) {
-                    jwPlayerInstance.setFullscreen(false);
-                } else {
-                    jwPlayerInstance.setFullscreen(true);
-                }
-            } else if (clapprPlayerInstance) {
-                const container = document.getElementById('myClapprPlayer');
-                if (container) {
-                    if (document.fullscreenElement) {
-                        document.exitFullscreen();
-                    } else if (container.requestFullscreen) {
-                        container.requestFullscreen();
-                    } else if (container.webkitRequestFullscreen) {
-                        container.webkitRequestFullscreen();
-                    }
-                }
-            }
-            showToast('⛶ ফুলস্ক্রিন টগল');
-        }
-
-        function destroyAllPlayers() {
-            if (vjsPlayer) {
-                try { vjsPlayer.dispose(); } catch (e) {}
-                vjsPlayer = null;
-            }
-            if (plyrPlayer) {
-                try { plyrPlayer.destroy(); } catch (e) {}
-                plyrPlayer = null;
-            }
-            if (jwPlayerInstance) {
-                try { jwPlayerInstance.remove(); } catch (e) {}
-                jwPlayerInstance = null;
-            }
-            if (clapprPlayerInstance) {
-                try { clapprPlayerInstance.destroy(); } catch (e) {}
-                clapprPlayerInstance = null;
-            }
-        }
-
-        function changeHeadlineEffect() {
-            const headline = document.getElementById('headlineText');
-            if (!headline) return;
-            const effects = ['', 'effect-glitch', 'effect-flicker', 'effect-neon'];
-            const currentEffect = effects.find(e => headline.classList.contains(e));
-            let nextEffect = '';
-            do {
-                const randomIndex = Math.floor(Math.random() * effects.length);
-                nextEffect = effects[randomIndex];
-            } while (nextEffect === currentEffect && effects.length > 1);
-            effects.forEach(e => headline.classList.remove(e));
-            if (nextEffect) {
-                headline.classList.add(nextEffect);
-            }
-        }
-
-        function startHeadlineEffectRotation() {
-            if (effectInterval) clearInterval(effectInterval);
-            effectInterval = setInterval(changeHeadlineEffect, 5000);
-            setTimeout(changeHeadlineEffect, 100);
-        }
-
-        function openVideoModal(movie) {
-            if (!movie || !movie.link) return;
-            currentPlayingMovie = movie;
-            destroyAllPlayers();
-            initTopbarButtons();
-            clearTopbarFocus();
-            const videoModal = document.getElementById('videoModal');
-            document.getElementById('videoTitle').textContent = movie.name || '';
-            const thumb = document.getElementById('currentVideoThumb');
-            thumb.src = movie.logo || 'https://picsum.photos/100/100';
-            thumb.alt = movie.name || 'বর্তমান ভিডিওর পোস্টার';
-            videoModal.style.display = 'flex';
-            const mountPoint = document.getElementById('player-mount-point');
-            mountPoint.innerHTML = '';
-            let pageContext = activePageGlobal;
-            if (pageContext === 'home' || pageContext === 'favorite' || pageContext === 'search-section') {
-                pageContext = 'movie';
-            }
-            const selectedPlayer = localStorage.getItem(`ghost_player_${pageContext}`) || 'videojs';
-            const isM3u8 = movie.link.includes(".m3u8");
-            let lastSavedVolume = localStorage.getItem('ghost_global_volume');
-            let initialVolume = lastSavedVolume !== null ? parseFloat(lastSavedVolume) : 1.0;
-            let isMutedByDefault = initialVolume === 0;
-            document.getElementById('playStopToggleBtn').innerHTML = '<i class="fas fa-pause"></i>';
-            if (selectedPlayer === 'videojs') {
-                const videoEl = document.createElement('video');
-                videoEl.id = 'myVideoPlayer';
-                videoEl.className = 'video-js vjs-default-skin vjs-big-play-centered vjs-theme-ghost w-full h-full';
-                videoEl.setAttribute('controls', 'true');
-                videoEl.setAttribute('preload', 'auto');
-                mountPoint.appendChild(videoEl);
-                let videoType = isM3u8 ? "application/x-mpegURL" : "video/mp4";
-                vjsPlayer = videojs('myVideoPlayer', {
-                    autoplay: true,
-                    controls: true,
-                    liveui: true
-                });
-                vjsPlayer.src({ src: movie.link, type: videoType });
-                vjsPlayer.ready(function() {
-                    vjsPlayer.volume(initialVolume);
-                    vjsPlayer.muted(isMutedByDefault);
-                    vjsPlayer.on('volumechange', function() {
-                        let currentVol = vjsPlayer.muted() ? 0 : vjsPlayer.volume();
-                        localStorage.setItem('ghost_global_volume', currentVol);
-                    });
-                    vjsPlayer.on('play', function() {
-                        document.getElementById('playStopToggleBtn').innerHTML = '<i class="fas fa-pause"></i>';
-                    });
-                    vjsPlayer.on('pause', function() {
-                        document.getElementById('playStopToggleBtn').innerHTML = '<i class="fas fa-play"></i>';
-                    });
-                    const videoEl2 = vjsPlayer.el().querySelector('video');
-                    if (videoEl2) {
-                        attachVideoControls(videoEl2);
-                    }
-                    vjsPlayer.play();
-                    if (window.innerWidth >= 768) {
-                        attachFullscreenOnPlay(vjsPlayer.el());
-                    }
-                });
-            } else if (selectedPlayer === 'plyr') {
-                const videoEl = document.createElement('video');
-                videoEl.id = 'myPlyrPlayer';
-                videoEl.className = 'w-full h-full';
-                videoEl.setAttribute('controls', 'true');
-                videoEl.setAttribute('playsinline', 'true');
-                mountPoint.appendChild(videoEl);
-                if (isM3u8 && Hls.isSupported()) {
-                    const hls = new Hls();
-                    hls.loadSource(movie.link);
-                    hls.attachMedia(videoEl);
-                } else {
-                    videoEl.src = movie.link;
-                }
-                plyrPlayer = new Plyr('#myPlyrPlayer', {
-                    autoplay: true,
-                    volume: initialVolume,
-                    muted: isMutedByDefault
-                });
-                plyrPlayer.on('volumechange', () => {
-                    let currentVol = plyrPlayer.muted ? 0 : plyrPlayer.volume;
-                    localStorage.setItem('ghost_global_volume', currentVol);
-                });
-                plyrPlayer.on('play', () => {
-                    document.getElementById('playStopToggleBtn').innerHTML = '<i class="fas fa-pause"></i>';
-                });
-                plyrPlayer.on('pause', () => {
-                    document.getElementById('playStopToggleBtn').innerHTML = '<i class="fas fa-play"></i>';
-                });
-                attachVideoControls(videoEl);
-                videoEl.play();
-                if (window.innerWidth >= 768) {
-                    attachFullscreenOnPlay(videoEl);
-                }
-            } else if (selectedPlayer === 'jwplayer') {
-                const containerDiv = document.createElement('div');
-                containerDiv.id = 'jwplayer-container';
-                containerDiv.className = 'w-full h-full';
-                mountPoint.appendChild(containerDiv);
-                jwPlayerInstance = jwplayer('jwplayer-container').setup({
-                    file: movie.link,
-                    width: "100%",
-                    height: "100%",
-                    aspectratio: "16:9",
-                    stretching: "fill",
-                    preload: "auto",
-                    autostart: true,
-                    mute: isMutedByDefault,
-                    controls: true,
-                    playbackRateControls: false
-                });
-                jwPlayerInstance.on('ready', function() {
-                    if (initialVolume !== undefined) {
-                        jwPlayerInstance.setVolume(initialVolume * 100);
-                    }
-                    const videoEl = document.querySelector('#jwplayer-container video');
-                    if (videoEl) {
-                        attachVideoControls(videoEl);
-                    }
-                });
-                jwPlayerInstance.on('play', function() {
-                    document.getElementById('playStopToggleBtn').innerHTML = '<i class="fas fa-pause"></i>';
-                });
-                jwPlayerInstance.on('pause', function() {
-                    document.getElementById('playStopToggleBtn').innerHTML = '<i class="fas fa-play"></i>';
-                });
-                jwPlayerInstance.on('volume', function(event) {
-                    let vol = event.volume / 100;
-                    localStorage.setItem('ghost_global_volume', vol);
-                });
-                if (window.innerWidth >= 768) {
-                    attachFullscreenOnPlay(document.querySelector('#jwplayer-container video'));
-                }
-            } else if (selectedPlayer === 'clappr') {
-                const clapprDiv = document.createElement('div');
-                clapprDiv.id = 'myClapprPlayer';
-                clapprDiv.className = 'w-full h-full';
-                mountPoint.appendChild(clapprDiv);
-                clapprPlayerInstance = new Clappr.Player({
-                    source: movie.link,
-                    parentId: '#myClapprPlayer',
-                    autoPlay: true,
-                    mute: isMutedByDefault,
-                    width: '100%',
-                    height: '100%'
-                });
-                clapprPlayerInstance.on(Clappr.Events.PLAYER_VOLUMECHANGE, function() {
-                    let currentVol = clapprPlayerInstance.volume / 100;
-                    localStorage.setItem('ghost_global_volume', currentVol);
-                });
-                clapprPlayerInstance.setVolume(initialVolume * 100);
-                clapprPlayerInstance.play();
-                clapprPlayerInstance.on(Clappr.Events.PLAYER_PLAY, function() {
-                    document.getElementById('playStopToggleBtn').innerHTML = '<i class="fas fa-pause"></i>';
-                });
-                clapprPlayerInstance.on(Clappr.Events.PLAYER_PAUSE, function() {
-                    document.getElementById('playStopToggleBtn').innerHTML = '<i class="fas fa-play"></i>';
-                });
-                if (window.innerWidth >= 768) {
-                    const videoEl = document.querySelector('#myClapprPlayer video');
-                    if (videoEl) {
-                        attachFullscreenOnPlay(videoEl);
-                        attachVideoControls(videoEl);
-                    }
-                }
-                setTimeout(() => {
-                    const videoEl = document.querySelector('#myClapprPlayer video');
-                    if (videoEl) attachVideoControls(videoEl);
-                }, 500);
-            }
-            let suggested = [];
-            const currentPage = pageContext;
-            if (globalDataStore[currentPage]) {
-                globalDataStore[currentPage].forEach(cat => {
-                    if (cat && cat.movies) {
-                        cat.movies.forEach(m => {
-                            if (m && !m.hidden && m.link && m.link !== movie.link) suggested.push(m);
-                        });
-                    }
-                });
-            }
-            if (suggested.length === 0) {
-                ['movie', 'livetv', 'adult'].forEach(type => {
-                    if (type !== currentPage && globalDataStore[type]) {
-                        globalDataStore[type].forEach(cat => {
-                            if (cat && cat.movies) {
-                                cat.movies.forEach(m => {
-                                    if (m && !m.hidden && m.link && m.link !== movie.link) suggested
-                                        .push(m);
-                                });
-                            }
-                        });
-                    }
-                });
-            }
-            suggested = suggested.sort(() => Math.random() - 0.5);
-            currentSuggestedMovies = suggested;
-            renderSuggestedVideos(suggested);
-            startHeadlineEffectRotation();
-            setTimeout(updateFullscreenOverlayState, 300);
-        }
-
-        function closeVideoModal() {
-            document.body.classList.remove('ghost-fs-overlay-active');
-            destroyAllPlayers();
-            document.getElementById('videoModal').style.display = 'none';
-            document.getElementById('suggestedGrid').innerHTML = '';
-            currentSuggestedMovies = [];
-            currentPlayingMovie = null;
-            clearTopbarFocus();
-            if (effectInterval) {
-                clearInterval(effectInterval);
-                effectInterval = null;
-            }
-            const headline = document.getElementById('headlineText');
-            if (headline) {
-                headline.className = 'headline-text';
-            }
-        }
-
-        function updateFullscreenOverlayState() {
-            if (window.innerWidth < 768) {
-                document.body.classList.remove('ghost-fs-overlay-active');
-                return;
-            }
-            const videoModal = document.getElementById('videoModal');
-            const isVideoModalVisible = videoModal && videoModal.style.display === 'flex';
-            const isFullscreen = !!(document.fullscreenElement || document.webkitFullscreenElement || document
-                .mozFullScreenElement || document.msFullscreenElement);
-            if (isFullscreen && isVideoModalVisible) {
-                document.body.classList.add('ghost-fs-overlay-active');
-            } else {
-                document.body.classList.remove('ghost-fs-overlay-active');
-            }
-        }
-
-        let ghostAutoFSInitDone = false;
-
-        function attachFullscreenOnPlay(videoElement) {
-            if (!videoElement) return;
-            if (videoElement._ghostFSAttached) return;
-            videoElement._ghostFSAttached = true;
-            let userInteractionHandler = null;
-            let fsAttempted = false;
-
-            function requestFS(el) {
-                if (!el) return;
-                if (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement ||
-                    document.msFullscreenElement) return;
-                try {
-                    const req = el.requestFullscreen || el.webkitRequestFullscreen || el.mozRequestFullScreen || el
-                        .msRequestFullscreen;
-                    if (req) {
-                        req.call(el).catch(() => {
-                            if (!userInteractionHandler && !fsAttempted) {
-                                fsAttempted = true;
-                                userInteractionHandler = function() {
-                                    if (window.innerWidth < 768) return;
-                                    if (!document.fullscreenElement && !document.webkitFullscreenElement) {
-                                        const req2 = el.requestFullscreen || el.webkitRequestFullscreen || el
-                                            .mozRequestFullScreen || el.msRequestFullscreen;
-                                        if (req2) {
-                                            req2.call(el).catch(() => {});
-                                        }
-                                    }
-                                    document.removeEventListener('click', userInteractionHandler);
-                                    document.removeEventListener('touchstart', userInteractionHandler);
-                                    document.removeEventListener('keydown', userInteractionHandler);
-                                    userInteractionHandler = null;
-                                    fsAttempted = false;
-                                };
-                                document.addEventListener('click', userInteractionHandler, { once: true });
-                                document.addEventListener('touchstart', userInteractionHandler, { once: true });
-                                document.addEventListener('keydown', userInteractionHandler, { once: true });
-                            }
-                        });
-                    }
-                } catch (e) {}
-            }
-            videoElement.addEventListener('play', function onPlay() {
-                if (window.innerWidth < 768) return;
-                if (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement ||
-                    document.msFullscreenElement) return;
-            }, { passive: true });
-            videoElement.addEventListener('fullscreenchange', updateFullscreenOverlayState);
-            videoElement.addEventListener('webkitfullscreenchange', updateFullscreenOverlayState);
-            videoElement.addEventListener('mozfullscreenchange', updateFullscreenOverlayState);
-            videoElement.addEventListener('MSFullscreenChange', updateFullscreenOverlayState);
-        }
-
-        function initGhostAutoFullscreen() {
-            if (ghostAutoFSInitDone) return;
-            ghostAutoFSInitDone = true;
-            const observer = new MutationObserver(function(mutations) {
-                if (window.innerWidth < 768) return;
-                for (const mutation of mutations) {
-                    for (const node of mutation.addedNodes) {
-                        if (node.nodeType === 1) {
-                            if (node.nodeName === 'VIDEO') {
-                                attachFullscreenOnPlay(node);
-                            }
-                            if (node.querySelector) {
-                                const videos = node.querySelectorAll('video');
-                                videos.forEach(attachFullscreenOnPlay);
-                                const containers = node.querySelectorAll(
-                                    '.video-js, #myPlyrPlayer, #jwplayer-container, #myClapprPlayer');
-                                containers.forEach(function(container) {
-                                    const v = container.querySelector('video');
-                                    if (v) attachFullscreenOnPlay(v);
-                                });
-                            }
-                        }
-                    }
-                }
-            });
-            observer.observe(document.body, { childList: true, subtree: true });
-            document.querySelectorAll('video').forEach(attachFullscreenOnPlay);
-            setInterval(function() {
-                if (window.innerWidth < 768) return;
-                document.querySelectorAll('video').forEach(function(v) {
-                    if (!v._ghostFSAttached) {
-                        attachFullscreenOnPlay(v);
-                    }
-                });
-            }, 3000);
-        }
-
-        let alertShown = false;
-
-        function detectDevTools() {
-            const threshold = 160;
-            const widthThreshold = window.outerWidth - window.innerWidth > threshold;
-            const heightThreshold = window.outerHeight - window.innerHeight > threshold;
-            if (widthThreshold || heightThreshold) {
-                if (!alertShown) {
-                    alertShown = true;
-                    const alertEl = document.getElementById('devtoolsAlert');
-                    alertEl.style.display = 'flex';
-                    setTimeout(() => alertEl.classList.add('show'), 50);
-                    changePage('home');
-                }
-            }
-        }
-        setInterval(detectDevTools, 1500);
-
-        async function fetchData(type) {
-            try {
-                const response = await fetch(KEYS[type].url);
-                if (!response.ok) {
-                    return;
-                }
-                const json = await response.json();
-                globalDataStore[type] = json.categories || [];
-            } catch (error) {
-                globalDataStore[type] = [];
-            }
-        }
-
-        function attachRemoteFocusToSidebar() {
-            document.querySelectorAll(
-                    '.sidebar a, .sidebar .menu-item-box, .sidebar .ghost-problem-btn, .sidebar .apk-download-btn, .sidebar .voice-toggle-btn'
-                    )
-                .forEach(item => {
-                    item.addEventListener('click', function(e) {
-                        focusRemoteOnSidebar(this);
-                    });
-                    item.addEventListener('contextmenu', function(e) {
-                        e.preventDefault();
-                        focusRemoteOnSidebar(this);
-                        return false;
-                    });
-                });
-        }
-
-        // ===== Paid Modal Functions =====
+        // ================================================================
+        // PAID MODAL
+        // ================================================================
         function openPaidModal() {
             const modal = document.getElementById('paidModal');
             const fallback = document.getElementById('paidFallback');
             const iframe = document.getElementById('paidIframe');
 
-            // Reset and show loader
             iframe.style.display = 'none';
             fallback.style.display = 'flex';
             fallback.innerHTML = `
-              <i class="fas fa-spinner fa-spin"></i>
-              <h3>লোড হচ্ছে...</h3>
-              <p>দয়া করে অপেক্ষা করুন</p>
+                <i class="fas fa-spinner fa-spin"></i>
+                <h3>লোড হচ্ছে...</h3>
+                <p>দয়া করে অপেক্ষা করুন</p>
             `;
-
             modal.style.display = 'flex';
             setTimeout(() => modal.classList.add('show'), 20);
 
-            // Load Paid.html in iframe
             iframe.src = 'Paid.html';
             iframe.onload = function() {
                 fallback.style.display = 'none';
@@ -4071,28 +3979,24 @@
             iframe.onerror = function() {
                 fallback.style.display = 'flex';
                 fallback.innerHTML = `
-                <i class="fas fa-exclamation-triangle text-yellow-500"></i>
-                <h3 class="text-yellow-400">Paid.html লোড করা সম্ভব হয়নি</h3>
-                <p class="text-gray-400">ফাইলটি পাওয়া যায়নি। অনুগ্রহ করে চেক করে আবার চেষ্টা করুন।</p>
-              `;
+                    <i class="fas fa-exclamation-triangle text-yellow-500"></i>
+                    <h3 class="text-yellow-400">Paid.html লোড করা সম্ভব হয়নি</h3>
+                    <p class="text-gray-400">ফাইলটি পাওয়া যায়নি। অনুগ্রহ করে চেক করে আবার চেষ্টা করুন।</p>
+                `;
                 iframe.style.display = 'none';
             };
-
-            // Fallback timer: if iframe doesn't load within 8 seconds, show error
             clearTimeout(iframe._loadTimer);
             iframe._loadTimer = setTimeout(() => {
                 if (fallback.style.display !== 'none') {
                     fallback.style.display = 'flex';
                     fallback.innerHTML = `
-                    <i class="fas fa-clock text-yellow-500"></i>
-                    <h3 class="text-yellow-400">লোড হতে সময় নিচ্ছে</h3>
-                    <p class="text-gray-400">Paid.html লোড করতে বেশি সময় লাগছে। নেটওয়ার্ক চেক করুন।</p>
-                  `;
+                        <i class="fas fa-clock text-yellow-500"></i>
+                        <h3 class="text-yellow-400">লোড হতে সময় নিচ্ছে</h3>
+                        <p class="text-gray-400">Paid.html লোড করতে বেশি সময় লাগছে। নেটওয়ার্ক চেক করুন।</p>
+                    `;
                     iframe.style.display = 'none';
                 }
             }, 8000);
-
-            // Close login modal if it's open
             closeLoginModal();
         }
 
@@ -4108,21 +4012,19 @@
                 const fallback = document.getElementById('paidFallback');
                 fallback.style.display = 'flex';
                 fallback.innerHTML = `
-                <i class="fas fa-spinner fa-spin"></i>
-                <h3>লোড হচ্ছে...</h3>
-                <p>দয়া করে অপেক্ষা করুন</p>
-              `;
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <h3>লোড হচ্ছে...</h3>
+                    <p>দয়া করে অপেক্ষা করুন</p>
+                `;
             }, 350);
         }
 
         // Close paid modal on backdrop click
         document.getElementById('paidModal')?.addEventListener('click', function(e) {
-            if (e.target === this) {
-                closePaidModal();
-            }
+            if (e.target === this) closePaidModal();
         });
 
-        // Close paid modal with ESC key
+        // ESC key for paid modal
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 const paidModal = document.getElementById('paidModal');
@@ -4133,12 +4035,304 @@
         });
 
         // ================================================================
+        // SEARCH
+        // ================================================================
+        function handleSearch(query) {
+            const txt = query.trim().toLowerCase();
+            const searchContainer = document.getElementById('content-search');
+            if (!txt) { changePage('home'); if (searchContainer) searchContainer.innerHTML = ''; return; }
+            changePage('search-section');
+            if (!searchContainer) return;
+            searchContainer.innerHTML = '';
+            let foundItems = [];
+            ['movie', 'livetv', 'adult'].forEach(type => {
+                if (globalDataStore[type]) {
+                    globalDataStore[type].forEach(cat => {
+                        if (cat && cat.movies) {
+                            cat.movies.forEach(movie => {
+                                if (movie && !movie.hidden && movie.name && movie.name.toLowerCase()
+                                    .includes(txt)) {
+                                    if (!foundItems.some(item => item.link === movie.link)) {
+                                        foundItems.push(movie);
+                                    }
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+            if (foundItems.length === 0) {
+                searchContainer.innerHTML =
+                    `<div class="text-gray-500 text-center col-span-full py-20 text-sm"><i class="fas fa-search-minus block text-3xl mb-2 text-gray-700"></i>কোনো কিছু খুঁজে পাওয়া যায়নি!</div>`;
+            } else {
+                let sIdx = 0;
 
+                function streamSearchData() {
+                    const maxBatch = 100;
+                    for (let i = 0; i < maxBatch; i++) {
+                        if (sIdx >= foundItems.length) return;
+                        searchContainer.appendChild(createPoster(foundItems[sIdx], false));
+                        sIdx++;
+                    }
+                    if (sIdx < foundItems.length) setTimeout(streamSearchData, 2);
+                }
+                streamSearchData();
+            }
+        }
+
+        // ================================================================
+        // PAGE NAVIGATION
+        // ================================================================
+        function changePage(pageId) {
+            activePageGlobal = pageId;
+            const sections = document.querySelectorAll('.page-section');
+            sections.forEach(section => section.classList.remove('active'));
+            setTimeout(() => { document.getElementById(pageId)?.classList.add('active'); }, 50);
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            const navBtn = document.getElementById(`btn-${pageId}`);
+            if (navBtn) navBtn.classList.add('active');
+            const titleMap = { home: 'Ghost Tv', movie: 'Movie', livetv: 'Live TV', adult: '18+ Adult',
+                favorite: 'Favorite', 'search-section': 'Search' };
+            document.getElementById('header-title').innerText = titleMap[pageId] || 'ɢʜᴏꜱᴛ_ᴛᴠ';
+            if (pageId === 'favorite') renderFavoritePage();
+            clearRemoteFocus();
+        }
+
+        // ================================================================
+        // RENDER FUNCTIONS
+        // ================================================================
+        function renderHomePage() {
+            const homeContainer = document.getElementById('content-home');
+            if (!homeContainer) return;
+            const loader = document.getElementById('homeLoader');
+            if (loader) loader.style.display = 'none';
+            homeContainer.innerHTML = '';
+            let typesToRender = ['movie', 'livetv'];
+            const isAdultVisible = localStorage.getItem('ghost_adult_visible') === 'true';
+            if (isAdultVisible) typesToRender.push('adult');
+
+            typesToRender.forEach(type => {
+                const categories = globalDataStore[type];
+                if (!categories || categories.length === 0) return;
+                let rowMovies = [];
+                for (let i = 0; i < categories.length; i++) {
+                    if (categories[i] && categories[i].movies) {
+                        const visible = categories[i].movies.filter(m => !m.hidden);
+                        rowMovies = rowMovies.concat([...visible]);
+                    }
+                }
+                if (rowMovies.length === 0) return;
+                const section = document.createElement('div');
+                section.className = "mb-10";
+                section.innerHTML = `
+                    <div class="flex justify-between items-center mb-3 px-1">
+                        <h2 class="text-xl font-bold uppercase tracking-wider text-red-500">${KEYS[type].title}</h2>
+                        <button onclick="changePage('${type}')" class="text-gray-400 hover:text-white text-xs font-bold border border-gray-700 px-3 py-1 rounded-full flex items-center gap-1 transition hover:border-red-500">
+                            SEE ALL <i class="fas fa-arrow-right text-[10px]"></i>
+                        </button>
+                    </div>
+                    <div id="home-row-${type}" class="scroll-row"></div>
+                `;
+                homeContainer.appendChild(section);
+                const rowDiv = document.getElementById(`home-row-${type}`);
+                if (rowDiv) {
+                    const isLiveTv = (type === 'livetv');
+                    rowMovies.slice(0, 15).forEach(movie => {
+                        if (movie) rowDiv.appendChild(createPoster(movie, isLiveTv));
+                    });
+                }
+            });
+        }
+
+        function renderFullPageLagFree(type) {
+            const container = document.getElementById(`content-${type}`);
+            const categories = globalDataStore[type];
+            if (!container) return;
+            container.innerHTML = '';
+            if (!categories || categories.length === 0) {
+                container.innerHTML =
+                    `<div class="text-gray-500 text-center py-12 text-sm">কোন কন্টেন্ট নেই</div>`;
+                return;
+            }
+            const isLiveTv = (type === 'livetv');
+            categories.forEach((category, catIndex) => {
+                if (!category) return;
+                const visibleMovies = (category.movies || []).filter(m => !m.hidden);
+                if (visibleMovies.length === 0) return;
+                const section = document.createElement('div');
+                section.className = "mb-10";
+                section.innerHTML = `
+                    <div class="flex justify-between items-center mb-3 px-1">
+                        <h2 class="text-xl font-bold">${category.name || ''}</h2>
+                        <button onclick="showAll('${type}', ${catIndex})" class="text-red-500 font-medium text-sm transition hover:text-red-400">See All</button>
+                    </div>
+                    <div id="row-${type}-${catIndex}" class="scroll-row"></div>
+                `;
+                container.appendChild(section);
+                const row = document.getElementById(`row-${type}-${catIndex}`);
+                if (row && visibleMovies.length > 0) {
+                    let chunkIndex = 0;
+
+                    function renderChunk() {
+                        const batchSize = 100;
+                        for (let i = 0; i < batchSize; i++) {
+                            if (chunkIndex >= visibleMovies.length) return;
+                            const movie = visibleMovies[chunkIndex];
+                            if (movie) row.appendChild(createPoster(movie, isLiveTv));
+                            chunkIndex++;
+                        }
+                        if (chunkIndex < visibleMovies.length) setTimeout(renderChunk, 2);
+                    }
+                    renderChunk();
+                }
+            });
+        }
+
+        function renderFavoritePage() {
+            const container = document.getElementById('content-favorite');
+            if (!container) return;
+            container.innerHTML = '';
+            const visible = favoritesList.filter(m => !m.hidden);
+            if (visible.length === 0) {
+                container.innerHTML =
+                    `<div class="text-gray-500 text-center col-span-full py-20 text-sm"><i class="fas fa-heart-broken block text-3xl mb-2 text-gray-700"></i>ফেবারেট লিস্ট ফাঁকা</div>`;
+                return;
+            }
+            visible.forEach(movie => {
+                if (movie) container.appendChild(createPoster(movie, false));
+            });
+        }
+
+        function showAll(type, catIndex) {
+            const cat = globalDataStore[type]?.[catIndex];
+            if (cat) {
+                document.getElementById('modalTitle').textContent = cat.name || '';
+                const contentDiv = document.getElementById('modalContent');
+                if (contentDiv) {
+                    contentDiv.innerHTML = '';
+                    const modalMovies = (cat.movies || []).filter(m => !m.hidden);
+                    let mIdx = 0;
+                    const isLiveTv = (type === 'livetv');
+
+                    function streamModalData() {
+                        const batch = 100;
+                        for (let i = 0; i < batch; i++) {
+                            if (mIdx >= modalMovies.length) return;
+                            contentDiv.appendChild(createPoster(modalMovies[mIdx], isLiveTv));
+                            mIdx++;
+                        }
+                        if (mIdx < modalMovies.length) setTimeout(streamModalData, 2);
+                    }
+                    openModal();
+                    streamModalData();
+                }
+            }
+        }
+
+        // ================================================================
+        // SLIDER
+        // ================================================================
+        function initSliderControl() {
+            if (sliderInterval) clearInterval(sliderInterval);
+            const slides = document.querySelectorAll('.slide');
+            if (slides.length <= 1) return;
+            sliderInterval = setInterval(() => {
+                slides[currentSlideIdx].classList.remove('active');
+                currentSlideIdx = (currentSlideIdx + 1) % slides.length;
+                slides[currentSlideIdx].classList.add('active');
+            }, 3200);
+        }
+
+        async function fetchAndRenderSlider() {
+            const sliderContainer = document.getElementById('dynamic-slider');
+            let sliderData = [
+                { img: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=1200",
+                    title: "সর্বশেষ সব নতুন মুভি দেখুন এখানে", type: "movie", badge: "Movies" },
+                { img: "https://images.unsplash.com/photo-1593789198777-f29bc259780e?q=80&w=1200",
+                    title: "বাফারিং ছাড়াই লাইভ টিভি চ্যানেল উপভোগ করুন", type: "livetv", badge: "Live TV" }
+            ];
+            try {
+                const res = await fetch(`https://api.jsonbin.io/v3/b/${USER_BIN}/latest`, {
+                    headers: { "X-Master-Key": MASTER_KEY, "X-Bin-Meta": "false" }
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data && data.slider && Array.isArray(data.slider)) {
+                        sliderData = data.slider.filter(s => s.type !== 'adult');
+                    }
+                }
+            } catch (e) {}
+
+            sliderContainer.innerHTML = '';
+            sliderData.forEach((slide, index) => {
+                const activeClass = index === 0 ? 'active' : '';
+                const badgeText = slide.badge || (slide.type === 'movie' ? 'Movies' : 'Live TV');
+                const badgeColor = slide.type === 'movie' ? 'bg-red-600' : 'bg-blue-600';
+                const div = document.createElement('div');
+                div.className = `slide ${activeClass}`;
+                div.onclick = () => changePage(slide.type);
+                div.innerHTML = `
+                    <img src="${slide.img}" class="w-full h-full object-cover" alt="Banner" loading="lazy">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent flex items-end p-5">
+                        <div>
+                            <span class="${badgeColor} text-white text-[9px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">${badgeText}</span>
+                            <h2 class="text-lg md:text-2xl font-extrabold mt-1 text-white">${slide.title}</h2>
+                        </div>
+                    </div>
+                `;
+                sliderContainer.appendChild(div);
+            });
+            currentSlideIdx = 0;
+            initSliderControl();
+        }
+
+        // ================================================================
+        // DATA FETCH
+        // ================================================================
+        async function fetchData(type) {
+            try {
+                const response = await fetch(KEYS[type].url);
+                if (!response.ok) return;
+                const json = await response.json();
+                globalDataStore[type] = json.categories || [];
+            } catch (error) {
+                globalDataStore[type] = [];
+            }
+        }
+
+        // ================================================================
+        // DEVTOOLS DETECTION
+        // ================================================================
+        function detectDevTools() {
+            const threshold = 160;
+            const widthThreshold = window.outerWidth - window.innerWidth > threshold;
+            const heightThreshold = window.outerHeight - window.innerHeight > threshold;
+            if (widthThreshold || heightThreshold) {
+                if (!alertShown) {
+                    alertShown = true;
+                    const alertEl = document.getElementById('devtoolsAlert');
+                    alertEl.style.display = 'flex';
+                    setTimeout(() => alertEl.classList.add('show'), 50);
+                    changePage('home');
+                }
+            }
+        }
+
+        function closeDevtoolsAlert() {
+            const alertEl = document.getElementById('devtoolsAlert');
+            alertEl.classList.remove('show');
+            setTimeout(() => { alertEl.style.display = 'none';
+                alertShown = false; }, 400);
+        }
+
+        setInterval(detectDevTools, 1500);
+
+        // ================================================================
+        // INIT
+        // ================================================================
         async function initPortal() {
             loadVoiceModeSettings();
-            if (window.speechSynthesis) {
-                window.speechSynthesis.getVoices();
-            }
+            if (window.speechSynthesis) window.speechSynthesis.getVoices();
             loadPlayerSettings();
             await fetchAndRenderSlider();
             await checkAutoLogin();
@@ -4151,6 +4345,10 @@
             attachRemoteFocusToNav();
             attachRemoteFocusToSidebar();
             initTopbarButtons();
+
+            // SETUP FULLSCREEN STRETCH FALLBACK (JavaScript)
+            setupFullscreenStretchFallback();
+
             if (window.innerWidth >= 768) {
                 initGhostAutoFullscreen();
                 document.addEventListener('fullscreenchange', updateFullscreenOverlayState);
@@ -4162,6 +4360,7 @@
             }
             updateAdultSidebarVisibility();
 
+            // Handle shared video via URL param
             const urlParams = new URLSearchParams(window.location.search);
             const playToken = urlParams.get('play');
             let playedFromShare = false;
@@ -4177,10 +4376,8 @@
                                 if (cat && cat.movies) {
                                     const match = cat.movies.find(m => m.link === sharedMovie.link || m
                                         .name === sharedMovie.name);
-                                    if (match) {
-                                        foundMovie = match;
-                                        foundType = type;
-                                    }
+                                    if (match) { foundMovie = match;
+                                        foundType = type; }
                                 }
                             });
                         }
@@ -4193,34 +4390,27 @@
                     console.error("Error loading shared video:", e);
                 }
             }
+
             if (!playedFromShare) {
                 const mode = new URLSearchParams(window.location.search).get('mode');
                 changePage(mode && KEYS[mode] && mode !== 'adult' ? mode : 'home');
             } else {
                 changePage('home');
             }
+
             setTimeout(playWelcomeVoice, 1500);
+
+            // Override showToast to speak
+            const originalShowToast = showToast;
+            showToast = function(message) {
+                originalShowToast(message);
+                speakNotification(message);
+            };
         }
 
-        window.addEventListener("orientationchange", function() {
-            const videoModal = document.getElementById('videoModal');
-            if (videoModal.style.display === 'flex' && vjsPlayer) {
-                if (window.orientation === 90 || window.orientation === -90) {
-                    if (!vjsPlayer.isFullscreen()) {
-                        vjsPlayer.requestFullscreen();
-                    }
-                } else if (window.orientation === 0 || window.orientation === 180) {
-                    if (vjsPlayer.isFullscreen()) {
-                        vjsPlayer.exitFullscreen();
-                    }
-                }
-            }
-        });
-
-        window.addEventListener('popstate', function(event) {
-            if (event.state && event.state.modalOpen) closeModal();
-        });
-
+        // ================================================================
+        // KEYBOARD SHORTCUTS
+        // ================================================================
         document.addEventListener('keydown', e => {
             if (e.key === "Escape") {
                 if (document.getElementById('videoModal').style.display === 'flex') {
@@ -4238,44 +4428,55 @@
             if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
                 if (document.getElementById('videoModal').style.display === 'flex' && activePageGlobal === 'livetv') {
                     e.preventDefault();
-                    if (e.key === "ArrowRight") {
-                        focusTopbarButton(topbarFocusIndex + 1);
-                    } else {
-                        focusTopbarButton(topbarFocusIndex - 1);
-                    }
+                    if (e.key === "ArrowRight") focusTopbarButton(topbarFocusIndex + 1);
+                    else focusTopbarButton(topbarFocusIndex - 1);
                 }
             }
             if (e.key === "Enter") {
                 if (topbarFocusIndex >= 0 && topbarFocusIndex < topbarButtons.length) {
                     const btn = topbarButtons[topbarFocusIndex];
-                    if (btn) {
-                        e.preventDefault();
-                        btn.click();
-                    }
+                    if (btn) { e.preventDefault();
+                        btn.click(); }
                 }
             }
         });
 
-        const originalShowToast = showToast;
-        showToast = function(message) {
-            originalShowToast(message);
-            speakNotification(message);
-        };
+        // ================================================================
+        // ORIENTATION CHANGE
+        // ================================================================
+        window.addEventListener("orientationchange", function() {
+            const videoModal = document.getElementById('videoModal');
+            if (videoModal.style.display === 'flex' && vjsPlayer) {
+                if (window.orientation === 90 || window.orientation === -90) {
+                    if (!vjsPlayer.isFullscreen()) vjsPlayer.requestFullscreen();
+                } else if (window.orientation === 0 || window.orientation === 180) {
+                    if (vjsPlayer.isFullscreen()) vjsPlayer.exitFullscreen();
+                }
+            }
+        });
 
-        window.onload = initPortal;
-    </script>
-    <script>
+        // ================================================================
+        // POPSTATE
+        // ================================================================
+        window.addEventListener('popstate', function(event) {
+            if (event.state && event.state.modalOpen) closeModal();
+        });
+
+        // ================================================================
+        // SERVICE WORKER
+        // ================================================================
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/sw.js')
-                    .then(reg => {
-                        console.log('✅ Service Worker registered successfully!');
-                    })
-                    .catch(err => {
-                        console.log('❌ Service Worker registration failed:', err);
-                    });
+                    .then(reg => { console.log('✅ Service Worker registered successfully!'); })
+                    .catch(err => { console.log('❌ Service Worker registration failed:', err); });
             });
         }
+
+        // ================================================================
+        // START
+        // ================================================================
+        window.onload = initPortal;
     </script>
 </body>
 </html>
