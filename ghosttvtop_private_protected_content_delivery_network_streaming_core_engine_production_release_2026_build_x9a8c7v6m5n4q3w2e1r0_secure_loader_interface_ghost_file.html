@@ -30,35 +30,6 @@
         jwplayer.key = "Khpp2dHxlBJHC8MCmLnBuV2jK/DwDnJMniwF6EO9HC/riJ712ZmbHg==";
     </script>
 
-    <script>
-        // ===== ফুলস্ক্রিন অটো এন্টার =====
-        document.addEventListener('DOMContentLoaded', function() {
-            const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-            if (isMobile) {
-                const el = document.documentElement;
-                if (el.requestFullscreen) {
-                    el.requestFullscreen().catch(() => {});
-                } else if (el.webkitRequestFullscreen) {
-                    el.webkitRequestFullscreen();
-                } else if (el.msRequestFullscreen) {
-                    el.msRequestFullscreen();
-                }
-            }
-        });
-
-        // ট্যাপ করলেও ফুলস্ক্রিন চেষ্টা করবে
-        document.addEventListener('click', function() {
-            if (!document.fullscreenElement && !document.webkitFullscreenElement) {
-                const el = document.documentElement;
-                if (el.requestFullscreen) {
-                    el.requestFullscreen().catch(() => {});
-                } else if (el.webkitRequestFullscreen) {
-                    el.webkitRequestFullscreen();
-                }
-            }
-        });
-    </script>
-
     <style>
         /* ===== রিসেট ও বেসিক ===== */
         * {
@@ -2086,7 +2057,80 @@
             width: 100% !important;
             height: 100% !important;
         }
+
+        /* ===== ফেবারিট স্টার আইকন – পোস্টারের বাম পাশে উপরে ===== */
+        .fav-star-badge {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: #fbbf24;
+            border: 1px solid rgba(251, 191, 36, 0.3);
+            transition: all 0.25s ease;
+            cursor: pointer;
+            z-index: 5;
+            pointer-events: auto;
+        }
+        .fav-star-badge:hover {
+            transform: scale(1.15);
+            background: rgba(0, 0, 0, 0.8);
+            border-color: #fbbf24;
+        }
+        .fav-star-badge.active {
+            color: #fbbf24;
+            background: rgba(251, 191, 36, 0.2);
+            border-color: #fbbf24;
+            box-shadow: 0 0 20px rgba(251, 191, 36, 0.25);
+        }
+        .fav-star-badge i {
+            pointer-events: none;
+        }
+        .livetv-poster .fav-star-badge {
+            top: 6px;
+            left: 6px;
+            width: 26px;
+            height: 26px;
+            font-size: 13px;
+        }
     </style>
+
+    <script>
+        // ===== ফুলস্ক্রিন অটো এন্টার =====
+        document.addEventListener('DOMContentLoaded', function() {
+            const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+            if (isMobile) {
+                const el = document.documentElement;
+                if (el.requestFullscreen) {
+                    el.requestFullscreen().catch(() => {});
+                } else if (el.webkitRequestFullscreen) {
+                    el.webkitRequestFullscreen();
+                } else if (el.msRequestFullscreen) {
+                    el.msRequestFullscreen();
+                }
+            }
+        });
+
+        // ট্যাপ করলেও ফুলস্ক্রিন চেষ্টা করবে
+        document.addEventListener('click', function() {
+            if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+                const el = document.documentElement;
+                if (el.requestFullscreen) {
+                    el.requestFullscreen().catch(() => {});
+                } else if (el.webkitRequestFullscreen) {
+                    el.webkitRequestFullscreen();
+                }
+            }
+        });
+    </script>
 </head>
 <body>
     <!-- ===== HEADER ===== -->
@@ -2590,7 +2634,7 @@
             renderSuggestedVideos(currentSuggestedMovies);
         }
         // ================================================================
-        // CREATE POSTER
+        // CREATE POSTER (লং-প্রেস সরানো হয়েছে)
         // ================================================================
         function createPoster(movie, isLiveTv = false) {
             if (!movie) return document.createElement('div');
@@ -2598,10 +2642,12 @@
             div.className = isLiveTv ? "poster livetv-poster" : "poster";
             const premiumBadge = movie.premium ? `<span class="premium-badge">🜲 𝗩𝗜𝗣</span>` : '';
             const isFav = favoritesList.some(f => f.link === movie.link);
-            const favHeart = isFav ? `<span class="fav-heart-badge"><i class="fas fa-heart"></i></span>` : '';
+            const favStar = isFav 
+                ? `<span class="fav-star-badge active" data-link="${movie.link}"><i class="fas fa-star"></i></span>` 
+                : `<span class="fav-star-badge" data-link="${movie.link}"><i class="fas fa-star"></i></span>`;
             if (isLiveTv) {
                 div.innerHTML = `
-                <div class="relative">${premiumBadge}${favHeart}
+                <div class="relative">${premiumBadge}${favStar}
                     <div class="poster-img-wrapper">
                         <img src="${movie.logo || 'https://picsum.photos/400/400'}" class="poster-img" alt="${movie.name || ''}" loading="lazy">
                     </div>
@@ -2610,46 +2656,33 @@
                 `;
             } else {
                 div.innerHTML = `
-                <div class="relative">${premiumBadge}${favHeart}
+                <div class="relative">${premiumBadge}${favStar}
                     <img src="${movie.logo || 'https://picsum.photos/400/220'}" class="poster-img" alt="${movie.name || ''}" loading="lazy">
                 </div>
                 <p class="poster-name">${movie.name || ''}</p>
                 `;
             }
-            attachRemoteSelectionToPoster(div, movie);
-            let pressTimer;
-            let isLongPress = false;
-            const startPress = (e) => {
-                isLongPress = false;
-                if (pressTimer) clearTimeout(pressTimer);
-                pressTimer = setTimeout(() => {
-                    isLongPress = true;
-                    const isCurrentlyFav = favoritesList.some(f => f.link === movie.link);
-                    const promptMsg = isCurrentlyFav ? "আপনি কি ফেবারেট থেকে রিমুভ করতে চান?" :
-                        "আপনি কি ফেবারেট করতে চান?";
-                    showCustomConfirm(promptMsg).then(confirmed => {
-                        if (confirmed) toggleFavorite(movie);
-                    });
-                }, 700);
-            };
-            const endPress = () => {
-                clearTimeout(pressTimer);
-            };
-            div.addEventListener('mousedown', startPress);
-            div.addEventListener('touchstart', startPress, { passive: true });
-            div.addEventListener('mouseup', endPress);
-            div.addEventListener('mouseleave', endPress);
-            div.addEventListener('touchend', endPress);
-            div.addEventListener('click', (e) => {
-                if (isLongPress) {
-                    e.preventDefault();
+            
+            // Star click handler
+            const starEl = div.querySelector('.fav-star-badge');
+            if (starEl) {
+                starEl.addEventListener('click', function(e) {
                     e.stopPropagation();
-                    isLongPress = false;
-                    return false;
-                }
+                    e.preventDefault();
+                    toggleFavorite(movie);
+                });
+            }
+            
+            attachRemoteSelectionToPoster(div, movie);
+            
+            // লং-প্রেস (চেপে ধরে রাখা) ইভেন্ট লিসেনার সরানো হলো
+            // শুধু সাধারণ ক্লিক ইভেন্ট থাকবে
+            div.addEventListener('click', (e) => {
+                if (e.target.closest('.fav-star-badge')) return;
                 focusRemoteOnPoster(div, movie);
                 handleMovieClick(movie);
             });
+            
             return div;
         }
         // ================================================================
@@ -2702,6 +2735,7 @@
         function attachRemoteSelectionToPoster(posterElement, movieData) {
             if (!posterElement) return;
             posterElement.addEventListener('click', function(e) {
+                if (e.target.closest('.fav-star-badge')) return;
                 e.stopPropagation();
                 focusRemoteOnPoster(this, movieData);
             });
