@@ -2101,6 +2101,11 @@
             height: 26px;
             font-size: 13px;
         }
+
+        /* ===== হোম পেজে স্পিনার ===== */
+        #homeLoader {
+            display: flex;
+        }
     </style>
 
     <script>
@@ -2634,7 +2639,7 @@
             renderSuggestedVideos(currentSuggestedMovies);
         }
         // ================================================================
-        // CREATE POSTER (লং-প্রেস সরানো হয়েছে)
+        // CREATE POSTER (লং-প্রেস সরানো হয়েছে - সম্পূর্ণ)
         // ================================================================
         function createPoster(movie, isLiveTv = false) {
             if (!movie) return document.createElement('div');
@@ -2675,8 +2680,8 @@
             
             attachRemoteSelectionToPoster(div, movie);
             
-            // লং-প্রেস (চেপে ধরে রাখা) ইভেন্ট লিসেনার সরানো হলো
-            // শুধু সাধারণ ক্লিক ইভেন্ট থাকবে
+            // ===== লং-প্রেস (চেপে ধরে রাখা) সম্পূর্ণভাবে সরানো হয়েছে =====
+            // শুধুমাত্র সাধারণ ক্লিক ইভেন্ট থাকবে, কোনো লং-প্রেস নেই
             div.addEventListener('click', (e) => {
                 if (e.target.closest('.fav-star-badge')) return;
                 focusRemoteOnPoster(div, movie);
