@@ -2,36 +2,61 @@
 <html lang="bn">
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
     <title>Gh👻st Tv</title>
-
-    <!-- PWA Meta Tags -->
-    <link rel="manifest" href="manifest.json" />
+    
+    <!-- ===== ফুলস্ক্রিন ও স্ট্যাটাস বার লুকানোর জন্য ===== -->
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <meta name="apple-mobile-web-app-title" content="Ghost Tv" />
-    <link rel="apple-touch-icon" href="https://github.com/ghosttv620/GhostTv/releases/download/Ghost_Tv/Ghost.Tv.Logo.jpg" />
+    <meta name="mobile-web-app-capable" content="yes" />
     <meta name="theme-color" content="#000000" />
-
-    <script src="https://cdn.tailwindcss.com">
-    </script>
+    
+    <!-- PWA Meta Tags -->
+    <link rel="manifest" href="manifest.json" />
+    <link rel="apple-touch-icon" href="https://github.com/ghosttv620/GhostTv/releases/download/Ghost_Tv/Ghost.Tv.Logo.jpg" />
+    
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <link href="https://vjs.zencdn.net/8.10.0/video-js.css" rel="stylesheet" />
-    <script src="https://vjs.zencdn.net/8.10.0/video.min.js">
-    </script>
+    <script src="https://vjs.zencdn.net/8.10.0/video.min.js"></script>
     <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
-    <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest">
-    </script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@clappr/player@latest/dist/clappr.min.js">
-    </script>
-
+    <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@clappr/player@latest/dist/clappr.min.js"></script>
+    
     <!-- JW Player -->
-    <script src="https://content.jwplatform.com/libraries/IDzF9Zmk.js">
-    </script>
+    <script src="https://content.jwplatform.com/libraries/IDzF9Zmk.js"></script>
     <script>
         jwplayer.key = "Khpp2dHxlBJHC8MCmLnBuV2jK/DwDnJMniwF6EO9HC/riJ712ZmbHg==";
+    </script>
+
+    <script>
+        // ===== ফুলস্ক্রিন অটো এন্টার =====
+        document.addEventListener('DOMContentLoaded', function() {
+            const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+            if (isMobile) {
+                const el = document.documentElement;
+                if (el.requestFullscreen) {
+                    el.requestFullscreen().catch(() => {});
+                } else if (el.webkitRequestFullscreen) {
+                    el.webkitRequestFullscreen();
+                } else if (el.msRequestFullscreen) {
+                    el.msRequestFullscreen();
+                }
+            }
+        });
+
+        // ট্যাপ করলেও ফুলস্ক্রিন চেষ্টা করবে
+        document.addEventListener('click', function() {
+            if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+                const el = document.documentElement;
+                if (el.requestFullscreen) {
+                    el.requestFullscreen().catch(() => {});
+                } else if (el.webkitRequestFullscreen) {
+                    el.webkitRequestFullscreen();
+                }
+            }
+        });
     </script>
 
     <style>
@@ -46,7 +71,6 @@
             user-select: none;
             -webkit-touch-callout: none;
         }
-
         body {
             font-family: 'Noto Sans Bengali', system-ui, sans-serif;
             background-color: #000;
@@ -54,7 +78,6 @@
             padding-bottom: 70px;
             overflow-x: hidden;
         }
-
         header {
             background-color: #1a1f29;
             padding: 12px 16px;
@@ -67,7 +90,6 @@
             box-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
             border-bottom: 1px solid rgba(255, 255, 255, 0.06);
         }
-
         .header-left {
             display: flex;
             align-items: center;
@@ -75,7 +97,6 @@
             flex: 1;
             min-width: 0;
         }
-
         .menu-btn {
             font-size: 22px;
             cursor: pointer;
@@ -86,7 +107,6 @@
         .menu-btn:hover {
             color: #e50914;
         }
-
         .logo {
             font-size: 18px;
             font-weight: 700;
@@ -96,7 +116,6 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
-
         /* ===== সাইডবার ===== */
         .sidebar {
             position: fixed;
@@ -148,7 +167,6 @@
             text-align: center;
             font-size: 18px;
         }
-
         .sidebar .ghost-problem-btn {
             display: flex;
             align-items: center;
@@ -174,7 +192,6 @@
             font-size: 18px;
             color: #e50914;
         }
-
         .sidebar .apk-download-btn {
             display: flex;
             align-items: center;
@@ -200,7 +217,6 @@
             font-size: 18px;
             color: #00c850;
         }
-
         .sidebar .voice-toggle-btn {
             display: flex;
             align-items: center;
@@ -239,14 +255,12 @@
             background: rgba(239, 68, 68, 0.2);
             color: #ef4444;
         }
-
         #sidebar-adult-item {
             display: none !important;
         }
         #sidebar-adult-item.visible {
             display: flex !important;
         }
-
         .remote-selected-name {
             color: #22c55e !important;
             transition: color 0.15s ease;
@@ -266,19 +280,16 @@
         .suggested-item.remote-selected-suggested .suggested-name {
             color: #22c55e !important;
         }
-
         .topbar-btn-focused {
             color: #22c55e !important;
             transform: scale(1.15);
             text-shadow: 0 0 20px rgba(34, 197, 94, 0.4);
         }
-
         .container {
             padding: 8px 4px;
             max-width: 100%;
             margin: 0 auto;
         }
-
         .page-section {
             display: none;
             opacity: 0;
@@ -290,7 +301,6 @@
             opacity: 1;
             transform: scale(1) translateY(0);
         }
-
         .poster {
             transition: all 0.25s ease;
             will-change: transform;
@@ -320,7 +330,6 @@
         .poster:hover {
             transform: scale(1.05);
         }
-
         .scroll-row {
             scrollbar-width: none;
             overflow-x: auto;
@@ -333,7 +342,6 @@
         .scroll-row::-webkit-scrollbar {
             display: none;
         }
-
         .poster.livetv-poster .poster-img-wrapper {
             width: 80%;
             aspect-ratio: 1/1;
@@ -375,7 +383,6 @@
             overflow: hidden;
             transition: color 0.15s ease;
         }
-
         .poster:not(.livetv-poster) .poster-img {
             aspect-ratio: 2 / 2.85;
             object-fit: cover;
@@ -400,14 +407,12 @@
             overflow: hidden;
             transition: color 0.15s ease;
         }
-
         .glass-header {
             background: rgba(0, 0, 0, 0.88);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
-
         #videoModal {
             display: none;
             position: fixed;
@@ -441,7 +446,6 @@
             text-overflow: ellipsis;
             color: #f1f5f9;
         }
-
         .video-container-box {
             width: 100%;
             aspect-ratio: 16 / 9;
@@ -452,7 +456,6 @@
             justify-content: center;
             flex-shrink: 0;
         }
-
         .video-js {
             width: 100% !important;
             height: 100% !important;
@@ -461,7 +464,6 @@
             background-color: #e50914 !important;
             border-color: #e50914 !important;
         }
-
         .suggested-section {
             width: 100%;
             background: #0b0f17;
@@ -489,7 +491,6 @@
             flex-shrink: 0;
             background: #1a1f2e;
         }
-
         .suggested-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -541,7 +542,6 @@
                 border-radius: 0 0 12px 12px;
             }
         }
-
         .suggested-item {
             cursor: pointer;
             transition: transform 0.2s ease, box-shadow 0.2s ease;
@@ -583,7 +583,6 @@
             margin-left: 3px;
             font-size: 10px;
         }
-
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -624,7 +623,6 @@
         .nav-item.active i {
             transform: scale(1.15);
         }
-
         .backdrop {
             position: fixed;
             top: 0;
@@ -639,7 +637,6 @@
         .backdrop.active {
             display: block;
         }
-
         .slider-container {
             position: relative;
             width: 100%;
@@ -667,7 +664,6 @@
             opacity: 1;
             display: block;
         }
-
         #toast-notice {
             position: fixed;
             bottom: 80px;
@@ -747,7 +743,6 @@
                 bottom: 70px;
             }
         }
-
         #customConfirmModal {
             display: none;
             position: fixed;
@@ -780,7 +775,6 @@
         #customConfirmModal.show .confirm-box {
             transform: scale(1);
         }
-
         #premiumAlertModal {
             display: none;
             position: fixed;
@@ -814,7 +808,6 @@
         #premiumAlertModal.show .premium-glass-box {
             transform: scale(1);
         }
-
         .sidebar-player-footer {
             background: rgba(10, 14, 23, 0.95);
             border-top: 1px solid rgba(255, 255, 255, 0.06);
@@ -852,7 +845,6 @@
             border-color: #e50914;
             box-shadow: 0 0 0 2px rgba(229, 9, 20, 0.2);
         }
-
         .modal-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -869,7 +861,6 @@
                 grid-template-columns: repeat(5, 1fr);
             }
         }
-
         .fav-heart-badge {
             position: absolute;
             bottom: 44px;
@@ -895,7 +886,6 @@
             letter-spacing: 0.5px;
             box-shadow: 0 2px 8px rgba(245, 158, 11, 0.4);
         }
-
         #loginModal .modal-card {
             background: #161d2b;
             border: 1px solid #2a3348;
@@ -915,7 +905,6 @@
             font-weight: 400;
             opacity: 0.8;
         }
-
         .suggested-scroll {
             max-height: 500px;
             overflow-y: auto;
@@ -932,7 +921,6 @@
         .suggested-scroll::-webkit-scrollbar-track {
             background: transparent;
         }
-
         #loginModal {
             display: none !important;
             position: fixed !important;
@@ -943,7 +931,6 @@
         #loginModal[style*="display: flex"] {
             display: flex !important;
         }
-
         .loading-spinner {
             display: flex;
             flex-direction: column;
@@ -971,7 +958,6 @@
                 transform: rotate(360deg);
             }
         }
-
         .modal-background-fix {
             background: #000 !important;
         }
@@ -984,7 +970,6 @@
         #modal .modal-grid {
             background: #000 !important;
         }
-
         .suggested-section {
             min-height: 350px;
         }
@@ -993,7 +978,6 @@
                 min-height: 450px;
             }
         }
-
         .scroll-row {
             display: flex;
             gap: 8px;
@@ -1035,7 +1019,6 @@
                 gap: 4px !important;
             }
         }
-
         @media (max-width: 480px) {
             .modal-grid {
                 grid-template-columns: repeat(3, 1fr) !important;
@@ -1049,7 +1032,6 @@
                 flex: 0 0 100% !important;
             }
         }
-
         #content-search {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -1066,7 +1048,6 @@
                 flex: 0 0 100% !important;
             }
         }
-
         #content-favorite {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -1083,7 +1064,6 @@
                 flex: 0 0 100% !important;
             }
         }
-
         .reset-device-btn {
             background: rgba(229, 9, 20, 0.12);
             border: 1px solid rgba(229, 9, 20, 0.25);
@@ -1111,7 +1091,6 @@
         .reset-device-btn i {
             font-size: 10px;
         }
-
         .login-card-header {
             display: flex;
             align-items: center;
@@ -1136,7 +1115,6 @@
         .login-btn-wrapper .reset-device-btn {
             flex-shrink: 0;
         }
-
         #ghostProblemModal {
             display: none;
             position: fixed;
@@ -1294,7 +1272,6 @@
         .ghost-problem-box .success-msg i {
             font-size: 20px;
         }
-
         .sr-only {
             position: absolute;
             width: 1px;
@@ -1305,7 +1282,6 @@
             clip: rect(0, 0, 0, 0);
             border: 0;
         }
-
         /* ===== বড় স্ক্রিনে ভিডিও প্লেয়ার ফুলস্ক্রিন, সাজেস্টেড লুকানো ===== */
         @media (min-width: 768px) {
             #videoModal .suggested-section {
@@ -1349,7 +1325,6 @@
                 display: none !important;
             }
         }
-
         @media (max-width: 767px) {
             #videoModal .suggested-section {
                 display: block !important;
@@ -1372,7 +1347,6 @@
                 display: flex !important;
             }
         }
-
         /* ===== ফুলস্ক্রিনে হেডার ওভারলে – শুধু বড় স্ক্রিনে ===== */
         @media (min-width: 768px) {
             body.ghost-fs-overlay-active #videoModal .glass-header {
@@ -1480,7 +1454,6 @@
                 }
             }
         }
-
         .topbar-actions {
             display: flex;
             align-items: center;
@@ -1507,7 +1480,6 @@
         .topbar-actions .fullscreen-icon {
             font-size: 20px;
         }
-
         .play-toggle-btn {
             background: none;
             border: none;
@@ -1522,7 +1494,6 @@
         .play-toggle-btn:hover {
             color: #e50914;
         }
-
         #devtoolsAlert {
             display: none;
             position: fixed;
@@ -1600,7 +1571,6 @@
         .devtools-alert-box .alert-btn:active {
             transform: scale(0.96);
         }
-
         /* ===== লাইভ টিভি পোস্টারের জন্য অতিরিক্ত স্টাইল ===== */
         .poster.livetv-poster .poster-img-wrapper {
             width: 72%;
@@ -1657,7 +1627,6 @@
             top: 6px;
             right: 6px;
         }
-
         .suggested-item.livetv-suggested .suggested-img-wrapper {
             width: 72%;
             aspect-ratio: 1/1;
@@ -1709,7 +1678,6 @@
         .suggested-item.livetv-suggested.remote-selected-suggested .suggested-name {
             color: #22c55e !important;
         }
-
         .suggested-title .headline-text {
             color: #ff0000;
             font-weight: 800;
@@ -1782,7 +1750,6 @@
             flex: 1;
             margin-left: 8px;
         }
-
         /* ===== JW Player ===== */
         #jwplayer-container {
             width: 100% !important;
@@ -1806,7 +1773,6 @@
             height: 100% !important;
             object-fit: fill !important;
         }
-
         /* ===== Paid Modal ===== */
         #paidModal {
             display: none;
@@ -1946,11 +1912,7 @@
                 min-height: 320px;
             }
         }
-
-        /* ============================================================
-                   FULLSCREEN STRETCH MODE — applies to ALL video players
-                   ============================================================ */
-
+        /* ============================================================ FULLSCREEN STRETCH MODE — applies to ALL video players ============================================================ */
         /* 1) Native HTML5 <video> in fullscreen */
         video:fullscreen {
             object-fit: fill !important;
@@ -1972,7 +1934,6 @@
             width: 100% !important;
             height: 100% !important;
         }
-
         /* 2) Video.js tech element inside fullscreen */
         .vjs-tech:fullscreen {
             object-fit: fill !important;
@@ -1994,7 +1955,6 @@
             width: 100% !important;
             height: 100% !important;
         }
-
         /* 3) JW Player video inside fullscreen */
         .jw-media video:fullscreen {
             object-fit: fill !important;
@@ -2016,7 +1976,6 @@
             width: 100% !important;
             height: 100% !important;
         }
-
         /* 4) Plyr video inside fullscreen */
         .plyr__video-wrapper video:fullscreen {
             object-fit: fill !important;
@@ -2038,7 +1997,6 @@
             width: 100% !important;
             height: 100% !important;
         }
-
         /* 5) Clappr video inside fullscreen */
         .clappr-container video:fullscreen {
             object-fit: fill !important;
@@ -2060,7 +2018,6 @@
             width: 100% !important;
             height: 100% !important;
         }
-
         /* 6) Any video inside a fullscreen container (fallback) */
         :fullscreen video {
             object-fit: fill !important;
@@ -2082,7 +2039,6 @@
             width: 100% !important;
             height: 100% !important;
         }
-
         /* 7) Fullscreen container itself — ensures no padding/letterbox */
         :fullscreen {
             width: 100% !important;
@@ -2108,7 +2064,6 @@
             padding: 0 !important;
             margin: 0 !important;
         }
-
         /* 8) Video.js fullscreen wrapper */
         .video-js.vjs-fullscreen {
             width: 100% !important;
@@ -2119,14 +2074,12 @@
             width: 100% !important;
             height: 100% !important;
         }
-
         /* 9) Plyr fullscreen wrapper */
         .plyr--fullscreen .plyr__video-wrapper video {
             object-fit: fill !important;
             width: 100% !important;
             height: 100% !important;
         }
-
         /* 10) JW Player fullscreen wrapper */
         .jwplayer.jw-flag-fullscreen .jw-media video {
             object-fit: fill !important;
@@ -2135,9 +2088,7 @@
         }
     </style>
 </head>
-
 <body>
-
     <!-- ===== HEADER ===== -->
     <header>
         <div class="header-left">
@@ -2150,10 +2101,8 @@
             </button>
         </div>
     </header>
-
     <!-- ===== BACKDROP ===== -->
     <div class="backdrop" onclick="toggleSidebar()"></div>
-
     <!-- ===== SIDEBAR ===== -->
     <div class="sidebar" id="sidebar">
         <div class="sidebar-menu-items">
@@ -2166,7 +2115,6 @@
             <a href="#" onclick="changePage('home'); toggleSidebar();"><i class="fas fa-home"></i> হোম</a>
             <a href="#" onclick="changePage('movie'); toggleSidebar();"><i class="fas fa-film"></i> মুভি</a>
             <a href="#" onclick="changePage('livetv'); toggleSidebar();"><i class="fas fa-tv"></i> লাইভ টিভি</a>
-
             <div class="menu-item-box justify-between cursor-pointer" id="sidebar-adult-item">
                 <div class="flex items-center gap-[16px]" onclick="if(document.getElementById('adultVisibilityToggle').checked) { changePage('adult'); toggleSidebar(); } else { showToast('⚠️ আগে চেকবক্সে টিক দিন!'); }">
                     <i class="fas fa-exclamation-triangle text-amber-500"></i>
@@ -2174,16 +2122,18 @@
                 </div>
                 <input type="checkbox" id="adultVisibilityToggle" onchange="toggleAdultNavVisibility(this.checked)" class="w-5 h-5 accent-red-600 cursor-pointer">
             </div>
-
             <div class="ghost-problem-btn" onclick="openGhostProblemModal(); toggleSidebar();">
-                <i class="fas fa-ghost"></i> <span>Ghost Problem Fix</span>
+                <i class="fas fa-ghost"></i>
+                <span>Ghost Problem Fix</span>
             </div>
             <div class="voice-toggle-btn" onclick="toggleVoiceMode(); toggleSidebar();">
-                <i class="fas fa-volume-up"></i> <span>ভয়েজ মোড</span>
+                <i class="fas fa-volume-up"></i>
+                <span>ভয়েজ মোড</span>
                 <span class="toggle-status" id="voiceModeStatus">অন</span>
             </div>
             <a href="https://github.com/ghosttv620/GhostTv/releases/download/Ghost_Tv/Ghost_Tv.apk" target="_blank" class="apk-download-btn" onclick="toggleSidebar();">
-                <i class="fas fa-download"></i> <span>Ghost Tv Apk</span>
+                <i class="fas fa-download"></i>
+                <span>Ghost Tv Apk</span>
             </a>
         </div>
         <div class="sidebar-player-footer">
@@ -2216,10 +2166,8 @@
             </div>
         </div>
     </div>
-
     <!-- ===== CONTAINER ===== -->
     <div class="container">
-
         <!-- SEARCH -->
         <section id="search-section" class="page-section">
             <div class="pt-4 px-2 max-w-full mx-auto">
@@ -2227,7 +2175,6 @@
                 <div id="content-search"></div>
             </div>
         </section>
-
         <!-- HOME -->
         <section id="home" class="page-section active">
             <div class="px-2 max-w-full mx-auto">
@@ -2247,16 +2194,12 @@
                 </div>
             </div>
         </section>
-
         <!-- MOVIE -->
         <section id="movie" class="page-section"><div class="pt-6 px-2 max-w-full mx-auto" id="content-movie"><div class="loading-spinner"><div class="spinner"></div><div class="loading-text">মুভি লোড হচ্ছে...</div></div></div></section>
-
         <!-- LIVE TV -->
         <section id="livetv" class="page-section"><div class="pt-6 px-2 max-w-full mx-auto" id="content-livetv"><div class="loading-spinner"><div class="spinner"></div><div class="loading-text">লাইভ টিভি লোড হচ্ছে...</div></div></div></section>
-
         <!-- ADULT -->
         <section id="adult" class="page-section"><div class="pt-6 px-2 max-w-full mx-auto" id="content-adult"><div class="loading-spinner"><div class="spinner"></div><div class="loading-text">অ্যাডাল্ট লোড হচ্ছে...</div></div></div></section>
-
         <!-- FAVORITE -->
         <section id="favorite" class="page-section">
             <div class="pt-4 px-2 max-w-full mx-auto">
@@ -2264,7 +2207,6 @@
             </div>
         </section>
     </div>
-
     <!-- ===== GHOST PROBLEM MODAL ===== -->
     <div id="ghostProblemModal">
         <div class="ghost-problem-box">
@@ -2291,7 +2233,6 @@
             </form>
         </div>
     </div>
-
     <!-- ===== CUSTOM CONFIRM ===== -->
     <div id="customConfirmModal">
         <div class="confirm-box text-center">
@@ -2306,7 +2247,6 @@
             </div>
         </div>
     </div>
-
     <!-- ===== PREMIUM ALERT ===== -->
     <div id="premiumAlertModal">
         <div class="premium-glass-box">
@@ -2322,7 +2262,6 @@
             </button>
         </div>
     </div>
-
     <!-- ===== LOGIN MODAL ===== -->
     <div id="loginModal" class="p-4" style="display:none !important;">
         <div class="modal-card">
@@ -2374,7 +2313,6 @@
             </div>
         </div>
     </div>
-
     <!-- ===== PAID MODAL ===== -->
     <div id="paidModal">
         <div class="paid-modal-box">
@@ -2392,7 +2330,6 @@
             </div>
         </div>
     </div>
-
     <!-- ===== MODAL (for "See All") ===== -->
     <div id="modal" class="hidden fixed inset-0 bg-black z-[2000] overflow-y-auto modal-background-fix">
         <div class="max-w-5xl mx-auto px-4 py-0">
@@ -2405,7 +2342,6 @@
             <div id="modalContent" class="modal-grid" style="background: #000 !important;"></div>
         </div>
     </div>
-
     <!-- ===== VIDEO MODAL ===== -->
     <div id="videoModal">
         <div class="glass-header">
@@ -2437,26 +2373,22 @@
             </div>
         </div>
     </div>
-
     <!-- ===== DEVTOOLS ALERT ===== -->
     <div id="devtoolsAlert">
         <div class="devtools-alert-box">
             <div class="alert-icon"><i class="fas fa-shield-alt"></i></div>
             <h3><i class="fas fa-exclamation-triangle"></i> ⚠️ সতর্কতা</h3>
             <p>
-                এই ওয়েবসাইটের স্ট্রিমিং লিংক চুরি, কপি বা অননুমোদিত ব্যবহার আইনত দণ্ডনীয় অপরাধ।<br>
-                প্রমাণ পাওয়া গেলে প্রয়োজনীয় আইনি ব্যবস্থা নেওয়া হবে।
+                এই ওয়েবসাইটের স্ট্রিমিং লিংক চুরি, কপি বা অননুমোদিত ব্যবহার আইনত দণ্ডনীয় অপরাধ।<br> প্রমাণ পাওয়া গেলে প্রয়োজনীয় আইনি ব্যবস্থা নেওয়া হবে।
             </p>
             <button class="alert-btn" onclick="closeDevtoolsAlert()">আমি বুঝেছি</button>
         </div>
     </div>
-
     <!-- ===== TOAST ===== -->
     <div id="toast-notice">
         <span class="toast-icon"><i class="fas fa-bell"></i></span>
         <span class="toast-text" id="toastMessage"></span>
     </div>
-
     <!-- ===== BOTTOM NAV ===== -->
     <nav class="bottom-nav">
         <button class="nav-item active" onclick="changePage('home')" id="btn-home"><i class="fas fa-home"></i><span>Home</span></button>
@@ -2465,7 +2397,6 @@
         <button class="nav-item" onclick="changePage('adult')" id="btn-adult" style="display: none;"><i class="fas fa-exclamation-triangle"></i><span>Adult</span></button>
         <button class="nav-item" onclick="changePage('favorite')" id="btn-favorite"><i class="fas fa-heart"></i><span>Favorite</span></button>
     </nav>
-
     <script>
         // ================================================================
         // CONFIG
@@ -2478,7 +2409,6 @@
             livetv: { url: "https://raw.githubusercontent.com/ghosttv620/Ghost-Tv/main/Ghost%20Tv.json", title: "Live TV" },
             adult: { url: "https://raw.githubusercontent.com/ghosttv620/Ghost-Adult/main/Ghost%20Adult.json", title: "18+ Adult" }
         };
-
         // ================================================================
         // STATE
         // ================================================================
@@ -2509,7 +2439,6 @@
         let lastClickTimeVideo = 0;
         let clickTimerVideo = null;
         let lastClickXVideo = 0;
-
         // ================================================================
         // HELPERS
         // ================================================================
@@ -2561,8 +2490,7 @@
             utterance.pitch = 1;
             utterance.volume = 1;
             const voices = window.speechSynthesis.getVoices();
-            const preferred = voices.find(v => v.lang === 'en-US' && (v.name.includes('Google') || v.name.includes(
-                'Natural') || v.name.includes('Samantha')));
+            const preferred = voices.find(v => v.lang === 'en-US' && (v.name.includes('Google') || v.name.includes('Natural') || v.name.includes('Samantha')));
             if (preferred) utterance.voice = preferred;
             window.speechSynthesis.speak(utterance);
         }
@@ -2577,7 +2505,9 @@
             document.querySelector('.backdrop').classList.toggle('active');
         }
 
-        function closeModal() { document.getElementById('modal').classList.add('hidden'); }
+        function closeModal() {
+            document.getElementById('modal').classList.add('hidden');
+        }
 
         function openModal() {
             const modal = document.getElementById('modal');
@@ -2585,7 +2515,6 @@
             modal.style.background = '#000';
             history.pushState({ modalOpen: true }, '');
         }
-
         // ================================================================
         // PLAYER SETTINGS
         // ================================================================
@@ -2601,7 +2530,6 @@
                 if (el) el.value = saved;
             });
         }
-
         // ================================================================
         // VOICE MODE
         // ================================================================
@@ -2638,7 +2566,6 @@
             speakMessage("Welcome to Ghost Corporation. Developer by Ghost Nirob.");
             sessionStorage.setItem('ghost_welcome_played', 'true');
         }
-
         // ================================================================
         // FAVORITES
         // ================================================================
@@ -2662,7 +2589,6 @@
             if (document.getElementById('favorite').classList.contains('active')) renderFavoritePage();
             renderSuggestedVideos(currentSuggestedMovies);
         }
-
         // ================================================================
         // CREATE POSTER
         // ================================================================
@@ -2673,27 +2599,24 @@
             const premiumBadge = movie.premium ? `<span class="premium-badge">🜲 𝗩𝗜𝗣</span>` : '';
             const isFav = favoritesList.some(f => f.link === movie.link);
             const favHeart = isFav ? `<span class="fav-heart-badge"><i class="fas fa-heart"></i></span>` : '';
-
             if (isLiveTv) {
                 div.innerHTML = `
-                    <div class="relative">${premiumBadge}${favHeart}
-                        <div class="poster-img-wrapper">
-                            <img src="${movie.logo || 'https://picsum.photos/400/400'}" class="poster-img" alt="${movie.name || ''}" loading="lazy">
-                        </div>
+                <div class="relative">${premiumBadge}${favHeart}
+                    <div class="poster-img-wrapper">
+                        <img src="${movie.logo || 'https://picsum.photos/400/400'}" class="poster-img" alt="${movie.name || ''}" loading="lazy">
                     </div>
-                    <p class="poster-name">${movie.name || ''}</p>
+                </div>
+                <p class="poster-name">${movie.name || ''}</p>
                 `;
             } else {
                 div.innerHTML = `
-                    <div class="relative">${premiumBadge}${favHeart}
-                        <img src="${movie.logo || 'https://picsum.photos/400/220'}" class="poster-img" alt="${movie.name || ''}" loading="lazy">
-                    </div>
-                    <p class="poster-name">${movie.name || ''}</p>
+                <div class="relative">${premiumBadge}${favHeart}
+                    <img src="${movie.logo || 'https://picsum.photos/400/220'}" class="poster-img" alt="${movie.name || ''}" loading="lazy">
+                </div>
+                <p class="poster-name">${movie.name || ''}</p>
                 `;
             }
-
             attachRemoteSelectionToPoster(div, movie);
-
             let pressTimer;
             let isLongPress = false;
             const startPress = (e) => {
@@ -2709,7 +2632,9 @@
                     });
                 }, 700);
             };
-            const endPress = () => { clearTimeout(pressTimer); };
+            const endPress = () => {
+                clearTimeout(pressTimer);
+            };
             div.addEventListener('mousedown', startPress);
             div.addEventListener('touchstart', startPress, { passive: true });
             div.addEventListener('mouseup', endPress);
@@ -2727,7 +2652,6 @@
             });
             return div;
         }
-
         // ================================================================
         // REMOTE FOCUS
         // ================================================================
@@ -2790,7 +2714,9 @@
 
         function attachRemoteFocusToNav() {
             document.querySelectorAll('.nav-item').forEach(btn => {
-                btn.addEventListener('click', function() { focusRemoteOnNav(this); });
+                btn.addEventListener('click', function() {
+                    focusRemoteOnNav(this);
+                });
                 btn.addEventListener('contextmenu', function(e) {
                     e.preventDefault();
                     focusRemoteOnNav(this);
@@ -2803,7 +2729,9 @@
             document.querySelectorAll(
                 '.sidebar a, .sidebar .menu-item-box, .sidebar .ghost-problem-btn, .sidebar .apk-download-btn, .sidebar .voice-toggle-btn'
             ).forEach(item => {
-                item.addEventListener('click', function() { focusRemoteOnSidebar(this); });
+                item.addEventListener('click', function() {
+                    focusRemoteOnSidebar(this);
+                });
                 item.addEventListener('contextmenu', function(e) {
                     e.preventDefault();
                     focusRemoteOnSidebar(this);
@@ -2811,7 +2739,6 @@
                 });
             });
         }
-
         // ================================================================
         // TOPBAR FOCUS
         // ================================================================
@@ -2838,12 +2765,11 @@
             const btn = topbarButtons[index];
             if (btn) {
                 btn.classList.add('topbar-btn-focused');
-                const label = btn.id === 'topBackBtn' ? 'ব্যাক বাটন' :
-                    btn.id === 'playStopToggleBtn' ? 'স্টার্ট স্টপ বাটন' : 'ফুলস্ক্রিন বাটন';
+                const label = btn.id === 'topBackBtn' ? 'ব্যাক বাটন' : btn.id === 'playStopToggleBtn' ?
+                    'স্টার্ট স্টপ বাটন' : 'ফুলস্ক্রিন বাটন';
                 speakNotification(`ফোকাস: ${label}`);
             }
         }
-
         // ================================================================
         // RANDOM CHANNEL (Live TV)
         // ================================================================
@@ -2875,7 +2801,6 @@
             speakNotification(`Channel changed to ${newMovie.name}`);
             handleMovieClick(newMovie);
         }
-
         // ================================================================
         // VIDEO CLICK / SKIP
         // ================================================================
@@ -2892,33 +2817,46 @@
                 }
                 return;
             }
-
             const now = Date.now();
             const timeSinceLastClick = now - lastClickTimeVideo;
             let clickX = 0;
             if (e.clientX !== undefined) clickX = e.clientX;
             else if (e.touches && e.touches[0]) clickX = e.touches[0].clientX;
             else if (e.changedTouches && e.changedTouches[0]) clickX = e.changedTouches[0].clientX;
-
             if (timeSinceLastClick < 400 && Math.abs(clickX - lastClickXVideo) < 50) {
                 e.preventDefault();
                 e.stopPropagation();
                 let rect = e.target ? e.target.getBoundingClientRect() : null;
-                if (!rect) { showToast('⚠️ ভিডিও অবস্থান পাওয়া যায়নি!'); return; }
+                if (!rect) {
+                    showToast('⚠️ ভিডিও অবস্থান পাওয়া যায়নি!');
+                    return;
+                }
                 const centerX = rect.left + rect.width / 2;
                 const isRight = clickX > centerX;
                 let player = vjsPlayer || plyrPlayer || jwPlayerInstance || clapprPlayerInstance;
-                if (!player) { showToast('⚠️ প্লেয়ার পাওয়া যায়নি!'); return; }
+                if (!player) {
+                    showToast('⚠️ প্লেয়ার পাওয়া যায়নি!');
+                    return;
+                }
                 let currentTime = 0,
                     duration = 0;
-                if (vjsPlayer) { currentTime = vjsPlayer.currentTime();
-                    duration = vjsPlayer.duration(); } else if (plyrPlayer) { currentTime = plyrPlayer.currentTime;
-                    duration = plyrPlayer.duration; } else if (jwPlayerInstance) { currentTime = jwPlayerInstance
-                        .getPosition();
-                    duration = jwPlayerInstance.getDuration(); } else if (clapprPlayerInstance) { currentTime =
-                        clapprPlayerInstance.getCurrentTime();
-                    duration = clapprPlayerInstance.getDuration(); }
-                if (!duration || duration === 0 || isNaN(duration)) { showToast('⚠️ ভিডিওর সময় পাওয়া যায়নি!'); return; }
+                if (vjsPlayer) {
+                    currentTime = vjsPlayer.currentTime();
+                    duration = vjsPlayer.duration();
+                } else if (plyrPlayer) {
+                    currentTime = plyrPlayer.currentTime;
+                    duration = plyrPlayer.duration;
+                } else if (jwPlayerInstance) {
+                    currentTime = jwPlayerInstance.getPosition();
+                    duration = jwPlayerInstance.getDuration();
+                } else if (clapprPlayerInstance) {
+                    currentTime = clapprPlayerInstance.getCurrentTime();
+                    duration = clapprPlayerInstance.getDuration();
+                }
+                if (!duration || duration === 0 || isNaN(duration)) {
+                    showToast('⚠️ ভিডিওর সময় পাওয়া যায়নি!');
+                    return;
+                }
                 let newTime = isRight ? Math.min(currentTime + 10, duration) : Math.max(currentTime - 10, 0);
                 if (vjsPlayer) vjsPlayer.currentTime(newTime);
                 else if (plyrPlayer) plyrPlayer.currentTime = newTime;
@@ -2927,17 +2865,23 @@
                 const dir = isRight ? '⏩ ফরোয়ার্ড' : '⏪ রিওয়াইন্ড';
                 showToast(`${dir} ১০ সেকেন্ড! (${Math.round(newTime)}/${Math.round(duration)})`);
                 speakNotification(isRight ? 'Forward 10 seconds' : 'Rewind 10 seconds');
-                if (clickTimerVideo) { clearTimeout(clickTimerVideo);
-                    clickTimerVideo = null; }
+                if (clickTimerVideo) {
+                    clearTimeout(clickTimerVideo);
+                    clickTimerVideo = null;
+                }
                 return;
             }
             lastClickTimeVideo = now;
             lastClickXVideo = clickX;
-            if (clickTimerVideo) { clearTimeout(clickTimerVideo);
-                clickTimerVideo = null; }
+            if (clickTimerVideo) {
+                clearTimeout(clickTimerVideo);
+                clickTimerVideo = null;
+            }
         }
 
-        function handleVideoClick(e) { handleVideoClickForSkip(e); }
+        function handleVideoClick(e) {
+            handleVideoClickForSkip(e);
+        }
 
         function handleLeftRightClick(e) {
             if (activePageGlobal !== 'livetv') return;
@@ -2952,8 +2896,10 @@
                 e.stopPropagation();
                 changeToRandomChannel();
                 lastLeftRightClickTarget = null;
-                if (leftRightClickTimeout) { clearTimeout(leftRightClickTimeout);
-                    leftRightClickTimeout = null; }
+                if (leftRightClickTimeout) {
+                    clearTimeout(leftRightClickTimeout);
+                    leftRightClickTimeout = null;
+                }
                 return;
             }
             const rect = e.target.getBoundingClientRect();
@@ -2964,8 +2910,10 @@
             if (isRight) focusTopbarButton(topbarFocusIndex + 1);
             else focusTopbarButton(topbarFocusIndex - 1);
             lastLeftRightClickTarget = e.target;
-            if (leftRightClickTimeout) { clearTimeout(leftRightClickTimeout);
-                leftRightClickTimeout = null; }
+            if (leftRightClickTimeout) {
+                clearTimeout(leftRightClickTimeout);
+                leftRightClickTimeout = null;
+            }
             leftRightClickTimeout = setTimeout(() => {
                 lastLeftRightClickTarget = null;
                 leftRightClickTimeout = null;
@@ -2981,30 +2929,26 @@
             videoElement.addEventListener('touchend', function(e) {
                 const touch = e.changedTouches[0];
                 if (!touch) return;
-                const fake = { target: e.target, clientX: touch.clientX, clientY: touch.clientY,
-                    preventDefault: () => e.preventDefault(), stopPropagation: () => e.stopPropagation() };
+                const fake = { target: e.target, clientX: touch.clientX, clientY: touch.clientY, preventDefault: () => e
+                        .preventDefault(), stopPropagation: () => e.stopPropagation() };
                 handleVideoClick(fake);
             }, { passive: false });
             videoElement.addEventListener('click', handleLeftRightClick);
             videoElement.addEventListener('touchend', function(e) {
                 const touch = e.changedTouches[0];
                 if (!touch) return;
-                const fake = { target: e.target, clientX: touch.clientX, clientY: touch.clientY,
-                    preventDefault: () => e.preventDefault(), stopPropagation: () => e.stopPropagation() };
+                const fake = { target: e.target, clientX: touch.clientX, clientY: touch.clientY, preventDefault: () => e
+                        .preventDefault(), stopPropagation: () => e.stopPropagation() };
                 handleLeftRightClick(fake);
             }, { passive: false });
         }
-
         // ================================================================
         // FULLSCREEN STRETCH — JAVASCRIPT FALLBACK
         // ================================================================
         function setupFullscreenStretchFallback() {
             function applyStretchToFullscreenVideos() {
-                const fsEl = document.fullscreenElement ||
-                    document.webkitFullscreenElement ||
-                    document.mozFullScreenElement ||
-                    document.msFullscreenElement;
-
+                const fsEl = document.fullscreenElement || document.webkitFullscreenElement || document
+                .mozFullScreenElement || document.msFullscreenElement;
                 // Remove stretch from all videos first
                 document.querySelectorAll('video').forEach(v => {
                     v.style.objectFit = '';
@@ -3024,7 +2968,6 @@
                 document.querySelectorAll('.clappr-container video').forEach(el => {
                     el.style.objectFit = '';
                 });
-
                 if (fsEl) {
                     // Apply stretch to every video inside the fullscreen element
                     const videos = fsEl.querySelectorAll('video');
@@ -3065,27 +3008,21 @@
                     fsEl.style.margin = '0';
                 }
             }
-
             // Listen to all fullscreen change events
             ['fullscreenchange', 'webkitfullscreenchange', 'mozfullscreenchange', 'MSFullscreenChange'].forEach(evt => {
                 document.addEventListener(evt, applyStretchToFullscreenVideos);
             });
-
             // Also run once after a short delay to catch any initial fullscreen
             setTimeout(applyStretchToFullscreenVideos, 300);
-
             // Extra safety: run periodically while fullscreen is active
             setInterval(() => {
-                const fsEl = document.fullscreenElement ||
-                    document.webkitFullscreenElement ||
-                    document.mozFullScreenElement ||
-                    document.msFullscreenElement;
+                const fsEl = document.fullscreenElement || document.webkitFullscreenElement || document
+                    .mozFullScreenElement || document.msFullscreenElement;
                 if (fsEl) {
                     applyStretchToFullscreenVideos();
                 }
             }, 2000);
         }
-
         // ================================================================
         // FULLSCREEN OVERLAY STATE
         // ================================================================
@@ -3096,15 +3033,14 @@
             }
             const videoModal = document.getElementById('videoModal');
             const isVisible = videoModal && videoModal.style.display === 'flex';
-            const isFS = !!(document.fullscreenElement || document.webkitFullscreenElement ||
-                document.mozFullScreenElement || document.msFullscreenElement);
+            const isFS = !!(document.fullscreenElement || document.webkitFullscreenElement || document
+                .mozFullScreenElement || document.msFullscreenElement);
             if (isFS && isVisible) {
                 document.body.classList.add('ghost-fs-overlay-active');
             } else {
                 document.body.classList.remove('ghost-fs-overlay-active');
             }
         }
-
         // ================================================================
         // FULLSCREEN ON PLAY (auto fullscreen)
         // ================================================================
@@ -3112,29 +3048,28 @@
             if (!videoElement) return;
             if (videoElement._ghostFSAttached) return;
             videoElement._ghostFSAttached = true;
-
             let userInteractionHandler = null;
             let fsAttempted = false;
 
             function requestFS(el) {
                 if (!el) return;
-                if (document.fullscreenElement || document.webkitFullscreenElement ||
-                    document.mozFullScreenElement || document.msFullscreenElement) return;
+                if (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement ||
+                    document.msFullscreenElement) return;
                 try {
-                    const req = el.requestFullscreen || el.webkitRequestFullscreen ||
-                        el.mozRequestFullScreen || el.msRequestFullscreen;
+                    const req = el.requestFullscreen || el.webkitRequestFullscreen || el.mozRequestFullScreen || el
+                        .msRequestFullscreen;
                     if (req) {
                         req.call(el).catch(() => {
                             if (!userInteractionHandler && !fsAttempted) {
                                 fsAttempted = true;
                                 userInteractionHandler = function() {
                                     if (window.innerWidth < 768) return;
-                                    if (!document.fullscreenElement && !document
-                                        .webkitFullscreenElement) {
-                                        const req2 = el.requestFullscreen || el
-                                            .webkitRequestFullscreen ||
+                                    if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+                                        const req2 = el.requestFullscreen || el.webkitRequestFullscreen ||
                                             el.mozRequestFullScreen || el.msRequestFullscreen;
-                                        if (req2) { req2.call(el).catch(() => {}); }
+                                        if (req2) {
+                                            req2.call(el).catch(() => {});
+                                        }
                                     }
                                     document.removeEventListener('click', userInteractionHandler);
                                     document.removeEventListener('touchstart', userInteractionHandler);
@@ -3150,14 +3085,12 @@
                     }
                 } catch (e) {}
             }
-
             videoElement.addEventListener('play', function onPlay() {
                 if (window.innerWidth < 768) return;
-                if (document.fullscreenElement || document.webkitFullscreenElement ||
-                    document.mozFullScreenElement || document.msFullscreenElement) return;
+                if (document.fullscreenElement || document.webkitFullscreenElement || document
+                    .mozFullScreenElement || document.msFullscreenElement) return;
                 // Don't auto-request here — let the user click the fullscreen button
             }, { passive: true });
-
             videoElement.addEventListener('fullscreenchange', updateFullscreenOverlayState);
             videoElement.addEventListener('webkitfullscreenchange', updateFullscreenOverlayState);
             videoElement.addEventListener('mozfullscreenchange', updateFullscreenOverlayState);
@@ -3167,7 +3100,6 @@
         function initGhostAutoFullscreen() {
             if (ghostAutoFSInitDone) return;
             ghostAutoFSInitDone = true;
-
             const observer = new MutationObserver(function(mutations) {
                 if (window.innerWidth < 768) return;
                 for (const mutation of mutations) {
@@ -3188,7 +3120,6 @@
                 }
             });
             observer.observe(document.body, { childList: true, subtree: true });
-
             document.querySelectorAll('video').forEach(attachFullscreenOnPlay);
             setInterval(function() {
                 if (window.innerWidth < 768) return;
@@ -3197,16 +3128,26 @@
                 });
             }, 3000);
         }
-
         // ================================================================
         // VIDEO MODAL
         // ================================================================
         function destroyAllPlayers() {
-            if (vjsPlayer) { try { vjsPlayer.dispose(); } catch (e) {} vjsPlayer = null; }
-            if (plyrPlayer) { try { plyrPlayer.destroy(); } catch (e) {} plyrPlayer = null; }
-            if (jwPlayerInstance) { try { jwPlayerInstance.remove(); } catch (e) {} jwPlayerInstance = null; }
-            if (clapprPlayerInstance) { try { clapprPlayerInstance.destroy(); } catch (e) {} clapprPlayerInstance =
-                null; }
+            if (vjsPlayer) {
+                try { vjsPlayer.dispose(); } catch (e) {}
+                vjsPlayer = null;
+            }
+            if (plyrPlayer) {
+                try { plyrPlayer.destroy(); } catch (e) {}
+                plyrPlayer = null;
+            }
+            if (jwPlayerInstance) {
+                try { jwPlayerInstance.remove(); } catch (e) {}
+                jwPlayerInstance = null;
+            }
+            if (clapprPlayerInstance) {
+                try { clapprPlayerInstance.destroy(); } catch (e) {}
+                clapprPlayerInstance = null;
+            }
         }
 
         function changeHeadlineEffect() {
@@ -3241,8 +3182,10 @@
             const unique = [];
             const seen = new Set();
             movies.forEach(m => {
-                if (m && m.link && !seen.has(m.link)) { seen.add(m.link);
-                    unique.push(m); }
+                if (m && m.link && !seen.has(m.link)) {
+                    seen.add(m.link);
+                    unique.push(m);
+                }
             });
             const visible = unique.filter(m => !m.hidden);
             const toShow = visible.slice(0, 12);
@@ -3259,27 +3202,24 @@
                 suggestedPage = isLiveTv ? 'livetv' : 'movie';
             }
             const isLiveTvSuggested = (suggestedPage === 'livetv');
-
             toShow.forEach(movie => {
                 const item = document.createElement('div');
                 item.className = isLiveTvSuggested ? 'suggested-item livetv-suggested' : 'suggested-item';
                 const isFav = favoritesList.some(f => f.link === movie.link);
                 const favIcon = isFav ? `<i class="fas fa-heart text-red-500 text-[11px] ml-1"></i>` : '';
-
                 if (isLiveTvSuggested) {
                     item.innerHTML = `
-                        <div class="suggested-img-wrapper">
-                            <img src="${movie.logo || 'https://picsum.photos/400/400'}" class="suggested-img" alt="${movie.name || ''}" loading="lazy">
-                        </div>
-                        <div class="suggested-name">${movie.name || ''} ${favIcon}</div>
+                    <div class="suggested-img-wrapper">
+                        <img src="${movie.logo || 'https://picsum.photos/400/400'}" class="suggested-img" alt="${movie.name || ''}" loading="lazy">
+                    </div>
+                    <div class="suggested-name">${movie.name || ''} ${favIcon}</div>
                     `;
                 } else {
                     item.innerHTML = `
-                        <img src="${movie.logo || 'https://picsum.photos/400/220'}" alt="${movie.name || ''}" loading="lazy">
-                        <div class="suggested-name">${movie.name || ''} ${favIcon}</div>
+                    <img src="${movie.logo || 'https://picsum.photos/400/220'}" alt="${movie.name || ''}" loading="lazy">
+                    <div class="suggested-name">${movie.name || ''} ${favIcon}</div>
                     `;
                 }
-
                 item.addEventListener('click', function(e) {
                     focusRemoteOnSuggested(this, movie);
                     handleMovieClick(movie);
@@ -3318,17 +3258,14 @@
             destroyAllPlayers();
             initTopbarButtons();
             clearTopbarFocus();
-
             const videoModal = document.getElementById('videoModal');
             document.getElementById('videoTitle').textContent = movie.name || '';
             const thumb = document.getElementById('currentVideoThumb');
             thumb.src = movie.logo || 'https://picsum.photos/100/100';
             thumb.alt = movie.name || 'বর্তমান ভিডিওর পোস্টার';
             videoModal.style.display = 'flex';
-
             const mountPoint = document.getElementById('player-mount-point');
             mountPoint.innerHTML = '';
-
             let pageContext = activePageGlobal;
             if (pageContext === 'home' || pageContext === 'favorite' || pageContext === 'search-section') {
                 pageContext = 'movie';
@@ -3338,9 +3275,7 @@
             const lastSavedVolume = localStorage.getItem('ghost_global_volume');
             const initialVolume = lastSavedVolume !== null ? parseFloat(lastSavedVolume) : 1.0;
             const isMutedByDefault = initialVolume === 0;
-
             document.getElementById('playStopToggleBtn').innerHTML = '<i class="fas fa-pause"></i>';
-
             if (selectedPlayer === 'videojs') {
                 const videoEl = document.createElement('video');
                 videoEl.id = 'myVideoPlayer';
@@ -3348,7 +3283,6 @@
                 videoEl.setAttribute('controls', 'true');
                 videoEl.setAttribute('preload', 'auto');
                 mountPoint.appendChild(videoEl);
-
                 const videoType = isM3u8 ? "application/x-mpegURL" : "video/mp4";
                 vjsPlayer = videojs('myVideoPlayer', { autoplay: true, controls: true, liveui: true });
                 vjsPlayer.src({ src: movie.link, type: videoType });
@@ -3377,7 +3311,6 @@
                 videoEl.setAttribute('controls', 'true');
                 videoEl.setAttribute('playsinline', 'true');
                 mountPoint.appendChild(videoEl);
-
                 if (isM3u8 && Hls.isSupported()) {
                     const hls = new Hls();
                     hls.loadSource(movie.link);
@@ -3385,12 +3318,7 @@
                 } else {
                     videoEl.src = movie.link;
                 }
-
-                plyrPlayer = new Plyr('#myPlyrPlayer', {
-                    autoplay: true,
-                    volume: initialVolume,
-                    muted: isMutedByDefault
-                });
+                plyrPlayer = new Plyr('#myPlyrPlayer', { autoplay: true, volume: initialVolume, muted: isMutedByDefault });
                 plyrPlayer.on('volumechange', () => {
                     const vol = plyrPlayer.muted ? 0 : plyrPlayer.volume;
                     localStorage.setItem('ghost_global_volume', vol);
@@ -3409,8 +3337,7 @@
                 containerDiv.id = 'jwplayer-container';
                 containerDiv.className = 'w-full h-full';
                 mountPoint.appendChild(containerDiv);
-
-                jwPlayerInstance = jwplayer('jwplayer-container').setup({
+                jwPlayerInstance = jwplayer("jwplayer-container").setup({
                     file: movie.link,
                     width: "100%",
                     height: "100%",
@@ -3422,11 +3349,13 @@
                     controls: true,
                     playbackRateControls: false
                 });
-
                 jwPlayerInstance.on('ready', function() {
                     if (initialVolume !== undefined) jwPlayerInstance.setVolume(initialVolume * 100);
                     const videoEl = document.querySelector('#jwplayer-container video');
-                    if (videoEl) attachVideoControls(videoEl);
+                    if (videoEl) {
+                        attachVideoControls(videoEl);
+                        videoEl.style.setProperty('object-fit', 'fill', 'important');
+                    }
                 });
                 jwPlayerInstance.on('play', function() {
                     document.getElementById('playStopToggleBtn').innerHTML = '<i class="fas fa-pause"></i>';
@@ -3438,15 +3367,33 @@
                     const vol = event.volume / 100;
                     localStorage.setItem('ghost_global_volume', vol);
                 });
+                jwPlayerInstance.on('fullscreen', function(event) {
+                    setTimeout(() => {
+                        const videoEl = document.querySelector('#jwplayer-container video');
+                        if (videoEl) {
+                            videoEl.style.setProperty('object-fit', 'fill', 'important');
+                            videoEl.style.setProperty('width', '100%', 'important');
+                            videoEl.style.setProperty('height', '100%', 'important');
+                        }
+                        const container = document.querySelector('#jwplayer-container');
+                        if (container) {
+                            container.style.setProperty('width', '100%', 'important');
+                            container.style.setProperty('height', '100%', 'important');
+                        }
+                        updateFullscreenOverlayState();
+                    }, 100);
+                });
                 if (window.innerWidth >= 768) {
-                    attachFullscreenOnPlay(document.querySelector('#jwplayer-container video'));
+                    setTimeout(() => {
+                        const videoEl = document.querySelector('#jwplayer-container video');
+                        if (videoEl) attachFullscreenOnPlay(videoEl);
+                    }, 500);
                 }
             } else if (selectedPlayer === 'clappr') {
                 const clapprDiv = document.createElement('div');
                 clapprDiv.id = 'myClapprPlayer';
                 clapprDiv.className = 'w-full h-full';
                 mountPoint.appendChild(clapprDiv);
-
                 clapprPlayerInstance = new Clappr.Player({
                     source: movie.link,
                     parentId: '#myClapprPlayer',
@@ -3469,15 +3416,16 @@
                 });
                 if (window.innerWidth >= 768) {
                     const videoEl = document.querySelector('#myClapprPlayer video');
-                    if (videoEl) { attachFullscreenOnPlay(videoEl);
-                        attachVideoControls(videoEl); }
+                    if (videoEl) {
+                        attachFullscreenOnPlay(videoEl);
+                        attachVideoControls(videoEl);
+                    }
                 }
                 setTimeout(() => {
                     const videoEl = document.querySelector('#myClapprPlayer video');
                     if (videoEl) attachVideoControls(videoEl);
                 }, 500);
             }
-
             // Build suggested list
             let suggested = [];
             const currentPage = pageContext;
@@ -3519,12 +3467,13 @@
             currentSuggestedMovies = [];
             currentPlayingMovie = null;
             clearTopbarFocus();
-            if (effectInterval) { clearInterval(effectInterval);
-                effectInterval = null; }
+            if (effectInterval) {
+                clearInterval(effectInterval);
+                effectInterval = null;
+            }
             const headline = document.getElementById('headlineText');
             if (headline) headline.className = 'headline-text';
         }
-
         // ================================================================
         // TOGGLE PLAY/STOP & FULLSCREEN
         // ================================================================
@@ -3545,9 +3494,11 @@
                 if (jwPlayerInstance.getState() === 'paused' || jwPlayerInstance.getState() === 'idle') {
                     jwPlayerInstance.play();
                     isPlaying = true;
-                } else { jwPlayerInstance.pause();
+                } else {
+                    jwPlayerInstance.pause();
                     jwPlayerInstance.seek(0);
-                    isPlaying = false; }
+                    isPlaying = false;
+                }
             } else if (clapprPlayerInstance) {
                 if (clapprPlayerInstance.isPaused()) { clapprPlayerInstance.play();
                     isPlaying = true; } else { clapprPlayerInstance.pause();
@@ -3562,7 +3513,10 @@
 
         function toggleVideoFullscreen() {
             const active = vjsPlayer || plyrPlayer || jwPlayerInstance || clapprPlayerInstance;
-            if (!active) { showToast('⚠️ কোনো প্লেয়ার সক্রিয় নেই'); return; }
+            if (!active) {
+                showToast('⚠️ কোনো প্লেয়ার সক্রিয় নেই');
+                return;
+            }
             if (vjsPlayer) {
                 if (vjsPlayer.isFullscreen()) vjsPlayer.exitFullscreen();
                 else vjsPlayer.requestFullscreen();
@@ -3582,7 +3536,6 @@
             }
             showToast('⛶ ফুলস্ক্রিন টগল');
         }
-
         // ================================================================
         // CUSTOM CONFIRM
         // ================================================================
@@ -3610,14 +3563,12 @@
                 });
             });
         }
-
         // ================================================================
         // PREMIUM ALERT
         // ================================================================
         function showPremiumAlert(message) {
             const modal = document.getElementById('premiumAlertModal');
-            document.getElementById('premiumAlertMessage').innerText = message ||
-                "⚠️ এই কন্টেন্টটি প্রিমিয়াম! লগইন করুন।";
+            document.getElementById('premiumAlertMessage').innerText = message || "⚠️ এই কন্টেন্টটি প্রিমিয়াম! লগইন করুন।";
             modal.style.display = 'flex';
             setTimeout(() => modal.classList.add('show'), 10);
         }
@@ -3628,7 +3579,6 @@
             setTimeout(() => { modal.style.display = 'none';
                 openLoginModal(); }, 300);
         }
-
         // ================================================================
         // LOGIN / AUTH
         // ================================================================
@@ -3722,19 +3672,19 @@
             const area = document.getElementById('auth-status-area');
             if (currentUserData) {
                 area.innerHTML = `
-                    <div class="flex items-center gap-2">
-                        <span class="text-xs font-semibold text-green-400 bg-green-950/50 border border-green-800/60 px-3 py-1.5 rounded-full flex items-center gap-1">
-                            <span class="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></span>
-                            ${currentUserData.username}
-                        </span>
-                        <button onclick="handleLogout()" class="text-gray-500 hover:text-red-500 text-sm p-1"><i class="fas fa-sign-out-alt"></i></button>
-                    </div>
+                <div class="flex items-center gap-2">
+                    <span class="text-xs font-semibold text-green-400 bg-green-950/50 border border-green-800/60 px-3 py-1.5 rounded-full flex items-center gap-1">
+                        <span class="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse"></span>
+                        ${currentUserData.username}
+                    </span>
+                    <button onclick="handleLogout()" class="text-gray-500 hover:text-red-500 text-sm p-1"><i class="fas fa-sign-out-alt"></i></button>
+                </div>
                 `;
             } else {
                 area.innerHTML = `
-                    <button onclick="openLoginModal()" class="bg-red-600 hover:bg-red-700 text-white text-xs font-bold px-4 py-2 rounded-full transition active:scale-95 shadow-lg shadow-red-600/20">
-                        <i class="fas fa-user-lock mr-1"></i> লগইন
-                    </button>
+                <button onclick="openLoginModal()" class="bg-red-600 hover:bg-red-700 text-white text-xs font-bold px-4 py-2 rounded-full transition active:scale-95 shadow-lg shadow-red-600/20">
+                    <i class="fas fa-user-lock mr-1"></i> লগইন
+                </button>
                 `;
             }
             updateAdultSidebarVisibility();
@@ -3773,20 +3723,35 @@
         async function resetDeviceId() {
             const user = document.getElementById('loginUser')?.value.trim();
             const pass = document.getElementById('loginPass')?.value.trim();
-            if (!user || !pass) { showToast("⚠️ প্রথমে ইউজারনেম ও পাসওয়ার্ড দিন!"); return; }
+            if (!user || !pass) {
+                showToast("⚠️ প্রথমে ইউজারনেম ও পাসওয়ার্ড দিন!");
+                return;
+            }
             try {
                 const res = await fetch(`https://api.jsonbin.io/v3/b/${USER_BIN}/latest`, {
                     headers: { "X-Master-Key": MASTER_KEY, "X-Bin-Meta": "false" }
                 });
-                if (!res.ok) { showToast("⚠️ সার্ভার সংযোগ ব্যর্থ!"); return; }
+                if (!res.ok) {
+                    showToast("⚠️ সার্ভার সংযোগ ব্যর্থ!");
+                    return;
+                }
                 const responseData = await res.json();
                 let users = [];
                 let isArray = false;
-                if (Array.isArray(responseData)) { users = responseData;
-                    isArray = true; } else if (responseData.users && Array.isArray(responseData.users)) { users =
-                        responseData.users; } else { showToast("⚠️ ডেটা ফরম্যাট সঠিক নয়!"); return; }
+                if (Array.isArray(responseData)) {
+                    users = responseData;
+                    isArray = true;
+                } else if (responseData.users && Array.isArray(responseData.users)) {
+                    users = responseData.users;
+                } else {
+                    showToast("⚠️ ডেটা ফরম্যাট সঠিক নয়!");
+                    return;
+                }
                 const userIndex = users.findIndex(u => u.username === user && u.password === pass);
-                if (userIndex === -1) { showToast("⚠️ ইউজারনাম বা পাসওয়ার্ড ভুল!"); return; }
+                if (userIndex === -1) {
+                    showToast("⚠️ ইউজারনাম বা পাসওয়ার্ড ভুল!");
+                    return;
+                }
                 users[userIndex].device_id = "";
                 let updateData = isArray ? users : { users: users };
                 if (!isArray) {
@@ -3798,7 +3763,10 @@
                     headers: { "Content-Type": "application/json", "X-Master-Key": MASTER_KEY },
                     body: JSON.stringify(updateData)
                 });
-                if (!putRes.ok) { showToast("⚠️ রিসেট আপডেট করতে ব্যর্থ!"); return; }
+                if (!putRes.ok) {
+                    showToast("⚠️ রিসেট আপডেট করতে ব্যর্থ!");
+                    return;
+                }
                 localStorage.removeItem('ghost_user');
                 localStorage.removeItem('ghost_pass');
                 currentUserData = null;
@@ -3811,7 +3779,6 @@
                 showToast("⚠️ রিসেট করতে সমস্যা হয়েছে!");
             }
         }
-
         // ================================================================
         // ADULT VISIBILITY
         // ================================================================
@@ -3827,8 +3794,10 @@
                 adultItem.classList.remove('visible');
                 if (document.getElementById('adult').classList.contains('active')) changePage('home');
                 const chk = document.getElementById('adultVisibilityToggle');
-                if (chk && chk.checked) { chk.checked = false;
-                    toggleAdultNavVisibility(false); }
+                if (chk && chk.checked) {
+                    chk.checked = false;
+                    toggleAdultNavVisibility(false);
+                }
             }
         }
 
@@ -3853,7 +3822,6 @@
             if (checkbox) checkbox.checked = isVisible;
             document.getElementById('btn-adult').style.display = isVisible ? 'flex' : 'none';
         }
-
         // ================================================================
         // GHOST PROBLEM MODAL
         // ================================================================
@@ -3890,20 +3858,25 @@
             const problemDesc = document.getElementById('problemDescription').value.trim();
             const sendBtn = document.getElementById('ghostSendBtn');
             const successMsg = document.getElementById('ghostSuccessMsg');
-
-            if (!movieName) { showToast('⚠️ দয়া করে টিভি অথবা মুভির নাম লিখুন!');
-                document.getElementById('problemMovieName').focus(); return; }
-            if (!problemDesc) { showToast('⚠️ দয়া করে প্রবলেমটি লিখুন!');
-                document.getElementById('problemDescription').focus(); return; }
-            if (problemDesc.length < 5) { showToast('⚠️ প্রবলেমটি একটু বিস্তারিত লিখুন (কমপক্ষে ৫ অক্ষর)'); return; }
-
+            if (!movieName) {
+                showToast('⚠️ দয়া করে টিভি অথবা মুভির নাম লিখুন!');
+                document.getElementById('problemMovieName').focus();
+                return;
+            }
+            if (!problemDesc) {
+                showToast('⚠️ দয়া করে প্রবলেমটি লিখুন!');
+                document.getElementById('problemDescription').focus();
+                return;
+            }
+            if (problemDesc.length < 5) {
+                showToast('⚠️ প্রবলেমটি একটু বিস্তারিত লিখুন (কমপক্ষে ৫ অক্ষর)');
+                return;
+            }
             sendBtn.disabled = true;
             sendBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> সেন্ড হচ্ছে...';
-
             const username = currentUserData ? currentUserData.username : 'অতিথি';
             const deviceId = myDeviceId;
             const currentTime = new Date().toLocaleString('bn-BD', { timeZone: 'Asia/Dhaka' });
-
             const payload = {
                 embeds: [{
                     title: '👻 Ghost Problem Fix',
@@ -3919,7 +3892,6 @@
                     timestamp: new Date().toISOString()
                 }]
             };
-
             try {
                 const response = await fetch(DISCORD_WEBHOOK, {
                     method: 'POST',
@@ -3952,7 +3924,6 @@
                 sendBtn.disabled = false;
             }
         }
-
         // ================================================================
         // PAID MODAL
         // ================================================================
@@ -3960,7 +3931,6 @@
             const modal = document.getElementById('paidModal');
             const fallback = document.getElementById('paidFallback');
             const iframe = document.getElementById('paidIframe');
-
             iframe.style.display = 'none';
             fallback.style.display = 'flex';
             fallback.innerHTML = `
@@ -3970,7 +3940,6 @@
             `;
             modal.style.display = 'flex';
             setTimeout(() => modal.classList.add('show'), 20);
-
             iframe.src = 'Paid.html';
             iframe.onload = function() {
                 fallback.style.display = 'none';
@@ -4018,12 +3987,10 @@
                 `;
             }, 350);
         }
-
         // Close paid modal on backdrop click
         document.getElementById('paidModal')?.addEventListener('click', function(e) {
             if (e.target === this) closePaidModal();
         });
-
         // ESC key for paid modal
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
@@ -4033,14 +4000,17 @@
                 }
             }
         });
-
         // ================================================================
         // SEARCH
         // ================================================================
         function handleSearch(query) {
             const txt = query.trim().toLowerCase();
             const searchContainer = document.getElementById('content-search');
-            if (!txt) { changePage('home'); if (searchContainer) searchContainer.innerHTML = ''; return; }
+            if (!txt) {
+                changePage('home');
+                if (searchContainer) searchContainer.innerHTML = '';
+                return;
+            }
             changePage('search-section');
             if (!searchContainer) return;
             searchContainer.innerHTML = '';
@@ -4079,7 +4049,6 @@
                 streamSearchData();
             }
         }
-
         // ================================================================
         // PAGE NAVIGATION
         // ================================================================
@@ -4087,7 +4056,9 @@
             activePageGlobal = pageId;
             const sections = document.querySelectorAll('.page-section');
             sections.forEach(section => section.classList.remove('active'));
-            setTimeout(() => { document.getElementById(pageId)?.classList.add('active'); }, 50);
+            setTimeout(() => {
+                document.getElementById(pageId)?.classList.add('active');
+            }, 50);
             document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
             const navBtn = document.getElementById(`btn-${pageId}`);
             if (navBtn) navBtn.classList.add('active');
@@ -4097,7 +4068,6 @@
             if (pageId === 'favorite') renderFavoritePage();
             clearRemoteFocus();
         }
-
         // ================================================================
         // RENDER FUNCTIONS
         // ================================================================
@@ -4110,7 +4080,6 @@
             let typesToRender = ['movie', 'livetv'];
             const isAdultVisible = localStorage.getItem('ghost_adult_visible') === 'true';
             if (isAdultVisible) typesToRender.push('adult');
-
             typesToRender.forEach(type => {
                 const categories = globalDataStore[type];
                 if (!categories || categories.length === 0) return;
@@ -4150,8 +4119,7 @@
             if (!container) return;
             container.innerHTML = '';
             if (!categories || categories.length === 0) {
-                container.innerHTML =
-                    `<div class="text-gray-500 text-center py-12 text-sm">কোন কন্টেন্ট নেই</div>`;
+                container.innerHTML = `<div class="text-gray-500 text-center py-12 text-sm">কোন কন্টেন্ট নেই</div>`;
                 return;
             }
             const isLiveTv = (type === 'livetv');
@@ -4228,7 +4196,6 @@
                 }
             }
         }
-
         // ================================================================
         // SLIDER
         // ================================================================
@@ -4246,8 +4213,8 @@
         async function fetchAndRenderSlider() {
             const sliderContainer = document.getElementById('dynamic-slider');
             let sliderData = [
-                { img: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=1200",
-                    title: "সর্বশেষ সব নতুন মুভি দেখুন এখানে", type: "movie", badge: "Movies" },
+                { img: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?q=80&w=1200", title: "সর্বশেষ সব নতুন মুভি দেখুন এখানে",
+                    type: "movie", badge: "Movies" },
                 { img: "https://images.unsplash.com/photo-1593789198777-f29bc259780e?q=80&w=1200",
                     title: "বাফারিং ছাড়াই লাইভ টিভি চ্যানেল উপভোগ করুন", type: "livetv", badge: "Live TV" }
             ];
@@ -4262,7 +4229,6 @@
                     }
                 }
             } catch (e) {}
-
             sliderContainer.innerHTML = '';
             sliderData.forEach((slide, index) => {
                 const activeClass = index === 0 ? 'active' : '';
@@ -4285,7 +4251,6 @@
             currentSlideIdx = 0;
             initSliderControl();
         }
-
         // ================================================================
         // DATA FETCH
         // ================================================================
@@ -4299,7 +4264,6 @@
                 globalDataStore[type] = [];
             }
         }
-
         // ================================================================
         // DEVTOOLS DETECTION
         // ================================================================
@@ -4324,9 +4288,7 @@
             setTimeout(() => { alertEl.style.display = 'none';
                 alertShown = false; }, 400);
         }
-
         setInterval(detectDevTools, 1500);
-
         // ================================================================
         // INIT
         // ================================================================
@@ -4345,10 +4307,8 @@
             attachRemoteFocusToNav();
             attachRemoteFocusToSidebar();
             initTopbarButtons();
-
             // SETUP FULLSCREEN STRETCH FALLBACK (JavaScript)
             setupFullscreenStretchFallback();
-
             if (window.innerWidth >= 768) {
                 initGhostAutoFullscreen();
                 document.addEventListener('fullscreenchange', updateFullscreenOverlayState);
@@ -4359,7 +4319,6 @@
                 setTimeout(updateFullscreenOverlayState, 500);
             }
             updateAdultSidebarVisibility();
-
             // Handle shared video via URL param
             const urlParams = new URLSearchParams(window.location.search);
             const playToken = urlParams.get('play');
@@ -4374,8 +4333,8 @@
                         if (globalDataStore[type]) {
                             globalDataStore[type].forEach(cat => {
                                 if (cat && cat.movies) {
-                                    const match = cat.movies.find(m => m.link === sharedMovie.link || m
-                                        .name === sharedMovie.name);
+                                    const match = cat.movies.find(m => m.link === sharedMovie.link || m.name ===
+                                        sharedMovie.name);
                                     if (match) { foundMovie = match;
                                         foundType = type; }
                                 }
@@ -4390,16 +4349,13 @@
                     console.error("Error loading shared video:", e);
                 }
             }
-
             if (!playedFromShare) {
                 const mode = new URLSearchParams(window.location.search).get('mode');
                 changePage(mode && KEYS[mode] && mode !== 'adult' ? mode : 'home');
             } else {
                 changePage('home');
             }
-
             setTimeout(playWelcomeVoice, 1500);
-
             // Override showToast to speak
             const originalShowToast = showToast;
             showToast = function(message) {
@@ -4407,7 +4363,6 @@
                 speakNotification(message);
             };
         }
-
         // ================================================================
         // KEYBOARD SHORTCUTS
         // ================================================================
@@ -4435,12 +4390,13 @@
             if (e.key === "Enter") {
                 if (topbarFocusIndex >= 0 && topbarFocusIndex < topbarButtons.length) {
                     const btn = topbarButtons[topbarFocusIndex];
-                    if (btn) { e.preventDefault();
-                        btn.click(); }
+                    if (btn) {
+                        e.preventDefault();
+                        btn.click();
+                    }
                 }
             }
         });
-
         // ================================================================
         // ORIENTATION CHANGE
         // ================================================================
@@ -4454,25 +4410,26 @@
                 }
             }
         });
-
         // ================================================================
         // POPSTATE
         // ================================================================
         window.addEventListener('popstate', function(event) {
             if (event.state && event.state.modalOpen) closeModal();
         });
-
         // ================================================================
         // SERVICE WORKER
         // ================================================================
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/sw.js')
-                    .then(reg => { console.log('✅ Service Worker registered successfully!'); })
-                    .catch(err => { console.log('❌ Service Worker registration failed:', err); });
+                    .then(reg => {
+                        console.log('✅ Service Worker registered successfully!');
+                    })
+                    .catch(err => {
+                        console.log('❌ Service Worker registration failed:', err);
+                    });
             });
         }
-
         // ================================================================
         // START
         // ================================================================
