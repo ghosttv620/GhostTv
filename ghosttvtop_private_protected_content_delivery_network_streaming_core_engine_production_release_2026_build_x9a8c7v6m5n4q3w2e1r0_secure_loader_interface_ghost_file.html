@@ -4,12 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
     <title>Gh👻st Tv</title>
-    <!-- ===== ফুলস্ক্রিন ও স্ট্যাটাস বার লুকানোর জন্য ===== -->
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="theme-color" content="#000000" />
-    <!-- PWA Meta Tags -->
     <link rel="manifest" href="manifest.json" />
     <link rel="apple-touch-icon" href="https://github.com/ghosttv620/GhostTv/releases/download/Ghost_Tv/Ghost.Tv.Logo.jpg" />
     <script src="https://cdn.tailwindcss.com">
@@ -25,7 +23,6 @@
     </script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@clappr/player@latest/dist/clappr.min.js">
     </script>
-    <!-- JW Player -->
     <script src="https://content.jwplatform.com/libraries/IDzF9Zmk.js">
     </script>
     <script>
@@ -88,7 +85,6 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
-        /* ===== সাইডবার ===== */
         .sidebar {
             position: fixed;
             top: 0;
@@ -1254,7 +1250,7 @@
             clip: rect(0, 0, 0, 0);
             border: 0;
         }
-        /* ===== বড় স্ক্রিনে ভিডিও প্লেয়ার ফুলস্ক্রিন, সাজেস্টেড লুকানো ===== */
+        /* ===== বড় স্ক্রিনে ভিডিও প্লেয়ার ফুলস্ক্রিন, সাজেস্টেড লুকানো ===== */
         @media (min-width: 768px) {
             #videoModal .suggested-section {
                 display: none !important;
@@ -1543,7 +1539,6 @@
         .devtools-alert-box .alert-btn:active {
             transform: scale(0.96);
         }
-        /* ===== লাইভ টিভি পোস্টারের জন্য অতিরিক্ত স্টাইল ===== */
         .poster.livetv-poster .poster-img-wrapper {
             width: 72%;
             aspect-ratio: 1/1;
@@ -1722,7 +1717,6 @@
             flex: 1;
             margin-left: 8px;
         }
-        /* ===== JW Player ===== */
         #jwplayer-container {
             width: 100% !important;
             height: 100% !important;
@@ -1745,7 +1739,6 @@
             height: 100% !important;
             object-fit: fill !important;
         }
-        /* ===== Paid Modal ===== */
         #paidModal {
             display: none;
             position: fixed;
@@ -1884,8 +1877,6 @@
                 min-height: 320px;
             }
         }
-        /* ============================================================ FULLSCREEN STRETCH MODE — applies to ALL video players ============================================================ */
-        /* 1) Native HTML5 <video> in fullscreen */
         video:fullscreen {
             object-fit: fill !important;
             width: 100% !important;
@@ -1906,7 +1897,6 @@
             width: 100% !important;
             height: 100% !important;
         }
-        /* 2) Video.js tech element inside fullscreen */
         .vjs-tech:fullscreen {
             object-fit: fill !important;
             width: 100% !important;
@@ -1927,7 +1917,6 @@
             width: 100% !important;
             height: 100% !important;
         }
-        /* 3) JW Player video inside fullscreen */
         .jw-media video:fullscreen {
             object-fit: fill !important;
             width: 100% !important;
@@ -1948,7 +1937,6 @@
             width: 100% !important;
             height: 100% !important;
         }
-        /* 4) Plyr video inside fullscreen */
         .plyr__video-wrapper video:fullscreen {
             object-fit: fill !important;
             width: 100% !important;
@@ -1969,7 +1957,6 @@
             width: 100% !important;
             height: 100% !important;
         }
-        /* 5) Clappr video inside fullscreen */
         .clappr-container video:fullscreen {
             object-fit: fill !important;
             width: 100% !important;
@@ -1990,7 +1977,6 @@
             width: 100% !important;
             height: 100% !important;
         }
-        /* 6) Any video inside a fullscreen container (fallback) */
         :fullscreen video {
             object-fit: fill !important;
             width: 100% !important;
@@ -2011,7 +1997,6 @@
             width: 100% !important;
             height: 100% !important;
         }
-        /* 7) Fullscreen container itself — ensures no padding/letterbox */
         :fullscreen {
             width: 100% !important;
             height: 100% !important;
@@ -2036,7 +2021,6 @@
             padding: 0 !important;
             margin: 0 !important;
         }
-        /* 8) Video.js fullscreen wrapper */
         .video-js.vjs-fullscreen {
             width: 100% !important;
             height: 100% !important;
@@ -2046,19 +2030,16 @@
             width: 100% !important;
             height: 100% !important;
         }
-        /* 9) Plyr fullscreen wrapper */
         .plyr--fullscreen .plyr__video-wrapper video {
             object-fit: fill !important;
             width: 100% !important;
             height: 100% !important;
         }
-        /* 10) JW Player fullscreen wrapper */
         .jwplayer.jw-flag-fullscreen .jw-media video {
             object-fit: fill !important;
             width: 100% !important;
             height: 100% !important;
         }
-        /* ===== ফেবারিট স্টার আইকন – পোস্টারের বাম পাশে উপরে ===== */
         .fav-star-badge {
             position: absolute;
             top: 8px;
@@ -2101,13 +2082,11 @@
             height: 26px;
             font-size: 13px;
         }
-        /* ===== হোম পেজে স্পিনার ===== */
         #homeLoader {
             display: flex;
         }
     </style>
     <script>
-        // ===== ফুলস্ক্রিন অটো এন্টার =====
         document.addEventListener('DOMContentLoaded', function() {
             const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
             if (isMobile) {
@@ -2121,7 +2100,6 @@
                 }
             }
         });
-        // ট্যাপ করলেও ফুলস্ক্রিন চেষ্টা করবে
         document.addEventListener('click', function() {
             if (!document.fullscreenElement && !document.webkitFullscreenElement) {
                 const el = document.documentElement;
@@ -2481,6 +2459,10 @@
         let alertShown = false;
         let ghostAutoFSInitDone = false;
 
+        // ===== SEQUENTIAL CHANNEL NAVIGATION STATE =====
+        let sequentialChannelIndex = -1; // current index in the flattened channel list
+        let sequentialChannelList = []; // flattened list of all visible live TV channels
+
         // ================================================================
         // HELPERS
         // ================================================================
@@ -2664,7 +2646,6 @@
                 `;
             }
 
-            // Star click handler
             const starEl = div.querySelector('.fav-star-badge');
             if (starEl) {
                 starEl.addEventListener('click', function(e) {
@@ -2679,6 +2660,18 @@
             div.addEventListener('click', (e) => {
                 if (e.target.closest('.fav-star-badge')) return;
                 focusRemoteOnPoster(div, movie);
+
+                // যদি লাইভ টিভি হয় এবং ভিডিও মোডাল খোলা থাকে, তাহলে sequential index আপডেট করে play করবে
+                // অন্যথায় normal handleMovieClick
+                const isLiveTvClick = isLiveTv || (activePageGlobal === 'livetv');
+                if (isLiveTvClick) {
+                    // sequential channel list রিফ্রেশ করে index খুঁজে বের করি
+                    refreshSequentialChannelList();
+                    const idx = sequentialChannelList.findIndex(ch => ch.link === movie.link);
+                    if (idx !== -1) {
+                        sequentialChannelIndex = idx;
+                    }
+                }
                 handleMovieClick(movie);
             });
 
@@ -2806,44 +2799,118 @@
         }
 
         // ================================================================
-        // RANDOM CHANNEL (Live TV) - এখন আর ডাবল ক্লিকে কল হবে না, শুধু স্ক্রল এবং ArrowUp/Down দিয়ে
+        // SEQUENTIAL CHANNEL NAVIGATION (Live TV)
         // ================================================================
-        function getRandomChannel() {
-            const currentPage = activePageGlobal;
-            let allMovies = [];
-            if (globalDataStore[currentPage]) {
-                globalDataStore[currentPage].forEach(cat => {
-                    if (cat && cat.movies) {
-                        const visible = cat.movies.filter(m => !m.hidden);
-                        allMovies = allMovies.concat(visible);
+
+        /** Flatten all visible Live TV channels in the order they appear (category by category) */
+        function refreshSequentialChannelList() {
+            const flat = [];
+            const livetvData = globalDataStore.livetv || [];
+            for (const category of livetvData) {
+                if (category && category.movies) {
+                    for (const movie of category.movies) {
+                        if (movie && !movie.hidden) {
+                            flat.push(movie);
+                        }
                     }
-                });
+                }
             }
-            const currentLink = currentPlayingMovie ? currentPlayingMovie.link : null;
-            const others = allMovies.filter(m => m.link !== currentLink);
-            if (others.length === 0) return null;
-            return others[Math.floor(Math.random() * others.length)];
+            sequentialChannelList = flat;
+
+            // যদি currentPlayingMovie থাকে, তাহলে তার ইনডেক্স খুঁজে বের করি
+            if (currentPlayingMovie) {
+                const idx = sequentialChannelList.findIndex(ch => ch.link === currentPlayingMovie.link);
+                if (idx !== -1) {
+                    sequentialChannelIndex = idx;
+                } else {
+                    // যদি না পাওয়া যায়, তাহলে 0 সেট করি
+                    sequentialChannelIndex = 0;
+                }
+            } else {
+                sequentialChannelIndex = 0;
+            }
+
+            // যদি লিস্ট খালি হয়, তাহলে ইনডেক্স -1 সেট করি
+            if (sequentialChannelList.length === 0) {
+                sequentialChannelIndex = -1;
+            }
         }
 
-        function changeToRandomChannel() {
-            if (activePageGlobal !== 'livetv') return;
-            const newMovie = getRandomChannel();
-            if (!newMovie) {
-                showToast('⚠️ অন্য কোনো চ্যানেল পাওয়া যায়নি!');
+        /** Get the channel at the given index, with wrap-around */
+        function getChannelAtIndex(index) {
+            if (sequentialChannelList.length === 0) return null;
+            // wrap-around
+            while (index < 0) index += sequentialChannelList.length;
+            while (index >= sequentialChannelList.length) index -= sequentialChannelList.length;
+            return sequentialChannelList[index] || null;
+        }
+
+        /** Change to the next or previous channel sequentially */
+        function changeToSequentialChannel(direction) {
+            // direction: 1 = next, -1 = previous
+            if (activePageGlobal !== 'livetv') {
+                showToast('⚠️ শুধুমাত্র লাইভ টিভি পেজে চ্যানেল পরিবর্তন করা যায়!');
                 return;
             }
-            showToast(`🔄 চ্যানেল পরিবর্তন: ${newMovie.name}`);
+
+            // রিফ্রেশ লিস্ট
+            refreshSequentialChannelList();
+
+            if (sequentialChannelList.length === 0) {
+                showToast('⚠️ কোনো চ্যানেল পাওয়া যায়নি!');
+                return;
+            }
+
+            // যদি currentPlayingMovie না থাকে, তাহলে প্রথম চ্যানেল থেকে শুরু করি
+            if (!currentPlayingMovie) {
+                const first = sequentialChannelList[0];
+                if (first) {
+                    sequentialChannelIndex = 0;
+                    showToast(`🔄 চ্যানেল: ${first.name}`);
+                    speakNotification(`Channel changed to ${first.name}`);
+                    handleMovieClick(first);
+                }
+                return;
+            }
+
+            // বর্তমান ইনডেক্স খুঁজে বের করি (রিফ্রেশের পর)
+            const currentIdx = sequentialChannelList.findIndex(ch => ch.link === currentPlayingMovie.link);
+            if (currentIdx === -1) {
+                // যদি current না পাওয়া যায়, তাহলে 0 থেকে শুরু
+                sequentialChannelIndex = 0;
+            } else {
+                sequentialChannelIndex = currentIdx;
+            }
+
+            // নতুন ইনডেক্স
+            let newIdx = sequentialChannelIndex + direction;
+            // wrap-around
+            if (newIdx < 0) newIdx = sequentialChannelList.length - 1;
+            if (newIdx >= sequentialChannelList.length) newIdx = 0;
+
+            // যদি একই হয় (শুধু একটি চ্যানেল থাকলে)
+            if (newIdx === sequentialChannelIndex) {
+                showToast('⚠️ শুধুমাত্র একটি চ্যানেল উপলব্ধ!');
+                return;
+            }
+
+            const newMovie = sequentialChannelList[newIdx];
+            if (!newMovie) {
+                showToast('⚠️ চ্যানেল খুঁজে পাওয়া যায়নি!');
+                return;
+            }
+
+            sequentialChannelIndex = newIdx;
+            showToast(`🔄 চ্যানেল: ${newMovie.name}`);
             speakNotification(`Channel changed to ${newMovie.name}`);
             handleMovieClick(newMovie);
         }
 
         // ================================================================
-        // VIDEO CONTROLS - শুধু স্ক্রল ইভেন্ট রাখা হয়েছে, ডাবল ক্লিক বাদ
+        // SCROLL HANDLER (with sequential navigation)
         // ================================================================
-        // স্ক্রল ইভেন্ট - চ্যানেল চেঞ্জ (শুধু লাইভ টিভিতে)
         let scrollAccumulator = 0;
         const SCROLL_THRESHOLD = 80;
-        let lastScrollTime = 0;
 
         function handleVideoScroll(e) {
             if (activePageGlobal !== 'livetv') return;
@@ -2853,22 +2920,23 @@
             e.preventDefault();
             e.stopPropagation();
             const delta = e.deltaY || 0;
-            scrollAccumulator += Math.abs(delta);
-            if (scrollAccumulator >= SCROLL_THRESHOLD) {
+            scrollAccumulator += delta;
+            if (Math.abs(scrollAccumulator) >= SCROLL_THRESHOLD) {
+                const direction = scrollAccumulator > 0 ? 1 : -1;
                 scrollAccumulator = 0;
-                changeToRandomChannel();
+                changeToSequentialChannel(direction);
             }
         }
 
-        // টাচ ডিভাইসের জন্য সুইপ ডিটেক্ট
+        // ================================================================
+        // TOUCH SWIPE HANDLER (with sequential navigation)
+        // ================================================================
         let touchStartY = 0;
         let touchStartTime = 0;
 
-        function attachVideoScroll(videoElement) {
-            if (!videoElement || videoElement._ghostScrollAttached) return;
-            videoElement._ghostScrollAttached = true;
-
-            videoElement.addEventListener('wheel', handleVideoScroll, { passive: false });
+        function attachVideoTouch(videoElement) {
+            if (!videoElement || videoElement._ghostTouchAttached) return;
+            videoElement._ghostTouchAttached = true;
 
             videoElement.addEventListener('touchstart', function(e) {
                 const touch = e.changedTouches[0];
@@ -2886,28 +2954,24 @@
                 if (Math.abs(diffY) > 50 && diffTime < 500) {
                     e.preventDefault();
                     e.stopPropagation();
-                    changeToRandomChannel();
+                    const direction = diffY > 0 ? 1 : -1;
+                    changeToSequentialChannel(direction);
                 }
             }, { passive: false });
         }
 
-        // ক্লিক ইভেন্ট – কিছুই করব না (ডাবল ক্লিক বাদ)
-        function handleVideoClick(e) {
-            // কোনো কাজ করবে না
-            return;
-        }
-
-        // Left/Right ক্লিক – কিছুই করব না (টপবার ফোকাস আলাদা হ্যান্ডেল করে)
-        function handleLeftRightClick(e) {
-            // কিছুই করব না
-            return;
-        }
-
+        // ================================================================
+        // ATTACH VIDEO CONTROLS (scroll + touch)
+        // ================================================================
         function attachVideoControls(videoElement) {
             if (!videoElement || videoElement._ghostControlsAttached) return;
             videoElement._ghostControlsAttached = true;
-            // শুধু স্ক্রল অ্যাটাচ করব, ডাবল ক্লিকের কিছু নেই
-            attachVideoScroll(videoElement);
+
+            // স্ক্রল
+            videoElement.addEventListener('wheel', handleVideoScroll, { passive: false });
+
+            // টাচ
+            attachVideoTouch(videoElement);
         }
 
         // ================================================================
@@ -3218,6 +3282,16 @@
         function openVideoModal(movie) {
             if (!movie || !movie.link) return;
             currentPlayingMovie = movie;
+
+            // লাইভ টিভি হলে sequential index আপডেট করি
+            if (activePageGlobal === 'livetv') {
+                refreshSequentialChannelList();
+                const idx = sequentialChannelList.findIndex(ch => ch.link === movie.link);
+                if (idx !== -1) {
+                    sequentialChannelIndex = idx;
+                }
+            }
+
             destroyAllPlayers();
             initTopbarButtons();
             clearTopbarFocus();
@@ -4083,6 +4157,12 @@
             document.getElementById('header-title').innerText = titleMap[pageId] || 'ɢʜᴏꜱᴛ_ᴛᴠ';
 
             if (pageId === 'favorite') renderFavoritePage();
+
+            // লাইভ টিভি পেজে গেলে sequential list রিফ্রেশ করি
+            if (pageId === 'livetv') {
+                refreshSequentialChannelList();
+            }
+
             clearRemoteFocus();
         }
         // ================================================================
@@ -4180,6 +4260,11 @@
                     renderChunk();
                 }
             });
+
+            // লাইভ টিভি পেজ রেন্ডার শেষে sequential list রিফ্রেশ করি
+            if (type === 'livetv') {
+                refreshSequentialChannelList();
+            }
         }
 
         function renderFavoritePage() {
@@ -4311,6 +4396,7 @@
                 }
             }
         }
+        setInterval(detectDevTools, 1500);
 
         function closeDevtoolsAlert() {
             const alertEl = document.getElementById('devtoolsAlert');
@@ -4320,7 +4406,6 @@
                 alertShown = false;
             }, 400);
         }
-        setInterval(detectDevTools, 1500);
         // ================================================================
         // INIT
         // ================================================================
@@ -4332,6 +4417,10 @@
             await checkAutoLogin();
             loadAdultVisibilitySettings();
             await Promise.all([fetchData('movie'), fetchData('livetv'), fetchData('adult')]);
+
+            // sequential list initialize
+            refreshSequentialChannelList();
+
             renderHomePage();
             renderFullPageLagFree('movie');
             renderFullPageLagFree('livetv');
@@ -4415,7 +4504,8 @@
             if ((e.key === "ArrowUp" || e.key === "ArrowDown") && activePageGlobal === 'livetv') {
                 if (document.getElementById('videoModal').style.display === 'flex') {
                     e.preventDefault();
-                    changeToRandomChannel();
+                    const direction = e.key === "ArrowDown" ? 1 : -1;
+                    changeToSequentialChannel(direction);
                 }
             }
             if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
