@@ -21,11 +21,13 @@
     <meta name="author" content="Ghost TV">
     <link rel="canonical" href="https://ghosttv.top/">
     <link rel="icon" type="image/jpeg" href="https://i.postimg.cc/yYkfrsXK/ghost-tv-favicon.jpg">
+
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://ghosttv.top/">
     <meta property="og:title" content="Ghost TV - Live TV & Movie Streaming Portal">
     <meta property="og:description" content="বাফারিং ছাড়াই উপভোগ করুন যেকোনো লাইভ টিভি চ্যানেল ও নতুন সব মুভি। আপনার বিনোদনের বিশ্বস্ত অনলাইন প্ল্যাটফর্ম।">
     <meta property="og:image" content="https://i.postimg.cc/yYkfrsXK/ghost-tv-favicon.jpg">
+
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://ghosttv.top/">
     <meta property="twitter:title" content="Ghost TV - Live TV & Movie Streaming Portal">
@@ -49,6 +51,7 @@
     </script>
 
     <style>
+        /* === সম্পূর্ণ ফুলস্ক্রিন + কালো ব্যাকগ্রাউন্ড === */
         html,
         body {
             margin: 0;
@@ -57,7 +60,10 @@
             height: 100%;
             overflow: hidden;
             background-color: #000000;
+            /* কালো ব্যাকগ্রাউন্ড */
         }
+
+        /* স্ট্যাটাস বার সম্পূর্ণ লুকানোর জন্য */
         iframe {
             position: fixed;
             top: 0;
@@ -69,8 +75,10 @@
             padding: 0;
             overflow: hidden;
             z-index: 999999;
+            /* iframe সবসময় উপরে থাকবে */
         }
-        /* PWA Install Banner Style (Optional) */
+
+        /* PWA Install Banner Style (ঐচ্ছিক) */
         #pwa-install-banner {
             display: none;
             position: fixed;
@@ -88,37 +96,45 @@
             font-family: system-ui, -apple-system, sans-serif;
             box-shadow: 0 -4px 24px rgba(229, 9, 20, 0.2);
         }
+
         #pwa-install-banner.show {
             display: flex;
         }
+
         #pwa-install-banner .banner-left {
             display: flex;
             align-items: center;
             gap: 12px;
         }
+
         #pwa-install-banner .banner-left img {
             width: 44px;
             height: 44px;
             border-radius: 10px;
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
+
         #pwa-install-banner .banner-left .banner-text {
             color: #fff;
         }
+
         #pwa-install-banner .banner-left .banner-text .banner-title {
             font-weight: 700;
             font-size: 14px;
             color: #e50914;
         }
+
         #pwa-install-banner .banner-left .banner-text .banner-sub {
             font-size: 11px;
             color: #9aa3b5;
         }
+
         #pwa-install-banner .banner-right {
             display: flex;
             gap: 10px;
             align-items: center;
         }
+
         #pwa-install-banner .btn-install {
             background: #e50914;
             color: #fff;
@@ -130,10 +146,12 @@
             cursor: pointer;
             transition: 0.2s;
         }
+
         #pwa-install-banner .btn-install:hover {
             transform: scale(1.05);
             background: #b8070f;
         }
+
         #pwa-install-banner .btn-close {
             background: rgba(255, 255, 255, 0.08);
             color: #8a94a6;
@@ -144,10 +162,12 @@
             cursor: pointer;
             transition: 0.2s;
         }
+
         #pwa-install-banner .btn-close:hover {
             background: rgba(255, 255, 255, 0.15);
             color: #fff;
         }
+
         @media (max-width: 480px) {
             #pwa-install-banner {
                 padding: 12px 14px;
@@ -221,7 +241,8 @@
                     _0x2e1a[_0x5f24[7]]();
                     return false;
                 }
-                if (_0x2e1a[_0x5f24[12]] && _0x2e1a[_0x5f24[13]] && (_0x2e1a.keyCode == 73 || _0x2e1a.keyCode == 74 || _0x2e1a.keyCode == 67)) {
+                if (_0x2e1a[_0x5f24[12]] && _0x2e1a[_0x5f24[13]] && (_0x2e1a.keyCode == 73 || _0x2e1a.keyCode == 74 ||
+                        _0x2e1a.keyCode == 67)) {
                     _0x2e1a[_0x5f24[7]]();
                     return false;
                 }
@@ -308,7 +329,6 @@
         // 🔄 Detect PWA Installation from App Store (optional)
         // ============================================================
         // If user comes from a custom scheme or deep link, handle here
-
         console.log('👻 Ghost Tv PWA Loaded Successfully!');
     </script>
 
