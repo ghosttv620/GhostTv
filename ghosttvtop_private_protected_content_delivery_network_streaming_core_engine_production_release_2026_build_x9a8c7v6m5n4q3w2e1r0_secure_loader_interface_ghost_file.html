@@ -2085,6 +2085,55 @@
         #homeLoader {
             display: flex;
         }
+        
+        /* Live TV remote number input - style */
+        .remote-number-display {
+            position: fixed;
+            bottom: 90px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 16px;
+            padding: 16px 28px;
+            color: white;
+            font-size: 28px;
+            font-weight: 700;
+            z-index: 5000;
+            display: none;
+            min-width: 80px;
+            text-align: center;
+            letter-spacing: 4px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.7);
+        }
+        .remote-number-display .channel-name {
+            font-size: 14px;
+            font-weight: 400;
+            color: #9aa3b5;
+            letter-spacing: 0.5px;
+            margin-top: 4px;
+            max-width: 200px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+        .remote-number-display.show {
+            display: block;
+            animation: fadeInUp 0.25s ease forwards;
+        }
+        .remote-number-display.hide {
+            animation: fadeOutDown 0.25s ease forwards;
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateX(-50%) translateY(20px) scale(0.95); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+        }
+        @keyframes fadeOutDown {
+            from { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+            to { opacity: 0; transform: translateX(-50%) translateY(20px) scale(0.95); }
+        }
     </style>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -2125,8 +2174,16 @@
             </button>
         </div>
     </header>
+
+    <!-- ===== REMOTE NUMBER DISPLAY ===== -->
+    <div class="remote-number-display" id="remoteNumberDisplay">
+        <div id="remoteNumberText">--</div>
+        <div class="channel-name" id="remoteChannelName"></div>
+    </div>
+
     <!-- ===== BACKDROP ===== -->
     <div class="backdrop" onclick="toggleSidebar()"></div>
+
     <!-- ===== SIDEBAR ===== -->
     <div class="sidebar" id="sidebar">
         <div class="sidebar-menu-items">
@@ -2190,6 +2247,7 @@
             </div>
         </div>
     </div>
+
     <!-- ===== CONTAINER ===== -->
     <div class="container">
         <!-- SEARCH -->
@@ -2231,6 +2289,7 @@
             </div>
         </section>
     </div>
+
     <!-- ===== GHOST PROBLEM MODAL ===== -->
     <div id="ghostProblemModal">
         <div class="ghost-problem-box">
@@ -2257,6 +2316,7 @@
             </form>
         </div>
     </div>
+
     <!-- ===== CUSTOM CONFIRM ===== -->
     <div id="customConfirmModal">
         <div class="confirm-box text-center">
@@ -2271,6 +2331,7 @@
             </div>
         </div>
     </div>
+
     <!-- ===== PREMIUM ALERT ===== -->
     <div id="premiumAlertModal">
         <div class="premium-glass-box">
@@ -2286,6 +2347,7 @@
             </button>
         </div>
     </div>
+
     <!-- ===== LOGIN MODAL ===== -->
     <div id="loginModal" class="p-4" style="display:none !important;">
         <div class="modal-card">
@@ -2337,6 +2399,7 @@
             </div>
         </div>
     </div>
+
     <!-- ===== PAID MODAL ===== -->
     <div id="paidModal">
         <div class="paid-modal-box">
@@ -2354,6 +2417,7 @@
             </div>
         </div>
     </div>
+
     <!-- ===== MODAL (for "See All") ===== -->
     <div id="modal" class="hidden fixed inset-0 bg-black z-[2000] overflow-y-auto modal-background-fix">
         <div class="max-w-5xl mx-auto px-4 py-0">
@@ -2366,6 +2430,7 @@
             <div id="modalContent" class="modal-grid" style="background: #000 !important;"></div>
         </div>
     </div>
+
     <!-- ===== VIDEO MODAL ===== -->
     <div id="videoModal">
         <div class="glass-header">
@@ -2397,23 +2462,25 @@
             </div>
         </div>
     </div>
+
     <!-- ===== DEVTOOLS ALERT ===== -->
     <div id="devtoolsAlert">
         <div class="devtools-alert-box">
             <div class="alert-icon"><i class="fas fa-shield-alt"></i></div>
             <h3><i class="fas fa-exclamation-triangle"></i> ⚠️ সতর্কতা</h3>
             <p>
-                এই ওয়েবসাইটের স্ট্রিমিং লিংক চুরি, কপি বা অননুমোদিত ব্যবহার আইনত দণ্ডনীয় অপরাধ।<br>
-                প্রমাণ পাওয়া গেলে প্রয়োজনীয় আইনি ব্যবস্থা নেওয়া হবে।
+                এই ওয়েবসাইটের স্ট্রিমিং লিংক চুরি, কপি বা অননুমোদিত ব্যবহার আইনত দণ্ডনীয় অপরাধ।<br> প্রমাণ পাওয়া গেলে প্রয়োজনীয় আইনি ব্যবস্থা নেওয়া হবে।
             </p>
             <button class="alert-btn" onclick="closeDevtoolsAlert()">আমি বুঝেছি</button>
         </div>
     </div>
+
     <!-- ===== TOAST ===== -->
     <div id="toast-notice">
         <span class="toast-icon"><i class="fas fa-bell"></i></span>
         <span class="toast-text" id="toastMessage"></span>
     </div>
+
     <!-- ===== BOTTOM NAV ===== -->
     <nav class="bottom-nav">
         <button class="nav-item active" onclick="changePage('home')" id="btn-home"><i class="fas fa-home"></i><span>Home</span></button>
@@ -2422,6 +2489,7 @@
         <button class="nav-item" onclick="changePage('adult')" id="btn-adult" style="display: none;"><i class="fas fa-exclamation-triangle"></i><span>Adult</span></button>
         <button class="nav-item" onclick="changePage('favorite')" id="btn-favorite"><i class="fas fa-heart"></i><span>Favorite</span></button>
     </nav>
+
     <script>
         // ================================================================
         // CONFIG
@@ -2434,6 +2502,7 @@
             livetv: { url: "https://raw.githubusercontent.com/ghosttv620/Ghost-Tv/main/Tv.json", title: "Live TV" },
             adult: { url: "https://raw.githubusercontent.com/ghosttv620/Ghost-Adult/main/Adult.json", title: "18+ Adult" }
         };
+
         // ================================================================
         // STATE
         // ================================================================
@@ -2460,8 +2529,15 @@
         let ghostAutoFSInitDone = false;
 
         // ===== SEQUENTIAL CHANNEL NAVIGATION STATE =====
-        let sequentialChannelIndex = -1; // current index in the flattened channel list
-        let sequentialChannelList = []; // flattened list of all visible live TV channels
+        let sequentialChannelIndex = -1;
+        let sequentialChannelList = [];
+
+        // ===== REMOTE NUMBER INPUT STATE =====
+        let remoteNumberBuffer = "";
+        let remoteNumberTimeout = null;
+        const remoteNumberDisplay = document.getElementById('remoteNumberDisplay');
+        const remoteNumberText = document.getElementById('remoteNumberText');
+        const remoteChannelName = document.getElementById('remoteChannelName');
 
         // ================================================================
         // HELPERS
@@ -2514,8 +2590,7 @@
             utterance.pitch = 1;
             utterance.volume = 1;
             const voices = window.speechSynthesis.getVoices();
-            const preferred = voices.find(v => v.lang === 'en-US' && (v.name.includes('Google') || v.name.includes(
-                'Natural') || v.name.includes('Samantha')));
+            const preferred = voices.find(v => v.lang === 'en-US' && (v.name.includes('Google') || v.name.includes('Natural') || v.name.includes('Samantha')));
             if (preferred) utterance.voice = preferred;
             window.speechSynthesis.speak(utterance);
         }
@@ -2540,12 +2615,13 @@
             modal.style.background = '#000';
             history.pushState({ modalOpen: true }, '');
         }
+
         // ================================================================
         // PLAYER SETTINGS
         // ================================================================
         function savePlayerSettings(page, playerType) {
             localStorage.setItem(`ghost_player_${page}`, playerType);
-            showToast(` ${page.toUpperCase()}  জন্য প্লেয়ার সেট করা হয়েছে!`);
+            showToast(` ${page.toUpperCase()} জন্য প্লেয়ার সেট করা হয়েছে!`);
         }
 
         function loadPlayerSettings() {
@@ -2555,6 +2631,7 @@
                 if (el) el.value = saved;
             });
         }
+
         // ================================================================
         // VOICE MODE
         // ================================================================
@@ -2591,6 +2668,7 @@
             speakMessage("Welcome to Ghost Corporation. Developer by Ghost Nirob.");
             sessionStorage.setItem('ghost_welcome_played', 'true');
         }
+
         // ================================================================
         // FAVORITES
         // ================================================================
@@ -2614,6 +2692,7 @@
             if (document.getElementById('favorite').classList.contains('active')) renderFavoritePage();
             renderSuggestedVideos(currentSuggestedMovies);
         }
+
         // ================================================================
         // CREATE POSTER
         // ================================================================
@@ -2660,12 +2739,8 @@
             div.addEventListener('click', (e) => {
                 if (e.target.closest('.fav-star-badge')) return;
                 focusRemoteOnPoster(div, movie);
-
-                // যদি লাইভ টিভি হয় এবং ভিডিও মোডাল খোলা থাকে, তাহলে sequential index আপডেট করে play করবে
-                // অন্যথায় normal handleMovieClick
                 const isLiveTvClick = isLiveTv || (activePageGlobal === 'livetv');
                 if (isLiveTvClick) {
-                    // sequential channel list রিফ্রেশ করে index খুঁজে বের করি
                     refreshSequentialChannelList();
                     const idx = sequentialChannelList.findIndex(ch => ch.link === movie.link);
                     if (idx !== -1) {
@@ -2677,13 +2752,14 @@
 
             return div;
         }
+
         // ================================================================
         // REMOTE FOCUS
         // ================================================================
         function clearRemoteFocus() {
             document.querySelectorAll(
                 '.remote-selected-name, .remote-selected-nav, .remote-selected-sidebar, .remote-selected-suggested-name, .remote-selected-poster, .remote-selected-suggested'
-                ).forEach(el => {
+            ).forEach(el => {
                 el.classList.remove('remote-selected-name', 'remote-selected-nav', 'remote-selected-sidebar',
                     'remote-selected-suggested-name', 'remote-selected-poster', 'remote-selected-suggested');
             });
@@ -2754,7 +2830,7 @@
         function attachRemoteFocusToSidebar() {
             document.querySelectorAll(
                 '.sidebar a, .sidebar .menu-item-box, .sidebar .ghost-problem-btn, .sidebar .apk-download-btn, .sidebar .voice-toggle-btn'
-                ).forEach(item => {
+            ).forEach(item => {
                 item.addEventListener('click', function() {
                     focusRemoteOnSidebar(this);
                 });
@@ -2765,6 +2841,7 @@
                 });
             });
         }
+
         // ================================================================
         // TOPBAR FOCUS
         // ================================================================
@@ -2801,8 +2878,6 @@
         // ================================================================
         // SEQUENTIAL CHANNEL NAVIGATION (Live TV)
         // ================================================================
-
-        /** Flatten all visible Live TV channels in the order they appear (category by category) */
         function refreshSequentialChannelList() {
             const flat = [];
             const livetvData = globalDataStore.livetv || [];
@@ -2816,52 +2891,38 @@
                 }
             }
             sequentialChannelList = flat;
-
-            // যদি currentPlayingMovie থাকে, তাহলে তার ইনডেক্স খুঁজে বের করি
             if (currentPlayingMovie) {
                 const idx = sequentialChannelList.findIndex(ch => ch.link === currentPlayingMovie.link);
                 if (idx !== -1) {
                     sequentialChannelIndex = idx;
                 } else {
-                    // যদি না পাওয়া যায়, তাহলে 0 সেট করি
                     sequentialChannelIndex = 0;
                 }
             } else {
                 sequentialChannelIndex = 0;
             }
-
-            // যদি লিস্ট খালি হয়, তাহলে ইনডেক্স -1 সেট করি
             if (sequentialChannelList.length === 0) {
                 sequentialChannelIndex = -1;
             }
         }
 
-        /** Get the channel at the given index, with wrap-around */
         function getChannelAtIndex(index) {
             if (sequentialChannelList.length === 0) return null;
-            // wrap-around
             while (index < 0) index += sequentialChannelList.length;
             while (index >= sequentialChannelList.length) index -= sequentialChannelList.length;
             return sequentialChannelList[index] || null;
         }
 
-        /** Change to the next or previous channel sequentially */
         function changeToSequentialChannel(direction) {
-            // direction: 1 = next, -1 = previous
             if (activePageGlobal !== 'livetv') {
                 showToast('⚠️ শুধুমাত্র লাইভ টিভি পেজে চ্যানেল পরিবর্তন করা যায়!');
                 return;
             }
-
-            // রিফ্রেশ লিস্ট
             refreshSequentialChannelList();
-
             if (sequentialChannelList.length === 0) {
                 showToast('⚠️ কোনো চ্যানেল পাওয়া যায়নি!');
                 return;
             }
-
-            // যদি currentPlayingMovie না থাকে, তাহলে প্রথম চ্যানেল থেকে শুরু করি
             if (!currentPlayingMovie) {
                 const first = sequentialChannelList[0];
                 if (first) {
@@ -2872,38 +2933,100 @@
                 }
                 return;
             }
-
-            // বর্তমান ইনডেক্স খুঁজে বের করি (রিফ্রেশের পর)
             const currentIdx = sequentialChannelList.findIndex(ch => ch.link === currentPlayingMovie.link);
             if (currentIdx === -1) {
-                // যদি current না পাওয়া যায়, তাহলে 0 থেকে শুরু
                 sequentialChannelIndex = 0;
             } else {
                 sequentialChannelIndex = currentIdx;
             }
-
-            // নতুন ইনডেক্স
             let newIdx = sequentialChannelIndex + direction;
-            // wrap-around
             if (newIdx < 0) newIdx = sequentialChannelList.length - 1;
             if (newIdx >= sequentialChannelList.length) newIdx = 0;
-
-            // যদি একই হয় (শুধু একটি চ্যানেল থাকলে)
             if (newIdx === sequentialChannelIndex) {
                 showToast('⚠️ শুধুমাত্র একটি চ্যানেল উপলব্ধ!');
                 return;
             }
-
             const newMovie = sequentialChannelList[newIdx];
             if (!newMovie) {
                 showToast('⚠️ চ্যানেল খুঁজে পাওয়া যায়নি!');
                 return;
             }
-
             sequentialChannelIndex = newIdx;
             showToast(`🔄 চ্যানেল: ${newMovie.name}`);
             speakNotification(`Channel changed to ${newMovie.name}`);
             handleMovieClick(newMovie);
+        }
+
+        // ================================================================
+        // REMOTE NUMBER INPUT (Live TV)
+        // ================================================================
+        function showRemoteNumberDisplay(text, channelName = '') {
+            remoteNumberText.textContent = text || '--';
+            remoteChannelName.textContent = channelName || '';
+            remoteNumberDisplay.classList.remove('hide');
+            remoteNumberDisplay.classList.add('show');
+            remoteNumberDisplay.style.display = 'block';
+        }
+
+        function hideRemoteNumberDisplay() {
+            remoteNumberDisplay.classList.remove('show');
+            remoteNumberDisplay.classList.add('hide');
+            setTimeout(() => {
+                remoteNumberDisplay.style.display = 'none';
+                remoteNumberDisplay.classList.remove('hide');
+            }, 300);
+        }
+
+        function handleRemoteNumberInput(key) {
+            if (activePageGlobal !== 'livetv') {
+                showToast('⚠️ লাইভ টিভি পেজে নম্বর টাইপ করুন!');
+                return;
+            }
+            // Clear previous timeout
+            if (remoteNumberTimeout) {
+                clearTimeout(remoteNumberTimeout);
+                remoteNumberTimeout = null;
+            }
+
+            // Build number buffer (max 3 digits)
+            if (remoteNumberBuffer.length < 3) {
+                remoteNumberBuffer += key;
+            } else {
+                // If already 3 digits, shift left and add new digit
+                remoteNumberBuffer = remoteNumberBuffer.slice(1) + key;
+            }
+
+            // Show the number on screen
+            showRemoteNumberDisplay(remoteNumberBuffer);
+
+            // Set timeout to play channel after 2 seconds of inactivity
+            remoteNumberTimeout = setTimeout(() => {
+                const targetNumber = parseInt(remoteNumberBuffer, 10);
+                if (isNaN(targetNumber) || targetNumber < 1) {
+                    hideRemoteNumberDisplay();
+                    remoteNumberBuffer = "";
+                    return;
+                }
+
+                // Find channel by index (1-based)
+                refreshSequentialChannelList();
+                const channelIndex = targetNumber - 1;
+                const targetChannel = getChannelAtIndex(channelIndex);
+
+                if (targetChannel) {
+                    sequentialChannelIndex = channelIndex;
+                    showToast(`📺 চ্যানেল: ${targetChannel.name}`);
+                    speakNotification(`Channel ${targetNumber}: ${targetChannel.name}`);
+                    handleMovieClick(targetChannel);
+                    hideRemoteNumberDisplay();
+                } else {
+                    showToast(`⚠️ চ্যানেল ${targetNumber} পাওয়া যায়নি!`);
+                    speakNotification(`Channel ${targetNumber} not found`);
+                    hideRemoteNumberDisplay();
+                }
+                remoteNumberBuffer = "";
+                remoteNumberTimeout = null;
+            }, 2000);
         }
 
         // ================================================================
@@ -2937,7 +3060,6 @@
         function attachVideoTouch(videoElement) {
             if (!videoElement || videoElement._ghostTouchAttached) return;
             videoElement._ghostTouchAttached = true;
-
             videoElement.addEventListener('touchstart', function(e) {
                 const touch = e.changedTouches[0];
                 if (!touch) return;
@@ -2966,11 +3088,7 @@
         function attachVideoControls(videoElement) {
             if (!videoElement || videoElement._ghostControlsAttached) return;
             videoElement._ghostControlsAttached = true;
-
-            // স্ক্রল
             videoElement.addEventListener('wheel', handleVideoScroll, { passive: false });
-
-            // টাচ
             attachVideoTouch(videoElement);
         }
 
@@ -2981,7 +3099,6 @@
             function applyStretchToFullscreenVideos() {
                 const fsEl = document.fullscreenElement || document.webkitFullscreenElement || document
                     .mozFullScreenElement || document.msFullscreenElement;
-
                 document.querySelectorAll('video').forEach(v => {
                     v.style.objectFit = '';
                     v.style.width = '';
@@ -2992,7 +3109,6 @@
                 document.querySelectorAll('.jw-media video').forEach(el => { el.style.objectFit = ''; });
                 document.querySelectorAll('.plyr__video-wrapper video').forEach(el => { el.style.objectFit = ''; });
                 document.querySelectorAll('.clappr-container video').forEach(el => { el.style.objectFit = ''; });
-
                 if (fsEl) {
                     const videos = fsEl.querySelectorAll('video');
                     videos.forEach(v => {
@@ -3027,13 +3143,10 @@
                     fsEl.style.margin = '0';
                 }
             }
-
             ['fullscreenchange', 'webkitfullscreenchange', 'mozfullscreenchange', 'MSFullscreenChange'].forEach(evt => {
                 document.addEventListener(evt, applyStretchToFullscreenVideos);
             });
-
             setTimeout(applyStretchToFullscreenVideos, 300);
-
             setInterval(() => {
                 const fsEl = document.fullscreenElement || document.webkitFullscreenElement || document
                     .mozFullScreenElement || document.msFullscreenElement;
@@ -3042,6 +3155,7 @@
                 }
             }, 2000);
         }
+
         // ================================================================
         // FULLSCREEN OVERLAY STATE
         // ================================================================
@@ -3060,6 +3174,7 @@
                 document.body.classList.remove('ghost-fs-overlay-active');
             }
         }
+
         // ================================================================
         // FULLSCREEN ON PLAY (auto fullscreen)
         // ================================================================
@@ -3067,7 +3182,6 @@
             if (!videoElement) return;
             if (videoElement._ghostFSAttached) return;
             videoElement._ghostFSAttached = true;
-
             let userInteractionHandler = null;
             let fsAttempted = false;
 
@@ -3085,8 +3199,8 @@
                                 userInteractionHandler = function() {
                                     if (window.innerWidth < 768) return;
                                     if (!document.fullscreenElement && !document.webkitFullscreenElement) {
-                                        const req2 = el.requestFullscreen || el.webkitRequestFullscreen || el
-                                            .mozRequestFullScreen || el.msRequestFullscreen;
+                                        const req2 = el.requestFullscreen || el.webkitRequestFullscreen ||
+                                            el.mozRequestFullScreen || el.msRequestFullscreen;
                                         if (req2) {
                                             req2.call(el).catch(() => {});
                                         }
@@ -3105,13 +3219,11 @@
                     }
                 } catch (e) {}
             }
-
             videoElement.addEventListener('play', function onPlay() {
                 if (window.innerWidth < 768) return;
                 if (document.fullscreenElement || document.webkitFullscreenElement || document
                     .mozFullScreenElement || document.msFullscreenElement) return;
             }, { passive: true });
-
             videoElement.addEventListener('fullscreenchange', updateFullscreenOverlayState);
             videoElement.addEventListener('webkitfullscreenchange', updateFullscreenOverlayState);
             videoElement.addEventListener('mozfullscreenchange', updateFullscreenOverlayState);
@@ -3121,7 +3233,6 @@
         function initGhostAutoFullscreen() {
             if (ghostAutoFSInitDone) return;
             ghostAutoFSInitDone = true;
-
             const observer = new MutationObserver(function(mutations) {
                 if (window.innerWidth < 768) return;
                 for (const mutation of mutations) {
@@ -3132,7 +3243,7 @@
                                 node.querySelectorAll('video').forEach(attachFullscreenOnPlay);
                                 node.querySelectorAll(
                                     '.video-js, #myPlyrPlayer, #jwplayer-container, #myClapprPlayer'
-                                    ).forEach(function(container) {
+                                ).forEach(function(container) {
                                     const v = container.querySelector('video');
                                     if (v) attachFullscreenOnPlay(v);
                                 });
@@ -3142,7 +3253,6 @@
                 }
             });
             observer.observe(document.body, { childList: true, subtree: true });
-
             document.querySelectorAll('video').forEach(attachFullscreenOnPlay);
             setInterval(function() {
                 if (window.innerWidth < 768) return;
@@ -3151,6 +3261,7 @@
                 });
             }, 3000);
         }
+
         // ================================================================
         // VIDEO MODAL
         // ================================================================
@@ -3212,7 +3323,6 @@
             });
             const visible = unique.filter(m => !m.hidden);
             const toShow = visible.slice(0, 12);
-
             let suggestedPage = 'movie';
             if (activePageGlobal === 'livetv' || activePageGlobal === 'home') {
                 const isLiveTv = toShow.some(m => {
@@ -3226,13 +3336,11 @@
                 suggestedPage = isLiveTv ? 'livetv' : 'movie';
             }
             const isLiveTvSuggested = (suggestedPage === 'livetv');
-
             toShow.forEach(movie => {
                 const item = document.createElement('div');
                 item.className = isLiveTvSuggested ? 'suggested-item livetv-suggested' : 'suggested-item';
                 const isFav = favoritesList.some(f => f.link === movie.link);
                 const favIcon = isFav ? `<i class="fas fa-heart text-red-500 text-[11px] ml-1"></i>` : '';
-
                 if (isLiveTvSuggested) {
                     item.innerHTML = `
                         <div class="suggested-img-wrapper">
@@ -3246,7 +3354,6 @@
                         <div class="suggested-name">${movie.name || ''} ${favIcon}</div>
                     `;
                 }
-
                 item.addEventListener('click', function(e) {
                     focusRemoteOnSuggested(this, movie);
                     handleMovieClick(movie);
@@ -3282,8 +3389,6 @@
         function openVideoModal(movie) {
             if (!movie || !movie.link) return;
             currentPlayingMovie = movie;
-
-            // লাইভ টিভি হলে sequential index আপডেট করি
             if (activePageGlobal === 'livetv') {
                 refreshSequentialChannelList();
                 const idx = sequentialChannelList.findIndex(ch => ch.link === movie.link);
@@ -3291,7 +3396,6 @@
                     sequentialChannelIndex = idx;
                 }
             }
-
             destroyAllPlayers();
             initTopbarButtons();
             clearTopbarFocus();
@@ -3315,6 +3419,7 @@
             const lastSavedVolume = localStorage.getItem('ghost_global_volume');
             const initialVolume = lastSavedVolume !== null ? parseFloat(lastSavedVolume) : 1.0;
             const isMutedByDefault = initialVolume === 0;
+
             document.getElementById('playStopToggleBtn').innerHTML = '<i class="fas fa-pause"></i>';
 
             if (selectedPlayer === 'videojs') {
@@ -3324,7 +3429,6 @@
                 videoEl.setAttribute('controls', 'true');
                 videoEl.setAttribute('preload', 'auto');
                 mountPoint.appendChild(videoEl);
-
                 const videoType = isM3u8 ? "application/x-mpegURL" : "video/mp4";
                 vjsPlayer = videojs('myVideoPlayer', {
                     autoplay: true,
@@ -3357,7 +3461,6 @@
                 videoEl.setAttribute('controls', 'true');
                 videoEl.setAttribute('playsinline', 'true');
                 mountPoint.appendChild(videoEl);
-
                 if (isM3u8 && Hls.isSupported()) {
                     const hls = new Hls();
                     hls.loadSource(movie.link);
@@ -3365,7 +3468,6 @@
                 } else {
                     videoEl.src = movie.link;
                 }
-
                 plyrPlayer = new Plyr('#myPlyrPlayer', {
                     autoplay: true,
                     volume: initialVolume,
@@ -3389,7 +3491,6 @@
                 containerDiv.id = 'jwplayer-container';
                 containerDiv.className = 'w-full h-full';
                 mountPoint.appendChild(containerDiv);
-
                 jwPlayerInstance = jwplayer("jwplayer-container").setup({
                     file: movie.link,
                     width: "100%",
@@ -3402,7 +3503,6 @@
                     controls: true,
                     playbackRateControls: false
                 });
-
                 jwPlayerInstance.on('ready', function() {
                     if (initialVolume !== undefined) jwPlayerInstance.setVolume(initialVolume * 100);
                     const videoEl = document.querySelector('#jwplayer-container video');
@@ -3448,7 +3548,6 @@
                 clapprDiv.id = 'myClapprPlayer';
                 clapprDiv.className = 'w-full h-full';
                 mountPoint.appendChild(clapprDiv);
-
                 clapprPlayerInstance = new Clappr.Player({
                     source: movie.link,
                     parentId: '#myClapprPlayer',
@@ -3457,21 +3556,18 @@
                     width: '100%',
                     height: '100%'
                 });
-
                 clapprPlayerInstance.on(Clappr.Events.PLAYER_VOLUMECHANGE, function() {
                     const vol = clapprPlayerInstance.volume / 100;
                     localStorage.setItem('ghost_global_volume', vol);
                 });
                 clapprPlayerInstance.setVolume(initialVolume * 100);
                 clapprPlayerInstance.play();
-
                 clapprPlayerInstance.on(Clappr.Events.PLAYER_PLAY, function() {
                     document.getElementById('playStopToggleBtn').innerHTML = '<i class="fas fa-pause"></i>';
                 });
                 clapprPlayerInstance.on(Clappr.Events.PLAYER_PAUSE, function() {
                     document.getElementById('playStopToggleBtn').innerHTML = '<i class="fas fa-play"></i>';
                 });
-
                 if (window.innerWidth >= 768) {
                     const videoEl = document.querySelector('#myClapprPlayer video');
                     if (videoEl) {
@@ -3533,14 +3629,21 @@
             const headline = document.getElementById('headlineText');
             if (headline) headline.className = 'headline-text';
             scrollAccumulator = 0;
+            // Hide remote number display if visible
+            hideRemoteNumberDisplay();
+            remoteNumberBuffer = "";
+            if (remoteNumberTimeout) {
+                clearTimeout(remoteNumberTimeout);
+                remoteNumberTimeout = null;
+            }
         }
+
         // ================================================================
         // TOGGLE PLAY/STOP & FULLSCREEN
         // ================================================================
         function togglePlayStop() {
             const btn = document.getElementById('playStopToggleBtn');
             let isPlaying = false;
-
             if (vjsPlayer) {
                 if (vjsPlayer.paused()) { vjsPlayer.play();
                     isPlaying = true; } else { vjsPlayer.pause();
@@ -3552,16 +3655,23 @@
                     plyrPlayer.currentTime = 0;
                     isPlaying = false; }
             } else if (jwPlayerInstance) {
-                if (jwPlayerInstance.getState() === 'paused' || jwPlayerInstance.getState() === 'idle') { jwPlayerInstance
-                        .play();
-                    isPlaying = true; } else { jwPlayerInstance.pause();
+                if (jwPlayerInstance.getState() === 'paused' || jwPlayerInstance.getState() === 'idle') {
+                    jwPlayerInstance.play();
+                    isPlaying = true;
+                } else {
+                    jwPlayerInstance.pause();
                     jwPlayerInstance.seek(0);
-                    isPlaying = false; }
+                    isPlaying = false;
+                }
             } else if (clapprPlayerInstance) {
-                if (clapprPlayerInstance.isPaused()) { clapprPlayerInstance.play();
-                    isPlaying = true; } else { clapprPlayerInstance.pause();
+                if (clapprPlayerInstance.isPaused()) {
+                    clapprPlayerInstance.play();
+                    isPlaying = true;
+                } else {
+                    clapprPlayerInstance.pause();
                     clapprPlayerInstance.seek(0);
-                    isPlaying = false; }
+                    isPlaying = false;
+                }
             } else {
                 showToast('⚠️ কোনো প্লেয়ার সক্রিয় নেই');
                 return;
@@ -3575,7 +3685,6 @@
                 showToast('⚠️ কোনো প্লেয়ার সক্রিয় নেই');
                 return;
             }
-
             if (vjsPlayer) {
                 if (vjsPlayer.isFullscreen()) vjsPlayer.exitFullscreen();
                 else vjsPlayer.requestFullscreen();
@@ -3595,6 +3704,7 @@
             }
             showToast('⛶ ফুলস্ক্রিন টগল');
         }
+
         // ================================================================
         // CUSTOM CONFIRM
         // ================================================================
@@ -3608,10 +3718,8 @@
                 const cancelBtn = oldCancel.cloneNode(true);
                 oldOk.parentNode.replaceChild(okBtn, oldOk);
                 oldCancel.parentNode.replaceChild(cancelBtn, oldCancel);
-
                 modal.style.display = 'flex';
                 setTimeout(() => modal.classList.add('show'), 10);
-
                 okBtn.addEventListener('click', () => {
                     modal.classList.remove('show');
                     setTimeout(() => modal.style.display = 'none', 300);
@@ -3624,6 +3732,7 @@
                 });
             });
         }
+
         // ================================================================
         // PREMIUM ALERT
         // ================================================================
@@ -3637,9 +3746,12 @@
         function closePremiumAlert() {
             const modal = document.getElementById('premiumAlertModal');
             modal.classList.remove('show');
-            setTimeout(() => { modal.style.display = 'none';
-                openLoginModal(); }, 300);
+            setTimeout(() => {
+                modal.style.display = 'none';
+                openLoginModal();
+            }, 300);
         }
+
         // ================================================================
         // LOGIN / AUTH
         // ================================================================
@@ -3652,10 +3764,7 @@
         async function verifyUser(username, password, isAuto = false) {
             try {
                 const res = await fetch(`https://api.jsonbin.io/v3/b/${USER_BIN}/latest`, {
-                    headers: {
-                        "X-Master-Key": MASTER_KEY,
-                        "X-Bin-Meta": "false"
-                    }
+                    headers: { "X-Master-Key": MASTER_KEY, "X-Bin-Meta": "false" }
                 });
                 if (!res.ok) {
                     if (!isAuto) showLoginError("সার্ভার সংযোগ ব্যর্থ!");
@@ -3705,10 +3814,7 @@
             try {
                 await fetch(`https://api.jsonbin.io/v3/b/${USER_BIN}`, {
                     method: 'PUT',
-                    headers: {
-                        "Content-Type": "application/json",
-                        "X-Master-Key": MASTER_KEY
-                    },
+                    headers: { "Content-Type": "application/json", "X-Master-Key": MASTER_KEY },
                     body: JSON.stringify(updatedData)
                 });
             } catch (e) {}
@@ -3796,10 +3902,7 @@
             }
             try {
                 const res = await fetch(`https://api.jsonbin.io/v3/b/${USER_BIN}/latest`, {
-                    headers: {
-                        "X-Master-Key": MASTER_KEY,
-                        "X-Bin-Meta": "false"
-                    }
+                    headers: { "X-Master-Key": MASTER_KEY, "X-Bin-Meta": "false" }
                 });
                 if (!res.ok) {
                     showToast("⚠️ সার্ভার সংযোগ ব্যর্থ!");
@@ -3830,10 +3933,7 @@
                 }
                 const putRes = await fetch(`https://api.jsonbin.io/v3/b/${USER_BIN}`, {
                     method: 'PUT',
-                    headers: {
-                        "Content-Type": "application/json",
-                        "X-Master-Key": MASTER_KEY
-                    },
+                    headers: { "Content-Type": "application/json", "X-Master-Key": MASTER_KEY },
                     body: JSON.stringify(updateData)
                 });
                 if (!putRes.ok) {
@@ -3852,6 +3952,7 @@
                 showToast("⚠️ রিসেট করতে সমস্যা হয়েছে!");
             }
         }
+
         // ================================================================
         // ADULT VISIBILITY
         // ================================================================
@@ -3867,8 +3968,10 @@
                 adultItem.classList.remove('visible');
                 if (document.getElementById('adult').classList.contains('active')) changePage('home');
                 const chk = document.getElementById('adultVisibilityToggle');
-                if (chk && chk.checked) { chk.checked = false;
-                    toggleAdultNavVisibility(false); }
+                if (chk && chk.checked) {
+                    chk.checked = false;
+                    toggleAdultNavVisibility(false);
+                }
             }
         }
 
@@ -3893,6 +3996,7 @@
             if (checkbox) checkbox.checked = isVisible;
             document.getElementById('btn-adult').style.display = isVisible ? 'flex' : 'none';
         }
+
         // ================================================================
         // GHOST PROBLEM MODAL
         // ================================================================
@@ -3921,7 +4025,9 @@
         function closeGhostProblemModal() {
             const modal = document.getElementById('ghostProblemModal');
             modal.classList.remove('show');
-            setTimeout(() => { modal.style.display = 'none'; }, 350);
+            setTimeout(() => {
+                modal.style.display = 'none';
+            }, 350);
         }
 
         async function sendGhostProblem() {
@@ -4000,6 +4106,7 @@
                 sendBtn.disabled = false;
             }
         }
+
         // ================================================================
         // PAID MODAL
         // ================================================================
@@ -4007,7 +4114,6 @@
             const modal = document.getElementById('paidModal');
             const fallback = document.getElementById('paidFallback');
             const iframe = document.getElementById('paidIframe');
-
             iframe.style.display = 'none';
             fallback.style.display = 'flex';
             fallback.innerHTML = `
@@ -4015,10 +4121,8 @@
                 <h3>লোড হচ্ছে...</h3>
                 <p>দয়া করে অপেক্ষা করুন</p>
             `;
-
             modal.style.display = 'flex';
             setTimeout(() => modal.classList.add('show'), 20);
-
             iframe.src = 'Paid.html';
             iframe.onload = function() {
                 fallback.style.display = 'none';
@@ -4033,7 +4137,6 @@
                 `;
                 iframe.style.display = 'none';
             };
-
             clearTimeout(iframe._loadTimer);
             iframe._loadTimer = setTimeout(() => {
                 if (fallback.style.display !== 'none') {
@@ -4046,7 +4149,6 @@
                     iframe.style.display = 'none';
                 }
             }, 8000);
-
             closeLoginModal();
         }
 
@@ -4072,7 +4174,6 @@
         document.getElementById('paidModal')?.addEventListener('click', function(e) {
             if (e.target === this) closePaidModal();
         });
-
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 const paidModal = document.getElementById('paidModal');
@@ -4081,6 +4182,7 @@
                 }
             }
         });
+
         // ================================================================
         // SEARCH
         // ================================================================
@@ -4095,7 +4197,6 @@
             changePage('search-section');
             if (!searchContainer) return;
             searchContainer.innerHTML = '';
-
             let foundItems = [];
             ['movie', 'livetv', 'adult'].forEach(type => {
                 if (globalDataStore[type]) {
@@ -4113,7 +4214,6 @@
                     });
                 }
             });
-
             if (foundItems.length === 0) {
                 searchContainer.innerHTML =
                     `<div class="text-gray-500 text-center col-span-full py-20 text-sm"><i class="fas fa-search-minus block text-3xl mb-2 text-gray-700"></i>কোনো কিছু খুঁজে পাওয়া যায়নি!</div>`;
@@ -4132,6 +4232,7 @@
                 streamSearchData();
             }
         }
+
         // ================================================================
         // PAGE NAVIGATION
         // ================================================================
@@ -4145,7 +4246,6 @@
             document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
             const navBtn = document.getElementById(`btn-${pageId}`);
             if (navBtn) navBtn.classList.add('active');
-
             const titleMap = {
                 home: 'Ghost Tv',
                 movie: 'Movie',
@@ -4155,16 +4255,13 @@
                 'search-section': 'Search'
             };
             document.getElementById('header-title').innerText = titleMap[pageId] || 'ɢʜᴏꜱᴛ_ᴛᴠ';
-
             if (pageId === 'favorite') renderFavoritePage();
-
-            // লাইভ টিভি পেজে গেলে sequential list রিফ্রেশ করি
             if (pageId === 'livetv') {
                 refreshSequentialChannelList();
             }
-
             clearRemoteFocus();
         }
+
         // ================================================================
         // RENDER FUNCTIONS
         // ================================================================
@@ -4174,15 +4271,12 @@
             const loader = document.getElementById('homeLoader');
             if (loader) loader.style.display = 'none';
             homeContainer.innerHTML = '';
-
             let typesToRender = ['movie', 'livetv'];
             const isAdultVisible = localStorage.getItem('ghost_adult_visible') === 'true';
             if (isAdultVisible) typesToRender.push('adult');
-
             typesToRender.forEach(type => {
                 const categories = globalDataStore[type];
                 if (!categories || categories.length === 0) return;
-
                 let rowMovies = [];
                 for (let i = 0; i < categories.length; i++) {
                     if (categories[i] && categories[i].movies) {
@@ -4191,7 +4285,6 @@
                     }
                 }
                 if (rowMovies.length === 0) return;
-
                 const section = document.createElement('div');
                 section.className = "mb-10";
                 section.innerHTML = `
@@ -4204,7 +4297,6 @@
                     <div id="home-row-${type}" class="scroll-row"></div>
                 `;
                 homeContainer.appendChild(section);
-
                 const rowDiv = document.getElementById(`home-row-${type}`);
                 if (rowDiv) {
                     const isLiveTv = (type === 'livetv');
@@ -4226,12 +4318,10 @@
                 return;
             }
             const isLiveTv = (type === 'livetv');
-
             categories.forEach((category, catIndex) => {
                 if (!category) return;
                 const visibleMovies = (category.movies || []).filter(m => !m.hidden);
                 if (visibleMovies.length === 0) return;
-
                 const section = document.createElement('div');
                 section.className = "mb-10";
                 section.innerHTML = `
@@ -4242,7 +4332,6 @@
                     <div id="row-${type}-${catIndex}" class="scroll-row"></div>
                 `;
                 container.appendChild(section);
-
                 const row = document.getElementById(`row-${type}-${catIndex}`);
                 if (row && visibleMovies.length > 0) {
                     let chunkIndex = 0;
@@ -4260,8 +4349,6 @@
                     renderChunk();
                 }
             });
-
-            // লাইভ টিভি পেজ রেন্ডার শেষে sequential list রিফ্রেশ করি
             if (type === 'livetv') {
                 refreshSequentialChannelList();
             }
@@ -4307,6 +4394,7 @@
                 }
             }
         }
+
         // ================================================================
         // SLIDER
         // ================================================================
@@ -4331,10 +4419,7 @@
             ];
             try {
                 const res = await fetch(`https://api.jsonbin.io/v3/b/${USER_BIN}/latest`, {
-                    headers: {
-                        "X-Master-Key": MASTER_KEY,
-                        "X-Bin-Meta": "false"
-                    }
+                    headers: { "X-Master-Key": MASTER_KEY, "X-Bin-Meta": "false" }
                 });
                 if (res.ok) {
                     const data = await res.json();
@@ -4343,7 +4428,6 @@
                     }
                 }
             } catch (e) {}
-
             sliderContainer.innerHTML = '';
             sliderData.forEach((slide, index) => {
                 const activeClass = index === 0 ? 'active' : '';
@@ -4366,6 +4450,7 @@
             currentSlideIdx = 0;
             initSliderControl();
         }
+
         // ================================================================
         // DATA FETCH
         // ================================================================
@@ -4379,6 +4464,7 @@
                 globalDataStore[type] = [];
             }
         }
+
         // ================================================================
         // DEVTOOLS DETECTION
         // ================================================================
@@ -4406,6 +4492,65 @@
                 alertShown = false;
             }, 400);
         }
+
+        // ================================================================
+        // KEYBOARD SHORTCUTS FOR REMOTE NUMBER INPUT
+        // ================================================================
+        document.addEventListener('keydown', function(e) {
+            // Number keys 0-9
+            if (e.key >= '0' && e.key <= '9') {
+                // Only if video modal is open and we're on livetv page
+                const videoModal = document.getElementById('videoModal');
+                if (videoModal.style.display === 'flex' && activePageGlobal === 'livetv') {
+                    e.preventDefault();
+                    handleRemoteNumberInput(e.key);
+                    return;
+                }
+            }
+
+            // Escape key - close remote display if open
+            if (e.key === 'Escape') {
+                if (remoteNumberDisplay.style.display === 'block') {
+                    hideRemoteNumberDisplay();
+                    remoteNumberBuffer = "";
+                    if (remoteNumberTimeout) {
+                        clearTimeout(remoteNumberTimeout);
+                        remoteNumberTimeout = null;
+                    }
+                }
+            }
+
+            // Arrow keys for sequential navigation (only if video modal is open and livetv page)
+            if ((e.key === "ArrowUp" || e.key === "ArrowDown") && activePageGlobal === 'livetv') {
+                const videoModal = document.getElementById('videoModal');
+                if (videoModal.style.display === 'flex') {
+                    e.preventDefault();
+                    const direction = e.key === "ArrowDown" ? 1 : -1;
+                    changeToSequentialChannel(direction);
+                }
+            }
+
+            // Left/Right for topbar focus
+            if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
+                const videoModal = document.getElementById('videoModal');
+                if (videoModal.style.display === 'flex') {
+                    e.preventDefault();
+                    if (e.key === "ArrowRight") focusTopbarButton(topbarFocusIndex + 1);
+                    else focusTopbarButton(topbarFocusIndex - 1);
+                }
+            }
+
+            if (e.key === "Enter") {
+                if (topbarFocusIndex >= 0 && topbarFocusIndex < topbarButtons.length) {
+                    const btn = topbarButtons[topbarFocusIndex];
+                    if (btn) {
+                        e.preventDefault();
+                        btn.click();
+                    }
+                }
+            }
+        });
+
         // ================================================================
         // INIT
         // ================================================================
@@ -4418,17 +4563,16 @@
             loadAdultVisibilitySettings();
             await Promise.all([fetchData('movie'), fetchData('livetv'), fetchData('adult')]);
 
-            // sequential list initialize
             refreshSequentialChannelList();
 
             renderHomePage();
             renderFullPageLagFree('movie');
             renderFullPageLagFree('livetv');
             renderFullPageLagFree('adult');
+
             attachRemoteFocusToNav();
             attachRemoteFocusToSidebar();
             initTopbarButtons();
-
             setupFullscreenStretchFallback();
 
             if (window.innerWidth >= 768) {
@@ -4490,41 +4634,7 @@
                 speakNotification(message);
             };
         }
-        // ================================================================
-        // KEYBOARD SHORTCUTS
-        // ================================================================
-        document.addEventListener('keydown', e => {
-            if (e.key === "Escape") {
-                if (document.getElementById('videoModal').style.display === 'flex') {
-                    closeVideoModal();
-                } else {
-                    closeModal();
-                }
-            }
-            if ((e.key === "ArrowUp" || e.key === "ArrowDown") && activePageGlobal === 'livetv') {
-                if (document.getElementById('videoModal').style.display === 'flex') {
-                    e.preventDefault();
-                    const direction = e.key === "ArrowDown" ? 1 : -1;
-                    changeToSequentialChannel(direction);
-                }
-            }
-            if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
-                if (document.getElementById('videoModal').style.display === 'flex') {
-                    e.preventDefault();
-                    if (e.key === "ArrowRight") focusTopbarButton(topbarFocusIndex + 1);
-                    else focusTopbarButton(topbarFocusIndex - 1);
-                }
-            }
-            if (e.key === "Enter") {
-                if (topbarFocusIndex >= 0 && topbarFocusIndex < topbarButtons.length) {
-                    const btn = topbarButtons[topbarFocusIndex];
-                    if (btn) {
-                        e.preventDefault();
-                        btn.click();
-                    }
-                }
-            }
-        });
+
         // ================================================================
         // ORIENTATION CHANGE
         // ================================================================
@@ -4538,12 +4648,14 @@
                 }
             }
         });
+
         // ================================================================
         // POPSTATE
         // ================================================================
         window.addEventListener('popstate', function(event) {
             if (event.state && event.state.modalOpen) closeModal();
         });
+
         // ================================================================
         // SERVICE WORKER
         // ================================================================
@@ -4558,6 +4670,7 @@
                     });
             });
         }
+
         // ================================================================
         // START
         // ================================================================
