@@ -85,6 +85,61 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
+
+        /* ===== CHANNEL INDEX DISPLAY IN HEADER (name + 000/000) ===== */
+        .channel-index-display {
+            font-size: 12px;
+            font-weight: 600;
+            color: #9aa3b5;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 2px 10px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            white-space: nowrap;
+            margin-left: 8px;
+            letter-spacing: 0.5px;
+            display: none;
+        }
+        .channel-index-display .current-num {
+            color: #e50914;
+            font-weight: 700;
+        }
+        .channel-index-display .total-num {
+            color: #6b7a93;
+        }
+
+        /* Video modal header title with channel index */
+        #videoModal .glass-header h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            max-width: 70%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: #f1f5f9;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        #videoModal .glass-header h3 .channel-index-badge {
+            font-size: 11px;
+            font-weight: 600;
+            color: #9aa3b5;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 1px 10px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            flex-shrink: 0;
+            letter-spacing: 0.5px;
+        }
+        #videoModal .glass-header h3 .channel-index-badge .curr {
+            color: #e50914;
+            font-weight: 700;
+        }
+        #videoModal .glass-header h3 .channel-index-badge .tot {
+            color: #6b7a93;
+        }
+
         .sidebar {
             position: fixed;
             top: 0;
@@ -413,6 +468,9 @@
             overflow: hidden;
             text-overflow: ellipsis;
             color: #f1f5f9;
+            display: flex;
+            align-items: center;
+            gap: 6px;
         }
         .video-container-box {
             width: 100%;
@@ -2085,7 +2143,6 @@
         #homeLoader {
             display: flex;
         }
-        
         /* Live TV remote number input - style */
         .remote-number-display {
             position: fixed;
@@ -2127,12 +2184,24 @@
             animation: fadeOutDown 0.25s ease forwards;
         }
         @keyframes fadeInUp {
-            from { opacity: 0; transform: translateX(-50%) translateY(20px) scale(0.95); }
-            to { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(20px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0) scale(1);
+            }
         }
         @keyframes fadeOutDown {
-            from { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
-            to { opacity: 0; transform: translateX(-50%) translateY(20px) scale(0.95); }
+            from {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0) scale(1);
+            }
+            to {
+                opacity: 0;
+                transform: translateX(-50%) translateY(20px) scale(0.95);
+            }
         }
     </style>
     <script>
@@ -2167,6 +2236,11 @@
         <div class="header-left">
             <div class="menu-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></div>
             <div class="logo" id="header-title">Ghost Tv</div>
+            <!-- ===== CHANNEL INDEX DISPLAY (header left side) ===== -->
+            <span class="channel-index-display" id="channelIndexDisplay">
+                <span class="current-num" id="currentChannelNum">00</span>
+                <span class="total-num">/ <span id="totalChannelNum">00</span></span>
+            </span>
         </div>
         <div id="auth-status-area">
             <button onclick="openLoginModal()" class="bg-red-600 hover:bg-red-700 text-white text-xs font-bold px-4 py-2 rounded-full transition active:scale-95 shadow-lg shadow-red-600/20">
@@ -2437,7 +2511,7 @@
             <button id="topBackBtn" onclick="closeVideoModal()" class="text-gray-400 hover:text-white text-lg font-medium flex items-center gap-1">
                 <i class="fas fa-arrow-left"></i>
             </button>
-            <h3 id="videoTitle" class="text-lg font-semibold truncate px-3 text-center flex-1">ভিডিও</h3>
+            <h3 id="videoTitle">ভিডিও</h3>
             <div class="topbar-actions">
                 <button id="playStopToggleBtn" onclick="togglePlayStop()" class="play-toggle-btn" title="স্টপ/স্টার্ট">
                     <i class="fas fa-pause"></i>
@@ -2469,7 +2543,8 @@
             <div class="alert-icon"><i class="fas fa-shield-alt"></i></div>
             <h3><i class="fas fa-exclamation-triangle"></i> ⚠️ সতর্কতা</h3>
             <p>
-                এই ওয়েবসাইটের স্ট্রিমিং লিংক চুরি, কপি বা অননুমোদিত ব্যবহার আইনত দণ্ডনীয় অপরাধ।<br> প্রমাণ পাওয়া গেলে প্রয়োজনীয় আইনি ব্যবস্থা নেওয়া হবে।
+                এই ওয়েবসাইটের স্ট্রিমিং লিংক চুরি, কপি বা অননুমোদিত ব্যবহার আইনত দণ্ডনীয় অপরাধ।<br>
+                প্রমাণ পাওয়া গেলে প্রয়োজনীয় আইনি ব্যবস্থা নেওয়া হবে।
             </p>
             <button class="alert-btn" onclick="closeDevtoolsAlert()">আমি বুঝেছি</button>
         </div>
@@ -2527,6 +2602,11 @@
         let topbarFocusIndex = -1;
         let alertShown = false;
         let ghostAutoFSInitDone = false;
+
+        // Channel Index Display
+        const channelIndexDisplay = document.getElementById('channelIndexDisplay');
+        const currentChannelNum = document.getElementById('currentChannelNum');
+        const totalChannelNum = document.getElementById('totalChannelNum');
 
         // ===== SEQUENTIAL CHANNEL NAVIGATION STATE =====
         let sequentialChannelIndex = -1;
@@ -2590,7 +2670,8 @@
             utterance.pitch = 1;
             utterance.volume = 1;
             const voices = window.speechSynthesis.getVoices();
-            const preferred = voices.find(v => v.lang === 'en-US' && (v.name.includes('Google') || v.name.includes('Natural') || v.name.includes('Samantha')));
+            const preferred = voices.find(v => v.lang === 'en-US' && (v.name.includes('Google') || v.name.includes(
+                'Natural') || v.name.includes('Samantha')));
             if (preferred) utterance.voice = preferred;
             window.speechSynthesis.speak(utterance);
         }
@@ -2700,13 +2781,11 @@
             if (!movie) return document.createElement('div');
             const div = document.createElement('div');
             div.className = isLiveTv ? "poster livetv-poster" : "poster";
-
             const premiumBadge = movie.premium ? `<span class="premium-badge">🜲 𝗩𝗜𝗣</span>` : '';
             const isFav = favoritesList.some(f => f.link === movie.link);
             const favStar = isFav ?
                 `<span class="fav-star-badge active" data-link="${movie.link}"><i class="fas fa-star"></i></span>` :
                 `<span class="fav-star-badge" data-link="${movie.link}"><i class="fas fa-star"></i></span>`;
-
             if (isLiveTv) {
                 div.innerHTML = `
                     <div class="relative">${premiumBadge}${favStar}
@@ -2724,7 +2803,6 @@
                     <p class="poster-name">${movie.name || ''}</p>
                 `;
             }
-
             const starEl = div.querySelector('.fav-star-badge');
             if (starEl) {
                 starEl.addEventListener('click', function(e) {
@@ -2733,9 +2811,7 @@
                     toggleFavorite(movie);
                 });
             }
-
             attachRemoteSelectionToPoster(div, movie);
-
             div.addEventListener('click', (e) => {
                 if (e.target.closest('.fav-star-badge')) return;
                 focusRemoteOnPoster(div, movie);
@@ -2745,11 +2821,11 @@
                     const idx = sequentialChannelList.findIndex(ch => ch.link === movie.link);
                     if (idx !== -1) {
                         sequentialChannelIndex = idx;
+                        updateChannelIndexDisplay();
                     }
                 }
-                handleMovieClick(movie);
+                handleMovieClickWithAutoNext(movie);
             });
-
             return div;
         }
 
@@ -2868,15 +2944,14 @@
             const btn = topbarButtons[index];
             if (btn) {
                 btn.classList.add('topbar-btn-focused');
-                const label = btn.id === 'topBackBtn' ? 'ব্যাক বাটন' :
-                    btn.id === 'playStopToggleBtn' ? 'স্টার্ট স্টপ বাটন' :
-                    'ফুলস্ক্রিন বাটন';
+                const label = btn.id === 'topBackBtn' ? 'ব্যাক বাটন' : btn.id === 'playStopToggleBtn' ?
+                    'স্টার্ট স্টপ বাটন' : 'ফুলস্ক্রিন বাটন';
                 speakNotification(`ফোকাস: ${label}`);
             }
         }
 
         // ================================================================
-        // SEQUENTIAL CHANNEL NAVIGATION (Live TV)
+        // SEQUENTIAL CHANNEL NAVIGATION (Live TV) - CATEGORY WISE
         // ================================================================
         function refreshSequentialChannelList() {
             const flat = [];
@@ -2904,6 +2979,9 @@
             if (sequentialChannelList.length === 0) {
                 sequentialChannelIndex = -1;
             }
+            // Update total channel count in header
+            totalChannelNum.textContent = String(sequentialChannelList.length).padStart(2, '0');
+            updateChannelIndexDisplay();
         }
 
         function getChannelAtIndex(index) {
@@ -2911,6 +2989,36 @@
             while (index < 0) index += sequentialChannelList.length;
             while (index >= sequentialChannelList.length) index -= sequentialChannelList.length;
             return sequentialChannelList[index] || null;
+        }
+
+        function updateChannelIndexDisplay() {
+            if (activePageGlobal === 'livetv' && currentPlayingMovie) {
+                const idx = sequentialChannelList.findIndex(ch => ch.link === currentPlayingMovie.link);
+                if (idx !== -1) {
+                    currentChannelNum.textContent = String(idx + 1).padStart(2, '0');
+                    channelIndexDisplay.style.display = 'inline-block';
+                } else {
+                    channelIndexDisplay.style.display = 'none';
+                }
+            } else {
+                channelIndexDisplay.style.display = 'none';
+            }
+        }
+
+        function updateVideoTitleWithIndex() {
+            const titleEl = document.getElementById('videoTitle');
+            if (!titleEl) return;
+            if (activePageGlobal === 'livetv' && currentPlayingMovie) {
+                const idx = sequentialChannelList.findIndex(ch => ch.link === currentPlayingMovie.link);
+                if (idx !== -1) {
+                    const total = sequentialChannelList.length;
+                    titleEl.innerHTML = `${currentPlayingMovie.name || ''} <span class="channel-index-badge"><span class="curr">${String(idx + 1).padStart(2, '0')}</span><span class="tot">/${String(total).padStart(2, '0')}</span></span>`;
+                } else {
+                    titleEl.textContent = currentPlayingMovie.name || 'ভিডিও';
+                }
+            } else {
+                titleEl.textContent = currentPlayingMovie ? currentPlayingMovie.name || 'ভিডিও' : 'ভিডিও';
+            }
         }
 
         function changeToSequentialChannel(direction) {
@@ -2923,29 +3031,31 @@
                 showToast('⚠️ কোনো চ্যানেল পাওয়া যায়নি!');
                 return;
             }
-            if (!currentPlayingMovie) {
+
+            let currentIdx = -1;
+            if (currentPlayingMovie) {
+                currentIdx = sequentialChannelList.findIndex(ch => ch.link === currentPlayingMovie.link);
+            }
+            if (currentIdx === -1) {
                 const first = sequentialChannelList[0];
                 if (first) {
                     sequentialChannelIndex = 0;
                     showToast(`🔄 চ্যানেল: ${first.name}`);
                     speakNotification(`Channel changed to ${first.name}`);
-                    handleMovieClick(first);
+                    handleMovieClickWithAutoNext(first);
                 }
                 return;
             }
-            const currentIdx = sequentialChannelList.findIndex(ch => ch.link === currentPlayingMovie.link);
-            if (currentIdx === -1) {
-                sequentialChannelIndex = 0;
-            } else {
-                sequentialChannelIndex = currentIdx;
-            }
-            let newIdx = sequentialChannelIndex + direction;
+
+            let newIdx = currentIdx + direction;
             if (newIdx < 0) newIdx = sequentialChannelList.length - 1;
             if (newIdx >= sequentialChannelList.length) newIdx = 0;
-            if (newIdx === sequentialChannelIndex) {
+
+            if (newIdx === currentIdx) {
                 showToast('⚠️ শুধুমাত্র একটি চ্যানেল উপলব্ধ!');
                 return;
             }
+
             const newMovie = sequentialChannelList[newIdx];
             if (!newMovie) {
                 showToast('⚠️ চ্যানেল খুঁজে পাওয়া যায়নি!');
@@ -2954,7 +3064,74 @@
             sequentialChannelIndex = newIdx;
             showToast(`🔄 চ্যানেল: ${newMovie.name}`);
             speakNotification(`Channel changed to ${newMovie.name}`);
-            handleMovieClick(newMovie);
+            handleMovieClickWithAutoNext(newMovie);
+        }
+
+        // ================================================================
+        // AUTO NEXT CHANNEL ON ERROR
+        // ================================================================
+        let autoNextRetryCount = 0;
+
+        function handleMovieClickWithAutoNext(movie) {
+            if (!movie) return;
+            autoNextRetryCount = 0;
+            const currentIdx = sequentialChannelList.findIndex(ch => ch.link === movie.link);
+
+            function playWithRetry(movieToPlay) {
+                if (!movieToPlay) {
+                    showToast('⚠️ কোনো চ্যানেল পাওয়া যায়নি!');
+                    return;
+                }
+                handleMovieClick(movieToPlay);
+
+                const errorHandler = function() {
+                    if (activePageGlobal !== 'livetv') return;
+                    if (autoNextRetryCount > sequentialChannelList.length) {
+                        showToast('⚠️ সব চ্যানেল ট্রাই করে ব্যর্থ!');
+                        return;
+                    }
+                    autoNextRetryCount++;
+                    let nextIdx = sequentialChannelList.findIndex(ch => ch.link === movieToPlay.link);
+                    if (nextIdx === -1) nextIdx = 0;
+                    nextIdx = (nextIdx + 1) % sequentialChannelList.length;
+                    const nextMovie = sequentialChannelList[nextIdx];
+                    if (nextMovie) {
+                        showToast(`🔄 অটো-নেক্সট: ${nextMovie.name}`);
+                        speakNotification(`Auto next: ${nextMovie.name}`);
+                        sequentialChannelIndex = nextIdx;
+                        removeErrorListener();
+                        setTimeout(() => playWithRetry(nextMovie), 500);
+                    }
+                };
+                window._ghostAutoNextHandler = errorHandler;
+            }
+            playWithRetry(movie);
+            setTimeout(() => {
+                attachErrorListenerToPlayer();
+            }, 1000);
+        }
+
+        function attachErrorListenerToPlayer() {
+            if (vjsPlayer) {
+                vjsPlayer.off('error', window._ghostAutoNextHandler);
+                vjsPlayer.on('error', window._ghostAutoNextHandler);
+            } else if (plyrPlayer) {
+                plyrPlayer.off('error', window._ghostAutoNextHandler);
+                plyrPlayer.on('error', window._ghostAutoNextHandler);
+            } else if (jwPlayerInstance) {
+                jwPlayerInstance.off('error', window._ghostAutoNextHandler);
+                jwPlayerInstance.on('error', window._ghostAutoNextHandler);
+            } else if (clapprPlayerInstance) {
+                clapprPlayerInstance.off(Clappr.Events.PLAYER_ERROR, window._ghostAutoNextHandler);
+                clapprPlayerInstance.on(Clappr.Events.PLAYER_ERROR, window._ghostAutoNextHandler);
+            }
+        }
+
+        function removeErrorListener() {
+            if (vjsPlayer) vjsPlayer.off('error', window._ghostAutoNextHandler);
+            if (plyrPlayer) plyrPlayer.off('error', window._ghostAutoNextHandler);
+            if (jwPlayerInstance) jwPlayerInstance.off('error', window._ghostAutoNextHandler);
+            if (clapprPlayerInstance) clapprPlayerInstance.off(Clappr.Events.PLAYER_ERROR, window._ghostAutoNextHandler);
         }
 
         // ================================================================
@@ -2982,24 +3159,16 @@
                 showToast('⚠️ লাইভ টিভি পেজে নম্বর টাইপ করুন!');
                 return;
             }
-            // Clear previous timeout
             if (remoteNumberTimeout) {
                 clearTimeout(remoteNumberTimeout);
                 remoteNumberTimeout = null;
             }
-
-            // Build number buffer (max 3 digits)
             if (remoteNumberBuffer.length < 3) {
                 remoteNumberBuffer += key;
             } else {
-                // If already 3 digits, shift left and add new digit
                 remoteNumberBuffer = remoteNumberBuffer.slice(1) + key;
             }
-
-            // Show the number on screen
             showRemoteNumberDisplay(remoteNumberBuffer);
-
-            // Set timeout to play channel after 2 seconds of inactivity
             remoteNumberTimeout = setTimeout(() => {
                 const targetNumber = parseInt(remoteNumberBuffer, 10);
                 if (isNaN(targetNumber) || targetNumber < 1) {
@@ -3007,17 +3176,14 @@
                     remoteNumberBuffer = "";
                     return;
                 }
-
-                // Find channel by index (1-based)
                 refreshSequentialChannelList();
                 const channelIndex = targetNumber - 1;
                 const targetChannel = getChannelAtIndex(channelIndex);
-
                 if (targetChannel) {
                     sequentialChannelIndex = channelIndex;
                     showToast(`📺 চ্যানেল: ${targetChannel.name}`);
                     speakNotification(`Channel ${targetNumber}: ${targetChannel.name}`);
-                    handleMovieClick(targetChannel);
+                    handleMovieClickWithAutoNext(targetChannel);
                     hideRemoteNumberDisplay();
                 } else {
                     showToast(`⚠️ চ্যানেল ${targetNumber} পাওয়া যায়নি!`);
@@ -3066,7 +3232,6 @@
                 touchStartY = touch.clientY;
                 touchStartTime = Date.now();
             }, { passive: true });
-
             videoElement.addEventListener('touchend', function(e) {
                 if (activePageGlobal !== 'livetv') return;
                 const touch = e.changedTouches[0];
@@ -3187,11 +3352,11 @@
 
             function requestFS(el) {
                 if (!el) return;
-                if (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement ||
-                    document.msFullscreenElement) return;
+                if (document.fullscreenElement || document.webkitFullscreenElement || document
+                    .mozFullScreenElement || document.msFullscreenElement) return;
                 try {
                     const req = el.requestFullscreen || el.webkitRequestFullscreen || el.mozRequestFullScreen || el
-                        .msRequestFullscreen;
+                        .msRequestfullscreen;
                     if (req) {
                         req.call(el).catch(() => {
                             if (!userInteractionHandler && !fsAttempted) {
@@ -3200,7 +3365,7 @@
                                     if (window.innerWidth < 768) return;
                                     if (!document.fullscreenElement && !document.webkitFullscreenElement) {
                                         const req2 = el.requestFullscreen || el.webkitRequestFullscreen ||
-                                            el.mozRequestFullScreen || el.msRequestFullscreen;
+                                            el.mozRequestFullScreen || el.msRequestfullscreen;
                                         if (req2) {
                                             req2.call(el).catch(() => {});
                                         }
@@ -3282,6 +3447,7 @@
                 try { clapprPlayerInstance.destroy(); } catch (e) {}
                 clapprPlayerInstance = null;
             }
+            removeErrorListener();
         }
 
         function changeHeadlineEffect() {
@@ -3356,7 +3522,7 @@
                 }
                 item.addEventListener('click', function(e) {
                     focusRemoteOnSuggested(this, movie);
-                    handleMovieClick(movie);
+                    handleMovieClickWithAutoNext(movie);
                 });
                 item.addEventListener('contextmenu', function(e) {
                     e.preventDefault();
@@ -3372,14 +3538,15 @@
             if (movie.premium) {
                 if (!currentUserData) {
                     showPremiumAlert(
-                        "⚠️ এই কন্টেন্টটি প্রিমিয়াম! দেখতে হলে প্রথমে ডানদিকের কোণায় ক্লিক করে লগইন করুন।");
+                        "⚠️ এই কন্টেন্টটি প্রিমিয়াম! দেখতে হলে প্রথমে ডানদিকের কোণায় ক্লিক করে লগইন করুন।"
+                    );
                     return;
                 }
                 const isValid = await verifyUser(currentUserData.username, currentUserData.password, true);
                 if (!isValid) {
                     showPremiumAlert(
                         "⚠️ সেশন শেষ বা ডিভাইস চেঞ্জ হয়েছে! অনুগ্রহ করে পুনরায় সঠিক আইডি পাসওয়ার্ড দিয়ে লগইন করুন।"
-                        );
+                    );
                     return;
                 }
             }
@@ -3395,13 +3562,19 @@
                 if (idx !== -1) {
                     sequentialChannelIndex = idx;
                 }
+                updateChannelIndexDisplay();
+            } else {
+                channelIndexDisplay.style.display = 'none';
             }
+
             destroyAllPlayers();
             initTopbarButtons();
             clearTopbarFocus();
 
             const videoModal = document.getElementById('videoModal');
-            document.getElementById('videoTitle').textContent = movie.name || '';
+            // Set video title with channel index badge
+            updateVideoTitleWithIndex();
+
             const thumb = document.getElementById('currentVideoThumb');
             thumb.src = movie.logo || 'https://picsum.photos/100/100';
             thumb.alt = movie.name || 'বর্তমান ভিডিওর পোস্টার';
@@ -3419,7 +3592,6 @@
             const lastSavedVolume = localStorage.getItem('ghost_global_volume');
             const initialVolume = lastSavedVolume !== null ? parseFloat(lastSavedVolume) : 1.0;
             const isMutedByDefault = initialVolume === 0;
-
             document.getElementById('playStopToggleBtn').innerHTML = '<i class="fas fa-pause"></i>';
 
             if (selectedPlayer === 'videojs') {
@@ -3430,11 +3602,7 @@
                 videoEl.setAttribute('preload', 'auto');
                 mountPoint.appendChild(videoEl);
                 const videoType = isM3u8 ? "application/x-mpegURL" : "video/mp4";
-                vjsPlayer = videojs('myVideoPlayer', {
-                    autoplay: true,
-                    controls: true,
-                    liveui: true
-                });
+                vjsPlayer = videojs('myVideoPlayer', { autoplay: true, controls: true, liveui: true });
                 vjsPlayer.src({ src: movie.link, type: videoType });
                 vjsPlayer.ready(function() {
                     vjsPlayer.volume(initialVolume);
@@ -3453,6 +3621,7 @@
                     if (videoEl2) attachVideoControls(videoEl2);
                     vjsPlayer.play();
                     if (window.innerWidth >= 768) attachFullscreenOnPlay(vjsPlayer.el());
+                    vjsPlayer.on('error', window._ghostAutoNextHandler);
                 });
             } else if (selectedPlayer === 'plyr') {
                 const videoEl = document.createElement('video');
@@ -3468,11 +3637,7 @@
                 } else {
                     videoEl.src = movie.link;
                 }
-                plyrPlayer = new Plyr('#myPlyrPlayer', {
-                    autoplay: true,
-                    volume: initialVolume,
-                    muted: isMutedByDefault
-                });
+                plyrPlayer = new Plyr('#myPlyrPlayer', { autoplay: true, volume: initialVolume, muted: isMutedByDefault });
                 plyrPlayer.on('volumechange', () => {
                     const vol = plyrPlayer.muted ? 0 : plyrPlayer.volume;
                     localStorage.setItem('ghost_global_volume', vol);
@@ -3486,6 +3651,7 @@
                 attachVideoControls(videoEl);
                 videoEl.play();
                 if (window.innerWidth >= 768) attachFullscreenOnPlay(videoEl);
+                plyrPlayer.on('error', window._ghostAutoNextHandler);
             } else if (selectedPlayer === 'jwplayer') {
                 const containerDiv = document.createElement('div');
                 containerDiv.id = 'jwplayer-container';
@@ -3537,6 +3703,7 @@
                         updateFullscreenOverlayState();
                     }, 100);
                 });
+                jwPlayerInstance.on('error', window._ghostAutoNextHandler);
                 if (window.innerWidth >= 768) {
                     setTimeout(() => {
                         const videoEl = document.querySelector('#jwplayer-container video');
@@ -3568,6 +3735,7 @@
                 clapprPlayerInstance.on(Clappr.Events.PLAYER_PAUSE, function() {
                     document.getElementById('playStopToggleBtn').innerHTML = '<i class="fas fa-play"></i>';
                 });
+                clapprPlayerInstance.on(Clappr.Events.PLAYER_ERROR, window._ghostAutoNextHandler);
                 if (window.innerWidth >= 768) {
                     const videoEl = document.querySelector('#myClapprPlayer video');
                     if (videoEl) {
@@ -3581,7 +3749,6 @@
                 }, 500);
             }
 
-            // Build suggested list
             let suggested = [];
             const currentPage = pageContext;
             if (globalDataStore[currentPage]) {
@@ -3629,13 +3796,13 @@
             const headline = document.getElementById('headlineText');
             if (headline) headline.className = 'headline-text';
             scrollAccumulator = 0;
-            // Hide remote number display if visible
             hideRemoteNumberDisplay();
             remoteNumberBuffer = "";
             if (remoteNumberTimeout) {
                 clearTimeout(remoteNumberTimeout);
                 remoteNumberTimeout = null;
             }
+            channelIndexDisplay.style.display = 'none';
         }
 
         // ================================================================
@@ -3645,15 +3812,23 @@
             const btn = document.getElementById('playStopToggleBtn');
             let isPlaying = false;
             if (vjsPlayer) {
-                if (vjsPlayer.paused()) { vjsPlayer.play();
-                    isPlaying = true; } else { vjsPlayer.pause();
+                if (vjsPlayer.paused()) {
+                    vjsPlayer.play();
+                    isPlaying = true;
+                } else {
+                    vjsPlayer.pause();
                     vjsPlayer.currentTime(0);
-                    isPlaying = false; }
+                    isPlaying = false;
+                }
             } else if (plyrPlayer) {
-                if (plyrPlayer.paused) { plyrPlayer.play();
-                    isPlaying = true; } else { plyrPlayer.pause();
+                if (plyrPlayer.paused) {
+                    plyrPlayer.play();
+                    isPlaying = true;
+                } else {
+                    plyrPlayer.pause();
                     plyrPlayer.currentTime = 0;
-                    isPlaying = false; }
+                    isPlaying = false;
+                }
             } else if (jwPlayerInstance) {
                 if (jwPlayerInstance.getState() === 'paused' || jwPlayerInstance.getState() === 'idle') {
                     jwPlayerInstance.play();
@@ -4025,9 +4200,7 @@
         function closeGhostProblemModal() {
             const modal = document.getElementById('ghostProblemModal');
             modal.classList.remove('show');
-            setTimeout(() => {
-                modal.style.display = 'none';
-            }, 350);
+            setTimeout(() => { modal.style.display = 'none'; }, 350);
         }
 
         async function sendGhostProblem() {
@@ -4035,7 +4208,6 @@
             const problemDesc = document.getElementById('problemDescription').value.trim();
             const sendBtn = document.getElementById('ghostSendBtn');
             const successMsg = document.getElementById('ghostSuccessMsg');
-
             if (!movieName) {
                 showToast('⚠️ দয়া করে টিভি অথবা মুভির নাম লিখুন!');
                 document.getElementById('problemMovieName').focus();
@@ -4050,14 +4222,11 @@
                 showToast('⚠️ প্রবলেমটি একটু বিস্তারিত লিখুন (কমপক্ষে ৫ অক্ষর)');
                 return;
             }
-
             sendBtn.disabled = true;
             sendBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> সেন্ড হচ্ছে...';
-
             const username = currentUserData ? currentUserData.username : 'অতিথি';
             const deviceId = myDeviceId;
             const currentTime = new Date().toLocaleString('bn-BD', { timeZone: 'Asia/Dhaka' });
-
             const payload = {
                 embeds: [{
                     title: '👻 Ghost Problem Fix',
@@ -4069,11 +4238,13 @@
                         { name: '📱 ডিভাইস', value: deviceId, inline: true },
                         { name: '📅 সময়', value: currentTime, inline: false }
                     ],
-                    footer: { text: 'Ghost TV — Problem Report', icon_url: 'https://img.icons8.com/color/48/ghost.png' },
+                    footer: {
+                        text: 'Ghost TV — Problem Report',
+                        icon_url: 'https://img.icons8.com/color/48/ghost.png'
+                    },
                     timestamp: new Date().toISOString()
                 }]
             };
-
             try {
                 const response = await fetch(DISCORD_WEBHOOK, {
                     method: 'POST',
@@ -4170,7 +4341,6 @@
                 `;
             }, 350);
         }
-
         document.getElementById('paidModal')?.addEventListener('click', function(e) {
             if (e.target === this) closePaidModal();
         });
@@ -4258,6 +4428,9 @@
             if (pageId === 'favorite') renderFavoritePage();
             if (pageId === 'livetv') {
                 refreshSequentialChannelList();
+                updateChannelIndexDisplay();
+            } else {
+                channelIndexDisplay.style.display = 'none';
             }
             clearRemoteFocus();
         }
@@ -4313,8 +4486,7 @@
             if (!container) return;
             container.innerHTML = '';
             if (!categories || categories.length === 0) {
-                container.innerHTML =
-                `<div class="text-gray-500 text-center py-12 text-sm">কোন কন্টেন্ট নেই</div>`;
+                container.innerHTML = `<div class="text-gray-500 text-center py-12 text-sm">কোন কন্টেন্ট নেই</div>`;
                 return;
             }
             const isLiveTv = (type === 'livetv');
@@ -4497,9 +4669,7 @@
         // KEYBOARD SHORTCUTS FOR REMOTE NUMBER INPUT
         // ================================================================
         document.addEventListener('keydown', function(e) {
-            // Number keys 0-9
             if (e.key >= '0' && e.key <= '9') {
-                // Only if video modal is open and we're on livetv page
                 const videoModal = document.getElementById('videoModal');
                 if (videoModal.style.display === 'flex' && activePageGlobal === 'livetv') {
                     e.preventDefault();
@@ -4507,8 +4677,6 @@
                     return;
                 }
             }
-
-            // Escape key - close remote display if open
             if (e.key === 'Escape') {
                 if (remoteNumberDisplay.style.display === 'block') {
                     hideRemoteNumberDisplay();
@@ -4519,8 +4687,6 @@
                     }
                 }
             }
-
-            // Arrow keys for sequential navigation (only if video modal is open and livetv page)
             if ((e.key === "ArrowUp" || e.key === "ArrowDown") && activePageGlobal === 'livetv') {
                 const videoModal = document.getElementById('videoModal');
                 if (videoModal.style.display === 'flex') {
@@ -4529,8 +4695,6 @@
                     changeToSequentialChannel(direction);
                 }
             }
-
-            // Left/Right for topbar focus
             if (e.key === "ArrowLeft" || e.key === "ArrowRight") {
                 const videoModal = document.getElementById('videoModal');
                 if (videoModal.style.display === 'flex') {
@@ -4539,7 +4703,6 @@
                     else focusTopbarButton(topbarFocusIndex - 1);
                 }
             }
-
             if (e.key === "Enter") {
                 if (topbarFocusIndex >= 0 && topbarFocusIndex < topbarButtons.length) {
                     const btn = topbarButtons[topbarFocusIndex];
@@ -4562,19 +4725,15 @@
             await checkAutoLogin();
             loadAdultVisibilitySettings();
             await Promise.all([fetchData('movie'), fetchData('livetv'), fetchData('adult')]);
-
             refreshSequentialChannelList();
-
             renderHomePage();
             renderFullPageLagFree('movie');
             renderFullPageLagFree('livetv');
             renderFullPageLagFree('adult');
-
             attachRemoteFocusToNav();
             attachRemoteFocusToSidebar();
             initTopbarButtons();
             setupFullscreenStretchFallback();
-
             if (window.innerWidth >= 768) {
                 initGhostAutoFullscreen();
                 document.addEventListener('fullscreenchange', updateFullscreenOverlayState);
@@ -4584,9 +4743,7 @@
                 setInterval(updateFullscreenOverlayState, 1000);
                 setTimeout(updateFullscreenOverlayState, 500);
             }
-
             updateAdultSidebarVisibility();
-
             const urlParams = new URLSearchParams(window.location.search);
             const playToken = urlParams.get('play');
             let playedFromShare = false;
@@ -4612,22 +4769,19 @@
                     });
                     const finalMovie = foundMovie || sharedMovie;
                     activePageGlobal = foundType;
-                    handleMovieClick(finalMovie);
+                    handleMovieClickWithAutoNext(finalMovie);
                     playedFromShare = true;
                 } catch (e) {
                     console.error("Error loading shared video:", e);
                 }
             }
-
             if (!playedFromShare) {
                 const mode = new URLSearchParams(window.location.search).get('mode');
                 changePage(mode && KEYS[mode] && mode !== 'adult' ? mode : 'home');
             } else {
                 changePage('home');
             }
-
             setTimeout(playWelcomeVoice, 1500);
-
             const originalShowToast = showToast;
             showToast = function(message) {
                 originalShowToast(message);
