@@ -1,292 +1,417 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>শর্ট ভিডিও স্কুল</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            background: #000;
-            overflow: hidden;
-            height: 100vh;
-            width: 100vw;
-            position: fixed;
-            top: 0;
-            left: 0;
-        }
-        .video-container {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: #000;
-        }
-        video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-            background: #000;
-            /* সব কন্ট্রোল লুকান */
-            &::-webkit-media-controls {
-                display: none !important;
-            }
-            &::-webkit-media-controls-enclosure {
-                display: none !important;
-            }
-            &::-webkit-media-controls-panel {
-                display: none !important;
-            }
-            &::-webkit-media-controls-play-button {
-                display: none !important;
-            }
-            &::-webkit-media-controls-start-playback-button {
-                display: none !important;
-            }
-            &::-webkit-media-controls-timeline {
-                display: none !important;
-            }
-            &::-webkit-media-controls-current-time-display {
-                display: none !important;
-            }
-            &::-webkit-media-controls-time-remaining-display {
-                display: none !important;
-            }
-            &::-webkit-media-controls-mute-button {
-                display: none !important;
-            }
-            &::-webkit-media-controls-volume-slider {
-                display: none !important;
-            }
-            &::-webkit-media-controls-fullscreen-button {
-                display: none !important;
-            }
-            /* Firefox */
-            &::-moz-media-controls {
-                display: none !important;
-            }
-            &::-moz-media-controls-panel {
-                display: none !important;
-            }
-            controlslist: "nodownload nofullscreen noremoteplayback";
-            disablepictureinpicture: true;
-        }
-        /* লোডিং ইন্ডিকেটর */
-        .loader {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 40px;
-            height: 40px;
-            border: 3px solid #333;
-            border-top: 3px solid #fff;
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
-            display: none;
-            z-index: 10;
-            pointer-events: none;
-        }
-        @keyframes spin {
-            0% { transform: translate(-50%, -50%) rotate(0deg); }
-            100% { transform: translate(-50%, -50%) rotate(360deg); }
-        }
-        /* এরর মেসেজ */
-        .error-msg {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: #fff;
-            font-size: 16px;
-            text-align: center;
-            z-index: 15;
-            padding: 20px;
-            background: rgba(0,0,0,0.8);
-            border-radius: 12px;
-            display: none;
-            max-width: 80%;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>শর্ট ভিডিও স্কুল</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      background: #000;
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+      position: fixed;
+      top: 0;
+      left: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-touch-callout: none;
+    }
+    .video-wrapper {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #000;
+      pointer-events: none;
+    }
+    video {
+      width: 720px;
+      height: 1080px;
+      max-width: 100vw;
+      max-height: 100vh;
+      object-fit: contain;
+      background: #000;
+      display: block;
+      pointer-events: auto;
+      /* সব নেটিভ কন্ট্রোল লুকান */
+      &::-webkit-media-controls { display: none !important; }
+      &::-webkit-media-controls-enclosure { display: none !important; }
+      &::-webkit-media-controls-panel { display: none !important; }
+      &::-webkit-media-controls-play-button { display: none !important; }
+      &::-webkit-media-controls-start-playback-button { display: none !important; }
+      &::-webkit-media-controls-timeline { display: none !important; }
+      &::-webkit-media-controls-current-time-display { display: none !important; }
+      &::-webkit-media-controls-time-remaining-display { display: none !important; }
+      &::-webkit-media-controls-mute-button { display: none !important; }
+      &::-webkit-media-controls-volume-slider { display: none !important; }
+      &::-webkit-media-controls-fullscreen-button { display: none !important; }
+      &::-moz-media-controls { display: none !important; }
+      &::-moz-media-controls-panel { display: none !important; }
+      controlslist: "nodownload nofullscreen noremoteplayback";
+      disablepictureinpicture: true;
+    }
+    /* শুধু মাঝখানে গ্লাস ইফেক্ট বাটন */
+    .center-play-btn {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.12);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      z-index: 20;
+      transition: opacity 0.25s ease, transform 0.2s ease;
+      opacity: 0;
+      pointer-events: none;
+      color: #fff;
+      font-size: 26px;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-touch-callout: none;
+    }
+    .center-play-btn.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .center-play-btn:active {
+      transform: translate(-50%, -50%) scale(0.90);
+    }
+    /* লোডিং */
+    .loader {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 40px;
+      height: 40px;
+      border: 3px solid #333;
+      border-top: 3px solid #fff;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      display: none;
+      z-index: 10;
+      pointer-events: none;
+    }
+    @keyframes spin {
+      0% { transform: translate(-50%, -50%) rotate(0deg); }
+      100% { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+    .error-msg {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #fff;
+      font-size: 16px;
+      text-align: center;
+      z-index: 15;
+      padding: 20px;
+      background: rgba(0,0,0,0.8);
+      border-radius: 12px;
+      display: none;
+      max-width: 80%;
+    }
+    @media (max-width: 720px) {
+      video {
+        width: 100vw;
+        height: 100vh;
+        max-width: 100vw;
+        max-height: 100vh;
+        object-fit: contain;
+      }
+    }
+    @media (orientation: landscape) and (max-height: 720px) {
+      video {
+        width: 100vw;
+        height: 100vh;
+        max-width: 100vw;
+        max-height: 100vh;
+        object-fit: contain;
+      }
+    }
+  </style>
 </head>
 <body>
-
-<div class="loader" id="loader"></div>
-<div class="error-msg" id="errorMsg"></div>
-
-<div class="video-container">
+  <div class="loader" id="loader"></div>
+  <div class="error-msg" id="errorMsg"></div>
+  <div class="video-wrapper">
     <video id="myVideo" playsinline></video>
-</div>
+  </div>
+  <div class="center-play-btn" id="centerPlayBtn"></div>
 
-<script>
-    // ===== কনফিগারেশন (আপডেটেড GitHub রিলিজ) =====
-    const OWNER = "ghosttv620";
-    const REPO = "All-Video";
-    const TAG = "Short";
-    const TOKEN = ""; // পাবলিক রিলিজ হলে খালি রাখুন
+  <script>
+    (function(){
+      // ===== কনফিগারেশন =====
+      const OWNER = "ghosttv620";
+      const REPO = "All-Video";
+      const TAG = "Short";
+      const TOKEN = "";
 
-    // ===== DOM এলিমেন্ট =====
-    const video = document.getElementById('myVideo');
-    const loader = document.getElementById('loader');
-    const errorMsg = document.getElementById('errorMsg');
+      // ===== DOM =====
+      const video = document.getElementById('myVideo');
+      const loader = document.getElementById('loader');
+      const errorMsg = document.getElementById('errorMsg');
+      const centerBtn = document.getElementById('centerPlayBtn');
 
-    let videoUrls = [];
-    let currentIndex = 0;
-    let touchStartY = 0;
-    let wheelTimeout = false;
+      let videoUrls = [];
+      let currentIndex = 0;
+      let touchStartY = 0;
+      let wheelTimeout = false;
+      let isPlaying = true;
+      let btnTimeout = null;
 
-    // ===== GitHub থেকে ভিডিও লিংক সংগ্রহ =====
-    async function fetchVideoUrls() {
-        try {
-            loader.style.display = 'block';
-            errorMsg.style.display = 'none';
+      // ===== Right ক্লিক বন্ধ =====
+      document.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+        return false;
+      });
 
-            const headers = { Accept: "application/vnd.github+json" };
-            if (TOKEN && TOKEN.trim() !== "") {
-                headers["Authorization"] = `token ${TOKEN}`;
-            }
+      // ===== মোবাইলের লং প্রেস বন্ধ =====
+      document.addEventListener('touchstart', function(e) {
+        // লং প্রেস থেকে কোনো মেনু আসবে না
+      }, { passive: true });
 
-            const res = await fetch(
-                `https://api.github.com/repos/${OWNER}/${REPO}/releases/tags/${TAG}`,
-                { headers }
-            );
+      // ===== বাটন আপডেট =====
+      function updateButtonIcon() {
+        centerBtn.textContent = video.paused ? '▶' : '⏸';
+      }
 
-            if (!res.ok) {
-                if (res.status === 404) {
-                    throw new Error('রিলিজ পাওয়া যায়নি!');
-                }
-                throw new Error(`HTTP ${res.status}`);
-            }
-
-            const data = await res.json();
-
-            if (!data.assets || data.assets.length === 0) {
-                throw new Error('কোনো ভিডিও পাওয়া যায়নি!');
-            }
-
-            // শুধু ভিডিও ফাইল
-            videoUrls = data.assets
-                .filter(asset => /\.(mp4|webm|ogg|mov|m4v)$/i.test(asset.name))
-                .map(asset => asset.browser_download_url);
-
-            if (videoUrls.length === 0) {
-                throw new Error('কোনো ভিডিও ফাইল পাওয়া যায়নি!');
-            }
-
-            loader.style.display = 'none';
-
-            // এলোমেলো একটি ভিডিও দিয়ে শুরু
-            currentIndex = Math.floor(Math.random() * videoUrls.length);
-            playVideo(currentIndex);
-
-        } catch (error) {
-            loader.style.display = 'none';
-            errorMsg.textContent = `❌ ${error.message}`;
-            errorMsg.style.display = 'block';
-            console.error(error);
+      function showPlayButton(show) {
+        if (show) {
+          updateButtonIcon();
+          centerBtn.classList.add('show');
+          clearTimeout(btnTimeout);
+          btnTimeout = setTimeout(() => {
+            centerBtn.classList.remove('show');
+          }, 1800);
+        } else {
+          centerBtn.classList.remove('show');
+          clearTimeout(btnTimeout);
         }
-    }
+      }
 
-    // ===== ভিডিও প্লে করা =====
-    function playVideo(index) {
+      // ===== টগল পজ/প্লে (সরাসরি ক্লিক/ট্যাপ) =====
+      function togglePlayPause() {
+        if (video.paused) {
+          video.play().catch(() => {});
+          isPlaying = true;
+        } else {
+          video.pause();
+          isPlaying = false;
+        }
+        showPlayButton(true);
+      }
+
+      // ===== ভিডিও ফেচ =====
+      async function fetchVideoUrls() {
+        try {
+          loader.style.display = 'block';
+          errorMsg.style.display = 'none';
+
+          const headers = { Accept: "application/vnd.github+json" };
+          if (TOKEN && TOKEN.trim() !== "") {
+            headers["Authorization"] = `token ${TOKEN}`;
+          }
+
+          const res = await fetch(
+            `https://api.github.com/repos/${OWNER}/${REPO}/releases/tags/${TAG}`,
+            { headers }
+          );
+
+          if (!res.ok) {
+            if (res.status === 404) throw new Error('রিলিজ পাওয়া যায়নি!');
+            throw new Error(`HTTP ${res.status}`);
+          }
+
+          const data = await res.json();
+          if (!data.assets || data.assets.length === 0) {
+            throw new Error('কোনো ভিডিও পাওয়া যায়নি!');
+          }
+
+          videoUrls = data.assets
+            .filter(asset => /\.(mp4|webm|ogg|mov|m4v)$/i.test(asset.name))
+            .map(asset => asset.browser_download_url);
+
+          if (videoUrls.length === 0) {
+            throw new Error('কোনো ভিডিও ফাইল পাওয়া যায়নি!');
+          }
+
+          loader.style.display = 'none';
+          currentIndex = Math.floor(Math.random() * videoUrls.length);
+          playVideo(currentIndex);
+        } catch (error) {
+          loader.style.display = 'none';
+          errorMsg.textContent = `❌ ${error.message}`;
+          errorMsg.style.display = 'block';
+          console.error(error);
+        }
+      }
+
+      // ===== প্লে ভিডিও =====
+      function playVideo(index) {
         if (videoUrls.length === 0) return;
-
         const url = videoUrls[index];
         currentIndex = index;
-
         video.src = url;
         video.load();
+        isPlaying = true;
 
         video.oncanplay = function() {
-            video.play().catch(err => {
-                // অটোপ্লে ব্লক হলে সাইলেন্ট
-                console.log('অটোপ্লে ব্লক');
-            });
+          video.play().catch(() => {});
+          centerBtn.classList.remove('show');
         };
 
         video.onerror = function() {
-            setTimeout(() => {
-                loadRandomVideo();
-            }, 1500);
+          console.warn('ভিডিও লোডে সমস্যা');
+          setTimeout(() => {
+            loadRandomVideo();
+          }, 1200);
         };
 
         video.onended = function() {
-            loadRandomVideo();
+          loadRandomVideo();
         };
-    }
 
-    // ===== রেনডম ভিডিও লোড (শুধু স্ক্রল করলে) =====
-    function loadRandomVideo() {
+        video.onplay = function() { 
+          isPlaying = true;
+          updateButtonIcon();
+          centerBtn.classList.remove('show');
+          clearTimeout(btnTimeout);
+        };
+        video.onpause = function() { 
+          isPlaying = false;
+          updateButtonIcon();
+          showPlayButton(true);
+        };
+      }
+
+      // ===== রেনডম লোড (আগের বাদে) =====
+      function loadRandomVideo() {
         if (videoUrls.length <= 1) {
-            playVideo(0);
-            return;
+          playVideo(0);
+          return;
         }
-
         let newIndex;
+        let attempts = 0;
         do {
-            newIndex = Math.floor(Math.random() * videoUrls.length);
-        } while (newIndex === currentIndex);
+          newIndex = Math.floor(Math.random() * videoUrls.length);
+          attempts++;
+        } while (newIndex === currentIndex && attempts < 20);
 
+        if (newIndex === currentIndex) {
+          newIndex = (currentIndex + 1) % videoUrls.length;
+        }
         playVideo(newIndex);
-    }
+      }
 
-    // ===== শুধু স্ক্রল ডিটেক্ট =====
-
-    // --- মাউস হুইল ---
-    document.addEventListener('wheel', function(e) {
+      // ===== স্ক্রল/সোয়াইপ/কী (ভিডিও চেঞ্জ) =====
+      document.addEventListener('wheel', function(e) {
         if (videoUrls.length < 2) return;
         if (wheelTimeout) return;
         wheelTimeout = true;
-        setTimeout(() => { wheelTimeout = false; }, 600);
-
-        if (e.deltaY > 0 || e.deltaY < 0) {
-            loadRandomVideo();
+        setTimeout(() => { wheelTimeout = false; }, 500);
+        if (e.deltaY !== 0) {
+          loadRandomVideo();
         }
-    }, { passive: true });
+      }, { passive: true });
 
-    // --- টাচ সোয়াইপ (মোবাইল) ---
-    document.addEventListener('touchstart', function(e) {
+      document.addEventListener('touchstart', function(e) {
         touchStartY = e.changedTouches[0].screenY;
-    }, { passive: true });
+      }, { passive: true });
 
-    document.addEventListener('touchend', function(e) {
+      document.addEventListener('touchend', function(e) {
         if (!touchStartY) return;
         const deltaY = touchStartY - e.changedTouches[0].screenY;
         if (Math.abs(deltaY) > 40 && videoUrls.length > 1) {
-            loadRandomVideo();
+          loadRandomVideo();
         }
         touchStartY = 0;
-    }, { passive: true });
+      }, { passive: true });
 
-    // --- কীবোর্ড Arrow keys (ডেস্কটপ) ---
-    document.addEventListener('keydown', function(e) {
+      document.addEventListener('keydown', function(e) {
         if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
-            e.preventDefault();
-            if (videoUrls.length > 1) {
-                loadRandomVideo();
-            }
+          e.preventDefault();
+          if (videoUrls.length > 1) {
+            loadRandomVideo();
+          }
         }
-    });
+        if (e.key === ' ' || e.key === 'Spacebar') {
+          e.preventDefault();
+          togglePlayPause();
+        }
+      });
 
-    // ===== ভিডিওতে ক্লিক/ট্যাপ করলে কিছু হবে না =====
-    video.addEventListener('click', function(e) {
+      // ===== ভিডিও ক্লিক/ট্যাপ - সরাসরি টগল =====
+      // 'click' ইভেন্ট ব্যবহার করছি, এতে কোনো দেরি হবে না
+      video.addEventListener('click', function(e) {
         e.preventDefault();
-        // কিছু করব না
-    });
+        e.stopPropagation();
+        togglePlayPause();
+      });
 
-    // ===== শুরু করুন =====
-    fetchVideoUrls();
+      // মোবাইলের জন্য 'touchend' - কিন্তু click ইতিমধ্যে কাজ করে
+      // তবুও নিশ্চিত করতে touchend ব্যবহার করছি (কিন্তু ডাবল ট্রিগার এড়াতে)
+      let touchHandled = false;
+      video.addEventListener('touchstart', function(e) {
+        if (e.touches.length === 1) {
+          this._touchStartTime = Date.now();
+          touchHandled = false;
+        }
+      }, { passive: true });
 
-    console.log('🎬 শর্ট ভিডিও স্কুল লোড হয়েছে!');
-    console.log('📹 শুধু স্ক্রল করলে ভিডিও চেইঞ্জ হবে');
-    console.log(`📂 সোর্স: ${OWNER}/${REPO}/releases/tag/${TAG}`);
-</script>
+      video.addEventListener('touchend', function(e) {
+        const dt = Date.now() - (this._touchStartTime || 0);
+        // যদি 300ms এর মধ্যে হয় এবং সোয়াইপ না হয়
+        if (dt < 300 && e.changedTouches.length === 1 && !touchHandled) {
+          touchHandled = true;
+          togglePlayPause();
+        }
+        this._touchStartTime = 0;
+      }, { passive: true });
 
+      // ===== সেন্টার বাটনে ক্লিক =====
+      centerBtn.addEventListener('click', function(e) {
+        e.stopPropagation();
+        togglePlayPause();
+      });
+
+      // মোবাইলে center বাটনে ট্যাপ
+      centerBtn.addEventListener('touchend', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        togglePlayPause();
+      });
+
+      // ===== সাউন্ড =====
+      video.volume = 1;
+
+      // ===== শুরু =====
+      fetchVideoUrls();
+
+      console.log('🎬 শর্ট ভিডিও স্কুল লোড হয়েছে!');
+      console.log('📹 স্ক্রল/সোয়াইপ/↑↓ কী দিয়ে ভিডিও চেইঞ্জ');
+      console.log('👆 ভিডিও ট্যাপ করলে পজ/প্লে (তাত্ক্ষণিক)');
+      console.log('🚫 Right ক্লিক ও লং প্রেস বন্ধ');
+    })();
+  </script>
 </body>
 </html>
