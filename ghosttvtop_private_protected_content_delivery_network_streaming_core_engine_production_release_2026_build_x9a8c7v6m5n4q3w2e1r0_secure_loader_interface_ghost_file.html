@@ -80,7 +80,6 @@
             overflow: hidden;
             text-overflow: ellipsis;
         }
-        /* ===== CHANNEL INDEX DISPLAY IN HEADER (name + 000/000) ===== */
         .channel-index-display {
             font-size: 12px;
             font-weight: 600;
@@ -101,7 +100,6 @@
         .channel-index-display .total-num {
             color: #6b7a93;
         }
-        /* Video modal header title with channel index */
         #videoModal .glass-header h3 {
             font-size: 1rem;
             font-weight: 600;
@@ -270,15 +268,12 @@
             background: rgba(239, 68, 68, 0.2);
             color: #ef4444;
         }
-        /* সাইডবারে শর্ট - লাইভ টিভির পর */
         #sidebar-short-item {
             display: flex !important;
         }
-        /* সাইডবারে ফেবারেট - এডাল্টের নিচে */
         #sidebar-favorite-item {
             display: flex !important;
         }
-        /* Adult visibility */
         #sidebar-adult-item {
             display: none !important;
         }
@@ -650,13 +645,8 @@
         .nav-item.active i {
             transform: scale(1.15);
         }
-        /* ফেবারেট নেভিগেশন বার থেকে সরানো হয়েছে */
         #btn-favorite {
             display: none !important;
-        }
-        /* শর্ট নেভিগেশন বারেও থাকবে (আগের মতো) */
-        #btn-short {
-            display: flex !important;
         }
         .backdrop {
             position: fixed;
@@ -1317,7 +1307,6 @@
             clip: rect(0, 0, 0, 0);
             border: 0;
         }
-        /* ===== বড় স্ক্রিনে ভিডিও প্লেয়ার ফুলস্ক্রিন, সাজেস্টেড লুকানো ===== */
         @media (min-width: 768px) {
             #videoModal .suggested-section {
                 display: none !important;
@@ -1382,7 +1371,6 @@
                 display: flex !important;
             }
         }
-        /* ===== ফুলস্ক্রিনে হেডার ওভারলে – শুধু বড় স্ক্রিনে ===== */
         @media (min-width: 768px) {
             body.ghost-fs-overlay-active #videoModal .glass-header {
                 position: fixed !important;
@@ -2152,7 +2140,6 @@
         #homeLoader {
             display: flex;
         }
-        /* Live TV remote number input - style */
         .remote-number-display {
             position: fixed;
             bottom: 90px;
@@ -2245,7 +2232,6 @@
         <div class="header-left">
             <div class="menu-btn" onclick="toggleSidebar()"><i class="fas fa-bars"></i></div>
             <div class="logo" id="header-title">Ghost Tv</div>
-            <!-- ===== CHANNEL INDEX DISPLAY (header left side) ===== -->
             <span class="channel-index-display" id="channelIndexDisplay">
                 <span class="current-num" id="currentChannelNum">00</span>
                 <span class="total-num">/ <span id="totalChannelNum">00</span></span>
@@ -2280,13 +2266,13 @@
             <a href="#" onclick="changePage('movie'); toggleSidebar();"><i class="fas fa-film"></i> মুভি</a>
             <a href="#" onclick="changePage('livetv'); toggleSidebar();"><i class="fas fa-tv"></i> লাইভ টিভি</a>
 
-            <!-- ১. শর্ট ভিডিও সাইডবারে লাইভ টিভির পরে -->
+            <!-- শর্ট - লাইভ টিভির পরে (সাইডবারে) -->
             <a href="#" id="sidebar-short-item" onclick="changePage('short'); toggleSidebar();" style="display:flex; align-items:center; gap:16px; padding:14px 24px; color:#f1f5f9; text-decoration:none; font-size:16px; font-weight:500; border-bottom:1px solid rgba(255,255,255,0.04); transition:0.25s ease; cursor:pointer;">
                 <i class="fas fa-video" style="width:22px; text-align:center; font-size:18px;"></i>
                 <span>Short</span>
             </a>
 
-            <!-- Adult item -->
+            <!-- Adult -->
             <div class="menu-item-box justify-between cursor-pointer" id="sidebar-adult-item">
                 <div class="flex items-center gap-[16px]" onclick="if(document.getElementById('adultVisibilityToggle').checked) { changePage('adult'); toggleSidebar(); } else { showToast('⚠️ আগে চেকবক্সে টিক দিন!'); }">
                     <i class="fas fa-exclamation-triangle text-amber-500"></i>
@@ -2295,7 +2281,7 @@
                 <input type="checkbox" id="adultVisibilityToggle" onchange="toggleAdultNavVisibility(this.checked)" class="w-5 h-5 accent-red-600 cursor-pointer">
             </div>
 
-            <!-- ২. ফেবারেট পেজ সাইডবারে এডাল্টের নিচে -->
+            <!-- ফেবারেট - এডাল্টের নিচে (সাইডবারে) -->
             <a href="#" id="sidebar-favorite-item" onclick="changePage('favorite'); toggleSidebar();" style="display:flex; align-items:center; gap:16px; padding:14px 24px; color:#f1f5f9; text-decoration:none; font-size:16px; font-weight:500; border-bottom:1px solid rgba(255,255,255,0.04); transition:0.25s ease; cursor:pointer;">
                 <i class="fas fa-heart" style="width:22px; text-align:center; font-size:18px;"></i>
                 <span>ফেবারেট</span>
@@ -2385,7 +2371,7 @@
         <!-- FAVORITE (শুধু সাইডবারে) -->
         <section id="favorite" class="page-section"><div class="pt-6 px-2 max-w-full mx-auto" id="content-favorite"><div class="loading-spinner"><div class="spinner"></div><div class="loading-text">ফেবারেট লোড হচ্ছে...</div></div></div></section>
 
-        <!-- SHORT (নেভিগেশন বারেও ও সাইডবারেও) -->
+        <!-- SHORT (নেভিগেশন বারেও & সাইডবারেও) -->
         <section id="short" class="page-section"><div class="pt-6 px-2 max-w-full mx-auto" id="content-short"><div class="loading-spinner"><div class="spinner"></div><div class="loading-text">Short ভিডিও লোড হচ্ছে...</div></div></div></section>
     </div>
 
@@ -2630,16 +2616,13 @@
         let alertShown = false;
         let ghostAutoFSInitDone = false;
 
-        // Channel Index Display
         const channelIndexDisplay = document.getElementById('channelIndexDisplay');
         const currentChannelNum = document.getElementById('currentChannelNum');
         const totalChannelNum = document.getElementById('totalChannelNum');
 
-        // ===== SEQUENTIAL CHANNEL NAVIGATION STATE =====
         let sequentialChannelIndex = -1;
         let sequentialChannelList = [];
 
-        // ===== REMOTE NUMBER INPUT STATE =====
         let remoteNumberBuffer = "";
         let remoteNumberTimeout = null;
         const remoteNumberDisplay = document.getElementById('remoteNumberDisplay');
@@ -4423,6 +4406,11 @@
         // PAGE NAVIGATION
         // ================================================================
         function changePage(pageId) {
+            if (pageId === 'short') {
+                // Short পেজে গেলে short.html এ redirect করবে
+                window.location.href = 'short.html';
+                return;
+            }
             activePageGlobal = pageId;
             const sections = document.querySelectorAll('.page-section');
             sections.forEach(section => section.classList.remove('active'));
@@ -4438,8 +4426,7 @@
                 livetv: 'Live TV',
                 adult: '18+ Adult',
                 'search-section': 'Search',
-                favorite: 'ফেবারেট',
-                short: 'Short'
+                favorite: 'ফেবারেট'
             };
             document.getElementById('header-title').innerText = titleMap[pageId] || 'ɢʜᴏꜱᴛ_ᴛᴠ';
             if (pageId === 'livetv') {
@@ -4450,7 +4437,6 @@
             }
             clearRemoteFocus();
             if (pageId === 'favorite') renderFavoritePage();
-            if (pageId === 'short') renderShortPage();
         }
 
         // ================================================================
@@ -4557,18 +4543,6 @@
                 const isLiveTv = false;
                 container.appendChild(createPoster(movie, isLiveTv));
             });
-        }
-
-        function renderShortPage() {
-            const container = document.getElementById('content-short');
-            if (!container) return;
-            container.innerHTML = `
-                <div class="text-center py-12">
-                    <i class="fas fa-video text-6xl text-red-500/30 mb-4 block"></i>
-                    <h2 class="text-2xl font-bold text-white mb-2">Short ভিডিও</h2>
-                    <p class="text-gray-400">শীঘ্রই আসছে...</p>
-                </div>
-            `;
         }
 
         // ================================================================
@@ -4804,6 +4778,10 @@
             }
             if (!playedFromShare) {
                 const mode = new URLSearchParams(window.location.search).get('mode');
+                if (mode === 'short') {
+                    window.location.href = 'short.html';
+                    return;
+                }
                 changePage(mode && KEYS[mode] && mode !== 'adult' ? mode : 'home');
             } else {
                 changePage('home');
