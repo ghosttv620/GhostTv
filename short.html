@@ -2,7 +2,7 @@
 <html lang="bn">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>শর্ট ভিডিও স্কুল</title>
     <style>
         * {
@@ -15,15 +15,17 @@
             overflow: hidden;
             height: 100vh;
             width: 100vw;
-            position: fixed;
-            top: 0;
-            left: 0;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
             align-items: center;
+            justify-content: flex-start;
+            padding-top: 20px; /* ডেস্কটপের জন্য প্লেয়ার উপরে */
             user-select: none;
             -webkit-user-select: none;
             -webkit-touch-callout: none;
+            position: fixed;
+            top: 0;
+            left: 0;
         }
         #player-container {
             width: 720px;
@@ -36,14 +38,26 @@
             justify-content: center;
             align-items: center;
             overflow: hidden;
+            touch-action: none;
+            flex-shrink: 0;
+        }
+        #video-wrapper {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            transform-origin: center center;
+            will-change: transform;
+            touch-action: none;
         }
         video {
             width: 100%;
             height: 100%;
-            object-fit: contain; /* ভিডিও ফিল না করে পুরোটা দেখাবে, রেশিও ঠিক থাকবে */
+            object-fit: contain;
             background: #000;
             display: block;
-            /* সব নেটিভ কন্ট্রোল লুকান */
             &::-webkit-media-controls { display: none !important; }
             &::-webkit-media-controls-enclosure { display: none !important; }
             &::-webkit-media-controls-panel { display: none !important; }
@@ -95,6 +109,44 @@
         .custom-play-btn:active {
             transform: translate(-50%, -50%) scale(0.90);
         }
+        
+        /* ===== পরবর্তী বাটন – গোল চিহ্নিত জায়গায় ফিক্সড ===== */
+        .next-btn {
+            position: fixed; /* স্ক্রিনের সাপেক্ষে ফিক্সড করে দেওয়া হয়েছে */
+            bottom: 25px;    /* নিচে 25px দূরত্বে (লাল গোল চিহ্নিত স্থানে) */
+            left: 50%;
+            transform: translateX(-50%);
+            margin: 0;       /* ডেস্কটপের মার্জিন রিমুভ করা হয়েছে */
+            padding: 14px 32px;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 40px;
+            color: #fff;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.2s ease, transform 0.15s ease;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            letter-spacing: 0.5px;
+            touch-action: manipulation;
+            user-select: none;
+            -webkit-user-select: none;
+            flex-shrink: 0;
+            z-index: 30; /* ভিডিওর উপরে থাকবে */
+        }
+        .next-btn:active {
+            transform: translateX(-50%) scale(0.92);
+            background: rgba(255, 255, 255, 0.25);
+        }
+        .next-btn .arrow {
+            font-size: 22px;
+            line-height: 1;
+        }
         .loader {
             position: fixed;
             top: 50%;
@@ -129,31 +181,67 @@
             display: none;
             max-width: 80%;
         }
-        /* মোবাইলে পুরো স্ক্রিন, কিন্তু contain থাকায় ক্রপ বা স্ট্রেচ হবে না */
+        
+        /* ===== মোবাইলের জন্য ফিক্স (বাটন নিচে গোল চিহ্নিত জায়গায়) ===== */
         @media (max-width: 720px) {
-            #player-container {
-                width: 100vw;
-                height: 100vh;
-                max-width: 100vw;
-                max-height: 100vh;
+            body {
+                padding-top: 0; /* উপরের কালো অংশ দূর */
+                justify-content: flex-start;
             }
-            video {
-                width: 100%;
-                height: 100%;
-                object-fit: contain;
+            #player-container {
+                position: relative;
+                width: 100vw;
+                height: auto;
+                aspect-ratio: 9 / 16; /* ভিডিও রেশিও ধরে রাখবে */
+                max-height: 80dvh; /* নিচে বাটনের জন্য জায়গা রাখা */
+                max-width: 100vw;
+                max-height: none;
+                flex-shrink: 0;
+                top: 0;
+            }
+            /* মোবাইলে বাটনটির স্টাইল (পজিশনিং একই থাকবে, তবে মোবাইলের মিডিয়া কোয়েরি থাকলেও ওপরের fixed স্টাইলই কাজ করবে) */
+            .next-btn {
+                bottom: 25px;
+                left: 50%;
+                transform: translateX(-50%);
+                padding: 14px 32px;
+                font-size: 16px;
+                background: rgba(0, 0, 0, 0.7);
+                backdrop-filter: blur(8px);
+                -webkit-backdrop-filter: blur(8px);
+                border: 1px solid rgba(255, 255, 255, 0.25);
+                box-shadow: 0 4px 20px rgba(0,0,0,0.8);
             }
         }
+        
+        /* ===== ল্যান্ডস্কেপ মোবাইলের জন্য একই নিয়ম ===== */
         @media (orientation: landscape) and (max-height: 1080px) {
-            #player-container {
-                width: 100vw;
-                height: 100vh;
-                max-width: 100vw;
-                max-height: 100vh;
+            body {
+                padding-top: 0;
+                justify-content: flex-start;
             }
-            video {
-                width: 100%;
-                height: 100%;
-                object-fit: contain;
+            #player-container {
+                position: relative;
+                width: 100vw;
+                height: auto;
+                aspect-ratio: 9 / 16;
+                max-height: 80dvh;
+                max-width: 100vw;
+                max-height: none;
+                flex-shrink: 0;
+                top: 0;
+            }
+            .next-btn {
+                bottom: 25px;
+                left: 50%;
+                transform: translateX(-50%);
+                padding: 14px 32px;
+                font-size: 16px;
+                background: rgba(0, 0, 0, 0.7);
+                backdrop-filter: blur(8px);
+                -webkit-backdrop-filter: blur(8px);
+                border: 1px solid rgba(255, 255, 255, 0.25);
+                box-shadow: 0 4px 20px rgba(0,0,0,0.8);
             }
         }
     </style>
@@ -162,8 +250,14 @@
     <div class="loader" id="loader"></div>
     <div class="error-msg" id="errorMsg"></div>
     <div id="player-container">
-        <video id="myVideo" playsinline></video>
+        <div id="video-wrapper">
+            <video id="myVideo" playsinline></video>
+        </div>
         <div class="custom-play-btn" id="customPlayBtn">▶</div>
+    </div>
+    <div class="next-btn" id="nextBtn">
+        <span>পরবর্তী</span>
+        <span class="arrow">→</span>
     </div>
 
     <script>
@@ -177,26 +271,46 @@
             // ===== DOM =====
             const container = document.getElementById('player-container');
             const video = document.getElementById('myVideo');
+            const wrapper = document.getElementById('video-wrapper');
             const loader = document.getElementById('loader');
             const errorMsg = document.getElementById('errorMsg');
             const customBtn = document.getElementById('customPlayBtn');
+            const nextBtn = document.getElementById('nextBtn');
 
             let videoUrls = [];
             let currentIndex = 0;
-            let touchStartY = 0;
-            let wheelTimeout = false;
             let isPlaying = true;
             let btnTimeout = null;
 
             // ===== লকড ভিডিও ট্র্যাক =====
             let lockedIndices = new Set();
 
-            // ===== Right ক্লিক ও লং প্রেস বন্ধ =====
+            // ===== পিন্চ জুম ও প্যান ভেরিয়েবল =====
+            let currentScale = 1;
+            let currentTranslateX = 0;
+            let currentTranslateY = 0;
+            const MIN_SCALE = 1;
+            const MAX_SCALE = 3;
+            let initialPinchDistance = 0;
+            let initialScale = 1;
+            let initialTranslateX = 0;
+            let initialTranslateY = 0;
+            let isPinching = false;
+            let lastTapTime = 0;
+            let pinchCenterX = 0;
+            let pinchCenterY = 0;
+
+            let isPanning = false;
+            let startPanX = 0;
+            let startPanY = 0;
+            let startTranslateX = 0;
+            let startTranslateY = 0;
+
+            // ===== Right ক্লিক বন্ধ =====
             document.addEventListener('contextmenu', function(e) {
                 e.preventDefault();
                 return false;
             });
-            document.addEventListener('touchstart', function() {}, { passive: true });
 
             // ===== কাস্টম বাটন ফাংশন =====
             function updateButtonIcon() {
@@ -227,6 +341,141 @@
                 }
                 showPlayButton(true);
             }
+
+            // ===== জুম + ট্রান্সলেট ফাংশন =====
+            function clampTranslation(scale, tx, ty) {
+                const rect = container.getBoundingClientRect();
+                const maxX = (rect.width * (scale - 1)) / 2;
+                const maxY = (rect.height * (scale - 1)) / 2;
+                return {
+                    x: Math.min(Math.max(tx, -maxX), maxX),
+                    y: Math.min(Math.max(ty, -maxY), maxY)
+                };
+            }
+
+            function setTransform(scale, tx, ty) {
+                const clamped = clampTranslation(scale, tx, ty);
+                currentScale = Math.min(Math.max(scale, MIN_SCALE), MAX_SCALE);
+                currentTranslateX = clamped.x;
+                currentTranslateY = clamped.y;
+                wrapper.style.transform = `translate(${currentTranslateX}px, ${currentTranslateY}px) scale(${currentScale})`;
+            }
+
+            function resetZoom() {
+                setTransform(1, 0, 0);
+            }
+
+            // ===== ডাবল ট্যাপ =====
+            function handleDoubleTap(e) {
+                const now = Date.now();
+                const timeSinceLastTap = now - lastTapTime;
+                if (timeSinceLastTap < 300) {
+                    resetZoom();
+                    lastTapTime = 0;
+                    return true;
+                }
+                lastTapTime = now;
+                return false;
+            }
+
+            // ===== পিন্চ জুম ইভেন্ট =====
+            function getPinchDistance(touches) {
+                if (touches.length < 2) return 0;
+                const dx = touches[0].clientX - touches[1].clientX;
+                const dy = touches[0].clientY - touches[1].clientY;
+                return Math.sqrt(dx * dx + dy * dy);
+            }
+
+            function getPinchCenter(touches) {
+                if (touches.length < 2) return { x: 0, y: 0 };
+                const rect = container.getBoundingClientRect();
+                const cx = (touches[0].clientX + touches[1].clientX) / 2 - rect.left;
+                const cy = (touches[0].clientY + touches[1].clientY) / 2 - rect.top;
+                return { x: cx, y: cy };
+            }
+
+            container.addEventListener('touchstart', function(e) {
+                const touches = e.touches;
+                if (touches.length === 2) {
+                    isPinching = true;
+                    isPanning = false;
+                    initialPinchDistance = getPinchDistance(touches);
+                    initialScale = currentScale;
+                    initialTranslateX = currentTranslateX;
+                    initialTranslateY = currentTranslateY;
+                    const center = getPinchCenter(touches);
+                    pinchCenterX = center.x;
+                    pinchCenterY = center.y;
+                    e.preventDefault();
+                } else if (touches.length === 1 && currentScale > 1) {
+                    isPanning = true;
+                    isPinching = false;
+                    startPanX = touches[0].clientX;
+                    startPanY = touches[0].clientY;
+                    startTranslateX = currentTranslateX;
+                    startTranslateY = currentTranslateY;
+                    e.preventDefault();
+                }
+            }, { passive: false });
+
+            container.addEventListener('touchmove', function(e) {
+                const touches = e.touches;
+                if (touches.length === 2 && isPinching) {
+                    const distance = getPinchDistance(touches);
+                    if (initialPinchDistance > 0) {
+                        const scaleFactor = distance / initialPinchDistance;
+                        let newScale = initialScale * scaleFactor;
+                        newScale = Math.min(Math.max(newScale, MIN_SCALE), MAX_SCALE);
+                        const rect = container.getBoundingClientRect();
+                        const centerX = rect.width / 2;
+                        const centerY = rect.height / 2;
+                        const dx = pinchCenterX - centerX;
+                        const dy = pinchCenterY - centerY;
+                        let newTx = initialTranslateX + dx * (1 - newScale / initialScale);
+                        let newTy = initialTranslateY + dy * (1 - newScale / initialScale);
+                        setTransform(newScale, newTx, newTy);
+                        e.preventDefault();
+                    }
+                } else if (touches.length === 1 && isPanning) {
+                    const dx = touches[0].clientX - startPanX;
+                    const dy = touches[0].clientY - startPanY;
+                    let newTx = startTranslateX + dx;
+                    let newTy = startTranslateY + dy;
+                    setTransform(currentScale, newTx, newTy);
+                    e.preventDefault();
+                }
+            }, { passive: false });
+
+            container.addEventListener('touchend', function(e) {
+                if (e.changedTouches.length === 1 && !isPinching && !isPanning) {
+                    const touch = e.changedTouches[0];
+                    if (handleDoubleTap(touch)) {
+                        e.preventDefault();
+                        return;
+                    }
+                }
+                if (isPinching) {
+                    isPinching = false;
+                    initialPinchDistance = 0;
+                    e.preventDefault();
+                }
+                if (isPanning) {
+                    isPanning = false;
+                    e.preventDefault();
+                }
+            }, { passive: false });
+
+            // ===== চেঞ্জ বাটন =====
+            nextBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                loadRandomVideo();
+            });
+
+            nextBtn.addEventListener('touchend', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                loadRandomVideo();
+            });
 
             // ===== ভিডিও লোড =====
             async function fetchVideoUrls() {
@@ -284,6 +533,8 @@
                 const url = videoUrls[index];
                 currentIndex = index;
                 
+                resetZoom();
+                
                 video.src = url;
                 video.load();
                 
@@ -322,17 +573,15 @@
                 };
             }
 
-            // ===== রেনডম ভিডিও (শুধু আনলকড থেকে) + রিসেট =====
+            // ===== রেনডম ভিডিও (শুধু আনলকড) + রিসেট =====
             function loadRandomVideo() {
                 if (videoUrls.length === 0) return;
 
-                // যদি সব ভিডিও লকড হয়ে যায়, তাহলে রিসেট করি (লক তালিকা খালি)
                 if (lockedIndices.size >= videoUrls.length) {
                     lockedIndices = new Set();
                     console.log('🔄 সব ভিডিও দেখা শেষ, নতুন চক্র শুরু হচ্ছে...');
                 }
 
-                // আনলকড ইনডেক্সগুলোর তালিকা
                 let availableIndices = [];
                 for (let i = 0; i < videoUrls.length; i++) {
                     if (!lockedIndices.has(i)) {
@@ -340,7 +589,6 @@
                     }
                 }
 
-                // যদি এখনও কোনো আনলকড না থাকে (সুরক্ষা)
                 if (availableIndices.length === 0) {
                     lockedIndices = new Set();
                     availableIndices = [];
@@ -357,36 +605,20 @@
                 playVideo(randomIndex);
             }
 
-            // ===== স্ক্রল/সোয়াইপ/কী =====
+            // ===== স্ক্রল/সোয়াইপ/কী-প্রেস ডিজেবল =====
             document.addEventListener('wheel', function(e) {
-                if (videoUrls.length < 2) return;
-                if (wheelTimeout) return;
-                wheelTimeout = true;
-                setTimeout(() => { wheelTimeout = false; }, 500);
-                if (e.deltaY !== 0) {
-                    loadRandomVideo();
-                }
-            }, { passive: true });
+                e.preventDefault();
+            }, { passive: false });
 
-            document.addEventListener('touchstart', function(e) {
-                touchStartY = e.changedTouches[0].screenY;
-            }, { passive: true });
-
-            document.addEventListener('touchend', function(e) {
-                if (!touchStartY) return;
-                const deltaY = touchStartY - e.changedTouches[0].screenY;
-                if (Math.abs(deltaY) > 40 && videoUrls.length > 1) {
-                    loadRandomVideo();
+            document.addEventListener('touchmove', function(e) {
+                if (e.touches.length === 1) {
+                    e.preventDefault();
                 }
-                touchStartY = 0;
-            }, { passive: true });
+            }, { passive: false });
 
             document.addEventListener('keydown', function(e) {
                 if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
                     e.preventDefault();
-                    if (videoUrls.length > 1) {
-                        loadRandomVideo();
-                    }
                 }
                 if (e.key === ' ' || e.key === 'Spacebar') {
                     e.preventDefault();
@@ -394,7 +626,7 @@
                 }
             });
 
-            // ===== কাস্টম বাটন ক্লিক =====
+            // ===== কাস্টম বাটন =====
             customBtn.addEventListener('click', function(e) {
                 e.stopPropagation();
                 togglePlayPause();
@@ -406,7 +638,6 @@
                 togglePlayPause();
             });
 
-            // ===== ভিডিও কন্টেইনার ক্লিক =====
             container.addEventListener('click', function(e) {
                 togglePlayPause();
             });
@@ -414,11 +645,13 @@
             // ===== শুরু =====
             fetchVideoUrls();
 
-            console.log('🎬 শর্ট ভিডিও স্কুল রেডি! (সাইজ 720x1080, contain মোড)');
-            console.log('📹 স্ক্রল/সোয়াইপ/↑↓ কী দিয়ে ভিডিও চেইঞ্জ');
+            console.log('🎬 শর্ট ভিডিও স্কুল রেডি!');
+            console.log('📌 স্ক্রল/সোয়াইপ/↑↓ কী দিয়ে ভিডিও চেঞ্জ হয় না');
+            console.log('👉 নিচের "পরবর্তী →" বাটনে চাপ দিন ভিডিও চেঞ্জ করতে');
             console.log('👆 ভিডিও ট্যাপ করলে পজ/প্লে');
             console.log('🔒 যেটা দেখছেন সেটা লক হয়ে থাকবে, আর আসবে না');
             console.log('🔄 সব শেষ হলে আপনা-আপনি রিসেট হয়ে নতুন চক্র শুরু হবে');
+            console.log('🤏 দুই আঙ্গুল দিয়ে পিন্চ করে জুম করুন, এক আঙ্গুল দিয়ে প্যান করুন, ডাবল ট্যাপে রিসেট');
             console.log(`📂 সোর্স: ${OWNER}/${REPO}/releases/tag/${TAG}`);
         })();
     </script>
