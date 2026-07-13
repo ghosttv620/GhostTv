@@ -43,7 +43,6 @@
       background: #000;
       display: block;
       pointer-events: auto;
-      /* সব নেটিভ কন্ট্রোল লুকান */
       &::-webkit-media-controls { display: none !important; }
       &::-webkit-media-controls-enclosure { display: none !important; }
       &::-webkit-media-controls-panel { display: none !important; }
@@ -60,7 +59,6 @@
       controlslist: "nodownload nofullscreen noremoteplayback";
       disablepictureinpicture: true;
     }
-    /* শুধু মাঝখানে গ্লাস ইফেক্ট বাটন */
     .center-play-btn {
       position: fixed;
       top: 50%;
@@ -95,7 +93,6 @@
     .center-play-btn:active {
       transform: translate(-50%, -50%) scale(0.90);
     }
-    /* লোডিং */
     .loader {
       position: fixed;
       top: 50%;
@@ -160,13 +157,11 @@
 
   <script>
     (function(){
-      // ===== কনফিগারেশন =====
       const OWNER = "ghosttv620";
       const REPO = "All-Video";
       const TAG = "Short";
       const TOKEN = "";
 
-      // ===== DOM =====
       const video = document.getElementById('myVideo');
       const loader = document.getElementById('loader');
       const errorMsg = document.getElementById('errorMsg');
@@ -179,37 +174,26 @@
       let isPlaying = true;
       let btnTimeout = null;
 
-      // ===== Right ক্লিক বন্ধ =====
-      document.addEventListener('contextmenu', function(e) {
-        e.preventDefault();
-        return false;
-      });
+      // ===== Right ক্লিক ও লং প্রেস বন্ধ =====
+      document.addEventListener('contextmenu', e => e.preventDefault());
+      document.addEventListener('touchstart', () => {}, { passive: true });
 
-      // ===== মোবাইলের লং প্রেস বন্ধ =====
-      document.addEventListener('touchstart', function(e) {
-        // লং প্রেস থেকে কোনো মেনু আসবে না
-      }, { passive: true });
-
-      // ===== বাটন আপডেট =====
+      // ===== বাটন ফাংশন =====
       function updateButtonIcon() {
         centerBtn.textContent = video.paused ? '▶' : '⏸';
       }
-
       function showPlayButton(show) {
         if (show) {
           updateButtonIcon();
           centerBtn.classList.add('show');
           clearTimeout(btnTimeout);
-          btnTimeout = setTimeout(() => {
-            centerBtn.classList.remove('show');
-          }, 1800);
+          btnTimeout = setTimeout(() => centerBtn.classList.remove('show'), 1800);
         } else {
           centerBtn.classList.remove('show');
           clearTimeout(btnTimeout);
         }
       }
 
-      // ===== টগল পজ/প্লে (সরাসরি ক্লিক/ট্যাপ) =====
       function togglePlayPause() {
         if (video.paused) {
           video.play().catch(() => {});
@@ -221,40 +205,24 @@
         showPlayButton(true);
       }
 
-      // ===== ভিডিও ফেচ =====
+      // ===== ফেচ ভিডিও =====
       async function fetchVideoUrls() {
         try {
           loader.style.display = 'block';
           errorMsg.style.display = 'none';
-
           const headers = { Accept: "application/vnd.github+json" };
-          if (TOKEN && TOKEN.trim() !== "") {
-            headers["Authorization"] = `token ${TOKEN}`;
-          }
-
-          const res = await fetch(
-            `https://api.github.com/repos/${OWNER}/${REPO}/releases/tags/${TAG}`,
-            { headers }
-          );
-
+          if (TOKEN && TOKEN.trim() !== "") headers["Authorization"] = `token ${TOKEN}`;
+          const res = await fetch(`https://api.github.com/repos/${OWNER}/${REPO}/releases/tags/${TAG}`, { headers });
           if (!res.ok) {
             if (res.status === 404) throw new Error('রিলিজ পাওয়া যায়নি!');
             throw new Error(`HTTP ${res.status}`);
           }
-
           const data = await res.json();
-          if (!data.assets || data.assets.length === 0) {
-            throw new Error('কোনো ভিডিও পাওয়া যায়নি!');
-          }
-
+          if (!data.assets || data.assets.length === 0) throw new Error('কোনো ভিডিও পাওয়া যায়নি!');
           videoUrls = data.assets
             .filter(asset => /\.(mp4|webm|ogg|mov|m4v)$/i.test(asset.name))
             .map(asset => asset.browser_download_url);
-
-          if (videoUrls.length === 0) {
-            throw new Error('কোনো ভিডিও ফাইল পাওয়া যায়নি!');
-          }
-
+          if (videoUrls.length === 0) throw new Error('কোনো ভিডিও ফাইল পাওয়া যায়নি!');
           loader.style.display = 'none';
           currentIndex = Math.floor(Math.random() * videoUrls.length);
           playVideo(currentIndex);
@@ -279,32 +247,28 @@
           video.play().catch(() => {});
           centerBtn.classList.remove('show');
         };
-
         video.onerror = function() {
           console.warn('ভিডিও লোডে সমস্যা');
-          setTimeout(() => {
-            loadRandomVideo();
-          }, 1200);
+          setTimeout(() => loadRandomVideo(), 1200);
         };
-
         video.onended = function() {
+          // ভিডিও শেষ হলে নতুন রেনডম লোড
           loadRandomVideo();
         };
-
-        video.onplay = function() { 
+        video.onplay = function() {
           isPlaying = true;
           updateButtonIcon();
           centerBtn.classList.remove('show');
           clearTimeout(btnTimeout);
         };
-        video.onpause = function() { 
+        video.onpause = function() {
           isPlaying = false;
           updateButtonIcon();
           showPlayButton(true);
         };
       }
 
-      // ===== রেনডম লোড (আগের বাদে) =====
+      // ===== রেনডম লোড (আগের ভিডিও বাদ দিয়ে) =====
       function loadRandomVideo() {
         if (videoUrls.length <= 1) {
           playVideo(0);
@@ -323,15 +287,12 @@
         playVideo(newIndex);
       }
 
-      // ===== স্ক্রল/সোয়াইপ/কী (ভিডিও চেঞ্জ) =====
+      // ===== স্ক্রল/সোয়াইপ/কী =====
       document.addEventListener('wheel', function(e) {
-        if (videoUrls.length < 2) return;
-        if (wheelTimeout) return;
+        if (videoUrls.length < 2 || wheelTimeout) return;
         wheelTimeout = true;
         setTimeout(() => { wheelTimeout = false; }, 500);
-        if (e.deltaY !== 0) {
-          loadRandomVideo();
-        }
+        if (e.deltaY !== 0) loadRandomVideo();
       }, { passive: true });
 
       document.addEventListener('touchstart', function(e) {
@@ -341,18 +302,14 @@
       document.addEventListener('touchend', function(e) {
         if (!touchStartY) return;
         const deltaY = touchStartY - e.changedTouches[0].screenY;
-        if (Math.abs(deltaY) > 40 && videoUrls.length > 1) {
-          loadRandomVideo();
-        }
+        if (Math.abs(deltaY) > 40 && videoUrls.length > 1) loadRandomVideo();
         touchStartY = 0;
       }, { passive: true });
 
       document.addEventListener('keydown', function(e) {
         if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
           e.preventDefault();
-          if (videoUrls.length > 1) {
-            loadRandomVideo();
-          }
+          if (videoUrls.length > 1) loadRandomVideo();
         }
         if (e.key === ' ' || e.key === 'Spacebar') {
           e.preventDefault();
@@ -360,16 +317,13 @@
         }
       });
 
-      // ===== ভিডিও ক্লিক/ট্যাপ - সরাসরি টগল =====
-      // 'click' ইভেন্ট ব্যবহার করছি, এতে কোনো দেরি হবে না
+      // ===== ভিডিও ক্লিক/ট্যাপ =====
       video.addEventListener('click', function(e) {
         e.preventDefault();
         e.stopPropagation();
         togglePlayPause();
       });
 
-      // মোবাইলের জন্য 'touchend' - কিন্তু click ইতিমধ্যে কাজ করে
-      // তবুও নিশ্চিত করতে touchend ব্যবহার করছি (কিন্তু ডাবল ট্রিগার এড়াতে)
       let touchHandled = false;
       video.addEventListener('touchstart', function(e) {
         if (e.touches.length === 1) {
@@ -380,7 +334,6 @@
 
       video.addEventListener('touchend', function(e) {
         const dt = Date.now() - (this._touchStartTime || 0);
-        // যদি 300ms এর মধ্যে হয় এবং সোয়াইপ না হয়
         if (dt < 300 && e.changedTouches.length === 1 && !touchHandled) {
           touchHandled = true;
           togglePlayPause();
@@ -388,29 +341,24 @@
         this._touchStartTime = 0;
       }, { passive: true });
 
-      // ===== সেন্টার বাটনে ক্লিক =====
       centerBtn.addEventListener('click', function(e) {
         e.stopPropagation();
         togglePlayPause();
       });
-
-      // মোবাইলে center বাটনে ট্যাপ
       centerBtn.addEventListener('touchend', function(e) {
         e.preventDefault();
         e.stopPropagation();
         togglePlayPause();
       });
 
-      // ===== সাউন্ড =====
       video.volume = 1;
-
-      // ===== শুরু =====
       fetchVideoUrls();
 
       console.log('🎬 শর্ট ভিডিও স্কুল লোড হয়েছে!');
       console.log('📹 স্ক্রল/সোয়াইপ/↑↓ কী দিয়ে ভিডিও চেইঞ্জ');
       console.log('👆 ভিডিও ট্যাপ করলে পজ/প্লে (তাত্ক্ষণিক)');
       console.log('🚫 Right ক্লিক ও লং প্রেস বন্ধ');
+      console.log('🔄 যে ভিডিও প্লে হচ্ছে সেটি আবার শেষে আসবে না (বাদ দেয়া হবে)');
     })();
   </script>
 </body>
