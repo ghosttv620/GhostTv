@@ -26,10 +26,10 @@
             -webkit-touch-callout: none;
         }
         #player-container {
-            width: 610px;
-            height: 1280px;
-            max-width: 610px;
-            max-height: 1280px;
+            width: 720px;
+            height: 1080px;
+            max-width: 720px;
+            max-height: 1080px;
             background: #000;
             position: relative;
             display: flex;
@@ -38,10 +38,9 @@
             overflow: hidden;
         }
         video {
+            width: 100%;
             height: 100%;
-            width: auto;
-            max-width: 100%;
-            object-fit: none;
+            object-fit: contain; /* ভিডিও ফিল না করে পুরোটা দেখাবে, রেশিও ঠিক থাকবে */
             background: #000;
             display: block;
             /* সব নেটিভ কন্ট্রোল লুকান */
@@ -130,8 +129,8 @@
             display: none;
             max-width: 80%;
         }
-        /* মোবাইলে পুরো স্ক্রিন (কিন্তু 610x1280 প্রয়োগ হয় না, কারণ মোবাইলে ভিউপোর্ট অনুযায়ী স্কেল) */
-        @media (max-width: 610px) {
+        /* মোবাইলে পুরো স্ক্রিন, কিন্তু contain থাকায় ক্রপ বা স্ট্রেচ হবে না */
+        @media (max-width: 720px) {
             #player-container {
                 width: 100vw;
                 height: 100vh;
@@ -139,13 +138,12 @@
                 max-height: 100vh;
             }
             video {
-                height: 100vh;
-                width: auto;
-                max-width: 100vw;
-                object-fit: none;
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
             }
         }
-        @media (orientation: landscape) and (max-height: 1280px) {
+        @media (orientation: landscape) and (max-height: 1080px) {
             #player-container {
                 width: 100vw;
                 height: 100vh;
@@ -153,10 +151,9 @@
                 max-height: 100vh;
             }
             video {
-                height: 100vh;
-                width: auto;
-                max-width: 100vw;
-                object-fit: none;
+                width: 100%;
+                height: 100%;
+                object-fit: contain;
             }
         }
     </style>
@@ -191,7 +188,7 @@
             let isPlaying = true;
             let btnTimeout = null;
 
-            // ===== লকড ভিডিও ট্র্যাক (যে ইনডেক্সগুলো একবার প্লে হয়েছে) =====
+            // ===== লকড ভিডিও ট্র্যাক =====
             let lockedIndices = new Set();
 
             // ===== Right ক্লিক ও লং প্রেস বন্ধ =====
@@ -345,7 +342,6 @@
 
                 // যদি এখনও কোনো আনলকড না থাকে (সুরক্ষা)
                 if (availableIndices.length === 0) {
-                    // একদম ফাঁকা থাকলে, সব রিসেট করে আবার চেষ্টা
                     lockedIndices = new Set();
                     availableIndices = [];
                     for (let i = 0; i < videoUrls.length; i++) {
@@ -418,7 +414,7 @@
             // ===== শুরু =====
             fetchVideoUrls();
 
-            console.log('🎬 শর্ট ভিডিও স্কুল রেডি! (সাইজ 610x1280)');
+            console.log('🎬 শর্ট ভিডিও স্কুল রেডি! (সাইজ 720x1080, contain মোড)');
             console.log('📹 স্ক্রল/সোয়াইপ/↑↓ কী দিয়ে ভিডিও চেইঞ্জ');
             console.log('👆 ভিডিও ট্যাপ করলে পজ/প্লে');
             console.log('🔒 যেটা দেখছেন সেটা লক হয়ে থাকবে, আর আসবে না');
