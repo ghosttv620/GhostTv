@@ -19,10 +19,10 @@
         }
 
         body {
-            background-color: #070913;
+            background: radial-gradient(circle at center, #0f172a 0%, #070913 100%);
             color: #ffffff;
             min-height: 100vh;
-            padding: 20px 10px;
+            padding: 30px 15px;
             overflow-x: hidden;
             display: flex;
             flex-direction: column;
@@ -38,13 +38,13 @@
         /* Header / Logo - One Line Fix for Mobile */
         .header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 35px;
             padding: 5px;
             width: 100%;
         }
 
         .logo {
-            font-size: 24px;
+            font-size: 26px;
             font-weight: 800;
             display: inline-block;
             white-space: nowrap;
@@ -54,7 +54,7 @@
 
         @media (min-width: 768px) {
             .logo {
-                font-size: 32px;
+                font-size: 34px;
             }
         }
 
@@ -69,10 +69,10 @@
 
         @keyframes glowText {
             0% {
-                text-shadow: 0 0 8px rgba(255, 51, 51, 0.3), 0 0 15px rgba(0, 191, 255, 0.3);
+                text-shadow: 0 0 10px rgba(255, 51, 51, 0.4), 0 0 20px rgba(0, 191, 255, 0.4);
             }
             100% {
-                text-shadow: 0 0 20px rgba(255, 51, 51, 0.8), 0 0 35px rgba(0, 191, 255, 0.8);
+                text-shadow: 0 0 25px rgba(255, 51, 51, 0.9), 0 0 40px rgba(0, 191, 255, 0.9);
             }
         }
 
@@ -80,40 +80,43 @@
         .cards-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
+            gap: 25px;
         }
 
-        /* Download Card: Transparent Background & 10px Border Radius */
+        /* Premium Glassmorphism Download Card */
         .download-card {
-            background: transparent;
-            border: 2px solid rgba(255, 255, 255, 0.15);
-            border-radius: 10px;
-            padding: 18px;
+            background: rgba(15, 23, 42, 0.65);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 14px;
+            padding: 20px;
             text-align: center;
             position: relative;
             z-index: 1;
             overflow: hidden;
-            transition: all 0.4s ease;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
             cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
 
         .download-card:hover {
-            border-color: #00bfff;
-            transform: translateY(-5px);
-            box-shadow: 0 0 20px rgba(0, 191, 255, 0.4);
+            border-color: rgba(0, 191, 255, 0.6);
+            transform: translateY(-7px);
+            box-shadow: 0 15px 35px rgba(0, 191, 255, 0.25), inset 0 0 15px rgba(0, 191, 255, 0.1);
         }
 
         .download-card.selected {
-            border: 2px solid transparent;
-            box-shadow: 0 0 25px rgba(0, 255, 0, 0.7), inset 0 0 15px rgba(0, 255, 0, 0.2);
-            transform: translateY(-5px);
+            border: 1px solid rgba(0, 255, 0, 0.8);
+            box-shadow: 0 0 30px rgba(0, 255, 0, 0.4), inset 0 0 20px rgba(0, 255, 0, 0.15);
+            transform: translateY(-7px);
         }
 
         /* কার্ডের ভেতরের নাম কালারফুল অ্যানিমেশন */
         .card-title {
-            font-size: 16px;
+            font-size: 17px;
             font-weight: 700;
-            margin-bottom: 12px;
+            margin-bottom: 14px;
             letter-spacing: 0.5px;
             animation: titleColorAnim 4s infinite;
         }
@@ -125,36 +128,49 @@
             100% { color: #ff3333; }
         }
 
-        /* Card Image Box */
+        /* Card Image Box with Premium Styling */
         .card-img-box {
             width: 100%;
-            height: 140px;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 8px;
+            height: 150px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 10px;
             overflow: hidden;
-            margin-bottom: 15px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
             position: relative;
         }
 
+        .card-img-box::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-image: var(--bg-img);
+            background-size: cover;
+            background-position: center;
+            filter: blur(10px) brightness(0.5);
+            z-index: 1;
+        }
+
         .card-img-box img {
+            position: relative;
+            z-index: 2;
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain;
             transition: transform 0.5s ease;
-            pointer-events: none; /* ছবি ড্র্যাগ করা বা সেভ করা রোধ করতে */
+            pointer-events: none;
         }
 
         .download-card:hover .card-img-box img, .download-card.selected .card-img-box img {
             transform: scale(1.08);
         }
 
-        /* Download Button with Animation */
+        /* Premium Download Button with Animation */
         .card-download-btn {
             background: linear-gradient(135deg, #ff3333, #cc0000);
             color: white;
-            padding: 12px;
-            border-radius: 8px;
+            padding: 13px;
+            border-radius: 10px;
             text-decoration: none;
             font-weight: bold;
             font-size: 14px;
@@ -163,7 +179,7 @@
             justify-content: center;
             gap: 8px;
             width: 100%;
-            box-shadow: 0 4px 15px rgba(255, 51, 51, 0.4);
+            box-shadow: 0 5px 20px rgba(255, 51, 51, 0.4);
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
@@ -177,7 +193,7 @@
             width: 100%;
             height: 100%;
             background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
-            transition: 0.5s;
+            transition: 0.6s;
         }
 
         .card-download-btn:hover::after {
@@ -186,7 +202,7 @@
 
         .download-card.selected .card-download-btn {
             background: linear-gradient(135deg, #00ff00, #00aa00);
-            box-shadow: 0 0 20px rgba(0, 255, 0, 0.8);
+            box-shadow: 0 0 25px rgba(0, 255, 0, 0.7);
             transform: scale(1.02);
             animation: btnPulse 1.5s infinite;
         }
@@ -212,11 +228,11 @@
         /* Footer */
         footer {
             text-align: center;
-            padding: 30px 0;
-            margin-top: 30px;
+            padding: 35px 0 10px 0;
+            margin-top: 40px;
             color: #6b7280;
             font-size: 12px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
             width: 100%;
         }
     </style>
@@ -251,7 +267,7 @@
             e.preventDefault();
         });
 
-        // ২. কিবোর্ড শর্টকাট দিয়ে ডেভলপার টুল ও সোর্স কোড দেখা বন্ধ করা (F12, Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U ইত্যাদি)
+        // ২. কিবোর্ড শর্টকাট দিয়ে ডেভলপার টুল ও সোর্স কোড দেখা বন্ধ করা
         document.addEventListener('keydown', function(e) {
             if (
                 e.key === 'F12' || 
@@ -288,7 +304,8 @@
                 if (!response.ok) throw new Error('Network response was not ok');
                 
                 const files = await response.json();
-                renderCards(files && files.length > 0 ? files : fallbackData);
+                const activeFiles = files.filter(item => item.status !== false);
+                renderCards(activeFiles.length > 0 ? activeFiles : fallbackData);
 
             } catch (error) {
                 console.warn('Using fallback data due to fetch error:', error);
@@ -307,7 +324,7 @@
 
                 card.innerHTML = `
                     <div class="card-title">${item.title || 'Untitled'}</div>
-                    <div class="card-img-box">
+                    <div class="card-img-box" style="--bg-img: url('${item.image || ''}')">
                         <img src="${item.image || ''}" alt="${item.title || 'File Image'}" draggable="false">
                     </div>
                     <a href="${item.downloadLink || '#'}" class="card-download-btn" target="_blank">
@@ -321,6 +338,5 @@
 
         loadFiles();
     </script>
-
 </body>
 </html>
