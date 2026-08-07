@@ -2201,29 +2201,8 @@
         }
     </style>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-            if (isMobile) {
-                const el = document.documentElement;
-                if (el.requestFullscreen) {
-                    el.requestFullscreen().catch(() => {});
-                } else if (el.webkitRequestFullscreen) {
-                    el.webkitRequestFullscreen();
-                } else if (el.msRequestFullscreen) {
-                    el.msRequestFullscreen();
-                }
-            }
-        });
-        document.addEventListener('click', function() {
-            if (!document.fullscreenElement && !document.webkitFullscreenElement) {
-                const el = document.documentElement;
-                if (el.requestFullscreen) {
-                    el.requestFullscreen().catch(() => {});
-                } else if (el.webkitRequestFullscreen) {
-                    el.webkitRequestFullscreen();
-                }
-            }
-        });
+        // ===== অটো-ফুলস্ক্রিন বাদ দেওয়া হয়েছে =====
+        // ইচ্ছাকৃতভাবে খালি রাখা হয়েছে — আগের DOMContentLoaded ও click হ্যান্ডলার সরানো হয়েছে
     </script>
 </head>
 <body>
@@ -3347,67 +3326,23 @@
         }
 
         // ================================================================
-        // FULLSCREEN ON PLAY
+        // FULLSCREEN ON PLAY (শুধু ভিডিও প্লেয়ারের জন্য, পুরো পেজ না)
         // ================================================================
         function attachFullscreenOnPlay(videoElement) {
             if (!videoElement) return;
             if (videoElement._ghostFSAttached) return;
             videoElement._ghostFSAttached = true;
-            let userInteractionHandler = null;
-            let fsAttempted = false;
 
-            function requestFS(el) {
-                if (!el) return;
-                if (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement ||
-                    document
-                    .msFullscreenElement) return;
-                try {
-                    const req = el.requestFullscreen || el.webkitRequestFullscreen || el.mozRequestFullScreen || el
-                        .msRequestfullscreen;
-                    if (req) {
-                        req.call(el).catch(() => {
-                            if (!userInteractionHandler && !fsAttempted) {
-                                fsAttempted = true;
-                                userInteractionHandler = function() {
-                                    if (window.innerWidth < 768) return;
-                                    if (!document.fullscreenElement && !document.webkitFullscreenElement) {
-                                        const req2 = el.requestFullscreen || el.webkitRequestFullscreen || el
-                                            .mozRequestFullScreen || el.msRequestfullscreen;
-                                        if (req2) {
-                                            req2.call(el).catch(() => {});
-                                        }
-                                    }
-                                    document.removeEventListener('click', userInteractionHandler);
-                                    document.removeEventListener('touchstart', userInteractionHandler);
-                                    document.removeEventListener('keydown', userInteractionHandler);
-                                    userInteractionHandler = null;
-                                    fsAttempted = false;
-                                };
-                                document.addEventListener('click', userInteractionHandler, { once: true });
-                                document.addEventListener('touchstart', userInteractionHandler, { once: true });
-                                document.addEventListener('keydown', userInteractionHandler, { once: true });
-                            }
-                        });
-                    }
-                } catch (e) {}
-            }
-            videoElement.addEventListener('play', function onPlay() {
-                if (window.innerWidth < 768) return;
-                if (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement ||
-                    document
-                    .msFullscreenElement) return;
-            }, { passive: true });
-            videoElement.addEventListener('fullscreenchange', updateFullscreenOverlayState);
-            videoElement.addEventListener('webkitfullscreenchange', updateFullscreenOverlayState);
-            videoElement.addEventListener('mozfullscreenchange', updateFullscreenOverlayState);
-            videoElement.addEventListener('MSFullscreenChange', updateFullscreenOverlayState);
+            // শুধু ভিডিও এলিমেন্টের ফুলস্ক্রিন, পুরো পেজের জন্য নয়
+            // ব্যবহারকারী যখন ভিডিওতে ফুলস্ক্রিন বাটন ক্লিক করবে তখনই ফুলস্ক্রিন হবে
+            // এখানে কোনো অটো ফুলস্ক্রিন করা হচ্ছে না
         }
 
         function initGhostAutoFullscreen() {
             if (ghostAutoFSInitDone) return;
             ghostAutoFSInitDone = true;
+            // শুধু ভিডিও এলিমেন্টে ইভেন্ট অ্যাটাচ করা হচ্ছে, অটো ফুলস্ক্রিন নয়
             const observer = new MutationObserver(function(mutations) {
-                if (window.innerWidth < 768) return;
                 for (const mutation of mutations) {
                     for (const node of mutation.addedNodes) {
                         if (node.nodeType === 1) {
@@ -3428,12 +3363,6 @@
             });
             observer.observe(document.body, { childList: true, subtree: true });
             document.querySelectorAll('video').forEach(attachFullscreenOnPlay);
-            setInterval(function() {
-                if (window.innerWidth < 768) return;
-                document.querySelectorAll('video').forEach(function(v) {
-                    if (!v._ghostFSAttached) attachFullscreenOnPlay(v);
-                });
-            }, 3000);
         }
 
         // ================================================================
@@ -4407,7 +4336,6 @@
         // ================================================================
         function changePage(pageId) {
             if (pageId === 'short') {
-                // Short পেজে গেলে short.html এ redirect করবে
                 window.location.href = 'short.html';
                 return;
             }
