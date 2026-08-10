@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Free Fire UID Checker</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;600;700;800&display=swap');
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      padding: 25px 15px;
+      background:
+        radial-gradient(circle at 50% 0%, #304500 0%, transparent 35%),
+        linear-gradient(135deg, #030303, #101500, #030303);
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      width: 450px;
+      height: 450px;
+      border-radius: 50%;
+      background: #b7ff00;
+      filter: blur(180px);
+      opacity: .07;
+      pointer-events: none;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 520px;
+      margin: auto;
+    }
+
+    /* Header */
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .logo {
+      width: 72px;
+      height: 72px;
+      margin: auto;
+      margin-bottom: 15px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 2px solid #b7ff00;
+      border-radius: 18px;
+      color: #b7ff00;
+      font-size: 29px;
+      font-weight: 900;
+      box-shadow: 0 0 25px rgba(183, 255, 0, .3), inset 0 0 20px rgba(183, 255, 0, .08);
+    }
+
+    .title {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 23px;
+      font-weight: 800;
+      letter-spacing: 2px;
+    }
+
+    .subtitle {
+      margin-top: 7px;
+      color: #777;
+      font-size: 11px;
+      letter-spacing: 1.5px;
+    }
+
+    /* Search Card */
+    .search-card {
+      padding: 20px;
+      background: rgba(15, 15, 15, .92);
+      border: 1px solid rgba(183, 255, 0, .25);
+      border-radius: 18px;
+      box-shadow: 0 0 25px rgba(0, 0, 0, .5);
+    }
+
+    .input {
+      width: 100%;
+      height: 54px;
+      padding: 0 15px;
+      border: 1px solid #333;
+      border-radius: 11px;
+      outline: none;
+      background: #0b0b0b;
+      color: white;
+      font-size: 16px;
+    }
+
+    .input:focus {
+      border-color: #b7ff00;
+      box-shadow: 0 0 15px rgba(183, 255, 0, .12);
+    }
+
+    .button {
+      width: 100%;
+      height: 54px;
+      margin-top: 12px;
+      border: 0;
+      border-radius: 11px;
+      background: linear-gradient(135deg, #d8ff00, #8dcc00);
+      color: #080808;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 22px rgba(183, 255, 0, .3);
+    }
+
+    .button:disabled {
+      opacity: .8;
+    }
+
+    .error {
+      margin-top: 12px;
+      text-align: center;
+      padding: 12px;
+      border-radius: 9px;
+      background: rgba(255, 50, 50, .08);
+      border: 1px solid rgba(255, 50, 50, .25);
+      color: #ff5555;
+      display: none;
+    }
+
+    /* Result */
+    .result {
+      display: none;
+      margin-top: 18px;
+    }
+
+    /* Player Name */
+    .player-name {
+      padding: 20px;
+      margin-bottom: 12px;
+      text-align: center;
+      background: linear-gradient(135deg, rgba(183, 255, 0, .12), rgba(183, 255, 0, .03));
+      border: 1px solid rgba(183, 255, 0, .35);
+      border-radius: 15px;
+    }
+
+    .name-label {
+      color: #777;
+      font-size: 10px;
+      letter-spacing: 2px;
+      margin-bottom: 8px;
+    }
+
+    .name {
+      color: #b7ff00;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 22px;
+      font-weight: 800;
+      word-break: break-word;
+      text-shadow: 0 0 15px rgba(183, 255, 0, .35);
+    }
+
+    /* Section */
+    .section {
+      margin-bottom: 12px;
+      padding: 17px;
+      background: rgba(15, 15, 15, .92);
+      border: 1px solid #252525;
+      border-radius: 14px;
+    }
+
+    .section-title {
+      margin-bottom: 14px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #292929;
+      color: #b7ff00;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1px;
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 9px;
+    }
+
+    .info {
+      min-width: 0;
+      padding: 11px;
+      background: #0b0b0b;
+      border-radius: 9px;
+      border: 1px solid #1d1d1d;
+    }
+
+    .info-label {
+      color: #666;
+      font-size: 10px;
+      margin-bottom: 5px;
+    }
+
+    .info-value {
+      color: #eee;
+      font-size: 13px;
+      font-weight: bold;
+      word-break: break-word;
+    }
+
+    .age-value {
+      color: #b7ff00;
+    }
+
+    /* Footer */
+    .footer {
+      padding: 18px 0 5px;
+      text-align: center;
+      color: #444;
+      font-size: 9px;
+      letter-spacing: 2px;
+    }
+
+    @media(max-width:420px) {
+      .info-grid {
+        grid-template-columns: 1fr;
+      }
+      .name {
+        font-size: 19px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- HEADER -->
+    <div class="header">
+      <div class="logo">FF</div>
+      <div class="title">UID CHECKER</div>
+      <div class="subtitle">FREE FIRE COMPLETE PLAYER INFORMATION</div>
+    </div>
+
+    <!-- SEARCH -->
+    <div class="search-card">
+      <input class="input" type="number" id="uid" placeholder="ENTER FREE FIRE UID" autocomplete="off">
+      <button class="button" id="checkBtn" onclick="checkUID()">CHECK PLAYER</button>
+      <div class="error" id="error"></div>
+    </div>
+
+    <!-- RESULT -->
+    <div class="result" id="result">
+      <!-- PLAYER NAME -->
+      <div class="player-name">
+        <div class="name-label">PLAYER NAME</div>
+        <div class="name" id="playerName"></div>
+      </div>
+
+      <!-- ACCOUNT INFORMATION -->
+      <div class="section">
+        <div class="section-title">👤 ACCOUNT INFORMATION</div>
+        <div class="info-grid">
+          <div class="info"><div class="info-label">UID</div><div class="info-value" id="accountUID"></div></div>
+          <div class="info"><div class="info-label">LEVEL</div><div class="info-value" id="level"></div></div>
+          <div class="info"><div class="info-label">EXP</div><div class="info-value" id="exp"></div></div>
+          <div class="info"><div class="info-label">LIKES</div><div class="info-value" id="likes"></div></div>
+          <div class="info"><div class="info-label">REGION</div><div class="info-value" id="region"></div></div>
+          <div class="info"><div class="info-label">SEASON ID</div><div class="info-value" id="season"></div></div>
+          <div class="info"><div class="info-label">ACCOUNT CREATED</div><div class="info-value" id="created"></div></div>
+          <div class="info"><div class="info-label">ACCOUNT AGE</div><div class="info-value age-value" id="accountAge"></div></div>
+          <div class="info"><div class="info-label">LAST LOGIN</div><div class="info-value" id="lastLogin"></div></div>
+          <div class="info"><div class="info-label">ACCOUNT CREATE TIMESTAMP</div><div class="info-value" id="createTimestamp"></div></div>
+        </div>
+      </div>
+
+      <!-- RANK -->
+      <div class="section">
+        <div class="section-title">🏆 RANK INFORMATION</div>
+        <div class="info-grid">
+          <div class="info"><div class="info-label">BR MAX RANK</div><div class="info-value" id="brMaxRank"></div></div>
+          <div class="info"><div class="info-label">BR RANK POINT</div><div class="info-value" id="brRankPoint"></div></div>
+          <div class="info"><div class="info-label">CS MAX RANK</div><div class="info-value" id="csMaxRank"></div></div>
+          <div class="info"><div class="info-label">CS RANK POINT</div><div class="info-value" id="csRankPoint"></div></div>
+        </div>
+      </div>
+
+      <!-- EQUIPPED ITEMS (images kept as text IDs – exactly as requested) -->
+      <div class="section">
+        <div class="section-title">🎒 EQUIPPED ITEMS</div>
+        <div class="info-grid">
+          <div class="info"><div class="info-label">AVATAR ID</div><div class="info-value" id="avatar"></div></div>
+          <div class="info"><div class="info-label">BP BADGES</div><div class="info-value" id="badges"></div></div>
+          <div class="info"><div class="info-label">BP ID</div><div class="info-value" id="bpID"></div></div>
+          <div class="info"><div class="info-label">BANNER ID</div><div class="info-value" id="bannerID"></div></div>
+        </div>
+      </div>
+
+      <!-- SOCIAL -->
+      <div class="section">
+        <div class="section-title">🌐 SOCIAL INFORMATION</div>
+        <div class="info-grid">
+          <div class="info"><div class="info-label">ACCOUNT ID</div><div class="info-value" id="socialID"></div></div>
+          <div class="info"><div class="info-label">GENDER</div><div class="info-value" id="gender"></div></div>
+          <div class="info"><div class="info-label">LANGUAGE</div><div class="info-value" id="language"></div></div>
+        </div>
+      </div>
+
+      <!-- GUILD -->
+      <div class="section">
+        <div class="section-title">🛡️ GUILD INFORMATION</div>
+        <div class="info-grid">
+          <div class="info"><div class="info-label">GUILD ID</div><div class="info-value" id="guildID"></div></div>
+          <div class="info"><div class="info-label">GUILD NAME</div><div class="info-value" id="guildName"></div></div>
+          <div class="info"><div class="info-label">GUILD LEVEL</div><div class="info-value" id="guildLevel"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">POWERED BY GHOST CORPORATION</div>
+  </div>
+
+  <script>
+    const API_KEY = "wOXLBvK802Fk_aTlR-kbdpQsWWx9qqHPY_o_7Ngp5J4";
+
+    const uidInput = document.getElementById("uid");
+    const checkBtn = document.getElementById("checkBtn");
+    const errorBox = document.getElementById("error");
+    const result = document.getElementById("result");
+
+    function formatDate(timestamp) {
+      if (!timestamp) return "N/A";
+      const date = new Date(Number(timestamp) * 1000);
+      if (isNaN(date.getTime())) return "N/A";
+      return date.toLocaleString("en-GB", {
+        day: "2-digit",
+        month: "long",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+        second: "2-digit"
+      });
+    }
+
+    function getAccountAge(timestamp) {
+      if (!timestamp) return "N/A";
+      const created = new Date(Number(timestamp) * 1000);
+      if (isNaN(created.getTime())) return "N/A";
+      const now = new Date();
+      let milliseconds = now.getTime() - created.getTime();
+      if (milliseconds < 0) return "N/A";
+      const totalDays = Math.floor(milliseconds / (1000 * 60 * 60 * 24));
+      const years = Math.floor(totalDays / 365);
+      const remainingAfterYears = totalDays - (years * 365);
+      const months = Math.floor(remainingAfterYears / 30);
+      const days = remainingAfterYears - (months * 30);
+      let text = totalDays + " Days";
+      if (years > 0) {
+        text = years + " Years " + months + " Months " + days + " Days";
+      } else if (months > 0) {
+        text = months + " Months " + days + " Days";
+      }
+      return text;
+    }
+
+    async function checkUID() {
+      const uid = uidInput.value.trim();
+      errorBox.style.display = "none";
+      result.style.display = "none";
+
+      if (!uid) {
+        checkBtn.innerText = "UID দিন";
+        checkBtn.style.background = "linear-gradient(135deg,#ff5555,#b90000)";
+        checkBtn.style.color = "white";
+        return;
+      }
+
+      checkBtn.disabled = true;
+      checkBtn.innerText = "SEARCHING...";
+
+      try {
+        const url = "https://api.gameskinbo.com/ff-info/get?uid=" + encodeURIComponent(uid) + "&region=BD";
+        const response = await fetch(url, {
+          method: "GET",
+          headers: { "x-api-key": API_KEY }
+        });
+        const data = await response.json();
+
+        if (!response.ok || data.error) {
+          throw new Error("INVALID_UID");
+        }
+
+        const account = data.AccountInfo || {};
+        const profile = data.AccountProfileInfo || {};
+        const equipped = data.EquippedItemsInfo || {};
+        const social = data.SocialInfo || {};
+        const guild = data.GuildInfo || {};
+
+        if (!account.AccountName) {
+          throw new Error("INVALID_UID");
+        }
+
+        // Player Name
+        document.getElementById("playerName").innerText = account.AccountName || "N/A";
+
+        // Account
+        document.getElementById("accountUID").innerText = uid;
+        document.getElementById("level").innerText = account.AccountLevel ?? "N/A";
+        document.getElementById("exp").innerText = account.AccountEXP ?? "N/A";
+        document.getElementById("likes").innerText = account.AccountLikes ?? "N/A";
+        document.getElementById("region").innerText = account.AccountRegion || "N/A";
+        document.getElementById("season").innerText = account.AccountSeasonId ?? "N/A";
+        document.getElementById("created").innerText = formatDate(account.AccountCreateTime);
+        document.getElementById("accountAge").innerText = getAccountAge(account.AccountCreateTime);
+        document.getElementById("lastLogin").innerText = formatDate(account.AccountLastLogin);
+        document.getElementById("createTimestamp").innerText = account.AccountCreateTime || "N/A";
+
+        // Rank
+        document.getElementById("brMaxRank").innerText = profile.BrMaxRank ?? "N/A";
+        document.getElementById("brRankPoint").innerText = profile.BrRankPoint ?? "N/A";
+        document.getElementById("csMaxRank").innerText = profile.CsMaxRank ?? "N/A";
+        document.getElementById("csRankPoint").innerText = profile.CsRankPoint ?? "N/A";
+
+        // EQUIPPED ITEMS (IDs remain as-is, no images changed)
+        document.getElementById("avatar").innerText = equipped.EquippedAvatarId ?? "N/A";
+        document.getElementById("badges").innerText = equipped.EquippedBPBadges ?? "N/A";
+        document.getElementById("bpID").innerText = equipped.EquippedBPID ?? "N/A";
+        document.getElementById("bannerID").innerText = equipped.EquippedBannerId ?? "N/A";
+
+        // Social
+        document.getElementById("socialID").innerText = social.accountId || "N/A";
+        document.getElementById("gender").innerText = social.gender || "N/A";
+        document.getElementById("language").innerText = social.language || "N/A";
+
+        // Guild
+        document.getElementById("guildID").innerText = guild.GuildID || "N/A";
+        document.getElementById("guildName").innerText = guild.GuildName || "N/A";
+        document.getElementById("guildLevel").innerText = guild.GuildLevel ?? "N/A";
+
+        result.style.display = "block";
+        checkBtn.innerText = account.AccountName;
+        checkBtn.title = account.AccountName;
+        checkBtn.style.background = "linear-gradient(135deg,#d8ff00,#8dcc00)";
+        checkBtn.style.color = "#080808";
+
+      } catch (error) {
+        result.style.display = "none";
+        checkBtn.innerText = "আপনার UID ভুল";
+        checkBtn.title = "আপনার UID ভুল";
+        checkBtn.style.background = "linear-gradient(135deg,#ff5555,#b90000)";
+        checkBtn.style.color = "white";
+      } finally {
+        checkBtn.disabled = false;
+      }
+    }
+
+    uidInput.addEventListener("keydown", function(event) {
+      if (event.key === "Enter") {
+        checkUID();
+      }
+    });
+
+    uidInput.addEventListener("input", function() {
+      checkBtn.innerText = "CHECK PLAYER";
+      checkBtn.title = "";
+      checkBtn.disabled = false;
+      checkBtn.style.background = "linear-gradient(135deg,#d8ff00,#8dcc00)";
+      checkBtn.style.color = "#080808";
+      errorBox.style.display = "none";
+      result.style.display = "none";
+    });
+  </script>
+</body>
+</html>
