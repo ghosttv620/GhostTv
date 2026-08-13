@@ -367,7 +367,11 @@
 
         const encodedMessage = encodeURIComponent(message);
         
-        const waUrl = `https://api.whatsapp.com/send?text=${encodedMessage}`;
+        // এখানে 8801XXXXXXXXX এর জায়গায় আপনার আসল WhatsApp নাম্বার দিন (অবশ্যই 88 সহ দিবেন, কিন্তু + দিবেন না)
+        const yourWhatsAppNumber = "8801907293620"; 
+        
+        // এটি ইউজারের ফোনে সরাসরি তার হোয়াটসঅ্যাপ ওপেন করে আপনার নাম্বারে মেসেজ রেডি করে দিবে
+        const waUrl = `https://wa.me/${yourWhatsAppNumber}?text=${encodedMessage}`;
         
         window.open(waUrl, '_blank');
     }
