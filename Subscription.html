@@ -7,16 +7,14 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;600;700&display=swap');
-
-        /* ---------------- Subscription Plan Styles ---------------- */
+        
         body { font-family: system-ui, -apple-system, sans-serif; background: #f4f7fc; padding: 4px; margin: 0;}
         .bangla { font-family: 'Hind Siliguri', 'Noto Sans Bengali', system-ui, sans-serif; }
         .plan-card { transition: transform 0.12s ease; }
         .plan-card:hover { transform: scale(1.01); }
         .plan-list li { font-size: 11px; }
         .plan-list li span { font-size: 12px; }
-        
-        /* ——— ULTRA COMPACT ——— */
+
         @media (max-width: 480px) {
             body { padding: 2px; }
             .plan-card { padding: 8px 10px !important; border-radius: 10px !important; }
@@ -37,8 +35,7 @@
             .mt-4 { margin-top: 8px !important; }
             .text-\[10px\] { font-size: 8px !important; }
         }
-        
-        /* base compact (always small) */
+
         .plan-card { padding: 10px 12px; border-radius: 12px; }
         .plan-card h2 { font-size: 17px; }
         .plan-card .price { font-size: 22px; }
@@ -57,50 +54,19 @@
         .mt-4 { margin-top: 8px; }
         .text-\[10px\] { font-size: 9px; }
 
-
-        /* ---------------- Payment Gateway Styles ---------------- */
         * { box-sizing: border-box; font-family: 'Noto Sans Bengali', sans-serif;}
-        
-        /* Overlay wrapper to cover the entire screen correctly */
-        #gatewayOverlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background-color: #f4f7fc;
-            z-index: 9999; /* Ensure it's always on top */
-        }
-
-        .container {
-            background: #ffffff;
-            width: 100%;
-            max-width: 400px;
-            height: 100%;
-            margin: 0 auto; /* Center it horizontally */
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            box-shadow: 0 0 20px rgba(0,0,0,0.1);
-        }
-
+        #gatewayOverlay { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: #f4f7fc; z-index: 9999; }
+        .container { background: #ffffff; width: 100%; max-width: 400px; height: 100%; margin: 0 auto; position: relative; overflow: hidden; display: flex; flex-direction: column; box-shadow: 0 0 20px rgba(0,0,0,0.1); }
         .header { text-align: center; padding: 40px 20px 20px; }
         .main-logo { width: 60px; height: 60px; border-radius: 50%; margin: 0 auto; display: block; object-fit: cover; border: 1px solid #eaeaea; }
         .header h1 { color: #6b7280; font-size: 20px; margin-top: 15px; text-transform: uppercase; }
         .mobile-banking-btn { background-color: #0052cc; color: white; text-align: center; padding: 12px; margin: 0 20px 20px; border-radius: 6px; font-weight: 600; }
-        
         .payment-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; padding: 0 20px; }
         .payment-card { background: #fff; border: 1px solid #eaeaea; border-radius: 8px; padding: 15px 10px; text-align: center; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.02); transition: 0.2s; display: flex; justify-content: center; align-items: center; height: 75px; }
         .payment-card img { max-width: 90%; max-height: 40px; object-fit: contain; }
         .payment-card:active { transform: scale(0.98); }
-        
         .bottom-pay-btn { background: #dce7f9; color: #0052cc; text-align: center; padding: 15px; font-weight: bold; font-size: 16px; border-radius: 20px 20px 0 0; cursor: pointer; width: 100%; flex-shrink: 0; z-index: 5; }
-        
-        /* Cancel Button on Gateway Main Screen */
-        .cancel-gateway-btn {
-            background: none; border: none; color: #6b7280; position: absolute; top: 15px; left: 15px; font-size: 20px; cursor: pointer; z-index: 10;
-        }
-
-        /* Modal Screen */
+        .cancel-gateway-btn { background: none; border: none; color: #6b7280; position: absolute; top: 15px; left: 15px; font-size: 20px; cursor: pointer; z-index: 10; }
         .modal { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: #f4f7fc; display: none; flex-direction: column; z-index: 20; }
         .modal-header { background: #fff; padding: 15px 20px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #eaeaea; }
         .back-btn { background: none; border: none; font-size: 18px; cursor: pointer; color: #666; }
@@ -109,146 +75,114 @@
         .amount-row { display: flex; justify-content: space-between; padding: 0 20px; margin-bottom: 15px; font-weight: bold; color: #444; align-items: center; }
         .small-logo { width: 24px; height: 24px; border-radius: 50%; vertical-align: middle; margin-right: 8px; object-fit: cover; }
         .amount-box { font-size: 18px; }
-        
         .instruction-box { margin: 0 20px; border-radius: 8px; color: white; padding: 20px; flex: 1; overflow-y: auto; }
         .input-group { margin-bottom: 20px; }
         .input-group label { display: block; text-align: center; margin-bottom: 10px; font-weight: bold; font-size: 14px; }
-        .trx-input { width: 100%; padding: 12px; border: none; border-radius: 4px; font-size: 14px; outline: none; }
+        .trx-input { width: 100%; padding: 12px; border: none; border-radius: 4px; font-size: 14px; outline: none; color: red !important; font-weight: bold; }
         .steps { list-style: none; font-size: 13px; line-height: 1.6; }
         .steps li { margin-bottom: 12px; position: relative; padding-left: 15px; }
         .steps li::before { content: "•"; position: absolute; left: 0; top: 0; font-size: 16px; }
         .copy-btn { background: rgba(0,0,0,0.3); border: none; color: white; padding: 2px 8px; border-radius: 4px; font-size: 11px; cursor: pointer; margin-left: 5px; }
         .verify-btn { color: white; border: none; padding: 15px; width: calc(100% - 40px); margin: 15px 20px 20px; border-radius: 6px; font-weight: bold; font-size: 16px; cursor: pointer; transition: background 0.3s; }
-
     </style>
 </head>
 <body>
-
-<!-- ---------------- MAIN SUBSCRIPTION PAGE ---------------- -->
-<div id="subscriptionPage" class="max-w-sm w-full mx-auto" style="min-height: 100vh; display: flex; flex-direction: column; justify-content: center;">
-    <div class="flex flex-col gap-3">
-        <!-- ——— PRIME CARD ——— -->
-        <div class="plan-card bg-gradient-to-br from-lime-400 to-yellow-300 border border-lime-500/60 shadow-sm">
-            <div class="text-center mb-1">
-                <h2 class="font-bold text-zinc-900">Prime</h2>
-                <p class="bangla text-xs text-zinc-700 sub-title">প্রাইম সাবস্ক্রিপশন</p>
-                <div class="mt-1 text-xl font-bold text-zinc-900 price">৯৯৳<span class="text-[10px] font-normal text-zinc-700">/মাস</span></div>
+    <div id="subscriptionPage" class="max-w-sm w-full mx-auto" style="min-height: 100vh; display: flex; flex-direction: column; justify-content: center;">
+        <div class="flex flex-col gap-3">
+            <div class="plan-card bg-gradient-to-br from-lime-400 to-yellow-300 border border-lime-500/60 shadow-sm">
+                <div class="text-center mb-1">
+                    <h2 class="font-bold text-zinc-900">Prime</h2>
+                    <p class="bangla text-xs text-zinc-700 sub-title">প্রাইম সাবস্ক্রিপশন</p>
+                    <div class="mt-1 text-xl font-bold text-zinc-900 price">৯৯৳<span class="text-[10px] font-normal text-zinc-700">/মাস</span></div>
+                </div>
+                <div class="bg-white/40 backdrop-blur-sm rounded-lg px-3 py-1.5 mb-1.5">
+                    <ul class="space-y-0.5 plan-list">
+                        <li class="flex items-center gap-1.5 text-zinc-800"><span class="text-green-700 font-bold text-xs">✓</span> মুভি</li>
+                        <li class="flex items-center gap-1.5 text-zinc-800"><span class="text-green-700 font-bold text-xs">✓</span> টিভি</li>
+                        <li class="flex items-center gap-1.5 text-zinc-800"><span class="text-green-700 font-bold text-xs">✓</span> VIP এক্সেস</li>
+                    </ul>
+                </div>
+                <button onclick="initiatePayment('Prime', 99)" class="block w-full bg-zinc-900/90 text-white rounded-lg font-semibold text-center hover:bg-zinc-800 transition shadow-sm bangla"> সাবস্ক্রাইব করুন </button>
             </div>
-            <div class="bg-white/40 backdrop-blur-sm rounded-lg px-3 py-1.5 mb-1.5">
-                <ul class="space-y-0.5 plan-list">
-                    <li class="flex items-center gap-1.5 text-zinc-800"><span class="text-green-700 font-bold text-xs">✓</span> মুভি</li>
-                    <li class="flex items-center gap-1.5 text-zinc-800"><span class="text-green-700 font-bold text-xs">✓</span> টিভি</li>
-                    <li class="flex items-center gap-1.5 text-zinc-800"><span class="text-green-700 font-bold text-xs">✓</span> VIP এক্সেস</li>
-                </ul>
+            <div class="plan-card bg-gradient-to-br from-orange-600/90 to-red-600/90 border-2 border-orange-400/60 relative shadow-sm">
+                <div class="absolute -top-2 left-1/2 -translate-x-1/2 bg-orange-500 text-white rounded-full font-medium tracking-wide badge"> জনপ্রিয় </div>
+                <div class="text-center mb-1">
+                    <h2 class="font-bold text-white">Premium</h2>
+                    <p class="bangla text-xs text-orange-100 sub-title">প্রিমিয়াম সাবস্ক্রিপশন</p>
+                    <div class="mt-1 text-xl font-bold text-white price">১৫০৳<span class="text-[10px] font-normal text-orange-100">/মাস</span></div>
+                </div>
+                <div class="bg-black/30 backdrop-blur-sm rounded-lg px-3 py-1.5 mb-1.5">
+                    <ul class="space-y-0.5 plan-list">
+                        <li class="flex items-center gap-1.5 text-white"><span class="text-green-400 text-xs">✓</span> মুভি</li>
+                        <li class="flex items-center gap-1.5 text-white"><span class="text-green-400 text-xs">✓</span> টিভি</li>
+                        <li class="flex items-center gap-1.5 text-white"><span class="text-green-400 text-xs">✓</span> অ্যাডাল্ট</li>
+                        <li class="flex items-center gap-1.5 text-white"><span class="text-green-400 text-xs">✓</span> VIP এক্সেস</li>
+                        <li class="flex items-center gap-1.5 text-white"><span class="text-green-400 text-xs">✓</span> ২৪/৭ সাপোর্ট</li>
+                    </ul>
+                </div>
+                <button onclick="initiatePayment('Premium', 150)" class="block w-full bg-white/90 text-black rounded-lg font-semibold text-center hover:bg-white transition shadow-sm bangla"> সাবস্ক্রাইব করুন </button>
             </div>
-            <button onclick="initiatePayment('Prime', 99)" class="block w-full bg-zinc-900/90 text-white rounded-lg font-semibold text-center hover:bg-zinc-800 transition shadow-sm bangla"> 
-                সাবস্ক্রাইব করুন 
-            </button>
         </div>
+        <p class="text-center text-zinc-500 mt-2 text-[9px] bangla">যেকোনো সময় ক্যানসেল করতে পারবেন</p>
+    </div>
 
-        <!-- ——— PREMIUM CARD ——— -->
-        <div class="plan-card bg-gradient-to-br from-orange-600/90 to-red-600/90 border-2 border-orange-400/60 relative shadow-sm">
-            <div class="absolute -top-2 left-1/2 -translate-x-1/2 bg-orange-500 text-white rounded-full font-medium tracking-wide badge"> জনপ্রিয় </div>
-            <div class="text-center mb-1">
-                <h2 class="font-bold text-white">Premium</h2>
-                <p class="bangla text-xs text-orange-100 sub-title">প্রিমিয়াম সাবস্ক্রিপশন</p>
-                <div class="mt-1 text-xl font-bold text-white price">১৫০৳<span class="text-[10px] font-normal text-orange-100">/মাস</span></div>
+    <div id="gatewayOverlay">
+        <div class="container">
+            <div id="mainScreen" style="display: flex; flex-direction: column; height: 100%; width: 100%; position: relative;">
+                <button class="cancel-gateway-btn" onclick="cancelPayment()">❮</button>
+                <div style="flex: 1; overflow-y: auto;">
+                    <div class="header">
+                        <img id="mainLogo" src="" alt="Logo" class="main-logo">
+                        <h1 id="siteTitle">Gh👻st_Payment</h1>
+                    </div>
+                    <div class="mobile-banking-btn" id="mobileBankingText">মোবাইল ব্যাংকিং</div>
+                    <div class="payment-grid" id="paymentGrid"></div>
+                    <div style="height: 30px;"></div>
+                </div>
+                <div class="bottom-pay-btn" id="bottomPayBtn"></div>
             </div>
-            <div class="bg-black/30 backdrop-blur-sm rounded-lg px-3 py-1.5 mb-1.5">
-                <ul class="space-y-0.5 plan-list">
-                    <li class="flex items-center gap-1.5 text-white"><span class="text-green-400 text-xs">✓</span> মুভি</li>
-                    <li class="flex items-center gap-1.5 text-white"><span class="text-green-400 text-xs">✓</span> টিভি</li>
-                    <li class="flex items-center gap-1.5 text-white"><span class="text-green-400 text-xs">✓</span> অ্যাডাল্ট</li>
-                    <li class="flex items-center gap-1.5 text-white"><span class="text-green-400 text-xs">✓</span> VIP এক্সেস</li>
-                    <li class="flex items-center gap-1.5 text-white"><span class="text-green-400 text-xs">✓</span> ২৪/৭ সাপোর্ট</li>
-                </ul>
+
+            <div class="modal" id="paymentModal">
+                <div class="modal-header">
+                    <button class="back-btn" onclick="closeModal()">❮</button>
+                    <span style="color: #666; font-size: 14px;">A/EN ✕</span>
+                </div>
+                <div class="modal-logo-area">
+                    <img id="modalLogoImg" src="" alt="Payment Logo">
+                </div>
+                <div class="amount-row">
+                    <div>
+                        <img id="smallLogo" src="" alt="icon" class="small-logo">
+                        <span id="modalSiteName" style="vertical-align: middle;">Gh👻st_Payment</span>
+                    </div>
+                    <div class="amount-box" id="modalAmountBox"></div>
+                </div>
+                <div class="instruction-box" id="instructionBox">
+                    <div class="input-group">
+                        <label id="trxLabel">ট্রানজেকশন আইডি দিন</label>
+                        <input type="text" id="trxInput" class="trx-input" placeholder="">
+                    </div>
+                    <ul class="steps" id="stepsList"></ul>
+                </div>
+                <button class="verify-btn" id="verifyBtn" onclick="verifyAndSendWhatsApp()">ভেরিফাই</button>
             </div>
-            <button onclick="initiatePayment('Premium', 150)" class="block w-full bg-white/90 text-black rounded-lg font-semibold text-center hover:bg-white transition shadow-sm bangla"> 
-                সাবস্ক্রাইব করুন 
-            </button>
         </div>
     </div>
-    <p class="text-center text-zinc-500 mt-2 text-[9px] bangla">যেকোনো সময় ক্যানসেল করতে পারবেন</p>
-</div>
 
-
-<!-- ---------------- PAYMENT GATEWAY (Hidden by default) ---------------- -->
-<div id="gatewayOverlay">
-    <div class="container">
-        <!-- Main Screen -->
-        <div id="mainScreen" style="display: flex; flex-direction: column; height: 100%; width: 100%; position: relative;">
-            <button class="cancel-gateway-btn" onclick="cancelPayment()">❮</button>
-            <div style="flex: 1; overflow-y: auto;">
-                <div class="header">
-                    <img id="mainLogo" src="" alt="Logo" class="main-logo">
-                    <h1 id="siteTitle">Gh👻st_Payment</h1>
-                </div>
-                <div class="mobile-banking-btn" id="mobileBankingText">মোবাইল ব্যাংকিং</div>
-                <!-- Dynamic Payment Grid -->
-                <div class="payment-grid" id="paymentGrid"></div>
-                <div style="height: 30px;"></div> 
-            </div>
-            <div class="bottom-pay-btn" id="bottomPayBtn"></div>
-        </div>
-
-        <!-- Details Modal -->
-        <div class="modal" id="paymentModal">
-            <div class="modal-header">
-                <button class="back-btn" onclick="closeModal()">❮</button>
-                <span style="color: #666; font-size: 14px;">A/EN ✕</span>
-            </div>
-            <div class="modal-logo-area">
-                <img id="modalLogoImg" src="" alt="Payment Logo">
-            </div>
-            <div class="amount-row">
-                <div>
-                    <img id="smallLogo" src="" alt="icon" class="small-logo"> 
-                    <span id="modalSiteName" style="vertical-align: middle;">Gh👻st_Payment</span>
-                </div>
-                <div class="amount-box" id="modalAmountBox"></div>
-            </div>
-            <div class="instruction-box" id="instructionBox">
-                <div class="input-group">
-                    <label id="trxLabel">ট্রানজেকশন আইডি দিন</label>
-                    <input type="text" id="trxInput" class="trx-input" placeholder="">
-                </div>
-                <ul class="steps" id="stepsList"></ul>
-            </div>
-            <button class="verify-btn" id="verifyBtn" onclick="verifyAndSendWhatsApp()">ভেরিফাই</button>
-        </div>
-    </div>
-</div>
-
-<script>
-    // --- Global Variables for State ---
-    let currentPlan = "";
-    let currentAmount = 0;
-    let selectedMethodName = "";
-    let selectedMethodNumber = "";
-    let globalData = null;
-
-    // --- JSON Loading ---
-    const rawUrl = "https://raw.githubusercontent.com/ghostpanel/Ghost-File/refs/heads/main/Ghost%20Payment.json";
-    const jsonUrl = rawUrl + "?t=" + new Date().getTime();
-
-    fetch(jsonUrl)
-        .then(response => response.json())
-        .then(data => {
+    <script>
+        let currentPlan = ""; let currentAmount = 0; let selectedMethodName = ""; let selectedMethodNumber = ""; let globalData = null;
+        const rawUrl = "https://raw.githubusercontent.com/ghostpanel/Ghost-File/refs/heads/main/Ghost%20Payment.json";
+        const jsonUrl = rawUrl + "?t=" + new Date().getTime();
+        
+        fetch(jsonUrl).then(response => response.json()).then(data => {
             globalData = data;
-            
-            // Set Header & Texts (except dynamic amount)
             document.title = data.siteName;
             document.getElementById("siteTitle").innerText = data.siteName;
             document.getElementById("modalSiteName").innerText = data.siteName;
             document.getElementById("mobileBankingText").innerText = data.mobileBankingText;
-            
-            // Set Logos
             document.getElementById("mainLogo").src = data.headerLogo;
             document.getElementById("smallLogo").src = data.headerLogo;
-            
-            // Build Payment Grid
             const grid = document.getElementById("paymentGrid");
-            grid.innerHTML = "";
             data.paymentMethods.forEach((method, index) => {
                 if(method.status === "on" || method.status === true) {
                     const card = document.createElement("div");
@@ -258,124 +192,68 @@
                     grid.appendChild(card);
                 }
             });
-        })
-        .catch(err => {
-            console.error("JSON Error: ", err);
-        });
+        }).catch(err => console.error("JSON Error: ", err));
 
-    // --- Core Functions ---
-    
-    // 1. User clicks "সাবস্ক্রাইব করুন"
-    function initiatePayment(planName, amount) {
-        if(!globalData) {
-            alert("Payment system is loading, please wait...");
-            return;
-        }
-        currentPlan = planName;
-        currentAmount = amount;
-        
-        // Update dynamic amount displays
-        document.getElementById("bottomPayBtn").innerText = `পে করুন ${amount}.00`;
-        document.getElementById("modalAmountBox").innerText = `৳ ${amount}`;
-        
-        // Hide Subscription Page, Show Gateway
-        document.getElementById("subscriptionPage").style.display = "none";
-        document.getElementById("gatewayOverlay").style.display = "block";
-    }
-    
-    // 2. User clicks back from Gateway to Subscription Page
-    function cancelPayment() {
-        document.getElementById("gatewayOverlay").style.display = "none";
-        document.getElementById("subscriptionPage").style.display = "flex";
-        
-        // Reset Gateway State
-        document.getElementById('paymentModal').style.display = 'none';
-        document.getElementById('mainScreen').style.display = 'flex';
-        document.getElementById('trxInput').value = ""; // Clear input
-    }
-
-    // 3. User selects a Payment Method
-    function openModal(methodIndex) {
-        if(!globalData) return;
-        const method = globalData.paymentMethods[methodIndex];
-        const modalData = globalData.modal;
-        
-        // Store for WhatsApp message
-        selectedMethodName = method.name;
-        selectedMethodNumber = method.number;
-        
-        document.getElementById('mainScreen').style.display = 'none';
-        document.getElementById('paymentModal').style.display = 'flex';
-        
-        document.getElementById('modalLogoImg').src = method.logo;
-        document.getElementById('instructionBox').style.backgroundColor = method.boxColor;
-        document.getElementById('verifyBtn').style.backgroundColor = method.btnColor;
-        
-        document.getElementById('trxLabel').innerText = modalData.transactionLabel;
-        document.getElementById('trxInput').placeholder = modalData.transactionPlaceholder;
-        document.getElementById('verifyBtn').innerText = modalData.verifyBtnText;
-        
-        const stepsUl = document.getElementById('stepsList');
-        stepsUl.innerHTML = "";
-        
-        modalData.steps.forEach(step => {
-            let liHTML = step
-                .replace(/{method}/g, method.name)
-                .replace(/{ussd}/g, method.ussd)
-                .replace(/{number}/g, method.number)
-                .replace(/{amount}/g, currentAmount); // Using dynamic amount!
-            
-            if (liHTML.includes("{copy_button}")) {
-                liHTML = liHTML.replace(/{copy_button}/g, `<button class="copy-btn" onclick="copyNumber('${method.number}')">${modalData.copyBtnText}</button>`);
-            }
-            if (!method.ussd || method.ussd.trim() === "") {
-                liHTML = liHTML.replace(" ডায়াল কোড দিন অথবা আপনার ", "আপনার ");
-            }
-
-            const li = document.createElement("li");
-            li.innerHTML = liHTML;
-            stepsUl.appendChild(li);
-        });
-    }
-
-    function closeModal() {
-        document.getElementById('paymentModal').style.display = 'none';
-        document.getElementById('mainScreen').style.display = 'flex';
-    }
-
-    function copyNumber(number) {
-        navigator.clipboard.writeText(number).then(() => {
-            alert("Number copied: " + number);
-        });
-    }
-
-    // 4. Verify & Send to WhatsApp
-    function verifyAndSendWhatsApp() {
-        const trxId = document.getElementById('trxInput').value.trim();
-        if(trxId === "") {
-            alert("দয়া করে ট্রানজেকশন আইডি দিন!");
-            return;
+        function initiatePayment(planName, amount) {
+            if(!globalData) return;
+            currentPlan = planName; currentAmount = amount;
+            document.getElementById("bottomPayBtn").innerText = `পে করুন ${amount}.00`;
+            document.getElementById("modalAmountBox").innerText = `৳ ${amount}`;
+            document.getElementById("subscriptionPage").style.display = "none";
+            document.getElementById("gatewayOverlay").style.display = "block";
         }
 
-        // Message Format for WhatsApp
-        const message = `*New Subscription Request* 👻\n\n` +
-                        `*Plan:* ${currentPlan}\n` +
-                        `*Amount:* ${currentAmount} BDT\n` +
-                        `*Method:* ${selectedMethodName}\n` +
-                        `*Sent To:* ${selectedMethodNumber}\n` +
-                        `*Trx ID:* ${trxId}`;
+        function cancelPayment() {
+            document.getElementById("gatewayOverlay").style.display = "none";
+            document.getElementById("subscriptionPage").style.display = "flex";
+            document.getElementById('paymentModal').style.display = 'none';
+            document.getElementById('mainScreen').style.display = 'flex';
+            document.getElementById('trxInput').value = "";
+        }
 
-        const encodedMessage = encodeURIComponent(message);
-        
-        // এখানে 8801XXXXXXXXX এর জায়গায় আপনার আসল WhatsApp নাম্বার দিন (অবশ্যই 88 সহ দিবেন, কিন্তু + দিবেন না)
-        const yourWhatsAppNumber = "8801907293620"; 
-        
-        // এটি ইউজারের ফোনে সরাসরি তার হোয়াটসঅ্যাপ ওপেন করে আপনার নাম্বারে মেসেজ রেডি করে দিবে
-        const waUrl = `https://wa.me/${yourWhatsAppNumber}?text=${encodedMessage}`;
-        
-        window.open(waUrl, '_blank');
-    }
-</script>
+        function openModal(methodIndex) {
+            if(!globalData) return;
+            const method = globalData.paymentMethods[methodIndex];
+            const modalData = globalData.modal;
+            selectedMethodName = method.name;
+            selectedMethodNumber = method.number;
+            document.getElementById('mainScreen').style.display = 'none';
+            document.getElementById('paymentModal').style.display = 'flex';
+            document.getElementById('modalLogoImg').src = method.logo;
+            document.getElementById('instructionBox').style.backgroundColor = method.boxColor;
+            document.getElementById('verifyBtn').style.backgroundColor = method.btnColor;
+            document.getElementById('trxLabel').innerText = modalData.transactionLabel;
+            document.getElementById('trxInput').placeholder = modalData.transactionPlaceholder;
+            document.getElementById('verifyBtn').innerText = modalData.verifyBtnText;
+            const stepsUl = document.getElementById('stepsList');
+            stepsUl.innerHTML = "";
+            modalData.steps.forEach(step => {
+                let liHTML = step.replace(/{method}/g, method.name).replace(/{ussd}/g, method.ussd).replace(/{number}/g, method.number).replace(/{amount}/g, currentAmount);
+                if (liHTML.includes("{copy_button}")) {
+                    liHTML = liHTML.replace(/{copy_button}/g, `<button class="copy-btn" onclick="copyNumber('${method.number}')">${modalData.copyBtnText}</button>`);
+                }
+                const li = document.createElement("li");
+                li.innerHTML = liHTML;
+                stepsUl.appendChild(li);
+            });
+        }
 
+        function closeModal() {
+            document.getElementById('paymentModal').style.display = 'none';
+            document.getElementById('mainScreen').style.display = 'flex';
+        }
+
+        function copyNumber(number) {
+            navigator.clipboard.writeText(number).then(() => alert("Number copied: " + number));
+        }
+
+        function verifyAndSendWhatsApp() {
+            const trxId = document.getElementById('trxInput').value.trim();
+            if(trxId === "") { alert("দয়া করে ট্রানজেকশন আইডি দিন!"); return; }
+            const message = `*New Subscription Request* 👻\n\n*Plan:* ${currentPlan}\n*Amount:* ${currentAmount} BDT\n*Method:* ${selectedMethodName}\n*Sent To:* ${selectedMethodNumber}\n*Trx ID:* ${trxId}`;
+            const waUrl = `https://wa.me/8801907293620?text=${encodeURIComponent(message)}`;
+            window.open(waUrl, '_blank');
+        }
+    </script>
 </body>
 </html>
