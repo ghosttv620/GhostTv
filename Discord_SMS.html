@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Discord Title & Image Sender</title>
+
+<style>
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    padding:20px;
+    background:#0d1117;
+    color:white;
+    font-family:Arial,sans-serif;
+}
+
+.container{
+    max-width:700px;
+    margin:auto;
+    background:#161b22;
+    padding:20px;
+    border-radius:16px;
+}
+
+h2{
+    text-align:center;
+    margin-top:0;
+}
+
+.item{
+    background:#0d1117;
+    border:1px solid #30363d;
+    border-radius:12px;
+    padding:15px;
+    margin-bottom:15px;
+}
+
+.item-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:12px;
+}
+
+.number{
+    font-weight:bold;
+}
+
+input[type="text"]{
+    width:100%;
+    padding:13px;
+    margin-bottom:10px;
+    border:0;
+    outline:none;
+    border-radius:8px;
+    background:#21262d;
+    color:white;
+}
+
+input[type="file"]{
+    width:100%;
+    padding:10px;
+    background:#21262d;
+    color:white;
+    border-radius:8px;
+}
+
+.preview{
+    width:100%;
+    max-height:250px;
+    object-fit:contain;
+    margin-top:10px;
+    border-radius:8px;
+    display:none;
+}
+
+.remove{
+    background:#da3633;
+    color:white;
+    border:0;
+    padding:7px 12px;
+    border-radius:7px;
+    cursor:pointer;
+}
+
+.add{
+    width:100%;
+    padding:14px;
+    border:0;
+    border-radius:9px;
+    background:#30363d;
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+    margin-bottom:10px;
+}
+
+.send{
+    width:100%;
+    padding:14px;
+    border:0;
+    border-radius:9px;
+    background:#5865F2;
+    color:white;
+    font-size:16px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.send:disabled{
+    opacity:.6;
+}
+
+#status{
+    text-align:center;
+    margin-top:15px;
+    font-weight:bold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>Discord Sender</h2>
+
+<div id="items"></div>
+
+<button class="add" onclick="addItem()">
+    ＋ Add More
+</button>
+
+<button class="send" id="sendBtn" onclick="sendToDiscord()">
+    🚀 Send To Discord
+</button>
+
+<div id="status"></div>
+
+</div>
+
+<script>
+
+// =================================================
+// নতুন Discord Webhook URL এখানে বসাও
+// =================================================
+
+const WEBHOOK_URL = "https://discord.com/api/webhooks/1542158118371205181/Y4rLYLy-EslayINhPcvvxWFoV54ACI9hnh1-L2ZHepfkZRJwQSqRcqR1diMtVFJTDvLC";
+
+
+// =================================================
+// Item যোগ করা
+// =================================================
+
+function addItem(){
+
+    const container = document.getElementById("items");
+
+    const item = document.createElement("div");
+
+    item.className = "item";
+
+    item.innerHTML = `
+
+        <div class="item-top">
+
+            <span class="number">
+                Title + Image
+            </span>
+
+            <button
+                class="remove"
+                onclick="removeItem(this)">
+                Remove
+            </button>
+
+        </div>
+
+        <input
+            type="text"
+            class="title"
+            placeholder="এখানে Title লিখুন"
+        >
+
+        <input
+            type="file"
+            class="image"
+            accept="image/png,image/jpeg,image/webp,image/gif"
+            onchange="previewImage(this)"
+        >
+
+        <img class="preview">
+
+    `;
+
+    container.appendChild(item);
+
+    updateNumbers();
+}
+
+
+// =================================================
+// Remove
+// =================================================
+
+function removeItem(button){
+
+    button.closest(".item").remove();
+
+    updateNumbers();
+}
+
+
+// =================================================
+// Number Update
+// =================================================
+
+function updateNumbers(){
+
+    const items =
+        document.querySelectorAll(".item");
+
+    items.forEach((item,index)=>{
+
+        item.querySelector(".number").innerText =
+            "Title + Image #" + (index + 1);
+
+    });
+}
+
+
+// =================================================
+// Image Preview
+// =================================================
+
+function previewImage(input){
+
+    const preview =
+        input.parentElement.querySelector(".preview");
+
+    if(input.files && input.files[0]){
+
+        const file = input.files[0];
+
+        preview.src =
+            URL.createObjectURL(file);
+
+        preview.style.display = "block";
+
+    }else{
+
+        preview.style.display = "none";
+
+    }
+}
+
+
+// =================================================
+// Send To Discord
+// =================================================
+
+async function sendToDiscord(){
+
+    const status =
+        document.getElementById("status");
+
+    const sendBtn =
+        document.getElementById("sendBtn");
+
+    const items =
+        [...document.querySelectorAll(".item")];
+
+
+    if(WEBHOOK_URL === "YOUR_NEW_WEBHOOK_URL"){
+
+        status.innerText =
+            "❌ আগে Webhook URL বসাও";
+
+        return;
+    }
+
+
+    if(items.length === 0){
+
+        status.innerText =
+            "❌ আগে Title + Image যোগ করো";
+
+        return;
+    }
+
+
+    const validItems = [];
+
+
+    for(const item of items){
+
+        const title =
+            item.querySelector(".title")
+            .value.trim();
+
+        const fileInput =
+            item.querySelector(".image");
+
+        const file =
+            fileInput.files[0];
+
+
+        if(!title || !file){
+
+            status.innerText =
+                "❌ প্রতিটি Title-এর সাথে একটি Image দিতে হবে";
+
+            return;
+        }
+
+
+        // Discord attachment-এর জন্য
+        // filename তৈরি
+
+        const safeName =
+            file.name.replace(
+                /[^a-zA-Z0-9._-]/g,
+                "_"
+            );
+
+
+        validItems.push({
+            title:title,
+            file:file,
+            filename:safeName
+        });
+
+    }
+
+
+    sendBtn.disabled = true;
+
+    status.innerText =
+        "⏳ Discord-এ পাঠানো হচ্ছে...";
+
+
+    try{
+
+        // Discord সর্বোচ্চ 10টি attachment/embed
+        // এক request-এ নেয়।
+        // তাই 10টি করে batch করা হচ্ছে।
+
+        for(
+            let start = 0;
+            start < validItems.length;
+            start += 10
+        ){
+
+            const batch =
+                validItems.slice(
+                    start,
+                    start + 10
+                );
+
+
+            const formData =
+                new FormData();
+
+
+            const embeds = [];
+
+
+            batch.forEach((item,index)=>{
+
+                const attachmentName =
+                    `image_${index}_${item.filename}`;
+
+
+                // File যোগ
+                formData.append(
+                    `files[${index}]`,
+                    item.file,
+                    attachmentName
+                );
+
+
+                // Embed তৈরি
+                embeds.push({
+
+                    title:item.title,
+
+                    image:{
+                        url:
+                        `attachment://${attachmentName}`
+                    }
+
+                });
+
+            });
+
+
+            formData.append(
+                "payload_json",
+                JSON.stringify({
+
+                    embeds:embeds
+
+                })
+            );
+
+
+            const response =
+                await fetch(
+                    WEBHOOK_URL,
+                    {
+                        method:"POST",
+                        body:formData
+                    }
+                );
+
+
+            if(!response.ok){
+
+                throw new Error(
+                    "Discord Error: " +
+                    response.status
+                );
+
+            }
+
+        }
+
+
+        status.innerText =
+            "✅ সবগুলো Discord-এ Successfully পাঠানো হয়েছে!";
+
+
+    }catch(error){
+
+        console.error(error);
+
+        status.innerText =
+            "❌ পাঠানো যায়নি: " +
+            error.message;
+
+
+    }finally{
+
+        sendBtn.disabled = false;
+
+    }
+
+}
+
+
+// =================================================
+// প্রথম Item
+// =================================================
+
+addItem();
+
+</script>
+
+</body>
+</html>
