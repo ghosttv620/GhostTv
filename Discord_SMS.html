@@ -23,9 +23,9 @@
         h2{ 
             text-align:center; 
             margin-top:0; 
-            font-weight: 900; /* লেখা মোটা করা হয়েছে */
+            font-weight: 900; 
             font-size: 30px; 
-            text-shadow: 0 3px 8px rgba(88, 101, 242, 0.4); /* সুন্দর ডিজাইনের জন্য শ্যাডো দেওয়া হয়েছে */
+            text-shadow: 0 3px 8px rgba(88, 101, 242, 0.4); 
         } 
         .item{ 
             background:#0d1117; 
@@ -51,7 +51,9 @@
             outline:none; 
             border-radius:8px; 
             background:#21262d; 
-            color:white; 
+            color:white;
+            font-weight: bold;
+            font-size: 15px;
         } 
         input[type="file"]{ 
             width:100%; 
@@ -111,8 +113,7 @@
 </head> 
 <body> 
     <div class="container"> 
-        <!-- টাইটেলের দুই পাশে ফুল যোগ করা হয়েছে -->
-        <h2>🌸 Discord Sender 🌸</h2> 
+        <h2>Discord Sender</h2> 
         
         <div id="items"></div> 
         <button class="add" onclick="addItem()"> ＋ Add More </button> 
@@ -225,9 +226,10 @@
                         const attachmentName = `image_${index}_${item.filename}`; 
                         // File যোগ 
                         formData.append( `files[${index}]`, item.file, attachmentName ); 
-                        // Embed তৈরি 
+                        // Embed তৈরি (এখানে লাল কালার 16711680 যুক্ত করা হয়েছে)
                         embeds.push({ 
-                            title:item.title, 
+                            title: `🌸 **${item.title}** 🌸`,
+                            color: 16711680, // লাল রঙের ডেসিমাল কোড
                             image:{ url: `attachment://${attachmentName}` } 
                         }); 
                     }); 
